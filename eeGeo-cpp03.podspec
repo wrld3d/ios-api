@@ -19,7 +19,7 @@ Pod::Spec.new do |m|
 
   m.requires_arc = false
   m.source_files = '**/*.{h,m,mm,cpp}'
-  m.public_header_files = "api/*.h"
+  m.public_header_files = "api/public/*.h"
   m.vendored_library = 'libapps-on-maps.a', 'libapps-on-maps-sim.a'
 
   m.module_name = 'eeGeo-cpp03'
