@@ -10,7 +10,6 @@
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "RegularTexturePageLayout.h"
-#include "Logger.h"
 #include "CameraTransitioner.h"
 #include "PrecacheOperationScheduler.h"
 #include "AnnotationController.h"
@@ -192,11 +191,6 @@
 - (EGAnnotationView*)viewForAnnotation:(id<EGAnnotation>)annotation
 {
     return m_pAnnotationController->ViewForAnnotation(annotation);
-}
-
-- (void)setVisibleCoordinateBounds:(EGCoordinateBounds)bounds
-{
-    [self setVisibleCoordinateBounds:bounds animated:YES];
 }
 
 - (void)setVisibleCoordinateBounds:(EGCoordinateBounds)bounds animated:(BOOL)animated

@@ -4,59 +4,33 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+
+/*!
+ @struct EGCoordinateBounds
+ @brief Contains the WGS84 extents of a bounded region of the map.
+ */
 typedef struct {
     CLLocationCoordinate2D sw;
     CLLocationCoordinate2D ne;
 } EGCoordinateBounds;
 
-NS_INLINE EGCoordinateBounds EGCoordinateBoundsMake(CLLocationCoordinate2D sw,
-                                                    CLLocationCoordinate2D ne)
-{
-    EGCoordinateBounds bounds;
-    bounds.sw = sw;
-    bounds.ne = ne;
-    return bounds;
-}
+/*!
+ @function EGCoordinateBoundsMake
+ @brief Create an EGCoordinateBounds instance from a pair of WGS84 coordinates.
+ @param sw The south western point.
+ @param ne The north eastern point.
+ @return Returns an EGCoordinateBounds instance for the region.
+ */
+EGCoordinateBounds EGCoordinateBoundsMake(CLLocationCoordinate2D sw,
+                                          CLLocationCoordinate2D ne);
 
-NS_INLINE EGCoordinateBounds EGCoordinateBoundsFromCoordinatesMake(CLLocationCoordinate2D* coordinates,
-                                                                   NSUInteger count)
-{
-    EGCoordinateBounds bounds;
-    
-    if(count == 0)
-    {
-        bounds.sw = bounds.ne = CLLocationCoordinate2DMake(0.f, 0.f);
-        return bounds;
-    }
-    
-    
-    bounds.sw = bounds.ne = CLLocationCoordinate2DMake(coordinates[0].latitude, coordinates[0].longitude);
-    
-    for(NSUInteger i = 1; i < count; ++ i)
-    {
-        CLLocationCoordinate2D coordinate = coordinates[i];
-        
-        if(coordinate.latitude < bounds.sw.latitude)
-        {
-            bounds.sw.latitude = coordinate.latitude;
-        }
-        
-        if(coordinate.latitude > bounds.ne.latitude)
-        {
-            bounds.ne.latitude = coordinate.latitude;
-        }
-        
-        if(coordinate.longitude < bounds.sw.longitude)
-        {
-            bounds.sw.longitude = coordinate.longitude;
-        }
-        
-        if(coordinate.longitude > bounds.ne.longitude)
-        {
-            bounds.ne.longitude = coordinate.longitude;
-        }
-    }
-    
-    return bounds;
-}
+/*!
+ @function EGCoordinateBoundsMake
+ @brief Create an EGCoordinateBounds instance from a collection of WGS84 coordinates.
+ @param coordinates The collection of coordinates.
+ @param count The number of coordinates.
+ @return Returns an EGCoordinateBounds instance for the region.
+ */
+EGCoordinateBounds EGCoordinateBoundsFromCoordinatesMake(CLLocationCoordinate2D* coordinates,
+                                                         NSUInteger count);
 

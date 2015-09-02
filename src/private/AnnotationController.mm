@@ -6,7 +6,6 @@
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "RegularTexturePageLayout.h"
-#include "Logger.h"
 #include "CameraTransitioner.h"
 #include "PrecacheOperationScheduler.h"
 #include "AnnotationController.h"
