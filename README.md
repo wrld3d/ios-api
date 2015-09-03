@@ -29,9 +29,9 @@ end
 
 ### iOS API Example App
 
-The [iOS API Example app](https://github.com/eegeo/ios-api-example) serves two purposes. Firstly, it is a minimal app that can be used as a reference for using the API in practice, or as a basis for more complex apps. Secondly, it serves as a demonstrates of the use of the eeGeo 3D Maps alongside Apple's MapKit, and Google Maps. 
+The [iOS API Example app](https://github.com/eegeo/ios-api-example) serves two purposes. Firstly, it is a minimal app that can be used as a reference for using the API in practice, or as a basis for more complex apps. Secondly, it serves as a demonstration of the use of the eeGeo 3D Maps alongside Apple's MapKit, and Google Maps. 
 
-The intention of the eeGeo 3D Maps API is that it is simple to use and can be dropped in to an app unobtrusively, so it uses common idioms for mapping API's. The example app provides a concrete demonstration of this by setting up the same scene in all three maps. We also take the opportunity to show some of the dynamic features of our maps to change the look and feel of the environment. 
+The intention of the eeGeo 3D Maps API is that it is simple to use and can be dropped in to an app unobtrusively, so it uses common idioms for mapping APIs. The example app provides a concrete demonstration of this by setting up the same scene in all three maps. We also take the opportunity to show some of the dynamic features of our maps to change the look and feel of the environment. 
 
 **To get started with the example app:**
 
@@ -60,7 +60,7 @@ end
 
 ### API Key 
 
-In order to use the eeGeo 3D Maps API, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an API key for your apps [API keys](https://www.eegeo.com/developers/apikeys). 
+In order to use the eeGeo 3D Maps API, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an [API key](https://www.eegeo.com/developers/apikeys) for your apps. 
 
 After signing up for a developer account and creating an API key, add it to the example app [plist file](https://github.com/eegeo/ios-api-example/blob/master/ExampleApp/eeGeoApiExample-Info.plist#L6) as described in the previous section.
 
@@ -69,7 +69,7 @@ If you are creating a new app, or integrating eeGeo 3D Maps into an existing app
 
 ## API Overview 
 
-There are three main types that the app interacts with when using the eeGeo iOS API: EGMapView, EGMapApi, and EGMapDelegate.
+There are three main types that the app interacts with when using the eeGeo iOS API: EGMapView, EGMapDelegate, and EGMapApi.
 
 #### [EGMapView](https://github.com/eegeo/ios-api/blob/master/src/public/EGMapView.h)
 
