@@ -27,6 +27,7 @@ public:
     
     bool TryBindDisplay(GLKView& view,
                         id<UIGestureRecognizerDelegate>& gestureRecognizer);
+    void UnbindInputProvider();
     
     bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
 

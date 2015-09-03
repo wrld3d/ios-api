@@ -18,8 +18,18 @@
  @method initWithFrame
  @brief Initializes and returns a newly allocated view object with the specified frame rectangle.
  @param frame The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. This method uses the frame rectangle to set the center and bounds properties accordingly.
+ @return Initialised EGMapView instance, or nil if there was a problem.
  */
 - (id)initWithFrame:(CGRect)frame;
+
+/*!
+ @method initWithFrame
+ @brief Initializes and returns a newly allocated view object with the specified frame rectangle.
+ @param frame The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. This method uses the frame rectangle to set the center and bounds properties accordingly.
+ @param useCachedResources Flag to indicate whether global map resource cached should be used. Default is YES. Set to YES to retain expensive to create resources, improving loading time on re-entry and preserving scene state. Set to NO to help conserve memory, as resources will be released when the view is removed.
+ @return Initialised EGMapView instance, or nil if there was a problem.
+ */
+- (id)initWithFrame:(CGRect)frame :(BOOL)useCachedResources;
 
 /*!
  @property eegeoMapDelegate

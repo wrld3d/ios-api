@@ -28,6 +28,16 @@ AppLocationDelegate* m_pAppLocationDelegate;
 	[m_pLocationManager startUpdatingHeading];
 }
 
+- (void)dealloc
+{
+    m_pLocationManager.delegate = nil;
+    [m_pLocationManager stopUpdatingLocation];
+    [m_pLocationManager stopUpdatingHeading];
+    [m_pLocationManager release];
+    
+    [super dealloc];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
 	m_piOSLocationService->FailedToGetLocation();

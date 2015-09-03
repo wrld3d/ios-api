@@ -75,6 +75,14 @@ void AppRunner::ReleaseDisplay()
 	}
 }
 
+void AppRunner::UnbindInputProvider()
+{
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->UnbindInputProvider();
+    }
+}
+
 bool AppRunner::TryBindDisplay(GLKView& view,
                                id<UIGestureRecognizerDelegate>& gestureRecognizer)
 {

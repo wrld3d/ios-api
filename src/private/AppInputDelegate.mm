@@ -5,21 +5,22 @@
 #include <algorithm>
 
 @implementation AppInputDelegateGestureListener
-
-UIView* m_pView;
-id<UIGestureRecognizerDelegate>* m_pGestureRecognizer;
-AppInputDelegate* m_pAppInputDelegate;
-float m_previousDist;
-float m_pixelScale;
-float m_screenWidth;
-float m_screenHeight;
-
-UIRotationGestureRecognizer *gestureRotation;
-UIPinchGestureRecognizer *gesturePinch;
-UIPanGestureRecognizer* gesturePan;
-UITapGestureRecognizer* gestureTap;
-UITapGestureRecognizer* gestureDoubleTap;
-UILongPressGestureRecognizer* gestureTouch;
+{
+    UIView* m_pView;
+    id<UIGestureRecognizerDelegate>* m_pGestureRecognizer;
+    AppInputDelegate* m_pAppInputDelegate;
+    float m_previousDist;
+    float m_pixelScale;
+    float m_screenWidth;
+    float m_screenHeight;
+    
+    UIRotationGestureRecognizer *gestureRotation;
+    UIPinchGestureRecognizer *gesturePinch;
+    UIPanGestureRecognizer* gesturePan;
+    UITapGestureRecognizer* gestureTap;
+    UITapGestureRecognizer* gestureDoubleTap;
+    UILongPressGestureRecognizer* gestureTouch;
+}
 
 -(void) bindToViewController:(UIView*)pView :(id<UIGestureRecognizerDelegate>*)pGestureRecognizer :(AppInputDelegate*)pAppInputDelegate :(float)width :(float)height :(float)pixelScale
 {
@@ -36,25 +37,21 @@ UILongPressGestureRecognizer* gestureTouch;
 	[gestureRotation setDelegate:*m_pGestureRecognizer];
 	gestureRotation.cancelsTouchesInView = FALSE;
 	[m_pView addGestureRecognizer: gestureRotation];
-	[gestureRotation release];
     
 	gesturePinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePinch_Callback:)];
 	[gesturePinch setDelegate:*m_pGestureRecognizer];
 	gesturePinch.cancelsTouchesInView = FALSE;
 	[m_pView addGestureRecognizer: gesturePinch];
-	[gesturePinch release];
     
 	gesturePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePan_Callback:)];
 	[gesturePan setDelegate:*m_pGestureRecognizer];
 	gesturePan.cancelsTouchesInView = FALSE;
 	[m_pView addGestureRecognizer: gesturePan];
-	[gesturePan release];
     
 	gestureTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTap_Callback:)];
 	[gestureTap setDelegate:*m_pGestureRecognizer];
 	gestureTap.cancelsTouchesInView = FALSE;
 	[m_pView addGestureRecognizer: gestureTap];
-	[gestureTap release];
     
 	gestureDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureDoubleTap_Callback:)];
 	[gestureDoubleTap setDelegate:*m_pGestureRecognizer];
@@ -62,15 +59,29 @@ UILongPressGestureRecognizer* gestureTouch;
 	gestureDoubleTap.delaysTouchesEnded = FALSE;
 	gestureDoubleTap.numberOfTapsRequired = 2;
 	[m_pView addGestureRecognizer: gestureDoubleTap];
-	[gestureDoubleTap release];
     
     gestureTouch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTouch_Callback:)];
     [gestureTouch setDelegate:*m_pGestureRecognizer];
     gestureTouch.cancelsTouchesInView = FALSE;
     gestureTouch.minimumPressDuration = 0;
     [m_pView addGestureRecognizer: gestureTouch];
-	[gestureTouch release];
+}
+
+- (void)dealloc
+{
+    [m_pView removeGestureRecognizer:gestureRotation];
+    [m_pView removeGestureRecognizer:gesturePinch];
+    [m_pView removeGestureRecognizer:gesturePan];
+    [m_pView removeGestureRecognizer:gestureTap];
+    [m_pView removeGestureRecognizer:gestureDoubleTap];
     
+    [gestureDoubleTap release];
+    [gestureTap release];
+    [gesturePan release];
+    [gestureRotation release];
+    [gesturePinch release];
+    
+    [super dealloc];
 }
 
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer

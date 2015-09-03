@@ -102,11 +102,17 @@ AppHost::~AppHost()
 	m_pBlitter = NULL;
 }
 
+void AppHost::UnbindInputProvider()
+{
+    Eegeo_DELETE m_pAppInputDelegate;
+    m_pAppInputDelegate = NULL;
+}
+
 void AppHost::BindInputProvider(GLKView &view,
                                 id<UIGestureRecognizerDelegate>& gestureRecognizer,
                                 const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
-    Eegeo_DELETE m_pAppInputDelegate;
+    UnbindInputProvider();
     
     m_pAppInputDelegate = new AppInputDelegate(*m_pApp,
                                                view,

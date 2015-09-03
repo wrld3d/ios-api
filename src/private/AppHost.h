@@ -35,6 +35,7 @@ public:
     void BindInputProvider(GLKView& view,
                            id<UIGestureRecognizerDelegate>& gestureRecognizer,
                            const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void UnbindInputProvider();
 
 	void Update(float dt);
 	void Draw(float dt);

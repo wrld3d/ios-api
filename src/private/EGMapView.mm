@@ -18,13 +18,14 @@ EAGLContext* g_pContext = NULL;
     bool m_informedDelegateEegeoApiAvailable;
     EegeoMapApiImplementation* m_pEegeoMapApi;
     bool m_teardownHappened;
+    bool m_useCachedResources;
 }
 
 - (id)initWithCoder:(NSCoder*)coder
 {
     if(self = [super initWithCoder:coder])
     {
-        [self initView];
+        [self initView :YES];
     }
     
     return self;
@@ -34,7 +35,17 @@ EAGLContext* g_pContext = NULL;
 {
     if(self = [super initWithFrame:frame])
     {
-        [self initView];
+        [self initView :YES];
+    }
+    
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame :(BOOL)useCachedResources
+{
+    if(self = [super initWithFrame:frame])
+    {
+        [self initView :useCachedResources];
     }
     
     return self;
@@ -50,18 +61,27 @@ EAGLContext* g_pContext = NULL;
     [m_pEegeoMapApi teardown];
     m_pEegeoMapApi = nil;
     
+    m_pAppRunner->UnbindInputProvider();
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"handleResume" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"handlePause" object:nil];
     
     [super removeFromSuperview];
     
+    if(!m_useCachedResources)
+    {
+        delete m_pAppRunner;
+        m_pAppRunner = NULL;
+    }
+    
+    self.context = nil;
     m_teardownHappened = YES;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
--(void)initView
+-(void)initView :(BOOL)useCachedResources
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
@@ -71,20 +91,30 @@ EAGLContext* g_pContext = NULL;
     m_pEegeoMapApi = nil;
     m_teardownHappened = NO;
     m_pDisplayLink = nil;
+    m_useCachedResources = useCachedResources;
     
     [self createDisplayLink];
     
     id<UIGestureRecognizerDelegate> gestureRecognizer = self;
-
-    if(g_pAppRunner == NULL)
-    {
-        std::string apiKey = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"eeGeoMapsApiKey"] UTF8String];
-        g_pAppRunner = new AppRunner(apiKey);
-        g_pContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    }
     
-    m_pAppRunner = g_pAppRunner;
-    self.context = g_pContext;
+    std::string apiKey = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"eeGeoMapsApiKey"] UTF8String];
+   
+    if(m_useCachedResources)
+    {
+        if(g_pAppRunner == NULL)
+        {
+            g_pAppRunner = new AppRunner(apiKey);
+            g_pContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        }
+        
+        m_pAppRunner = g_pAppRunner;
+        self.context = g_pContext;
+    }
+    else
+    {
+        m_pAppRunner = new AppRunner(apiKey);
+        self.context = [[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2] autorelease];
+    }
     
     m_pAppRunner->TryBindDisplay(*self, gestureRecognizer);
     
