@@ -3,7 +3,7 @@
 #import "EegeoMapApiImplementation.h"
 #import "EGPolygonImplementation.h"
 #import "EGPrecacheOperationImplementation.h"
-#import "EegeoMapDelegate.h"
+#import "EGMapDelegate.h"
 
 #include "CameraHelpers.h"
 #include "EcefTangentBasis.h"
@@ -23,7 +23,7 @@
 {
     Eegeo::EegeoWorld* m_pWorld;
     ExampleApp* m_pApp;
-    id<EegeoMapDelegate> m_delegate;
+    id<EGMapDelegate> m_delegate;
 
     Eegeo::Api::CameraTransitioner* m_pCameraTransitioner;
     Eegeo::Api::PrecacheOperationScheduler m_precacheOperationScheduler;
@@ -34,7 +34,7 @@
 
 - (id)initWithWorld:(Eegeo::EegeoWorld&)world
                 app:(ExampleApp&)app
-           delegate:(id<EegeoMapDelegate>)delegate
+           delegate:(id<EGMapDelegate>)delegate
                view:(UIView*)view
 {
     m_pWorld = &world;

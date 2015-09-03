@@ -8,7 +8,7 @@
 /*!
  @protocol EGPrecacheOperation
  @brief Provides an interface to a precache operation. 
- @discussion Precache operations are unobtrusive, and not interrupt user streaming. They are prioritised to only download resources when other resources are is not streaming. After scheduling a precache operation with the EegeoMapApi, this protocol can be used to query the progress of the operation, and to cancel the operation if required.
+ @discussion Precache operations are unobtrusive, and not interrupt user streaming. They are prioritised to only download resources when other resources are is not streaming. After scheduling a precache operation with the EGMapApi, this protocol can be used to query the progress of the operation, and to cancel the operation if required.
  */
 @protocol EGPrecacheOperation<NSObject>
 

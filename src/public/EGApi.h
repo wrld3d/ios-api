@@ -2,9 +2,9 @@
 
 #pragma once
 
-#import "EegeoMapApi.h"
-#import "EegeoMapView.h"
-#import "EegeoMapDelegate.h"
+#import "EGMapApi.h"
+#import "EGMapView.h"
+#import "EGMapDelegate.h"
 #import "EGPointAnnotation.h"
 #import "EGCoordinateBounds.h"
 #import "EGPolygon.h"

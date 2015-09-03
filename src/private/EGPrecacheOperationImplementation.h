@@ -4,7 +4,7 @@
 
 #import "EGPrecacheOperation.h"
 #import "EGInternalApi.h"
-#import "EegeoMapDelegate.h"
+#import "EGMapDelegate.h"
 #include "Web.h"
 #include "VectorMath.h"
 
@@ -14,7 +14,7 @@
                     scheduler:(Eegeo::Api::PrecacheOperationScheduler&)precacheOperationScheduler
                        center:(const Eegeo::dv3&)ecefCentre
                        radius:(double)radius
-                     delegate:(id<EegeoMapDelegate>)delegate;
+                     delegate:(id<EGMapDelegate>)delegate;
 
 - (BOOL)tryStart;
 

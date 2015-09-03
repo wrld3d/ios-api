@@ -2,23 +2,23 @@
 
 #pragma once
 
-#import "EegeoMapApi.h"
+#import "EGMapApi.h"
 #import "EGAnnotationView.h"
 
 /*!
- @protocol EegeoMapDelegate
+ @protocol EGMapDelegate
  @brief Provides applications with the means to handle events from the eeGeo 3D Map, and provide customisation.
- @discussion The EegeoMapDelegate protocol presents the EegeoMapApi instance associated with an EegeoMapView to the application, and allows the application to optionally handle events and provide customisation to the map.
+ @discussion The EGMapDelegate protocol presents the EGMapApi instance associated with an EGMapView to the application, and allows the application to optionally handle events and provide customisation to the map.
  */
-@protocol EegeoMapDelegate<NSObject>
+@protocol EGMapDelegate<NSObject>
 
-- (void)eegeoMapReady:(id<EegeoMapApi>)api;
+- (void)eegeoMapReady:(id<EGMapApi>)api;
 
 @optional
 
 /*!
  @method precacheOperationCompleted
- @brief Handle the completion of a precache operation. This
+ @brief Handle the completion of a precache operation.
  @param precacheOperation Pointer to EGPrecacheOperation instance.
  @return Returns nothing.
  */
@@ -34,7 +34,7 @@
 
 /*!
  @method didSelectAnnotation
- @brief Handle the selection of an annotation. Selection may have occurred programatically via the EegeoMapApi, or via a user interaction.
+ @brief Handle the selection of an annotation. Selection may have occurred programatically via the EGMapApi, or via a user interaction.
  @param annotation Pointer to EGAnnotation instance.
  @return Returns nothing.
  */
@@ -42,7 +42,7 @@
 
 /*!
  @method didDeselectAnnotation
- @brief Handle the deselection of an annotation. Deselection may have occurred programatically via the EegeoMapApi, or via a user interaction.
+ @brief Handle the deselection of an annotation. Deselection may have occurred programatically via the EGMapApi, or via a user interaction.
  @param annotation Pointer to EGAnnotation instance.
  @return Returns nothing.
  */

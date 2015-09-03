@@ -8,7 +8,7 @@
 #include <map>
 #include "AnnotationStateModel.h"
 #include "Types.h"
-#include "EegeoMapDelegate.h"
+#include "EGMapDelegate.h"
 #include "TerrainHeightProvider.h"
 #include "Rendering.h"
 #include "Pins.h"
@@ -36,7 +36,7 @@ namespace Eegeo
             Eegeo::Helpers::GLHelpers::TextureInfo m_pinIconsTexture;
             Eegeo::Pins::PinsModule* m_pPinsModule;
             UIView* m_pMapView;
-            id<EegeoMapDelegate> m_pDelegate;
+            id<EGMapDelegate> m_pDelegate;
                     
             TModelMap m_modelMap;
             TViewMap m_viewMap;
@@ -56,7 +56,7 @@ namespace Eegeo
                                  Eegeo::Helpers::ITextureFileLoader& textureFileLoader,
                                  Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                  UIView* view,
-                                 id<EegeoMapDelegate> pDelegate);
+                                 id<EGMapDelegate> pDelegate);
             
             ~AnnotationController();
             

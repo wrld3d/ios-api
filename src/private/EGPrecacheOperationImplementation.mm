@@ -57,7 +57,7 @@ namespace
 {
     Eegeo::Web::PrecacheService* m_pPrecacheService;
     Eegeo::Api::PrecacheOperationScheduler* m_pPrecacheOperationScheduler;
-    id<EegeoMapDelegate> m_pDelegate;
+    id<EGMapDelegate> m_pDelegate;
     
     Eegeo::dv3 m_ecefCentre;
     double m_radius;
@@ -71,7 +71,7 @@ namespace
                     scheduler:(Eegeo::Api::PrecacheOperationScheduler&)precacheOperationScheduler
                        center:(const Eegeo::dv3&)ecefCentre
                        radius:(double)radius
-                     delegate:(id<EegeoMapDelegate>)delegate;
+                     delegate:(id<EGMapDelegate>)delegate;
 {
     m_pPrecacheService = &precacheService;
     m_pPrecacheOperationScheduler = &precacheOperationScheduler;

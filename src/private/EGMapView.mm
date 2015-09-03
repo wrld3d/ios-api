@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #import <GLKit/GLKit.h>
-#include "EegeoMapView.h"
+#include "EGMapView.h"
 #include "EegeoMapApiImplementation.h"
 #include "AppLocationDelegate.h"
 #include "AppRunner.h"
@@ -10,7 +10,7 @@
 AppRunner* g_pAppRunner = NULL;
 EAGLContext* g_pContext = NULL;
 
-@implementation EegeoMapView
+@implementation EGMapView
 {
     CADisplayLink* m_pDisplayLink;
     AppRunner* m_pAppRunner;

@@ -3,17 +3,17 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#import "EegeoMapApi.h"
+#import "EGMapApi.h"
 #import "EGApi.h"
 #include "EegeoWorld.h"
 #include "ExampleApp.h"
 #include "AppInterface.h"
 
-@interface EegeoMapApiImplementation : NSObject<EegeoMapApi>
+@interface EegeoMapApiImplementation : NSObject<EGMapApi>
 
 - (id)initWithWorld:(Eegeo::EegeoWorld&)world
                 app:(ExampleApp&)app
-           delegate:(id<EegeoMapDelegate>)delegate
+           delegate:(id<EGMapDelegate>)delegate
                view:(UIView*)view;
 
 - (void)teardown;

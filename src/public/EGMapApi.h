@@ -13,15 +13,15 @@
 #import "EGAnnotationView.h"
 
 /*!
- @protocol EegeoMapApi
+ @protocol EGMapApi
  @brief The main interface for applications to interact with the eeGeo 3D Map.
- @discussion The EegeoMapApi protocol exposes the main API points for manipulating the map. 
+ @discussion The EGMapApi protocol exposes the main API points for manipulating the map.
  
- Complementary methods are presented to add and remove features to the map, including annotations and polygons. Methods to manipulate and move the camera are presented on the EegeoMapApi.
+ Complementary methods are presented to add and remove features to the map, including annotations and polygons. Methods to manipulate and move the camera are presented on the EGMapApi.
  
- An instance of the EegeoMapView is provided to the the caller via the EegeoMapDelegate property of EegeoMapView, when the API is ready and available to use.
+ An instance of the EGMapView is provided to the the caller via the EGMapDelegate property of EGMapView, when the API is ready and available to use.
 */
-@protocol EegeoMapApi<NSObject>
+@protocol EGMapApi<NSObject>
 
 /*!
  @method polygonWithCoordinates
@@ -79,7 +79,7 @@
 
 /*!
  @method selectAnnotation
- @brief Programatically select an EGAnnotation instance that has already been to added the map. Selecting an annotation will deselect the currently selected annotation, if there is one. Deselection and selection handlers in the EegeoMapDelegate will be called.
+ @brief Programatically select an EGAnnotation instance that has already been to added the map. Selecting an annotation will deselect the currently selected annotation, if there is one. Deselection and selection handlers in the EGMapDelegate will be called.
  @param annotation Pointer to EGAnnotation instance, which has previously been added to the map.
  @param animated YES to play the annotation selection animation, NO to snap immediately.
  @return Returns nothing.
@@ -88,7 +88,7 @@
 
 /*!
  @method deselectAnnotation
- @brief Programatically deselect an EGAnnotation instance that has already been to added the map. The deselection handler in the EegeoMapDelegate will be called.
+ @brief Programatically deselect an EGAnnotation instance that has already been to added the map. The deselection handler in the EGMapDelegate will be called.
  @param annotation Pointer to EGAnnotation instance, which has previously been added to the map.
  @param animated YES to play the annotation deselection animation, NO to snap immediately.
  @return Returns nothing.

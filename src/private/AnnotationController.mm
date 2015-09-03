@@ -25,7 +25,7 @@ namespace Eegeo
                                                    Eegeo::Helpers::ITextureFileLoader& textureFileLoader,
                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                    UIView* pView,
-                                                   id<EegeoMapDelegate> pDelegate)
+                                                   id<EGMapDelegate> pDelegate)
         : m_terrainHeightProvider(terrainHeightProvider)
         , m_selectedAnnotation(nil)
         , m_pMapView(pView)
