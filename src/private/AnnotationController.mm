@@ -12,7 +12,6 @@
 #include "TerrainHeightProvider.h"
 #include "LatLongAltitude.h"
 #include "EGImageHelpers.h"
-#import "SMCalloutView.h"
 
 namespace Eegeo
 {
@@ -295,7 +294,7 @@ namespace Eegeo
                 float newX = (screenPos.GetX() + pView.centerOffset.x);
                 float newY = (screenPos.GetY() + pView.centerOffset.y);
 
-                if([pView isKindOfClass:[SMCalloutView class]])
+                if([pView class] == [EGAnnotationView class])
                 {
                     newX = roundf(newX);
                     newY = roundf(newY);
