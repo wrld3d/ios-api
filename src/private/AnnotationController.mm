@@ -52,7 +52,7 @@ namespace Eegeo
                                                                terrainModelModule.GetTerrainHeightProvider(),
                                                                spriteWidthInMetres,
                                                                spriteHeightInMetres,
-                                                               Eegeo::Rendering::LayerIds::PlaceNames,
+                                                               Eegeo::Rendering::LayerIds::AfterAll,
                                                                mapModule.GetEnvironmentFlatteningService(),
                                                                initialScreenProperties,
                                                                false);
