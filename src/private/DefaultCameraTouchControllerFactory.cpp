@@ -7,11 +7,11 @@
 
 namespace Examples
 {
-    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* DefaultCameraTouchControllerFactory::Create()
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* DefaultCameraTouchControllerFactory::Create(const Eegeo::Rendering::ScreenProperties& screenProperties)
     {
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
         
-        Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pTouchController = new Eegeo::Camera::GlobeCamera::GlobeCameraTouchController(touchControllerConfig);
+        Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* pTouchController = new Eegeo::Camera::GlobeCamera::GlobeCameraTouchController(touchControllerConfig, screenProperties);
     
         return pTouchController;
     }
