@@ -18,6 +18,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "ICityThemeRepository.h"
 #include "GlobeCameraControllerConfiguration.h"
+#include "CityThemesModule.h"
 
 @implementation EegeoMapApiImplementation
 {

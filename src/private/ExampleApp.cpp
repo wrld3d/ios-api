@@ -70,8 +70,8 @@ ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
     Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = eegeoWorld.GetTerrainModelModule();
     
     const bool twoFingerPanTiltEnabled = true;
-    const float interestPointLatitudeDegrees = 37.7858f;
-    const float interestPointLongitudeDegrees = -122.401f;
+    const float interestPointLatitudeDegrees = 37.793436f;
+    const float interestPointLongitudeDegrees = -122.398654f;
     const float interestPointAltitudeMeters = 2.7f;
     const float cameraControllerOrientationDegrees = 0.0f;
     const float cameraControllerDistanceFromInterestPointMeters = 1781.0f;
@@ -154,7 +154,7 @@ void ExampleApp::Draw (float dt)
     
     if (m_pLoadingScreen != NULL)
     {
-        m_pLoadingScreen->Draw();
+        //m_pLoadingScreen->Draw();
     }
 }
 
