@@ -20,7 +20,7 @@ Pod::Spec.new do |m|
   m.requires_arc = false
   m.source_files = '**/*.{h,m,mm,cpp}'
   m.public_header_files = "api/public/*.h"
-  m.vendored_library = 'libapps-on-maps-cpp11.a', 'libapps-on-maps-cpp11-sim.a', 'libturbojpeg.a'
+  m.vendored_library = 'libapps-on-maps-cpp11.a', 'libapps-on-maps-cpp11-sim.a', 'libturbojpeg.a', 'libuv.a', 'libcurl.a'
 
   m.module_name = 'eeGeo'
   m.frameworks = 'QuartzCore', 'CoreLocation', 'MobileCoreServices', 'SystemConfiguration', 'CFNetwork', 'GLKit', 'OpenGLES', 'UIKit', 'Foundation', 'CoreGraphics', 'CoreData'
