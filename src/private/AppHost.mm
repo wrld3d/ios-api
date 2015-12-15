@@ -6,7 +6,6 @@
 #include "EegeoWorld.h"
 #include "RenderContext.h"
 #include "AppInterface.h"
-#include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
 #include "GlobeCameraController.h"
@@ -23,8 +22,7 @@ using namespace Eegeo::iOS;
 
 AppHost::AppHost(const std::string& apiKey,
                  const Eegeo::Rendering::ScreenProperties& screenProperties)
-    :m_pBlitter(NULL)
-    ,m_pJpegLoader(NULL)
+    :m_pJpegLoader(NULL)
 	,m_piOSLocationService(NULL)
 	,m_pWorld(NULL)
 	,m_iOSInputBoxFactory()
@@ -43,10 +41,6 @@ AppHost::AppHost(const std::string& apiKey,
 
 	Eegeo::EffectHandler::Initialise();
 
-    m_pBlitter->m_isInitialised = false;
-	m_pBlitter = new Eegeo::Blitter(1024 * 128, 1024 * 64, 1024 * 32);
-	m_pBlitter->Initialise();
-
 	const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
     
 	Eegeo::Config::PlatformConfig config = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
@@ -59,7 +53,6 @@ AppHost::AppHost(const std::string& apiKey,
                                      *m_pJpegLoader,
                                      screenProperties,
                                      *m_piOSLocationService,
-                                     *m_pBlitter,
                                      m_iOSNativeUIFactories,
                                      environmentCharacterSet,
                                      config,
@@ -97,9 +90,6 @@ AppHost::~AppHost()
 
 	Eegeo::EffectHandler::Reset();
 	Eegeo::EffectHandler::Shutdown();
-	m_pBlitter->Shutdown();
-	delete m_pBlitter;
-	m_pBlitter = NULL;
 }
 
 void AppHost::UnbindInputProvider()
