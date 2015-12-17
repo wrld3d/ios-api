@@ -11,7 +11,6 @@
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
 #include "TouchEventWrapper.h"
-#include "Blitter.h"
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
 #include "Modules.h"
@@ -55,7 +54,6 @@ public:
     
 private:
     
-	Eegeo::Blitter* m_pBlitter;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
 	Eegeo::iOS::iOSLocationService* m_piOSLocationService;
 	Eegeo::EegeoWorld* m_pWorld;
