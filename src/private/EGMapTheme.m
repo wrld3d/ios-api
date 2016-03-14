@@ -35,7 +35,7 @@
          case EGMapThemeWeatherRainy:
              return @"Rainy";
          case EGMapThemeWeatherSnow:
-             return @"Snow";
+             return @"Snowy";
          default:
              [NSException raise:NSGenericException format:@"Unexpected weather"];
      }
