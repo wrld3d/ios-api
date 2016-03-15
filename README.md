@@ -51,6 +51,7 @@ The following step by step guide details the process for contributing to the iOS
     ```
 * Build the example app [as normal](https://github.com/eegeo/ios-api-example#getting-started).
 * Drag the ios-api and the eeGeo SDK into the Xcode workspace.
+    ![Dragging in the ios-api and SDK](http://cdn2.eegeo.com/wp-content/uploads/2016/03/DraggingSources.gif)
 * Add both to the include path of the example app, and add the SDK to the library path.
 
 3. **Make a change**
