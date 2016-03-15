@@ -38,26 +38,26 @@ The following step by step guide details the process for contributing to the iOS
     * Download the latest [eeGeo SDK](http://s3.amazonaws.com/eegeo-static/sdk.package.ios.cpp11.tar.gz).
 
 2. **Setup the project:**
-* Modify the Podfile in the example app to remove the eeGeo pod and add the SMCalloutView pod. It should look like this:
-    ```ruby
-    target :eeGeoApiExample do
-    
-        platform :ios, "7.0"
-    
-        pod 'SMCalloutView', '~> 2.1'
-        pod 'GoogleMaps', '1.10.1'
-        pod 'FPPopover', '1.4.1'
-    end
-    ```
-* Build the example app [as normal](https://github.com/eegeo/ios-api-example#getting-started).
-* Drag the ios-api and the eeGeo SDK into the Xcode workspace.
-    ![Dragging in the ios-api and SDK](http://cdn2.eegeo.com/wp-content/uploads/2016/03/DraggingSources.gif)
-* Add both to the include path of the example app, and add the SDK to the library path.
+    * Modify the Podfile in the example app to remove the eeGeo pod and add the SMCalloutView pod. It should look like this:
+        ```ruby
+        target :eeGeoApiExample do
+        
+            platform :ios, "7.0"
+        
+            pod 'SMCalloutView', '~> 2.1'
+            pod 'GoogleMaps', '1.10.1'
+            pod 'FPPopover', '1.4.1'
+        end
+        ```
+    * Build the example app [as normal](https://github.com/eegeo/ios-api-example#getting-started).
+    * Drag the ios-api and the eeGeo SDK into the Xcode workspace.
+        ![Dragging in the ios-api and SDK](http://cdn2.eegeo.com/wp-content/uploads/2016/03/DraggingSources.gif)
+    * Add both to the include path of the example app, and add the SDK to the library path.
 
 3. **Make a change**
-* Expose additional functionality as required.
-* Submit a pull request to this repo containing the new functionality.
-* Submit a pull request to [ios-api-example](https://github.com/eegeo/ios-api-example) demonstrating the new functionality in the example app.
+    * Expose additional functionality as required.
+    * Submit a pull request to this repo containing the new functionality.
+    * Submit a pull request to [ios-api-example](https://github.com/eegeo/ios-api-example) demonstrating the new functionality in the example app.
 
 ## API Overview 
 
