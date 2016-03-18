@@ -1,4 +1,8 @@
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2015/06/wide_eegeo_logo_hero.jpg)
+<a href="http://www.eegeo.com/">
+    <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
+</a>
+
+# eeGeo 3D Maps iOS API
 
 - [Getting started](#getting-started)
     - [eeGeo API Key](#eegeo-api-key)
@@ -11,8 +15,6 @@
         - [Themes](#themes)
 - [Support](#support)
 - [License](#license)
-
-# eeGeo 3D Maps iOS API
 
 Objective-C iOS bindings for the [eeGeo SDK](http://www.eegeo.com/developers/), a C++11 OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
 
