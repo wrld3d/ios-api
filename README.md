@@ -4,6 +4,8 @@
 
 # eeGeo 3D Maps iOS API
 
+![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+
 - [Support](#support)
 - [Getting started](#getting-started)
     - [eeGeo API Key](#eegeo-api-key)
@@ -16,7 +18,7 @@
         - [Themes](#themes)
 - [License](#license)
 
-Objective-C iOS bindings for the [eeGeo SDK](http://www.eegeo.com/developers/), a C++11 OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
+Objective-C iOS bindings for the [eeGeo SDK](http://www.eegeo.com/developers/), an OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
 
 The eeGeo 3D Maps API is simple to use and can be dropped unobtrusively into an app. It follows common idioms for mapping APIs, so should be familiar to anyone with prior experience in this area.
 
