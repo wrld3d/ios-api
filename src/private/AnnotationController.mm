@@ -18,6 +18,7 @@ namespace Eegeo
     namespace Api
     {
         AnnotationController::AnnotationController(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                                   Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
                                                    Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                                    Eegeo::Modules::Map::MapModule& mapModule,
                                                    const Eegeo::Rendering::ScreenProperties& initialScreenProperties,
@@ -41,21 +42,17 @@ namespace Eegeo
             int spriteWidthInMetres = 32;
             int spriteHeightInMetres = 32;
             
-            m_pPinsModule = Eegeo_NEW(Eegeo::Pins::PinsModule)(m_pinIconsTexture.textureId,
-                                                               *m_pPinIconsTexturePageLayout,
-                                                               renderingModule.GetGlBufferPool(),
-                                                               renderingModule.GetShaderIdGenerator(),
-                                                               renderingModule.GetMaterialIdGenerator(),
-                                                               renderingModule.GetVertexBindingPool(),
-                                                               renderingModule.GetVertexLayoutPool(),
-                                                               renderingModule.GetRenderableFilters(),
-                                                               terrainModelModule.GetTerrainHeightProvider(),
-                                                               spriteWidthInMetres,
-                                                               spriteHeightInMetres,
-                                                               Eegeo::Rendering::LayerIds::AfterAll,
-                                                               mapModule.GetEnvironmentFlatteningService(),
-                                                               initialScreenProperties,
-                                                               false);
+            m_pPinsModule = Eegeo::Pins::PinsModule::Create(
+                                                            renderingModule,
+                                                            platformAbstractionModule,
+                                                            mapModule,
+                                                            m_pinIconsTexture.textureId,
+                                                            *m_pPinIconsTexturePageLayout,
+                                                            Eegeo::Rendering::LayerIds::PlaceNames,
+                                                            spriteWidthInMetres,
+                                                            spriteHeightInMetres,
+                                                            initialScreenProperties,
+                                                            false);
         }
         
         AnnotationController::~AnnotationController()

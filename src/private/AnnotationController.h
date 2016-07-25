@@ -50,6 +50,7 @@ namespace Eegeo
             
         public:
             AnnotationController(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                 Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
                                  Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                  Eegeo::Modules::Map::MapModule& mapModule,
                                  const Eegeo::Rendering::ScreenProperties& initialScreenProperties,

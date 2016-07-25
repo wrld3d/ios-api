@@ -44,15 +44,17 @@
     
     m_pCameraTransitioner = Eegeo_NEW(Eegeo::Api::CameraTransitioner)(m_pApp->GetGlobeCameraController());
     
-    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractioModule = m_pWorld->GetPlatformAbstractionModule();
+    Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule = m_pWorld->GetPlatformAbstractionModule();
     Eegeo::Modules::Core::RenderingModule& renderingModule = m_pWorld->GetRenderingModule();
     Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
     Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
     const Eegeo::Rendering::ScreenProperties& initialScreenProperties = m_pApp->GetScreenPropertiesProvider().GetScreenProperties();
-    Eegeo::Helpers::ITextureFileLoader& textureFileLoader = platformAbstractioModule.GetTextureFileLoader();
+    Eegeo::Helpers::ITextureFileLoader& textureFileLoader = platformAbstractionModule.GetTextureFileLoader();
     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider = m_pWorld->GetMapModule().GetTerrainModelModule().GetTerrainHeightProvider();
     
+    
     m_pAnnotationController = Eegeo_NEW(Eegeo::Api::AnnotationController)(renderingModule,
+                                                                          platformAbstractionModule,
                                                                           terrainModelModule,
                                                                           mapModule,
                                                                           initialScreenProperties,
