@@ -168,4 +168,4 @@ Many other presets are available, allowing developers to create a distinctive an
 
 ## License
 
-The eeGeo 3D Maps API is released under the Eegeo Platform SDK Evaluation license. See [LICENSE.md](https://github.com/eegeo/ios-api/blob/master/LICENSE.md) for details.
+The eeGeo 3D Maps iOS API is released under the Simplified BSD License. See [LICENSE.md](https://github.com/eegeo/ios-api/blob/master/LICENSE.md) for details.
