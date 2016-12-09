@@ -41,12 +41,23 @@ AppHost::AppHost(const std::string& apiKey,
 
 	Eegeo::EffectHandler::Initialise();
 
-	const Eegeo::EnvironmentCharacterSet::Type environmentCharacterSet = Eegeo::EnvironmentCharacterSet::Latin;
-    
 	Eegeo::Config::PlatformConfig config = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
     
     config.OptionsConfig.StartMapModuleAutomatically = false;
     config.OptionsConfig.GenerateCollisionForAllResources = true;
+    
+    config.OptionsConfig.EnableLabels = true;
+    
+    const std::string defaultFont = "opensans_semibold_sdf.fnt";
+    
+    config.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = defaultFont;
+    config.MapLayersConfig.DebugRenderingModuleConfig.DebugFontFilename = defaultFont;
+    
+    config.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
+    config.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
+    config.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
+    config.MapLayersConfig.Interiors.UseLegacyLabels = false;
+    config.MapLayersConfig.Interiors.LabelFontTextureFilename = defaultFont;
     
 	m_pWorld = new Eegeo::EegeoWorld(apiKey,
                                      *m_piOSPlatformAbstractionModule,
@@ -54,7 +65,7 @@ AppHost::AppHost(const std::string& apiKey,
                                      screenProperties,
                                      *m_piOSLocationService,
                                      m_iOSNativeUIFactories,
-                                     environmentCharacterSet,
+                                     Eegeo::EnvironmentCharacterSet::UseFontModuleConfig,
                                      config,
                                      NULL);
     
