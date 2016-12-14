@@ -56,6 +56,8 @@ AppHost::AppHost(const std::string& apiKey,
     config.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
     config.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
     config.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
+    config.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
+    config.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "pin_sheet.json";
     config.MapLayersConfig.Interiors.UseLegacyLabels = false;
     config.MapLayersConfig.Interiors.LabelFontTextureFilename = defaultFont;
     
