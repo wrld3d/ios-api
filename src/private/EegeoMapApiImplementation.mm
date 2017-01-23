@@ -26,7 +26,7 @@
 
 extern "C"
 {
-    // :TODO: adjust eegeo-api in eegeo-mobile so this is no longer needed.
+    // :TODO: JS-specific.  Adjust eegeo-api in eegeo-mobile so this is no longer needed.
     void eegeoMapInitializedCallback(int mapId, Eegeo::Api::EegeoMapApi* pMapApi)
     {
         
@@ -146,13 +146,14 @@ extern "C"
     const double transitionDuration = 0.0;
     const bool hasTransitionDuration = false;
     const double altitude = 0.0;
+    const double tiltDegrees = 0.0;
     
     m_pApi->GetCameraApi().SetView(
         !!animated,
         centerCoordinate.latitude, centerCoordinate.longitude, altitude, modifyPosition,
         distanceMetres, modifyDistance,
         orientationDegrees, modifyHeading,
-        0.0, modifyTilt,
+        tiltDegrees, modifyTilt,
         transitionDuration, hasTransitionDuration,
         jumpIfFarAway, allowInterruption);
 }
@@ -220,6 +221,7 @@ extern "C"
 
 - (void)setMapTheme:(EGMapTheme*)mapTheme
 {
+    // :TODO: compare with historical, branching version to try to work out if there's a need for the different behaviour
     Eegeo::Api::EegeoThemesApi& themesApi = m_pApi->GetThemesApi();
     const float transitionSpeed = 1.0f;
     themesApi.SetTheme([mapTheme.themeName UTF8String]);
