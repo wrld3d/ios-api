@@ -6,8 +6,6 @@ namespace Eegeo
 {
     namespace Api
     {
-        class PrecacheOperationScheduler;
-        class CameraTransitioner;
         class AnnotationController;
     }
 }

@@ -8,56 +8,15 @@
 #include "Space.h"
 #include "IStreamingVolume.h"
 #include "PrecacheService.h"
-#include "PrecacheOperationScheduler.h"
-
-namespace
-{
-    class SphereVolume : public Eegeo::Streaming::IStreamingVolume
-    {
-        Eegeo::dv3 m_ecefCentre;
-        double m_sphereVolumeRadius;
-        std::vector<Eegeo::Streaming::MortonKey> m_interesectedKeys;
-        
-    public:
-        SphereVolume(double lat, double lon, double radius)
-        : m_ecefCentre(Eegeo::Space::LatLong::FromDegrees(lat, lon).ToECEF())
-        , m_sphereVolumeRadius(radius)
-        {
-            
-        }
-        
-        bool IntersectsKey(const Eegeo::Streaming::MortonKey& key,
-                           bool& canRefineIntersectedKey,
-                           double& intersectedNodeDepthSortSignedDistance)
-        {
-            intersectedNodeDepthSortSignedDistance = 0.0;
-            
-            const Eegeo::Space::CubeMap::CubeMapCellInfo cellInfo(key);
-            const Eegeo::dv3 keyEcef = cellInfo.GetFaceCentreECEF();
-            const double distanceBetweenCellBoundingSphereAndVolumeSphere = (m_ecefCentre - keyEcef).Length();
-            const double cellWidth = key.WidthInMetres();
-            const double cellBoundingSphereRadius = std::sqrt((cellWidth*cellWidth) + (cellWidth*cellWidth));
-            
-            if(distanceBetweenCellBoundingSphereAndVolumeSphere < (m_sphereVolumeRadius + cellBoundingSphereRadius))
-            {
-                m_interesectedKeys.push_back(key);
-                canRefineIntersectedKey = true;
-                
-                return true;
-            }
-            
-            canRefineIntersectedKey = false;
-            return false;
-        }
-    };
-}
-
+#include "EegeoPrecacheApi.h"
+#include <unordered_map>
 
 @implementation EGPrecacheOperationImplementation
 {
     Eegeo::Web::PrecacheService* m_pPrecacheService;
-    Eegeo::Api::PrecacheOperationScheduler* m_pPrecacheOperationScheduler;
+    Eegeo::Api::EegeoPrecacheApi* m_pPrecacheApi;
     id<EGMapDelegate> m_pDelegate;
+    Eegeo::Api::TOperationId m_operationId;
     
     Eegeo::dv3 m_ecefCentre;
     double m_radius;
@@ -67,16 +26,57 @@ namespace
     BOOL m_started;
 }
 
+namespace
+{
+    static std::unordered_map<Eegeo::Api::TOperationId, EGPrecacheOperationImplementation*> s_inFlightOperations;
+    static Eegeo::Api::TOperationId s_operationIdGenerator = 0;
+
+    static Eegeo::Api::TOperationId GenerateNextOperationId()
+    {
+        Eegeo::Api::TOperationId result;
+        
+        do
+        {
+            result = s_operationIdGenerator++;
+        }
+        while (s_inFlightOperations.find(result) != s_inFlightOperations.end());
+        
+        return result;
+    }
+
+    static void OnOperationCompleted(Eegeo::Api::TOperationId operation)
+    {
+        auto it = s_inFlightOperations.find(operation);
+        
+        Eegeo_ASSERT(it != s_inFlightOperations.end());
+        
+        it->second->m_inFlight = NO;
+        [it->second triggerDelegateCompletionCallback];
+        s_inFlightOperations.erase(it);
+    }
+
+    static void OnOperationCancelled(Eegeo::Api::TOperationId operation)
+    {
+        const auto& it = s_inFlightOperations.find(operation);
+        
+        Eegeo_ASSERT(it != s_inFlightOperations.end());
+        
+        [it->second cancel];
+        s_inFlightOperations.erase(it);
+    }
+}
+
 - (id)initWithPrecacheService:(Eegeo::Web::PrecacheService&)precacheService
-                    scheduler:(Eegeo::Api::PrecacheOperationScheduler&)precacheOperationScheduler
+                          api:(Eegeo::Api::EegeoPrecacheApi&)api
                        center:(const Eegeo::dv3&)ecefCentre
                        radius:(double)radius
                      delegate:(id<EGMapDelegate>)delegate;
 {
     m_pPrecacheService = &precacheService;
-    m_pPrecacheOperationScheduler = &precacheOperationScheduler;
+    m_pPrecacheApi = &api;
     m_pDelegate = delegate;
     
+    m_operationId = GenerateNextOperationId();
     m_ecefCentre = ecefCentre;
     m_radius = radius;
     m_cancelled = NO;
@@ -86,29 +86,19 @@ namespace
     return self;
 }
 
-- (BOOL)tryStart
+- (void)start
 {
     Eegeo_ASSERT(!m_cancelled);
     
-    if(m_pPrecacheService->IsCancelling())
-    {
-        return NO;
-    }
+    m_pPrecacheApi->BeginPrecacheOperation(m_operationId,
+                                           Eegeo::Space::LatLongAltitude::FromECEF(m_ecefCentre),
+                                           m_radius,
+                                           OnOperationCompleted,
+                                           OnOperationCancelled);
     
-    Eegeo_ASSERT(!m_pPrecacheService->CurrentlyPrecaching());
-
-    Eegeo::Space::LatLong ll(Eegeo::Space::LatLong::FromECEF(m_ecefCentre));
-    
-    SphereVolume volume(ll.GetLatitudeInDegrees(),
-                        ll.GetLongitudeInDegrees(),
-                        m_radius);
-    
-    m_pPrecacheService->Precache(volume);
-    
+    s_inFlightOperations[m_operationId] = self;
     m_inFlight = YES;
     m_started = YES;
-    
-    return YES;
 }
 
 - (BOOL)inFlight
@@ -124,12 +114,10 @@ namespace
         
         if(m_inFlight)
         {
-            m_pPrecacheService->CancelPrecaching();
+            m_pPrecacheApi->CancelPrecacheOperation(m_operationId);
         }
         
         m_inFlight = NO;
-        
-        m_pPrecacheOperationScheduler->RemoveFromScheduler(*self);
         
         [self triggerDelegateCompletionCallback];
     }
@@ -142,21 +130,12 @@ namespace
 
 - (int)percentComplete
 {
-    if(m_cancelled)
+    if([self completed])
     {
         return 100;
     }
     
-    return static_cast<int>(m_pPrecacheService->PercentCompleted());
-}
-
-- (void)update
-{
-    if(m_inFlight && !m_pPrecacheService->CurrentlyPrecaching())
-    {
-        m_inFlight = NO;
-        [self triggerDelegateCompletionCallback];
-    }
+    return m_started ? static_cast<int>(m_pPrecacheService->PercentCompleted()) : 0;
 }
 
 - (BOOL)completed

@@ -8,7 +8,6 @@
 #include "AppInterface.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
-#include "GlobeCameraController.h"
 #include "RenderCamera.h"
 #include "CameraHelpers.h"
 #include "PlatformConfig.h"
