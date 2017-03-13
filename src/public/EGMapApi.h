@@ -64,6 +64,13 @@
                    animated:(BOOL)animated;
 
 /*!
+ @method getCenterCoordinate
+ @brief Get the current focus location of the map
+ @return Returns the WGS84 sea-level coordinate of the current look-at location of the camera .
+ */
+- (CLLocationCoordinate2D)getCenterCoordinate;
+
+/*!
  @method addAnnotation
  @brief Add an EGAnnotation instance from the map.
  @param annotation Pointer to EGAnnotation instance.

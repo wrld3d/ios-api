@@ -158,6 +158,17 @@ extern "C"
         jumpIfFarAway, allowInterruption);
 }
 
+- (CLLocationCoordinate2D)getCenterCoordinate
+{
+    const Eegeo::dv3& interestPointEcef = m_pApp->GetGlobeCameraController().GetEcefInterestPoint();
+    
+    Eegeo::Space::LatLongAltitude interestPoint = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
+    
+    CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake(interestPoint.GetLatitudeInDegrees(), interestPoint.GetLongitudeInDegrees());
+    
+    return centerCoord;
+}
+
 - (void)addAnnotation:(id<EGAnnotation>)annotation
 {
     m_pAnnotationController->InsertAnnotation(annotation);
