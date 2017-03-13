@@ -10,8 +10,6 @@
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "RegularTexturePageLayout.h"
-#include "CameraTransitioner.h"
-#include "PrecacheOperationScheduler.h"
 #include "AnnotationController.h"
 #include "ICityThemesService.h"
 #include "ICityThemesUpdater.h"
@@ -20,19 +18,34 @@
 #include "GlobeCameraControllerConfiguration.h"
 #include "CityThemesModule.h"
 
+#include "EegeoGeofenceApi.h"
+#include "EegeoCameraApi.h"
+#include "EegeoAnnotationsApi.h"
+#include "EegeoPrecacheApi.h"
+#include "EegeoThemesApi.h"
+
+extern "C"
+{
+    // :TODO: JS-specific.  Adjust eegeo-api in eegeo-mobile so this is no longer needed.
+    void eegeoMapInitializedCallback(int mapId, Eegeo::Api::EegeoMapApi* pMapApi)
+    {
+        
+    }
+}
+
 @implementation EegeoMapApiImplementation
 {
     Eegeo::EegeoWorld* m_pWorld;
     ExampleApp* m_pApp;
     id<EGMapDelegate> m_delegate;
-
-    Eegeo::Api::CameraTransitioner* m_pCameraTransitioner;
-    Eegeo::Api::PrecacheOperationScheduler m_precacheOperationScheduler;
+    Eegeo::Api::EegeoMapApi* m_pApi;
+    Eegeo::Api::TGeofenceId m_geofenceIdGenerator;
     Eegeo::Api::AnnotationController* m_pAnnotationController;
 }
 
 @synthesize selectedAnnotations = _selectedAnnotations;
 
+// :TODO: reconsider this wiring, feels a bit backwards for the API to depend on the App
 - (id)initWithWorld:(Eegeo::EegeoWorld&)world
                 app:(ExampleApp&)app
            delegate:(id<EGMapDelegate>)delegate
@@ -41,8 +54,8 @@
     m_pWorld = &world;
     m_pApp = &app;
     m_delegate = delegate;
-    
-    m_pCameraTransitioner = Eegeo_NEW(Eegeo::Api::CameraTransitioner)(m_pApp->GetGlobeCameraController());
+    m_pApi = &app.GetApi();
+    m_geofenceIdGenerator = 0;
     
     Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule = m_pWorld->GetPlatformAbstractionModule();
     Eegeo::Modules::Core::RenderingModule& renderingModule = m_pWorld->GetRenderingModule();
@@ -51,7 +64,6 @@
     const Eegeo::Rendering::ScreenProperties& initialScreenProperties = m_pApp->GetScreenPropertiesProvider().GetScreenProperties();
     Eegeo::Helpers::ITextureFileLoader& textureFileLoader = platformAbstractionModule.GetTextureFileLoader();
     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider = m_pWorld->GetMapModule().GetTerrainModelModule().GetTerrainHeightProvider();
-    
     
     m_pAnnotationController = Eegeo_NEW(Eegeo::Api::AnnotationController)(renderingModule,
                                                                           platformAbstractionModule,
@@ -62,26 +74,18 @@
                                                                           terrainHeightProvider,
                                                                           view,
                                                                           delegate);
-        
+    
     return self;
 }
 
 - (void)teardown
 {
-    Eegeo_DELETE(m_pCameraTransitioner);
     Eegeo_DELETE(m_pAnnotationController);
 }
 
 - (void)update:(float)dt
 {
-    if(m_pCameraTransitioner->IsTransitioning())
-    {
-        m_pCameraTransitioner->Update(dt);
-    }
-    
     Eegeo::Camera::RenderCamera renderCamera(m_pApp->GetGlobeCameraController().GetRenderCamera());
-    
-    m_precacheOperationScheduler.Update();
     m_pAnnotationController->Update(dt, renderCamera);
 }
 
@@ -101,14 +105,10 @@
         const CLLocationCoordinate2D coord = coords[i];
         verts.push_back(Eegeo::Space::LatLongAltitude::FromDegrees(coord.latitude, coord.longitude, 0.0));
     }
-
-    auto* pModel = Eegeo::Data::Geofencing::GeofenceModel::GeofenceBuilder(
-            "test",
-            Eegeo::v4(1.0f, 0.0f, 0.0f, 0.5f),
-            verts)
-            .Build();
-
-    EGPolygonImplementation* wrapper = [[[EGPolygonImplementation alloc] initWithGeofence:*pModel] autorelease];
+    
+    Eegeo::Api::EegeoGeofenceApi& api = m_pApi->GetGeofenceApi();
+    Eegeo::v4 color(1.0f, 0.0f, 0.0f, 0.5f);
+    EGPolygonImplementation* wrapper = [[[EGPolygonImplementation alloc] initWithVerts:verts api:api color:color] autorelease];
 
     return wrapper;
 }
@@ -118,11 +118,7 @@
     if([polygon isKindOfClass:[EGPolygonImplementation class]])
     {
         EGPolygonImplementation* pImpl = (EGPolygonImplementation *)polygon;
-
-        Eegeo::Data::Geofencing::GeofenceController& geofenceController =
-                m_pWorld->GetDataModule().GetGeofenceModule().GetController();
-
-        geofenceController.Add(*pImpl.pGeofenceModel);
+        [pImpl addToScene];
     }
 }
 
@@ -131,11 +127,7 @@
     if([polygon isKindOfClass:[EGPolygonImplementation class]])
     {
         EGPolygonImplementation* pImpl = (EGPolygonImplementation *)polygon;
-
-        Eegeo::Data::Geofencing::GeofenceController& geofenceController =
-                m_pWorld->GetDataModule().GetGeofenceModule().GetController();
-
-        geofenceController.Remove(*pImpl.pGeofenceModel);
+        [pImpl removeFromScene];
     }
 }
 
@@ -145,23 +137,25 @@
          orientationDegrees:(float)orientationDegrees
                    animated:(BOOL)animated
 {
-    Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromDegrees(centerCoordinate.latitude,
-                                                                                        centerCoordinate.longitude,
-                                                                                        0.f);
+    const bool modifyPosition = true;
+    const bool modifyDistance = true;
+    const bool modifyHeading = true;
+    const bool modifyTilt = true;
+    const bool jumpIfFarAway = true;
+    const bool allowInterruption = false;
+    const double transitionDuration = 0.0;
+    const bool hasTransitionDuration = false;
+    const double altitude = 0.0;
+    const double tiltDegrees = 0.0;
     
-    if(!animated)
-    {
-        Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-        Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location.ToECEF(),
-                                                                          orientationDegrees,
-                                                                          cameraInterestBasis);
-        
-        m_pApp->SetCameraView(cameraInterestBasis, distanceMetres);
-    }
-    else
-    {
-        m_pCameraTransitioner->StartTransitionTo(location.ToECEF(), distanceMetres, orientationDegrees, true);
-    }
+    m_pApi->GetCameraApi().SetView(
+        !!animated,
+        centerCoordinate.latitude, centerCoordinate.longitude, altitude, modifyPosition,
+        distanceMetres, modifyDistance,
+        orientationDegrees, modifyHeading,
+        tiltDegrees, modifyTilt,
+        transitionDuration, hasTransitionDuration,
+        jumpIfFarAway, allowInterruption);
 }
 
 - (CLLocationCoordinate2D)getCenterCoordinate
@@ -209,31 +203,14 @@
 
 - (void)setVisibleCoordinateBounds:(EGCoordinateBounds)bounds animated:(BOOL)animated
 {
-    Eegeo::dv3 ne = Eegeo::Space::LatLong::FromDegrees(bounds.ne.latitude, bounds.ne.longitude).ToECEF();
-    Eegeo::dv3 sw = Eegeo::Space::LatLong::FromDegrees(bounds.sw.latitude, bounds.sw.longitude).ToECEF();
-    Eegeo::dv3 center = (ne + sw) / 2.0;
-    double boundingRadius = (ne - sw).Length() / 2.0;
+    const bool allowInterruption = false;
     
-    const float altitude = [self computeAltitudeForRadius:boundingRadius];
-    
-    if(animated)
-    {
-        m_pCameraTransitioner->StartTransitionTo(center, altitude, 0.f, 45.f, true);
-    }
-    else
-    {
-        const float currentBearingRads = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(center,
-                                                                                                 m_pApp->GetGlobeCameraController().GetInterestBasis().GetForward());
-        
-        Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-        Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(center,
-                                                                          Eegeo::Math::Rad2Deg(currentBearingRads),
-                                                                          cameraInterestBasis);
-        
-        m_pApp->SetCameraView(cameraInterestBasis, altitude, 45.f);
-    }
+    m_pApi->GetCameraApi().SetViewToBounds(
+                         Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0),
+                         Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0),
+                         !!animated,
+                         allowInterruption);
 }
-
 
 - (id<EGPrecacheOperation>)precacheMapDataInCoordinateBounds:(EGCoordinateBounds)bounds
 {
@@ -241,45 +218,25 @@
     Eegeo::dv3 sw = Eegeo::Space::LatLong::FromDegrees(bounds.sw.latitude, bounds.sw.longitude).ToECEF();
     Eegeo::dv3 ecefCenter = (ne + sw) / 2.0;
     double boundingRadius = fmax((ecefCenter - ne).Length(), (ecefCenter - sw).Length());
-
     
     EGPrecacheOperationImplementation* pEGPrecacheOperation = [[[EGPrecacheOperationImplementation alloc]
                                                                 initWithPrecacheService:m_pWorld->GetStreamingModule().GetPrecachingService()
-                                                                scheduler:m_precacheOperationScheduler
+                                                                api:m_pApi->GetPrecacheApi()
                                                                 center:ecefCenter
                                                                 radius:boundingRadius
                                                                 delegate:m_delegate] autorelease];
+    [pEGPrecacheOperation start];
     
-    m_precacheOperationScheduler.EnqueuePrecacheOperation(*pEGPrecacheOperation);
     return pEGPrecacheOperation;
 }
 
 - (void)setMapTheme:(EGMapTheme*)mapTheme
 {
-    Eegeo::Resources::CityThemes::ICityThemesService& cityThemesService = m_pWorld->GetCityThemesModule().GetCityThemesService();
-    Eegeo::Resources::CityThemes::ICityThemesUpdater& cityThemesUpdater = m_pWorld->GetCityThemesModule().GetCityThemesUpdater();
-
-    if(mapTheme.enableThemeByLocation)
-    {
-        // bit shonky: semantic meaning of themeName changes based on whether it is an explicitly
-        // named theme, or a location-based name of a season. Underlying C++ API needs some love.
-        cityThemesUpdater.SetEnabled(true);
-        cityThemesUpdater.SetThemeMustContain([mapTheme.themeName UTF8String]);
-        cityThemesService.RequestTransitionToState([mapTheme.themeStateName UTF8String], 1.0f);
-    }
-    else
-    {
-        Eegeo::Resources::CityThemes::ICityThemeRepository& cityThemesRepository = m_pWorld->GetCityThemesModule().GetCityThemesRepository();
-        const Eegeo::Resources::CityThemes::CityThemeData* pTheme = cityThemesRepository.GetThemeDataByName([mapTheme.themeName UTF8String]);
-
-        if(pTheme != NULL)
-        {
-            cityThemesUpdater.SetEnabled(false);
-            cityThemesService.SetSpecificTheme(*pTheme);
-            std::string state = [mapTheme.themeStateName UTF8String];
-            cityThemesService.RequestTransitionToState(state, 1.0f);
-        }
-    }
+    // :TODO: compare with historical, branching version to try to work out if there's a need for the different behaviour
+    Eegeo::Api::EegeoThemesApi& themesApi = m_pApi->GetThemesApi();
+    const float transitionSpeed = 1.0f;
+    themesApi.SetTheme([mapTheme.themeName UTF8String]);
+    themesApi.SetState([mapTheme.themeStateName UTF8String], transitionSpeed);
 }
 
 - (void)setEnvironmentFlatten:(BOOL)flatten
@@ -321,55 +278,55 @@
 
 - (BOOL)Event_TouchRotate:(const AppInterface::RotateData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchRotate_Start:(const AppInterface::RotateData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchRotate_End:(const AppInterface::RotateData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPinch:(const AppInterface::PinchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPinch_Start:(const AppInterface::PinchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPinch_End:(const AppInterface::PinchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPan:(const AppInterface::PanData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPan_Start:(const AppInterface::PanData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchPan_End:(const AppInterface::PanData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
@@ -378,31 +335,31 @@
     Eegeo::v2 screenTapPoint = Eegeo::v2(data.point.GetX(), data.point.GetY());
     m_pAnnotationController->HandleTap(screenTapPoint);
     
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchDoubleTap:(const AppInterface::TapData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchDown:(const AppInterface::TouchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchMove:(const AppInterface::TouchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 
 - (BOOL)Event_TouchUp:(const AppInterface::TouchData&)data
 {
-    bool eventConsumed = m_pCameraTransitioner->IsTransitioning();
+    bool eventConsumed = m_pApi->GetCameraApi().IsTransitioning();
     return eventConsumed;
 }
 

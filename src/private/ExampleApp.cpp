@@ -5,16 +5,21 @@
 #include "RenderCamera.h"
 #include "GlobeCameraController.h"
 #include "GlobeCameraInterestPointProvider.h"
-#include "GlobeCameraController.h"
 #include "CameraHelpers.h"
 #include "LatLongAltitude.h"
 #include "ScreenProperties.h"
+#include "InteriorsCameraController.h"
+#include "NavigationService.h"
+#include "GpsGlobeCameraControllerFactory.h"
+#include "InteriorsCameraControllerFactory.h"
+#include "EegeoMapApiFactory.h"
+#include "EegeoSpacesApi.h"
+#include "EegeoCameraApi.h"
 
 // Modules
 #include "MapModule.h"
 #include "TerrainModelModule.h"
 #include "CameraFrustumStreamingVolume.h"
-
 
 namespace
 {
@@ -30,7 +35,6 @@ namespace
         loadingScreenConfig.backgroundColor = Eegeo::v4(132.f/255.f, 203.f/255.f, 235.f/255.f, 1.f);
         loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
         loadingScreenConfig.layout = Eegeo::Rendering::LoadingScreenLayout::Centred;
-       
         
         Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
             "SplashScreen-1024x768.png",
@@ -47,58 +51,123 @@ namespace
 }
 
 
+void ExampleApp::CreateInteriorsCameraController()
+{
+    Eegeo::Modules::Map::MapModule& mapModule = World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    
+    Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory globeCameraControllerFactory(
+            mapModule.GetTerrainModelModule().GetTerrainHeightProvider(),
+            mapModule.GetEnvironmentFlatteningService(),
+            mapModule.GetResourceCeilingProvider());
+    
+    const Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig();
+    const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
+    const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
+    
+    const bool interiorsAffectedByFlattening = false;
+    
+    Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(                                                                            interiorsCameraConfig,
+        globeCameraConfig,
+        globeCameraTouchConfig,
+        globeCameraControllerFactory,
+        m_screenPropertiesProvider.GetScreenProperties(),
+        interiorsPresentationModule.GetInteriorInteractionModel(),
+        interiorsPresentationModule.GetInteriorViewModel(),
+        mapModule.GetEnvironmentFlatteningService(),
+        interiorsAffectedByFlattening);
+    
+    m_pInteriorTouchController = interiorsCameraControllerFactory.CreateTouchController();
+    m_pInteriorGlobeCameraController = interiorsCameraControllerFactory.CreateInteriorGlobeCameraController(*m_pInteriorTouchController);
+    m_pInteriorsCameraController = interiorsCameraControllerFactory.CreateInteriorsCameraController(*m_pInteriorTouchController, *m_pInteriorGlobeCameraController);
+}
 
+void ExampleApp::DeleteInteriorsCameraController()
+{
+    Eegeo_DELETE m_pInteriorsCameraController;
+    Eegeo_DELETE m_pInteriorGlobeCameraController;
+    Eegeo_DELETE m_pInteriorTouchController;
+}
+
+void ExampleApp::CreateGpsGlobeCameraController()
+{
+    Eegeo::Modules::Map::MapModule& mapModule = World().GetMapModule();
+    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider = World().GetTerrainModelModule().GetTerrainHeightProvider();
+    
+    m_pNavigationService = Eegeo_NEW(Eegeo::Location::NavigationService)(&World().GetLocationService(), &terrainHeightProvider);
+    
+    Eegeo::Camera::GlobeCamera::GpsGlobeCameraControllerFactory gpsGlobeCameraControllerFactory(terrainHeightProvider,
+                                                                                                mapModule.GetEnvironmentFlatteningService(),
+                                                                                                mapModule.GetResourceCeilingProvider(),
+                                                                                                *m_pNavigationService);
+    
+    const bool useLowSpecSettings = false;
+
+    m_pGpsGlobeCameraController = gpsGlobeCameraControllerFactory.Create(
+        useLowSpecSettings,
+        m_screenPropertiesProvider.GetScreenProperties());
+    
+    m_pCameraTouchController = &m_pGpsGlobeCameraController->GetTouchController();
+    
+}
+
+void ExampleApp::DeleteGpsGlobeCameraController()
+{
+    Eegeo_DELETE m_pGpsGlobeCameraController;
+    Eegeo_DELETE m_pNavigationService;
+}
 
 ExampleApp::ExampleApp(Eegeo::EegeoWorld* pWorld,
                        const Eegeo::Rendering::ScreenProperties& screenProperties)
-	: m_pCameraControllerFactory(NULL)
-	, m_pCameraTouchController(NULL)
+	: m_pCameraTouchController(NULL)
 	, m_pWorld(pWorld)
     , m_pLoadingScreen(NULL)
     , m_screenPropertiesProvider(screenProperties)
 {
-	Eegeo::EegeoWorld& eegeoWorld = *pWorld;
-
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
-
-	m_pCameraTouchController = new Eegeo::Camera::GlobeCamera::GlobeCameraTouchController(touchControllerConfig,
-                                                                                          m_screenPropertiesProvider.GetScreenProperties());
-
-	const bool useLowSpecSettings = false;
-	Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
-
-    Eegeo::Modules::Map::MapModule& mapModule = eegeoWorld.GetMapModule();
-    Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = eegeoWorld.GetTerrainModelModule();
+    Eegeo::EegeoWorld& eegeoWorld = *m_pWorld;
+	m_pLoadingScreen = CreateLoadingScreen(screenProperties, eegeoWorld.GetRenderingModule(), eegeoWorld.GetPlatformAbstractionModule());
     
-    const bool twoFingerPanTiltEnabled = true;
-    const float interestPointLatitudeDegrees = 37.793436f;
-    const float interestPointLongitudeDegrees = -122.398654f;
-    const float interestPointAltitudeMeters = 2.7f;
-    const float cameraControllerOrientationDegrees = 0.0f;
-    const float cameraControllerDistanceFromInterestPointMeters = 1781.0f;
+    // :TODO: consider whether camera creation should be moved to the API implementation & ExampleApp should depend on the API
+    CreateGpsGlobeCameraController();
+    CreateInteriorsCameraController();
     
-    m_pCameraControllerFactory = new Examples::DefaultCameraControllerFactory(
-                                                                    terrainModelModule,
-                                                                    mapModule,
-                                                                    *m_pCameraTouchController,
-                                                                    m_screenPropertiesProvider,
-                                                                    globeCameraControllerConfig,
-                                                                    twoFingerPanTiltEnabled,
-                                                                    interestPointLatitudeDegrees,
-                                                                    interestPointLongitudeDegrees,
-                                                                    interestPointAltitudeMeters,
-                                                                    cameraControllerOrientationDegrees,
-                                                                    cameraControllerDistanceFromInterestPointMeters);
+    const int mapId = 0;
+    m_pDebugCommandBuffer = new Eegeo::Debug::Commands::CommandBuffer();
+    m_pMapApi = Eegeo::Api::EegeoMapApiFactory::CreateMapApi(mapId,
+                                                             eegeoWorld,
+                                                             m_pGpsGlobeCameraController->GetRenderCamera(),
+                                                             *m_pGpsGlobeCameraController,
+                                                             *m_pInteriorsCameraController,
+                                                             *m_pDebugCommandBuffer);
     
-    m_pLoadingScreen = CreateLoadingScreen(screenProperties, eegeoWorld.GetRenderingModule(), eegeoWorld.GetPlatformAbstractionModule());
+    m_pMapApi->NotifyInitialized();
     
-    m_pCameraController = m_pCameraControllerFactory->Create();
+    const double interestPointLatitudeDegrees = 37.793436;
+    const double interestPointLongitudeDegrees = -122.398654;
+    const double interestPointAltitudeMeters = 2.7;
+    const double cameraControllerOrientationDegrees = 0.0;
+    const double cameraControllerDistanceFromInterestPointMeters = 1781.0;
+    const double tiltDegrees = 45.0;
+    const double transitionDuration = 0.0;
+    
+    const bool animate = false;
+    const bool modifyPosition = true;
+    const bool modifyDistance = true;
+    const bool modifyHeading = true;
+    const bool modifyTilt = true;
+    const bool hasTransitionDuration = false;
+    const bool jumpIfFarAway = true;
+    const bool allowInterruption = false;
+    
+    m_pMapApi->GetCameraApi().SetView(animate, interestPointLatitudeDegrees, interestPointLongitudeDegrees, interestPointAltitudeMeters, modifyPosition, cameraControllerDistanceFromInterestPointMeters, modifyDistance, cameraControllerOrientationDegrees, modifyHeading, tiltDegrees, modifyTilt, transitionDuration, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
 ExampleApp::~ExampleApp()
 {
-    delete m_pCameraController;
-	delete m_pCameraTouchController;
+    DeleteInteriorsCameraController();
+    DeleteGpsGlobeCameraController();
+
+    delete m_pDebugCommandBuffer;
     delete m_pLoadingScreen;
 }
 
@@ -118,12 +187,14 @@ void ExampleApp::Update (float dt)
 {
 	Eegeo::EegeoWorld& eegeoWorld = World();
     
-    m_pCameraTouchController->Update(dt);
+
+    m_pGpsGlobeCameraController->Update(dt);
 
 	eegeoWorld.EarlyUpdate(dt);
-    m_pCameraController->Update(dt);
     
-    Eegeo::Camera::CameraState cameraState(m_pCameraController->GetCameraState());
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController = GetGlobeCameraController();
+    
+    Eegeo::Camera::CameraState cameraState(cameraController.GetCameraState());
     Eegeo::Streaming::IStreamingVolume& streamingVolume(World().GetMapModule().GetStreamingVolume());
     
     Eegeo::EegeoUpdateParameters updateParameters(dt,
@@ -136,14 +207,16 @@ void ExampleApp::Update (float dt)
     
 	eegeoWorld.Update(updateParameters);
     
+    m_pMapApi->OnUpdate(dt);
+    
     UpdateLoadingScreen(dt);
 }
 
 void ExampleApp::Draw (float dt)
 {
     Eegeo::EegeoWorld& eegeoWorld = World();
-    
-    Eegeo::Camera::CameraState cameraState(m_pCameraController->GetCameraState());
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& cameraController = GetGlobeCameraController();
+    Eegeo::Camera::CameraState cameraState(cameraController.GetCameraState());
     
     Eegeo::EegeoDrawParameters drawParameters(cameraState.LocationEcef(),
                                               cameraState.InterestPointEcef(),
@@ -157,12 +230,15 @@ void ExampleApp::Draw (float dt)
     {
         //m_pLoadingScreen->Draw();
     }
+    
+    m_pMapApi->GetSpacesApi().UpdateRenderCamera(cameraController.GetRenderCamera());
+    m_pMapApi->OnDraw(dt);
 }
 
 void ExampleApp::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
     m_screenPropertiesProvider.NotifyScreenPropertiesChanged(screenProperties);
-    m_pCameraController->UpdateScreenProperties(screenProperties);
+    GetGlobeCameraController().UpdateScreenProperties(screenProperties);
     
     if (m_pLoadingScreen != NULL)
     {
@@ -173,13 +249,13 @@ void ExampleApp::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenPro
 void ExampleApp::SetCameraView(const Eegeo::Space::EcefTangentBasis& cameraInterestBasis, float distanceToInterest)
 {
     Eegeo_ASSERT(!World().Initialising());
-    m_pCameraController->SetView(cameraInterestBasis, distanceToInterest);
+    GetGlobeCameraController().SetView(cameraInterestBasis, distanceToInterest);
 }
 
 void ExampleApp::SetCameraView(const Eegeo::Space::EcefTangentBasis& cameraInterestBasis, float distanceToInterest, float tiltAngleDegrees)
 {
     SetCameraView(cameraInterestBasis, distanceToInterest);
-    m_pCameraController->ApplyTilt(tiltAngleDegrees);
+    GetGlobeCameraController().ApplyTilt(tiltAngleDegrees);
 }
 
 void ExampleApp::UpdateLoadingScreen(float dt)
@@ -253,7 +329,7 @@ void ExampleApp::Event_TouchPinch_Start(const AppInterface::PinchData& data)
 		return;
 	}
     
-	m_pCameraTouchController->Event_TouchPinch_Start(data);
+    m_pCameraTouchController->Event_TouchPinch_Start(data);
 }
 
 void ExampleApp::Event_TouchPinch_End(const AppInterface::PinchData& data)

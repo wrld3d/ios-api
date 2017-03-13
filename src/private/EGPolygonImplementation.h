@@ -5,8 +5,13 @@
 #import <Foundation/Foundation.h>
 #import "EGPolygon.h"
 #include "GeofenceModel.h"
+#include "EegeoGeofenceApi.h"
+#include <vector>
 
 @interface EGPolygonImplementation : NSObject<EGPolygon>
-    @property (nonatomic, readwrite) Eegeo::Data::Geofencing::GeofenceModel* pGeofenceModel;
-    - (instancetype)initWithGeofence:(Eegeo::Data::Geofencing::GeofenceModel&)geofence;
+    - (instancetype)initWithVerts:(const std::vector<Eegeo::Space::LatLongAltitude>&)verts
+                              api:(Eegeo::Api::EegeoGeofenceApi&)api
+                            color:(const Eegeo::v4&)color;
+    - (void) addToScene;
+    - (void) removeFromScene;
 @end

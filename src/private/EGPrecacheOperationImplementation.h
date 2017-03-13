@@ -7,19 +7,16 @@
 #import "EGMapDelegate.h"
 #include "Web.h"
 #include "VectorMath.h"
+#include "EegeoApi.h"
 
 @interface EGPrecacheOperationImplementation : NSObject<EGPrecacheOperation>
 
 - (id)initWithPrecacheService:(Eegeo::Web::PrecacheService&)precacheService
-                    scheduler:(Eegeo::Api::PrecacheOperationScheduler&)precacheOperationScheduler
+                          api:(Eegeo::Api::EegeoPrecacheApi&)api
                        center:(const Eegeo::dv3&)ecefCentre
                        radius:(double)radius
                      delegate:(id<EGMapDelegate>)delegate;
-
-- (BOOL)tryStart;
-
+- (void)start;
 - (BOOL)inFlight;
-
-- (void)update;
 
 @end

@@ -6,8 +6,6 @@
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "RegularTexturePageLayout.h"
-#include "CameraTransitioner.h"
-#include "PrecacheOperationScheduler.h"
 #include "AnnotationController.h"
 #include "TerrainHeightProvider.h"
 #include "LatLongAltitude.h"
@@ -288,8 +286,8 @@ namespace Eegeo
                 
                 screenPos /= static_cast<float>([UIScreen mainScreen].scale);
                 
-                float newX = (screenPos.GetX() + pView.centerOffset.x);
-                float newY = (screenPos.GetY() + pView.centerOffset.y);
+                float newX = screenPos.GetX() + static_cast<float>(pView.centerOffset.x);
+                float newY = screenPos.GetY() + static_cast<float>(pView.centerOffset.y);
 
                 if([pView class] == [EGAnnotationView class])
                 {

@@ -8,17 +8,28 @@
 #include "DefaultCameraControllerFactory.h"
 #include "AppInterface.h"
 #include "GlobeCameraController.h"
+#include "EegeoMapApi.h"
+#include "Location.h"
+#include "GpsGlobeCameraController.h"
+#include "Commands.h"
 
 class ExampleApp : private Eegeo::NonCopyable
 {
 private:
-    Examples::DefaultCameraControllerFactory* m_pCameraControllerFactory;
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pCameraTouchController;
-    Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pCameraController;
+    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGpsGlobeCameraController;
+    Eegeo::Location::NavigationService* m_pNavigationService;
+    
+    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pInteriorTouchController;
+    Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pInteriorGlobeCameraController;
+    Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
+    
+    Eegeo::Debug::Commands::CommandBuffer* m_pDebugCommandBuffer;
+    
+	Eegeo::ITouchController* m_pCameraTouchController;
 	Eegeo::EegeoWorld* m_pWorld;
     Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
     Examples::ScreenPropertiesProvider m_screenPropertiesProvider;
-    
+    Eegeo::Api::EegeoMapApi* m_pMapApi;
 
 	Eegeo::EegeoWorld& World()
 	{
@@ -26,6 +37,10 @@ private:
 	}
     
     void UpdateLoadingScreen(float dt);
+    void CreateInteriorsCameraController();
+    void DeleteInteriorsCameraController();
+    void CreateGpsGlobeCameraController();
+    void DeleteGpsGlobeCameraController();
 
 public:
 	ExampleApp(Eegeo::EegeoWorld* pWorld,
@@ -43,20 +58,20 @@ public:
     
     void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
     
-    Eegeo::Camera::GlobeCamera::GlobeCameraController& GetGlobeCameraController() const { return *m_pCameraController; }
+    Eegeo::Camera::GlobeCamera::GlobeCameraController& GetGlobeCameraController() const { return m_pGpsGlobeCameraController->GetGlobeCameraController(); }
     
     void SetCameraView(const Eegeo::Space::EcefTangentBasis& cameraInterestBasis, float distanceToInterest);
     
     void SetCameraView(const Eegeo::Space::EcefTangentBasis& cameraInterestBasis, float distanceToInterest, float tiltAngleDegrees);
     
-    Examples::DefaultCameraControllerFactory& GetDefaultCameraControllerFactory() const { return *m_pCameraControllerFactory; }
-
-	Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController()
+	Eegeo::ITouchController& GetTouchController()
 	{
 		return *m_pCameraTouchController;
 	}
     
     const Examples::IScreenPropertiesProvider& GetScreenPropertiesProvider() const { return m_screenPropertiesProvider; }
+    
+    Eegeo::Api::EegeoMapApi& GetApi() { return *m_pMapApi; }
 
 	void Event_TouchRotate 			(const AppInterface::RotateData& data);
 	void Event_TouchRotate_Start	(const AppInterface::RotateData& data);
