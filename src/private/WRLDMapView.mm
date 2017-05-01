@@ -378,7 +378,7 @@ const NSUInteger targetFrameInterval = 1;
     Eegeo::Space::LatLong latLong = cameraApi.GetInterestLatLong();
     
     _centerCoordinate = CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
-    
+    _zoomLevel = cameraApi.GetZoomLevel();
     _direction = cameraApi.GetHeadingDegrees();
 }
 
@@ -419,11 +419,9 @@ const NSUInteger targetFrameInterval = 1;
             direction:(CLLocationDirection)direction
              animated:(BOOL)animated
 {
-
-    Eegeo::Api::EegeoMapApi& mapApi = [self getMapApi];
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     
-    //todo helper to transform zoomLevel -> distance
-    double distance = 1000.0;
+    double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
     double altitude = 0.0;
     
     const double transitionDurationSeconds = animated ? 10.0 : 0.0;
@@ -431,7 +429,7 @@ const NSUInteger targetFrameInterval = 1;
     const bool jumpIfFarAway = true;
     const bool allowInterruption = true;
     
-    mapApi.GetCameraApi().SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
+    cameraApi.SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
     
 }
 
