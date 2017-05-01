@@ -360,6 +360,9 @@ const NSUInteger targetFrameInterval = 1;
     //Eegeo_TTY("displayLinkDelta %f, duration = %f", displayLinkDelta, _displayLink.duration);
    
     m_pApiRunner->Update(static_cast<float>(displayLinkDelta));
+    
+    
+    [self _updateViewProperties];
 }
 
 
@@ -367,6 +370,16 @@ const NSUInteger targetFrameInterval = 1;
 {
     Eegeo::Api::EegeoMapApi& mapApi = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoMapApi();
     return mapApi;
+}
+
+- (void)_updateViewProperties
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    Eegeo::Space::LatLong latLong = cameraApi.GetInterestLatLong();
+    
+    _centerCoordinate = CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
+    
+    _direction = cameraApi.GetHeadingDegrees();
 }
 
 #pragma mark == public interface implementation ==
