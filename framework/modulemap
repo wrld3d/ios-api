@@ -1,0 +1,5 @@
+framework module Wrld {
+  umbrella header "Wrld.h"
+  export *
+  module * { export * }
+}
