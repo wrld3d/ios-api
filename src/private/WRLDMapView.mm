@@ -8,6 +8,7 @@
 
 #include "iOSApiHostModule.h"
 #include "EegeoCameraApi.h"
+#include "EegeoIndoorsApi.h"
 #include "EegeoApiHost.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -42,7 +43,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         [self initView];
     }
-    
+
     return self;
 }
 
@@ -52,7 +53,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         [self initView];
     }
-    
+
     return self;
 }
 
@@ -69,75 +70,75 @@ const NSUInteger targetFrameInterval = 1;
     _displayLink = nil;
     _apiGestureDelegate = nil;
     _glkView = nil;
-    
+
     m_pApiRunner = NULL;
 
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppDidBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillTerminate)
                                                  name:UIApplicationWillTerminateNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onDeviceOrientationDidChange)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    
+
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    
-    
+
+
     if ([self isAppBackgrounded])
     {
         return;
     }
 
-    
+
     // don't create if app is being launched into background - we need a GLES context, only get this when applicationDidBecomeActive
     [self createPlatform];
-    
+
     Eegeo_ASSERT(m_pApiRunner != NULL);
-    
-    
+
+
     [self refreshDisplayLink];
-    
+
     const double latitude = 37.7858;
     const double longitude = -122.401;
     const double interestAltitude = 0.0;
     const double distanceToInterest = 1781.0;
     const double bearing = 0.0;
-    
+
 
     Eegeo::Api::EegeoMapApi& mapApi = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoMapApi();
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
-    
+
     mapApi.GetCameraApi().InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, bearing, 0.0, false);
 
-    
+
     apiHost.OnStart();
 
 
 
     // todo - this a test of view delegate. Event needs deferring, ViewController will not have valid ref to this view until after caller returns
-    
+
     if ([self.delegate respondsToSelector:@selector(mapApiCreated:)]) {
         [self.delegate mapApiCreated:self];
     }
-  
+
 }
 
 
@@ -145,28 +146,28 @@ const NSUInteger targetFrameInterval = 1;
 -(void) createPlatform
 {
     Eegeo_ASSERT(![self isAppBackgrounded]);
-    
+
     [self createGLContextAndView];
-    
+
     std::string apiKey = [[WRLDApi apiKey] UTF8String];
-    
+
     NSBundle *frameworkBundle = [NSBundle bundleForClass:[self class]];
     std::string frameworkBundleId = [[frameworkBundle bundleIdentifier] UTF8String];
-    
+
     m_pApiRunner = Eegeo::ApiHost::iOS::iOSApiRunner::Create(apiKey, frameworkBundleId, _glkView);
-    
+
     const Eegeo::Rendering::ScreenProperties& screenProperties = m_pApiRunner->GetDisplayScreenProperties();
-    
+
     _apiGestureDelegate = [[WRLDGestureDelegate alloc] initWith:&(m_pApiRunner->GetEegeoApiHostModule()->GetTouchController())
                                                                       :screenProperties.GetScreenWidth()
                                                                       :screenProperties.GetScreenHeight()
                                                                       :screenProperties.GetPixelScale()
                                ];
-    
+
     [_apiGestureDelegate bind:self];
-    
-    
-    
+
+
+
 }
 
 
@@ -176,7 +177,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         return;
     }
-    
+
     [self resume];
 }
 
@@ -186,7 +187,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         [self createPlatform];
     }
-    
+
     [self resume];
 }
 
@@ -196,7 +197,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         return;
     }
-    
+
     [self pause];
 }
 
@@ -208,7 +209,7 @@ const NSUInteger targetFrameInterval = 1;
 - (void)onDeviceOrientationDidChange
 {
     [self setNeedsLayout];
-    
+
     m_pApiRunner->NotifyDeviceOrientationChanged();
 
 }
@@ -222,39 +223,39 @@ const NSUInteger targetFrameInterval = 1;
 - (void)commonTeardown
 {
     [self refreshDisplayLink];
-    
+
     [_glkView deleteDrawable];
-    
+
     _glkView = nil;
-    
+
     if ([EAGLContext currentContext] == _glContext)
     {
         [EAGLContext setCurrentContext:nil];
     }
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    
+
     Eegeo_DELETE m_pApiRunner;
 }
 
 - (void)resume
 {
     Eegeo_ASSERT(m_pApiRunner != NULL);
-    
+
     if (!m_pApiRunner->IsPaused())
     {
         return;
     }
-    
+
     if ([self isAppBackgrounded])
     {
         return;
     }
-    
+
     _displayLink.paused = NO;
-    
+
 
     m_pApiRunner->Resume();
 }
@@ -262,17 +263,17 @@ const NSUInteger targetFrameInterval = 1;
 - (void)pause
 {
     Eegeo_ASSERT(m_pApiRunner != NULL);
-    
+
     if (m_pApiRunner->IsPaused())
     {
         return;
     }
-    
+
     _displayLink.paused = YES;
-    
+
     [_glkView deleteDrawable];
-    
-    
+
+
     m_pApiRunner->Pause();
 }
 
@@ -280,7 +281,7 @@ const NSUInteger targetFrameInterval = 1;
 -(void) removeFromSuperview
 {
     [self commonTeardown];
-    
+
     [super removeFromSuperview];
 }
 
@@ -299,7 +300,7 @@ const NSUInteger targetFrameInterval = 1;
     _glkView.delegate = self;
     _glkView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _glkView.opaque = YES;
-    
+
     [self addSubview:_glkView];
 }
 
@@ -322,7 +323,7 @@ const NSUInteger targetFrameInterval = 1;
         Eegeo_ASSERT(_displayLink == nil);
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateGlViewFromDisplayLink:)];
         _displayLink.frameInterval = targetFrameInterval;
-        
+
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         _prevDisplayLinkTimestamp = _displayLink.timestamp;
     }
@@ -350,18 +351,18 @@ const NSUInteger targetFrameInterval = 1;
 {
     Eegeo_ASSERT(m_pApiRunner != NULL);
     //CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
-    
+
     // _displayLink.timestamp is the time at which the previous frame was displayed
     const double maxFrameDelta = (4.0 * _displayLink.frameInterval) / 60.0;
     double displayLinkDelta = std::min(maxFrameDelta, (_displayLink.timestamp - _prevDisplayLinkTimestamp));
 
     _prevDisplayLinkTimestamp = _displayLink.timestamp;
-   
+
     //Eegeo_TTY("displayLinkDelta %f, duration = %f", displayLinkDelta, _displayLink.duration);
-   
+
     m_pApiRunner->Update(static_cast<float>(displayLinkDelta));
-    
-    
+
+
     [self _updateViewProperties];
 }
 
@@ -376,7 +377,7 @@ const NSUInteger targetFrameInterval = 1;
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     Eegeo::Space::LatLong latLong = cameraApi.GetInterestLatLong();
-    
+
     _centerCoordinate = CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
     _zoomLevel = cameraApi.GetZoomLevel();
     _direction = cameraApi.GetHeadingDegrees();
@@ -445,19 +446,61 @@ const NSUInteger targetFrameInterval = 1;
              animated:(BOOL)animated
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    
+
     double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
     double altitude = 0.0;
-    
+
     const double transitionDurationSeconds = animated ? 10.0 : 0.0;
     const bool hasTransitionDuration = true;
     const bool jumpIfFarAway = true;
     const bool allowInterruption = true;
-    
+
     cameraApi.SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
 
+- (void)exitIndoorMap
+{
+    [self getMapApi].GetIndoorsApi().ExitIndoorMap();
+}
 
+- (BOOL)isIndoors
+{
+    return [self getMapApi].GetIndoorsApi().HasActiveIndoorMap();
+}
+
+- (int)currentFloorIndex
+{
+    return [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
+}
+
+- (void)setFloorByIndex:(int)floorIndex
+{
+    [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(floorIndex);
+}
+
+- (void)moveUpFloors:(int)numberOfFloors
+{
+    const int currentFloor = [self currentFloorIndex];
+    if (currentFloor != -1)
+    {
+        [self setFloorByIndex:(currentFloor + numberOfFloors)];
+    }
+}
+
+- (void)moveDownFloors:(int)numberOfFloors
+{
+    [self moveUpFloors:-numberOfFloors];
+}
+
+- (void)moveUpFloor
+{
+    [self moveUpFloors:1];
+}
+
+- (void)moveDownFloor
+{
+    [self moveDownFloors:1];
+}
 
 @end

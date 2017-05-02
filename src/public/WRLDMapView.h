@@ -60,6 +60,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDirection:(double)direction
             animated:(BOOL)animated;
 
+
+#pragma mark - controlling the indoor map view -
+
+- (void)exitIndoorMap;
+
+- (BOOL)isIndoors;
+
+- (int)currentFloorIndex;
+
+- (void)setFloorByIndex:(int)floorIndex;
+
+- (void)moveUpFloor;
+
+- (void)moveDownFloor;
+
+- (void)moveUpFloors:(int)numberOfFloors;
+
+- (void)moveDownFloors:(int)numberOfFloors;
+
 @end
 
 NS_ASSUME_NONNULL_END
