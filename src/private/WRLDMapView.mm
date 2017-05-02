@@ -8,8 +8,12 @@
 
 #include "iOSApiHostModule.h"
 #include "EegeoCameraApi.h"
+#include "EegeoExpandFloorsApi.h"
 #include "EegeoIndoorsApi.h"
+#include "InteriorInteractionModel.h"
 #include "EegeoApiHost.h"
+
+#include <string>
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -458,6 +462,11 @@ const NSUInteger targetFrameInterval = 1;
     cameraApi.SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
+- (void)enterIndoorMap:(NSString*)indoorMapId
+{
+    const std::string interiorId = std::string([indoorMapId UTF8String]);
+    [self getMapApi].GetIndoorsApi().EnterIndoorMap(interiorId);
+}
 
 - (void)exitIndoorMap
 {
@@ -502,5 +511,24 @@ const NSUInteger targetFrameInterval = 1;
 {
     [self moveDownFloors:1];
 }
+
+- (void)expandIndoorMapView
+{
+    Eegeo::Resources::Interiors::InteriorInteractionModel& interactionModel = [self getMapApi].GetExpandFloorsApi().GetInteriorInteractionModel();
+    if (interactionModel.CanExpand())
+    {
+        interactionModel.ToggleExpanded();
+    }
+}
+
+- (void)collapseIndoorMapView
+{
+    Eegeo::Resources::Interiors::InteriorInteractionModel& interactionModel = [self getMapApi].GetExpandFloorsApi().GetInteriorInteractionModel();
+    if (!interactionModel.CanExpand())
+    {
+        interactionModel.ToggleExpanded();
+    }
+}
+
 
 @end

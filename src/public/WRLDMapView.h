@@ -63,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - controlling the indoor map view -
 
+- (void)enterIndoorMap:(NSString*)indoorMapId;
+
 - (void)exitIndoorMap;
 
 - (BOOL)isIndoors;
@@ -78,6 +80,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveUpFloors:(int)numberOfFloors;
 
 - (void)moveDownFloors:(int)numberOfFloors;
+
+- (void)expandIndoorMapView;
+
+- (void)collapseIndoorMapView;
 
 @end
 
