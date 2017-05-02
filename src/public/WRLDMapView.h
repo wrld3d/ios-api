@@ -19,15 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak, nullable) IBOutlet id<WRLDMapViewDelegate> delegate;
 
 
+#pragma mark - manipulating the visible portion of the map -
+
 /*! The coordinate at the center of the map view.
  */
 @property (nonatomic) CLLocationCoordinate2D centerCoordinate;
-
-@property (nonatomic) double zoomLevel;
-
-@property (nonatomic) CLLocationDirection direction;
-
-#pragma mark - manipulating the visible portion of the map -
 
 /*!
  @brief Centers the map about a coordinate without changing the current zoom level, and optionally animating from the current location.
@@ -36,16 +32,34 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 
-
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
                   zoomLevel:(double)zoomLevel
                    animated:(BOOL)animated;
 
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                  direction:(CLLocationDirection)direction
+                   animated:(BOOL)animated;
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
                   zoomLevel:(double)zoomLevel
                   direction:(CLLocationDirection)direction
-                  animated:(BOOL)animated;
+                   animated:(BOOL)animated;
+
+/*! The zoom level of the map.
+ */
+@property (nonatomic) double zoomLevel;
+
+- (void)setZoomLevel:(double)zoomLevel
+            animated:(BOOL)animated;
+
+
+/*! The heading of the map.
+ */
+@property (nonatomic) CLLocationDirection direction;
+
+- (void)setDirection:(double)direction
+            animated:(BOOL)animated;
+
 @end
 
 NS_ASSUME_NONNULL_END

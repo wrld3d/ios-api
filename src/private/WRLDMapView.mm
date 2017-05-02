@@ -388,20 +388,29 @@ const NSUInteger targetFrameInterval = 1;
 {
     [self setCenterCoordinate:coordinate
                     zoomLevel:[self zoomLevel]
+                    direction:[self direction]
                      animated:animated];
 }
-
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
                   zoomLevel:(double)zoomLevel
                    animated:(BOOL)animated
 {
     [self setCenterCoordinate:coordinate
-                    zoomLevel:[self zoomLevel]
+                    zoomLevel:zoomLevel
                     direction:[self direction]
                      animated:animated];
 }
 
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                  direction:(CLLocationDirection)direction
+                   animated:(BOOL)animated
+{
+    [self setCenterCoordinate:coordinate
+                    zoomLevel:[self zoomLevel]
+                    direction:direction
+                     animated:animated];
+}
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
                   zoomLevel:(double)zoomLevel
@@ -409,8 +418,24 @@ const NSUInteger targetFrameInterval = 1;
                    animated:(BOOL)animated
 {
     [self _setMapCenter:coordinate
-              zoomLevel:[self zoomLevel]
+              zoomLevel:zoomLevel
+              direction:direction
+               animated:animated];
+}
+
+- (void)setZoomLevel:(double)zoomLevel animated:(BOOL)animated
+{
+    [self _setMapCenter:[self centerCoordinate]
+              zoomLevel:zoomLevel
               direction:[self direction]
+               animated:animated];
+}
+
+- (void)setDirection:(double)direction animated:(BOOL)animated
+{
+    [self _setMapCenter:[self centerCoordinate]
+              zoomLevel:[self zoomLevel]
+              direction:direction
                animated:animated];
 }
 
@@ -430,7 +455,6 @@ const NSUInteger targetFrameInterval = 1;
     const bool allowInterruption = true;
     
     cameraApi.SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
-    
 }
 
 
