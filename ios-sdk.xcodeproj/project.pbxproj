@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9E7381EB8D1A60086600C /* IndoorControl.xib */; };
 		2CF9E73C1EB8D1C50086600C /* IndoorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9E73B1EB8D1C50086600C /* IndoorControl.m */; };
+		521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */; };
+		521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
 		E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; };
 		E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -79,6 +81,8 @@
 		2CF9E73A1EB8D1C50086600C /* IndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndoorControl.h; path = IndoorControl/IndoorControl.h; sourceTree = "<group>"; };
 		2CF9E73B1EB8D1C50086600C /* IndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndoorControl.m; path = IndoorControl/IndoorControl.m; sourceTree = "<group>"; };
 		3D2236C4A4CFE03870348C69 /* Pods-WrldSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.debug.xcconfig"; sourceTree = "<group>"; };
+		521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapCamera.mm; sourceTree = "<group>"; };
+		521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapCamera.h; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
 		D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WrldSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0310FFC1EB0E08B00002E88 /* Wrld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wrld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,6 +269,7 @@
 				E0F4E1691EB347FB00949ACE /* WRLDApi_Private.h */,
 				E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */,
 				E0F4E16B1EB347FB00949ACE /* WRLDGestureDelegate.mm */,
+				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 			);
 			path = private;
@@ -274,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				E0F4E16E1EB347FB00949ACE /* WRLDApi.h */,
+				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
 			);
@@ -302,6 +308,7 @@
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */,
+				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +462,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -465,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */,
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
 				E0F4E1761EB347FB00949ACE /* WRLDMapView.mm in Sources */,

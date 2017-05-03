@@ -456,6 +456,16 @@ const NSUInteger targetFrameInterval = 1;
     [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
 }
 
+- (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated
+{
+    [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch animated:animated];
+}
+
+- (void)setCamera:(WRLDMapCamera *)camera duration:(NSTimeInterval)duration
+{
+    [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch duration:duration];
+}
+
 - (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
 {
     const double duration = animated ? 10.0 : 0.0;

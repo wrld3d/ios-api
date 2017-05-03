@@ -4,6 +4,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "WRLDMapViewDelegate.h"
+#import "WRLDMapCamera.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - manipulating the visible portion of the map -
+
 
 /*! The coordinate at the center of the map view.
  */
@@ -45,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
                   direction:(CLLocationDirection)direction
                    animated:(BOOL)animated;
 
+
 /*! The zoom level of the map.
  */
 @property (nonatomic) double zoomLevel;
@@ -59,6 +62,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setDirection:(double)direction
             animated:(BOOL)animated;
+
+
+/*!
+ */
+@property (nonatomic, copy) WRLDMapCamera *camera;
+
+- (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated;
+
+- (void)setCamera:(WRLDMapCamera *)camera duration:(NSTimeInterval)duration;
 
 
 #pragma mark - controlling the indoor map view -
