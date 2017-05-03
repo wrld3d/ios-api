@@ -385,6 +385,8 @@ const NSUInteger targetFrameInterval = 1;
     _centerCoordinate = CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
     _zoomLevel = cameraApi.GetZoomLevel();
     _direction = cameraApi.GetHeadingDegrees();
+    
+    _camera = [WRLDMapCamera cameraLookingAtCenterCoordinate:_centerCoordinate fromDistance:cameraApi.GetDistanceToInterest() pitch:cameraApi.GetPitchDegrees() heading:_direction];
 }
 
 #pragma mark == public interface implementation ==
@@ -465,6 +467,11 @@ const NSUInteger targetFrameInterval = 1;
     cameraApi.SetViewToBounds(northEast, southWest, animated, allowInterruption);
 }
 
+- (void)setCamera:(WRLDMapCamera *)camera
+{
+    [self setCamera:camera animated:NO];
+}
+
 - (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated
 {
     [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch animated:animated];
@@ -477,8 +484,7 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
 {
-    const double duration = animated ? 10.0 : 0.0;
-    [self _setView:coordinate distance:distance heading:heading pitch:pitch duration:duration];
+    [self _setView:coordinate distance:distance heading:heading pitch:pitch duration:animated ? 10 : 0];
 }
 
 - (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration

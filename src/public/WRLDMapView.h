@@ -70,14 +70,15 @@ NS_ASSUME_NONNULL_BEGIN
  @brief Position the camera to encapsulate a bounded region.
  @param bounds Instance of an WRLDCoordinateBounds object, which describes the region to encapsulate.
  @param animated YES to animate smoothly to the new camera state, NO to snap immediately. Note that if the region is too far away from the current camera location, this parameter will be ignored and the camera will snap the new location.
- @return Returns nothing.
  */
 - (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated;
 
 
-/*!
+/*! The camera represents the current view of the map.
  */
 @property (nonatomic, copy) WRLDMapCamera *camera;
+
+- (void)setCamera:(WRLDMapCamera *)camera;
 
 - (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated;
 
