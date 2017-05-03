@@ -422,44 +422,62 @@ const NSUInteger targetFrameInterval = 1;
                   direction:(CLLocationDirection)direction
                    animated:(BOOL)animated
 {
-    [self _setMapCenter:coordinate
-              zoomLevel:zoomLevel
-              direction:direction
-               animated:animated];
+    [self _setCenterCoordinate:coordinate
+                     zoomLevel:zoomLevel
+                     direction:direction
+                      animated:animated];
 }
 
 - (void)setZoomLevel:(double)zoomLevel animated:(BOOL)animated
 {
-    [self _setMapCenter:[self centerCoordinate]
-              zoomLevel:zoomLevel
-              direction:[self direction]
-               animated:animated];
+    [self _setCenterCoordinate:[self centerCoordinate]
+                     zoomLevel:zoomLevel
+                     direction:[self direction]
+                      animated:animated];
 }
 
 - (void)setDirection:(double)direction animated:(BOOL)animated
 {
-    [self _setMapCenter:[self centerCoordinate]
-              zoomLevel:[self zoomLevel]
-              direction:direction
-               animated:animated];
+    [self _setCenterCoordinate:[self centerCoordinate]
+                     zoomLevel:[self zoomLevel]
+                     direction:direction
+                      animated:animated];
 }
 
-- (void)_setMapCenter:(CLLocationCoordinate2D)coordinate
-            zoomLevel:(double)zoomLevel
-            direction:(CLLocationDirection)direction
-             animated:(BOOL)animated
+- (void)_setCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                   zoomLevel:(double)zoomLevel
+                   direction:(CLLocationDirection)direction
+                    animated:(BOOL)animated
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    
+    const double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
+    
+    [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
+}
 
-    double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
-    double altitude = 0.0;
+- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
+{
+    const double duration = animated ? 10.0 : 0.0;
+    [self _setView:coordinate distance:distance heading:heading pitch:pitch duration:duration];
+}
 
-    const double transitionDurationSeconds = animated ? 10.0 : 0.0;
-    const bool hasTransitionDuration = true;
+- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    
+    const bool animated = duration > 0;
+    const bool modifyPosition = true;
+    const bool modifyDistance = true;
+    const bool modifyHeading = true;
+    const bool modifyPitch = pitch != -1;
+    const bool hasTransitionDuration = animated;
     const bool jumpIfFarAway = true;
     const bool allowInterruption = true;
-
-    cameraApi.SetView(animated, coordinate.latitude, coordinate.longitude, altitude, true, distance, true, direction, true, 0.0, false, transitionDurationSeconds, hasTransitionDuration, jumpIfFarAway, allowInterruption);
+    
+    const double altitude = 0.0;
+    
+    cameraApi.SetViewUsingZenithAngle(animated, coordinate.latitude, coordinate.longitude, altitude, modifyPosition, distance, modifyDistance, heading, modifyHeading, pitch, modifyPitch, duration, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
 - (void)enterIndoorMap:(NSString*)indoorMapId
