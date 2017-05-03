@@ -456,6 +456,15 @@ const NSUInteger targetFrameInterval = 1;
     [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
 }
 
+- (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    Eegeo::Space::LatLongAltitude northEast = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0);
+    Eegeo::Space::LatLongAltitude southWest = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0);
+    const bool allowInterruption = true;
+    cameraApi.SetViewToBounds(northEast, southWest, animated, allowInterruption);
+}
+
 - (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated
 {
     [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch animated:animated];
