@@ -17,6 +17,17 @@ namespace
 }
 
 
+@interface IndoorControl ()
+{
+    std::vector<std::string> m_tableViewFloorNames;
+}
+
+- (void) setFloorName:(const std::string*)name;
+- (void) updateFloors: (const std::vector<std::string>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
+
+@end
+
+
 @implementation IndoorControl
 
 - (UIColor*) textColorNormal
@@ -27,13 +38,6 @@ namespace
 - (UIColor*) textColorHighlighted
 {
     return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
-}
-
-- (id) initWithCoder:(NSCoder *)aDecoder
-{
-    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
-    CGFloat pixelScale = [[UIScreen mainScreen] scale];
-    return [self initWithParams: screenSize.width : screenSize.height : pixelScale ];
 }
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale
@@ -207,7 +211,7 @@ namespace
 
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
-
+    
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event

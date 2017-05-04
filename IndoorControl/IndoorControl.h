@@ -1,8 +1,6 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#include <string>
-#include <vector>
 
 @class IndoorControl;
 
@@ -33,11 +31,7 @@
     BOOL m_isSliderAnimPlaying;
 
     CGRect m_scrollRect;
-
-    std::vector<std::string> m_tableViewFloorNames;
 }
-
-- (id) initWithCoder:(NSCoder *)aDecoder;
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
 
@@ -47,11 +41,7 @@
 
 - (void) hide;
 
-- (void) setFloorName:(const std::string*)name;
-
 - (void) setSelectedFloor:(int)floorIndex;
-
-- (void) updateFloors: (const std::vector<std::string>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
 
 - (void) setFullyOnScreen;
 
