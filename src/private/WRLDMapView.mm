@@ -1,6 +1,7 @@
 
 #import "Wrld.h"
 #import "WRLDGestureDelegate.h"
+#import "WRLDNativeMapView.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -22,6 +23,7 @@
 @property (nonatomic) GLKView *glkView;
 @property (nonatomic) EAGLContext *glContext;
 @property (nonatomic) WRLDGestureDelegate* apiGestureDelegate;
+@property (nonatomic) WRLDNativeMapView* nativeMapView;
 
 @property (nonatomic) CADisplayLink* displayLink;
 
@@ -80,6 +82,7 @@ const NSUInteger targetFrameInterval = 1;
     _glContext = nil;
     _displayLink = nil;
     _apiGestureDelegate = nil;
+    _nativeMapView = nil;
     _glkView = nil;
 
     m_pApiRunner = NULL;
@@ -146,15 +149,6 @@ const NSUInteger targetFrameInterval = 1;
 
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
     apiHost.OnStart();
-
-
-
-    // todo - this a test of view delegate. Event needs deferring, ViewController will not have valid ref to this view until after caller returns
-
-    if ([self.delegate respondsToSelector:@selector(mapApiCreated:)]) {
-        [self.delegate mapApiCreated:self];
-    }
-
 }
 
 
@@ -182,8 +176,7 @@ const NSUInteger targetFrameInterval = 1;
 
     [_apiGestureDelegate bind:self];
 
-
-
+    _nativeMapView = new WRLDNativeMapView(self, *m_pApiRunner);
 }
 
 
@@ -619,6 +612,14 @@ const NSUInteger targetFrameInterval = 1;
     }
 }
 
+#pragma mark - WRLDMapView (Private)
+
+- (void)notifyInitialStreamingCompleted
+{
+    if ([self.delegate respondsToSelector:@selector(initialMapSceneLoaded:)]) {
+        [self.delegate initialMapSceneLoaded:self];
+    }
+}
 
 @end
 

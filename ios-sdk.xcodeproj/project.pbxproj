@@ -18,6 +18,9 @@
 		E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; };
 		E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E031100B1EB0E13B00002E88 /* GLKit.framework */; };
+		E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */; };
+		E0A48C001EBB32B900DD387F /* WRLDNativeMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */; };
+		E0A48C031EBB86E500DD387F /* WRLDMapView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */; };
 		E0F4E0FF1EB339EA00949ACE /* embedded_manifest.bin in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0B61EB339E900949ACE /* embedded_manifest.bin */; };
 		E0F4E1371EB339EA00949ACE /* label_category_icon_map.json in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0EF1EB339EA00949ACE /* label_category_icon_map.json */; };
 		E0F4E1381EB339EA00949ACE /* label_category_mapping.json in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0F01EB339EA00949ACE /* label_category_mapping.json */; };
@@ -94,6 +97,10 @@
 		E0310FFC1EB0E08B00002E88 /* Wrld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wrld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E031100B1EB0E13B00002E88 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E0601E4A1EAFBF510050EB45 /* ApiDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApiDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDNativeMapView.h; sourceTree = "<group>"; };
+		E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDNativeMapView.mm; sourceTree = "<group>"; };
+		E0A48C011EBB4B4300DD387F /* AppMapViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMapViewDelegate.h; sourceTree = "<group>"; };
+		E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+Private.h"; sourceTree = "<group>"; };
 		E0F4E0B61EB339E900949ACE /* embedded_manifest.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = embedded_manifest.bin; sourceTree = "<group>"; };
 		E0F4E0EF1EB339EA00949ACE /* label_category_icon_map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = label_category_icon_map.json; sourceTree = "<group>"; };
 		E0F4E0F01EB339EA00949ACE /* label_category_mapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = label_category_mapping.json; sourceTree = "<group>"; };
@@ -213,6 +220,7 @@
 				E0F4E1491EB3447E00949ACE /* Assets.xcassets */,
 				E0F4E14F1EB3447E00949ACE /* AppDelegate.h */,
 				E0F4E1521EB3447E00949ACE /* AppDelegate.m */,
+				E0A48C011EBB4B4300DD387F /* AppMapViewDelegate.h */,
 				E0F4E1531EB3447E00949ACE /* AppMapViewDelegate.m */,
 				E0F4E1511EB3447E00949ACE /* ViewController.h */,
 				E0F4E1551EB3447E00949ACE /* ViewController.m */,
@@ -277,8 +285,11 @@
 				E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */,
 				E0F4E16B1EB347FB00949ACE /* WRLDGestureDelegate.mm */,
 				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
-				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
+				E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */,
 				521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */,
+				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
+				E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */,
+				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -313,11 +324,13 @@
 			files = (
 				521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */,
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
+				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
 				521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
+				E0A48C031EBB86E500DD387F /* WRLDMapView+Private.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 			);
@@ -488,6 +501,7 @@
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
 				E0F4E1761EB347FB00949ACE /* WRLDMapView.mm in Sources */,
+				E0A48C001EBB32B900DD387F /* WRLDNativeMapView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

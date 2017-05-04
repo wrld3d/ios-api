@@ -113,6 +113,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)collapseIndoorMapView;
 
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

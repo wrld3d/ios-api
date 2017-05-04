@@ -8,6 +8,6 @@
 
 @optional
 
-- (void)mapApiCreated:(WRLDMapView *)mapView;
+- (void)initialMapSceneLoaded:(WRLDMapView *)mapView;
 
 @end

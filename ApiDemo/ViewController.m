@@ -1,4 +1,5 @@
 #import "ViewController.h"
+#import "AppMapViewDelegate.h"
 @import Wrld;
 
 
@@ -8,6 +9,8 @@
 @property (nonatomic) IBOutlet WRLDMapView *mapView;
 
 
+@property (nonatomic) AppMapViewDelegate *mapViewDelegate;
+
 @end
 
 
@@ -15,10 +18,6 @@
 {
 }
 
--(void)mapApiCreated
-{
-    NSLog(@"Eegeo Map api created");
-}
 
 - (void)viewDidLoad
 {
@@ -30,6 +29,10 @@
     }
     
      _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+     _mapViewDelegate = _mapView.delegate ? _mapView.delegate : [AppMapViewDelegate alloc];
+
+     _mapView.delegate = _mapViewDelegate;
 }
 
 
@@ -69,4 +72,11 @@
     [_mapView enterIndoorMap:@"westport_house"];
 }
 
+#pragma mark - AppMapViewDelegate
+
+-(void)initialMapSceneLoaded:(WRLDMapView *)mapView
+{
+    NSLog(@"initialMapSceneLoaded");
+
+}
 @end
