@@ -26,12 +26,16 @@
 @property (nonatomic) CADisplayLink* displayLink;
 
 @property (nonatomic) CFTimeInterval prevDisplayLinkTimestamp;
+
 @end
 
 
 @implementation WRLDMapView
 {
     Eegeo::ApiHost::iOS::iOSApiRunner* m_pApiRunner;
+    
+    CLLocationDegrees m_startLocationLatitude;
+    CLLocationDegrees m_startLocationLongitude;
 }
 
 
@@ -57,7 +61,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         [self initView];
     }
-
+    
     return self;
 }
 
@@ -119,20 +123,24 @@ const NSUInteger targetFrameInterval = 1;
 
 
     [self refreshDisplayLink];
+    
+    
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
 
     const double latitude = 37.7858;
     const double longitude = -122.401;
     const double interestAltitude = 0.0;
     const double distanceToInterest = 1781.0;
-    const double bearing = 0.0;
+    const double heading = 0.0;
+    const double pitch = 0.0;
+    const double setPitch = false;
 
+    cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
+    
+    m_startLocationLatitude = NAN;
+    m_startLocationLongitude = NAN;
 
-    Eegeo::Api::EegeoMapApi& mapApi = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoMapApi();
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
-
-    mapApi.GetCameraApi().InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, bearing, 0.0, false);
-
-
     apiHost.OnStart();
 
 
@@ -365,9 +373,6 @@ const NSUInteger targetFrameInterval = 1;
     //Eegeo_TTY("displayLinkDelta %f, duration = %f", displayLinkDelta, _displayLink.duration);
 
     m_pApiRunner->Update(static_cast<float>(displayLinkDelta));
-
-
-    [self _updateViewProperties];
 }
 
 
@@ -377,19 +382,21 @@ const NSUInteger targetFrameInterval = 1;
     return mapApi;
 }
 
-- (void)_updateViewProperties
-{
-    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    Eegeo::Space::LatLong latLong = cameraApi.GetInterestLatLong();
+#pragma mark - public interface implementation -
 
-    _centerCoordinate = CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
-    _zoomLevel = cameraApi.GetZoomLevel();
-    _direction = cameraApi.GetHeadingDegrees();
-    
-    _camera = [WRLDMapCamera cameraLookingAtCenterCoordinate:_centerCoordinate fromDistance:cameraApi.GetDistanceToInterest() pitch:cameraApi.GetPitchDegrees() heading:_direction];
+- (CLLocationCoordinate2D)centerCoordinate
+{
+    Eegeo::Space::LatLong latLong = [self getMapApi].GetCameraApi().GetInterestLatLong();
+    return CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
 }
 
-#pragma mark == public interface implementation ==
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    [self setCenterCoordinate:coordinate
+                    zoomLevel:[self zoomLevel]
+                    direction:[self direction]
+                     animated:NO];
+}
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated
 {
@@ -430,6 +437,16 @@ const NSUInteger targetFrameInterval = 1;
                       animated:animated];
 }
 
+- (double)zoomLevel
+{
+    return [self getMapApi].GetCameraApi().GetZoomLevel();
+}
+
+- (void)setZoomLevel:(double)zoomLevel
+{
+    [self setZoomLevel:zoomLevel animated:NO];
+}
+
 - (void)setZoomLevel:(double)zoomLevel animated:(BOOL)animated
 {
     [self _setCenterCoordinate:[self centerCoordinate]
@@ -438,7 +455,17 @@ const NSUInteger targetFrameInterval = 1;
                       animated:animated];
 }
 
-- (void)setDirection:(double)direction animated:(BOOL)animated
+- (CLLocationDirection)direction
+{
+    return [self getMapApi].GetCameraApi().GetHeadingDegrees();
+}
+
+- (void)setDirection:(CLLocationDirection)direction
+{
+    [self setDirection:direction animated:NO];
+}
+
+- (void)setDirection:(CLLocationDirection)direction animated:(BOOL)animated
 {
     [self _setCenterCoordinate:[self centerCoordinate]
                      zoomLevel:[self zoomLevel]
@@ -467,6 +494,12 @@ const NSUInteger targetFrameInterval = 1;
     cameraApi.SetViewToBounds(northEast, southWest, animated, allowInterruption);
 }
 
+- (WRLDMapCamera *)camera
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    return [WRLDMapCamera cameraLookingAtCenterCoordinate:self.centerCoordinate fromDistance:cameraApi.GetDistanceToInterest() pitch:cameraApi.GetPitchDegrees() heading:self.direction];
+}
+
 - (void)setCamera:(WRLDMapCamera *)camera
 {
     [self setCamera:camera animated:NO];
@@ -482,12 +515,12 @@ const NSUInteger targetFrameInterval = 1;
     [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch duration:duration];
 }
 
-- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
+- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
 {
     [self _setView:coordinate distance:distance heading:heading pitch:pitch duration:animated ? 10 : 0];
 }
 
-- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(double)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration
+- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     
@@ -570,6 +603,33 @@ const NSUInteger targetFrameInterval = 1;
     if (!interactionModel.CanExpand())
     {
         interactionModel.ToggleExpanded();
+    }
+}
+
+
+@end
+
+
+#pragma mark - IBAdditions implementation -
+
+@implementation WRLDMapView (IBAdditions)
+
+
+- (void)setLatitude:(double)latitude
+{
+    m_startLocationLatitude = latitude;
+    if (!isnan(m_startLocationLongitude))
+    {
+        self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
+    }
+}
+
+- (void)setLongitude:(double)longitude
+{
+    m_startLocationLongitude = longitude;
+    if (!isnan(m_startLocationLatitude))
+    {
+        self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
     }
 }
 

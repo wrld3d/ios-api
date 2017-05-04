@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) CLLocationCoordinate2D centerCoordinate;
 
+- (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate;
+
 /*!
  @brief Centers the map about a coordinate without changing the current zoom level, and optionally animating from the current location.
  @param coordinate The LatLong coordinate to look at.
@@ -52,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 /*! The zoom level of the map.
  */
 @property (nonatomic) double zoomLevel;
+
+- (void)setZoomLevel:(double)zoomLevel;
 
 - (void)setZoomLevel:(double)zoomLevel
             animated:(BOOL)animated;
