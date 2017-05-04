@@ -221,9 +221,18 @@ const NSUInteger targetFrameInterval = 1;
 - (void)onDeviceOrientationDidChange
 {
     [self setNeedsLayout];
+}
 
-    m_pApiRunner->NotifyDeviceOrientationChanged();
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    m_pApiRunner->NotifyViewFrameChanged();
+}
 
++ (BOOL)requiresConstraintBasedLayout
+{
+    return YES;
 }
 
 - (void)dealloc
