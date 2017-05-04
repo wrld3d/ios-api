@@ -34,8 +34,11 @@
 {
     Eegeo::ApiHost::iOS::iOSApiRunner* m_pApiRunner;
     
+    
     CLLocationDegrees m_startLocationLatitude;
     CLLocationDegrees m_startLocationLongitude;
+    bool m_startLocationLatitudeSet;
+    bool m_startLocationLongitudeSet;
 }
 
 
@@ -81,7 +84,11 @@ const NSUInteger targetFrameInterval = 1;
 
     m_pApiRunner = NULL;
 
-
+    m_startLocationLatitude = 0.0;
+    m_startLocationLongitude = 0.0;
+    m_startLocationLatitudeSet = false;
+    m_startLocationLongitudeSet = false;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
                                                  name:UIApplicationWillEnterForegroundNotification
@@ -136,9 +143,6 @@ const NSUInteger targetFrameInterval = 1;
     const double setPitch = false;
 
     cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
-    
-    m_startLocationLatitude = NAN;
-    m_startLocationLongitude = NAN;
 
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
     apiHost.OnStart();
@@ -623,24 +627,28 @@ const NSUInteger targetFrameInterval = 1;
 
 @implementation WRLDMapView (IBAdditions)
 
-
 - (void)setLatitude:(double)latitude
 {
     m_startLocationLatitude = latitude;
-    if (!isnan(m_startLocationLongitude))
-    {
-        self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
-    }
+    m_startLocationLatitudeSet = true;
+    [self _trySetCenterCoordinateFromStartLocation];
 }
 
 - (void)setLongitude:(double)longitude
 {
     m_startLocationLongitude = longitude;
-    if (!isnan(m_startLocationLatitude))
-    {
-        self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
-    }
+    m_startLocationLongitudeSet = true;
+    [self _trySetCenterCoordinateFromStartLocation];
 }
 
+- (void)_trySetCenterCoordinateFromStartLocation
+{
+    if (!m_startLocationLatitudeSet)
+        return;
+    if (!m_startLocationLongitudeSet)
+        return;
+    
+    self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
+}
 
 @end

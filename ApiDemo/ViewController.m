@@ -28,15 +28,8 @@
     {
         _mapView = (WRLDMapView*)[self view];
     }
-
-     const double latitude = 37.802;
-     const double longitude = -122.405783;
-    
-     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(latitude, longitude);
     
      _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-     [_mapView setCenterCoordinate:coord animated:true];
 }
 
 
