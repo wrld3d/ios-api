@@ -73,6 +73,11 @@
     return self;
 }
 
+- (CLLocationDistance)altitude
+{
+    return cos(_pitch * M_PI / 180) * _distance;
+}
+
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
     [encoder encodeDouble:_centerCoordinate.latitude forKey:@"centerCoordinateLatitude"];
@@ -98,9 +103,9 @@
 - (id)copyWithZone:(nullable NSZone *)zone
 {
     return [[WRLDMapCamera allocWithZone:zone] initWithCenterCoordinate:_centerCoordinate
-                                                              distance:_distance
-                                                                 pitch:_pitch
-                                                               heading:_heading];
+                                                               distance:_distance
+                                                                  pitch:_pitch
+                                                                heading:_heading];
 }
 
 @end
