@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9E7381EB8D1A60086600C /* IndoorControl.xib */; };
-		2CF9E73C1EB8D1C50086600C /* IndoorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9E73B1EB8D1C50086600C /* IndoorControl.m */; };
+		2C32D20B1EBB42AD00FC1B12 /* DebugIndoorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */; };
+		2C32D20C1EBB42AD00FC1B12 /* DebugIndoorControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C32D1E61EBB42AD00FC1B12 /* DebugIndoorControl.xib */; };
+		2C32D20D1EBB42AD00FC1B12 /* ImageHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1E91EBB42AD00FC1B12 /* ImageHelpers.mm */; };
+		2C32D2201EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1FE1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm */; };
+		2C32D2211EBB42AD00FC1B12 /* IndoorControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2001EBB42AD00FC1B12 /* IndoorControl.mm */; };
+		2C32D2221EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2021EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm */; };
+		2C32D2231EBB42AD00FC1B12 /* UIButton+DefaultStates.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2041EBB42AD00FC1B12 /* UIButton+DefaultStates.mm */; };
+		2C32D2241EBB42AD00FC1B12 /* UIColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2061EBB42AD00FC1B12 /* UIColors.mm */; };
+		2C32D2251EBB42AD00FC1B12 /* UIHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2081EBB42AD00FC1B12 /* UIHelpers.mm */; };
+		2C32D2261EBB42AD00FC1B12 /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */; };
+		2C32D2281EBB42F200FC1B12 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2C32D2271EBB42F200FC1B12 /* images */; };
 		521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */; };
 		521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */; };
@@ -80,9 +89,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2CF9E7381EB8D1A60086600C /* IndoorControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IndoorControl.xib; path = IndoorControl/IndoorControl.xib; sourceTree = "<group>"; };
-		2CF9E73A1EB8D1C50086600C /* IndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndoorControl.h; path = IndoorControl/IndoorControl.h; sourceTree = "<group>"; };
-		2CF9E73B1EB8D1C50086600C /* IndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndoorControl.m; path = IndoorControl/IndoorControl.m; sourceTree = "<group>"; };
+		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
+		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
+		2C32D1E61EBB42AD00FC1B12 /* DebugIndoorControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugIndoorControl.xib; sourceTree = "<group>"; };
+		2C32D1E81EBB42AD00FC1B12 /* ImageHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelpers.h; sourceTree = "<group>"; };
+		2C32D1E91EBB42AD00FC1B12 /* ImageHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageHelpers.mm; sourceTree = "<group>"; };
+		2C32D1FD1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmediatePanGestureRecognizer.h; sourceTree = "<group>"; };
+		2C32D1FE1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImmediatePanGestureRecognizer.mm; sourceTree = "<group>"; };
+		2C32D1FF1EBB42AD00FC1B12 /* IndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorControl.h; sourceTree = "<group>"; };
+		2C32D2001EBB42AD00FC1B12 /* IndoorControl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IndoorControl.mm; sourceTree = "<group>"; };
+		2C32D2011EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteriorsExplorerFloorItemView.h; sourceTree = "<group>"; };
+		2C32D2021EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InteriorsExplorerFloorItemView.mm; sourceTree = "<group>"; };
+		2C32D2031EBB42AD00FC1B12 /* UIButton+DefaultStates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+DefaultStates.h"; sourceTree = "<group>"; };
+		2C32D2041EBB42AD00FC1B12 /* UIButton+DefaultStates.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIButton+DefaultStates.mm"; sourceTree = "<group>"; };
+		2C32D2051EBB42AD00FC1B12 /* UIColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColors.h; sourceTree = "<group>"; };
+		2C32D2061EBB42AD00FC1B12 /* UIColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIColors.mm; sourceTree = "<group>"; };
+		2C32D2071EBB42AD00FC1B12 /* UIHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelpers.h; sourceTree = "<group>"; };
+		2C32D2081EBB42AD00FC1B12 /* UIHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIHelpers.mm; sourceTree = "<group>"; };
+		2C32D2091EBB42AD00FC1B12 /* UIView+TouchExclusivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TouchExclusivity.h"; sourceTree = "<group>"; };
+		2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TouchExclusivity.m"; sourceTree = "<group>"; };
+		2C32D2271EBB42F200FC1B12 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		3D2236C4A4CFE03870348C69 /* Pods-WrldSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.debug.xcconfig"; sourceTree = "<group>"; };
 		521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapCamera.mm; sourceTree = "<group>"; };
 		521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapCamera.h; sourceTree = "<group>"; };
@@ -165,14 +191,38 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		2CF9E7321EB8D1030086600C /* IndoorControl */ = {
+		2C32D1E31EBB42AD00FC1B12 /* DebugIndoorControl */ = {
 			isa = PBXGroup;
 			children = (
-				2CF9E7381EB8D1A60086600C /* IndoorControl.xib */,
-				2CF9E73A1EB8D1C50086600C /* IndoorControl.h */,
-				2CF9E73B1EB8D1C50086600C /* IndoorControl.m */,
+				2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */,
+				2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */,
+				2C32D1E61EBB42AD00FC1B12 /* DebugIndoorControl.xib */,
 			);
-			name = IndoorControl;
+			path = DebugIndoorControl;
+			sourceTree = "<group>";
+		};
+		2C32D1E71EBB42AD00FC1B12 /* IndoorControl */ = {
+			isa = PBXGroup;
+			children = (
+				2C32D2271EBB42F200FC1B12 /* images */,
+				2C32D1E81EBB42AD00FC1B12 /* ImageHelpers.h */,
+				2C32D1E91EBB42AD00FC1B12 /* ImageHelpers.mm */,
+				2C32D1FD1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.h */,
+				2C32D1FE1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm */,
+				2C32D1FF1EBB42AD00FC1B12 /* IndoorControl.h */,
+				2C32D2001EBB42AD00FC1B12 /* IndoorControl.mm */,
+				2C32D2011EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.h */,
+				2C32D2021EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm */,
+				2C32D2031EBB42AD00FC1B12 /* UIButton+DefaultStates.h */,
+				2C32D2041EBB42AD00FC1B12 /* UIButton+DefaultStates.mm */,
+				2C32D2051EBB42AD00FC1B12 /* UIColors.h */,
+				2C32D2061EBB42AD00FC1B12 /* UIColors.mm */,
+				2C32D2071EBB42AD00FC1B12 /* UIHelpers.h */,
+				2C32D2081EBB42AD00FC1B12 /* UIHelpers.mm */,
+				2C32D2091EBB42AD00FC1B12 /* UIView+TouchExclusivity.h */,
+				2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */,
+			);
+			path = IndoorControl;
 			sourceTree = "<group>";
 		};
 		D39018B2402324986ABDDC69 /* Frameworks */ = {
@@ -187,7 +237,8 @@
 		E0601E411EAFBF510050EB45 = {
 			isa = PBXGroup;
 			children = (
-				2CF9E7321EB8D1030086600C /* IndoorControl */,
+				2C32D1E31EBB42AD00FC1B12 /* DebugIndoorControl */,
+				2C32D1E71EBB42AD00FC1B12 /* IndoorControl */,
 				E0F4E17B1EB3480800949ACE /* framework */,
 				E0F4E1661EB347FB00949ACE /* src */,
 				E0F4E0B51EB339E900949ACE /* resources */,
@@ -436,9 +487,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C32D2281EBB42F200FC1B12 /* images in Resources */,
 				E0F4E1631EB3464600949ACE /* MainStoryboard_iPad.storyboard in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
-				2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */,
+				2C32D20C1EBB42AD00FC1B12 /* DebugIndoorControl.xib in Resources */,
 				E0F4E1641EB3464600949ACE /* MainStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,7 +525,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -495,10 +547,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C32D20B1EBB42AD00FC1B12 /* DebugIndoorControl.m in Sources */,
+				2C32D2231EBB42AD00FC1B12 /* UIButton+DefaultStates.mm in Sources */,
 				E0F4E15B1EB3447E00949ACE /* AppMapViewDelegate.m in Sources */,
-				2CF9E73C1EB8D1C50086600C /* IndoorControl.m in Sources */,
 				E0F4E15D1EB3447E00949ACE /* ViewController.m in Sources */,
+				2C32D2221EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm in Sources */,
+				2C32D2261EBB42AD00FC1B12 /* UIView+TouchExclusivity.m in Sources */,
+				2C32D2251EBB42AD00FC1B12 /* UIHelpers.mm in Sources */,
+				2C32D20D1EBB42AD00FC1B12 /* ImageHelpers.mm in Sources */,
+				2C32D2241EBB42AD00FC1B12 /* UIColors.mm in Sources */,
+				2C32D2211EBB42AD00FC1B12 /* IndoorControl.mm in Sources */,
 				E0F4E15C1EB3447E00949ACE /* main.m in Sources */,
+				2C32D2201EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm in Sources */,
 				E0F4E15A1EB3447E00949ACE /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
