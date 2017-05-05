@@ -1,11 +1,13 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
+#import "IndoorControlDelegate.h"
 
 @class IndoorControl;
 
 @interface IndoorControl : UIView<UITableViewDataSource, UITableViewDelegate>
 {
+    id<IndoorControlDelegate> m_delegate;
     float m_width;
     float m_height;
 
@@ -33,7 +35,7 @@
     CGRect m_scrollRect;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale andDelegate:(id<IndoorControlDelegate>)delegate;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 

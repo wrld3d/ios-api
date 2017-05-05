@@ -1,14 +1,15 @@
 #import "IndoorControlViewController.h"
 #import "IndoorControl.h"
+#import "IndoorControlDelegate.h"
 @import Wrld;
 
 
-@interface IndoorControlViewController ()
-
+@interface IndoorControlViewController () <IndoorControlDelegate>
 
 @property (nonatomic) IBOutlet WRLDMapView *mapView;
 @property (nonatomic, retain) IndoorControl* pIndoorControl;
 
+- (void) onCancelButtonPressed;
 
 @end
 
@@ -21,7 +22,7 @@
     
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
     CGFloat pixelScale = [[UIScreen mainScreen] scale];
-    self.pIndoorControl = [[IndoorControl alloc] initWithParams: screenSize.width : screenSize.height : pixelScale];
+    self.pIndoorControl = [[IndoorControl alloc] initWithParams: screenSize.width : screenSize.height : pixelScale andDelegate: self];
     [self addSubview:self.pIndoorControl];
     
     return self;
@@ -57,6 +58,11 @@
         [self.pIndoorControl setTouchEnabled:NO];
         [self.pIndoorControl setFullyOffScreen];
     }
+}
+
+- (void) onCancelButtonPressed
+{
+    [_mapView exitIndoorMap];
 }
 
 @end

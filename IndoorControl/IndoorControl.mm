@@ -40,10 +40,12 @@ namespace
     return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale andDelegate:(id<IndoorControlDelegate>)delegate
 {
     if (self = [super init])
     {
+        m_delegate = delegate;
+        
         const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
 
         m_pixelScale = 1.f;
@@ -211,7 +213,7 @@ namespace
 
 - (void) onCancelButtonPressed:(UIButton *)sender
 {
-    
+    [m_delegate onCancelButtonPressed];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event

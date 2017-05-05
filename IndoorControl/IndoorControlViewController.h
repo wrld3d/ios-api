@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IndoorControlViewController : UIView
+@interface IndoorControlViewController : UIView 
 
 @end
