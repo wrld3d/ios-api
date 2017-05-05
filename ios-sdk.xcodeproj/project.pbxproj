@@ -44,8 +44,7 @@
 		E0F4E15B1EB3447E00949ACE /* AppMapViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F4E1531EB3447E00949ACE /* AppMapViewDelegate.m */; };
 		E0F4E15C1EB3447E00949ACE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F4E1541EB3447E00949ACE /* main.m */; };
 		E0F4E15D1EB3447E00949ACE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F4E1551EB3447E00949ACE /* ViewController.m */; };
-		E0F4E1631EB3464600949ACE /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E15F1EB3464600949ACE /* MainStoryboard_iPad.storyboard */; };
-		E0F4E1641EB3464600949ACE /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E1611EB3464600949ACE /* MainStoryboard_iPhone.storyboard */; };
+		E0F4E1631EB3464600949ACE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E15F1EB3464600949ACE /* Main.storyboard */; };
 		E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F4E1681EB347FB00949ACE /* WRLDApi.m */; };
 		E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F4E1691EB347FB00949ACE /* WRLDApi_Private.h */; };
 		E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */; };
@@ -127,8 +126,7 @@
 		E0F4E1541EB3447E00949ACE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ApiDemo/main.m; sourceTree = SOURCE_ROOT; };
 		E0F4E1551EB3447E00949ACE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ApiDemo/ViewController.m; sourceTree = SOURCE_ROOT; };
 		E0F4E1561EB3447E00949ACE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ApiDemo/Info.plist; sourceTree = SOURCE_ROOT; };
-		E0F4E1601EB3464600949ACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ApiDemo/Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = SOURCE_ROOT; };
-		E0F4E1621EB3464600949ACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ApiDemo/Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = SOURCE_ROOT; };
+		E0F4E1601EB3464600949ACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ApiDemo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		E0F4E1681EB347FB00949ACE /* WRLDApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDApi.m; sourceTree = "<group>"; };
 		E0F4E1691EB347FB00949ACE /* WRLDApi_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDApi_Private.h; sourceTree = "<group>"; };
 		E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDGestureDelegate.h; sourceTree = "<group>"; };
@@ -225,8 +223,7 @@
 				E0F4E1511EB3447E00949ACE /* ViewController.h */,
 				E0F4E1551EB3447E00949ACE /* ViewController.m */,
 				E0F4E1561EB3447E00949ACE /* Info.plist */,
-				E0F4E15F1EB3464600949ACE /* MainStoryboard_iPad.storyboard */,
-				E0F4E1611EB3464600949ACE /* MainStoryboard_iPhone.storyboard */,
+				E0F4E15F1EB3464600949ACE /* Main.storyboard */,
 				E0601E4D1EAFBF510050EB45 /* Supporting Files */,
 			);
 			name = "Api Demo App";
@@ -449,10 +446,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0F4E1631EB3464600949ACE /* MainStoryboard_iPad.storyboard in Resources */,
+				E0F4E1631EB3464600949ACE /* Main.storyboard in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
 				2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */,
-				E0F4E1641EB3464600949ACE /* MainStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,20 +524,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E0F4E15F1EB3464600949ACE /* MainStoryboard_iPad.storyboard */ = {
+		E0F4E15F1EB3464600949ACE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E0F4E1601EB3464600949ACE /* Base */,
 			);
-			name = MainStoryboard_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		E0F4E1611EB3464600949ACE /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E0F4E1621EB3464600949ACE /* Base */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
