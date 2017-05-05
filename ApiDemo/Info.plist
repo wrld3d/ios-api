@@ -26,10 +26,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>UIMainStoryboardFile~ipad</key>
-	<string>MainStoryboard_iPad</string>
-	<key>UIMainStoryboardFile~iphone</key>
-	<string>MainStoryboard_iPhone</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
