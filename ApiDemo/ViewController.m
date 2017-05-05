@@ -76,7 +76,7 @@
 
 -(void)initialMapSceneLoaded:(WRLDMapView *)mapView
 {
-    NSLog(@"initialMapSceneLoaded");
+    NSLog(@"ViewController - streaming of initial map scene completed.");
 
 }
 @end
