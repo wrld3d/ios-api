@@ -1,8 +1,11 @@
-#import <Foundation/Foundation.h>
 
 #pragma once
+#import <Foundation/Foundation.h>
+#include "EegeoMapApi.h"
+
 
 @class WRLDMapView;
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -10,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)notifyInitialStreamingCompleted;
 
+-(Eegeo::Api::EegeoMapApi&)getMapApi;
 
 @end
 

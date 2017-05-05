@@ -15,6 +15,10 @@
 		521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */; };
+		D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6581EBB8C6600384605 /* WRLDMarker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0AAB65E1EBC904900384605 /* WRLDMarkerOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB65D1EBC904900384605 /* WRLDMarkerOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0AAB6601EBC906C00384605 /* WRLDMarkerOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB65F1EBC906C00384605 /* WRLDMarkerOptions.m */; };
 		E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; };
 		E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E031100B1EB0E13B00002E88 /* GLKit.framework */; };
@@ -92,6 +96,10 @@
 		521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDCoordinateBounds.h; sourceTree = "<group>"; };
 		521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+IBAdditions.h"; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
+		D0AAB6581EBB8C6600384605 /* WRLDMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMarker.h; sourceTree = "<group>"; };
+		D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMarker.mm; sourceTree = "<group>"; };
+		D0AAB65D1EBC904900384605 /* WRLDMarkerOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMarkerOptions.h; sourceTree = "<group>"; };
+		D0AAB65F1EBC906C00384605 /* WRLDMarkerOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMarkerOptions.m; sourceTree = "<group>"; };
 		D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WrldSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0310FFC1EB0E08B00002E88 /* Wrld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wrld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E031100B1EB0E13B00002E88 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -287,6 +295,8 @@
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 				E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */,
 				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
+				D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */,
+				D0AAB65F1EBC906C00384605 /* WRLDMarkerOptions.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -299,6 +309,8 @@
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
+				D0AAB6581EBB8C6600384605 /* WRLDMarker.h */,
+				D0AAB65D1EBC904900384605 /* WRLDMarkerOptions.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -320,11 +332,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */,
+				D0AAB65E1EBC904900384605 /* WRLDMarkerOptions.h in Headers */,
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
 				521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
+				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				E0A48C031EBB86E500DD387F /* WRLDMapView+Private.h in Headers */,
@@ -482,7 +496,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -494,8 +508,10 @@
 			files = (
 				521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */,
 				521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */,
+				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
+				D0AAB6601EBC906C00384605 /* WRLDMarkerOptions.m in Sources */,
 				E0F4E1761EB347FB00949ACE /* WRLDMapView.mm in Sources */,
 				E0A48C001EBB32B900DD387F /* WRLDNativeMapView.mm in Sources */,
 			);

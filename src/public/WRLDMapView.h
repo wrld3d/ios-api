@@ -6,6 +6,8 @@
 #import "WRLDMapViewDelegate.h"
 #import "WRLDMapCamera.h"
 #import "WRLDCoordinateBounds.h"
+#import "WRLDMarker.h"
+#import "WRLDMarkerOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -87,6 +89,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated;
 
 - (void)setCamera:(WRLDMapCamera *)camera duration:(NSTimeInterval)duration;
+
+#pragma mark - markers -
+
+- (WRLDMarker *)addMarker:(WRLDMarkerOptions *)marker;
+
+- (NSArray <WRLDMarker *> *)addMarkers:(NSArray <WRLDMarkerOptions *> *)markers;
 
 
 #pragma mark - controlling the indoor map view -

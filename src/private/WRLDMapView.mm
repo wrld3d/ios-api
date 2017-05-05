@@ -544,6 +544,30 @@ const NSUInteger targetFrameInterval = 1;
     cameraApi.SetViewUsingZenithAngle(animated, coordinate.latitude, coordinate.longitude, altitude, modifyPosition, distance, modifyDistance, heading, modifyHeading, pitch, modifyPitch, duration, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
+#pragma mark - markers -
+
+
+- (WRLDMarker *)addMarker:(WRLDMarkerOptions *)markerOptions
+{
+    return [[WRLDMarker alloc] initWithMarkerOptions:markerOptions
+                                     andAddToMapView:self];
+}
+
+- (NSArray <WRLDMarker *> *)addMarkers:(NSArray <WRLDMarkerOptions *> *)markerOptionsArray
+{
+    NSMutableArray* markersArray = [[NSMutableArray alloc] init];
+    
+    for (WRLDMarkerOptions* markerOptions in markerOptionsArray)
+    {
+        [markersArray addObject:[self addMarker:markerOptions]];
+    }
+    
+    return markersArray;
+}
+
+
+#pragma mark - controlling the indoor map view -
+
 - (void)enterIndoorMap:(NSString*)indoorMapId
 {
     const std::string interiorId = std::string([indoorMapId UTF8String]);
