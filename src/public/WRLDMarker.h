@@ -8,9 +8,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMarker : NSObject
 
-- (instancetype)initWithMarkerOptions:(WRLDMarkerOptions *)markerOptions
-                      andAddToMapView:(WRLDMapView*) mapView;
-
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 
 @end

@@ -32,6 +32,7 @@
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate
 {
     _coordinate = coordinate;
+    m_pMarkersApi->SetLocation(m_markerId, _coordinate.latitude, _coordinate.longitude);
 }
 
 @end

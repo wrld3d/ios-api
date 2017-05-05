@@ -2,6 +2,7 @@
 #import "Wrld.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDNativeMapView.h"
+#import "WRLDMarker+Private.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -564,7 +565,6 @@ const NSUInteger targetFrameInterval = 1;
     
     return markersArray;
 }
-
 
 #pragma mark - controlling the indoor map view -
 
