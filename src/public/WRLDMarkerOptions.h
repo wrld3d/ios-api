@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, MarkerElevationMode)
 
 @property (nonatomic) CLLocationDistance elevation;
 
-@property (nonatomic) MarkerElevationMode elevationLevel;
+@property (nonatomic) MarkerElevationMode elevationMode;
 
 @property (nonatomic) NSInteger drawOrder;
 

@@ -12,7 +12,19 @@
 
 + (instancetype)markerOptions
 {
-    return [[self alloc] init];
+    return [[self alloc] initProperties];
+}
+
+- (instancetype)initProperties
+{
+    if (self = [super init])
+    {
+        _title = @"";
+        _styleName = @"marker_default";
+        _userData = @"";
+        _iconKey = @"misc";
+    }
+    return self;
 }
 
 - (void)setIndoorMapId:(NSString *)indoorMapId
