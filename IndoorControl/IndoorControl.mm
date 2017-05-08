@@ -17,17 +17,6 @@ namespace
 }
 
 
-@interface IndoorControl ()
-{
-    std::vector<std::string> m_tableViewFloorNames;
-}
-
-- (void) setFloorName:(const std::string*)name;
-- (void) updateFloors: (const std::vector<std::string>&) floorNumbers withCurrentFloor: (int) currentlySelectedFloor;
-
-@end
-
-
 @implementation IndoorControl
 
 - (UIColor*) textColorNormal
@@ -167,9 +156,9 @@ namespace
         [self hideFloorLabels];
         [self setHidden:YES];
         [self setArrowState:NO :NO];
-
+        
+        [self updateFloors: [NSArray arrayWithObjects: @"G", @"1", @"2", @"3", nil] withCurrentFloor:0];
         [self setTouchEnabled:YES];
-        [self updateFloors:{"G", "1"} withCurrentFloor:0];
         [self show];
         [self setFullyOnScreen];
     }
@@ -257,9 +246,9 @@ namespace
     return [self pointInside:touchLocation withEvent:nil];
 }
 
-- (void) setFloorName:(const std::string*)name
+- (void) setFloorName:(NSString*)name
 {
-    self.pFloorNameLabel.text = [NSString stringWithUTF8String:name->c_str()];
+    self.pFloorNameLabel.text = name;
 }
 
 - (void) setSelectedFloor:(int)floorIndex
@@ -273,11 +262,10 @@ namespace
     }
 }
 
-- (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
+- (void) updateFloors: (NSArray<NSString*>*) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
 {
     m_floorSelection = 0.0;
-    m_tableViewFloorNames = floorShortNames;
-    std::reverse(m_tableViewFloorNames.begin(), m_tableViewFloorNames.end());
+    m_tableViewFloorNames = [[floorShortNames reverseObjectEnumerator] allObjects];
 
     [self refreshFloorViews];
 
@@ -293,7 +281,7 @@ namespace
     [self.pFloorListView reloadData];
 
 
-    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    int floorCount = [m_tableViewFloorNames count];
     float maxHeight = m_screenHeight*0.5f;
     float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
     float totalHeight = m_floorDivisionHeight * floorCount + verticalPadding;
@@ -365,14 +353,14 @@ namespace
 
 - (bool) GetCanShowChangeFloorTutorialDialog
 {
-    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    int floorCount = [m_tableViewFloorNames count];
     return floorCount > 1;
 }
 
 - (void) refreshFloorIndicator:(int)floorIndex
 {
-    int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;
-    self.pFloorOnButtonLabel.text = [NSString stringWithCString:m_tableViewFloorNames.at(nameIndex).c_str() encoding:NSUTF8StringEncoding];
+    int nameIndex = [m_tableViewFloorNames count] - 1 - floorIndex;
+    self.pFloorOnButtonLabel.text = m_tableViewFloorNames[nameIndex];
 }
 
 - (float) GetXPositionForFloorPanelAt:(float)t
@@ -569,7 +557,7 @@ namespace
     }
     else
     {
-        int floorCount = (int)m_tableViewFloorNames.size()-1;
+        int floorCount = [m_tableViewFloorNames count] - 1;
         int floorIndex = (int)roundf(m_floorSelection*floorCount);
         // m_pInterop->SelectFloor(floorIndex);
 
@@ -614,11 +602,9 @@ namespace
 
 - (void) moveButtonToFloorIndex:(int)floorIndex :(BOOL)shouldAnimate
 {
-    int row = static_cast<int>((m_tableViewFloorNames.size()-1)-floorIndex);
+    int floorCount = [m_tableViewFloorNames count];
+    int row = floorCount - 1 - floorIndex;
     NSIndexPath* ipath = [NSIndexPath indexPathForRow:row inSection:0];
-
-
-    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
 
     CGFloat topY = self.pFloorListView.frame.origin.y;
     CGFloat bottomY = topY+self.pFloorListView.frame.size.height;
@@ -675,7 +661,7 @@ namespace
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return static_cast<int>(m_tableViewFloorNames.size());
+    return [m_tableViewFloorNames count];
 }
 
 static NSString *CellIdentifier = @"floorCell";
@@ -687,7 +673,7 @@ static NSString *CellIdentifier = @"floorCell";
     const float divisionLabelSpacing = 5;
 
     int floorIndex = static_cast<int>(indexPath.row);
-    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    int floorCount = [m_tableViewFloorNames count];
 
     InteriorsExplorerFloorItemView *cell = (InteriorsExplorerFloorItemView*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil)
@@ -712,8 +698,7 @@ static NSString *CellIdentifier = @"floorCell";
         }
     }
 
-    const std::string& name = m_tableViewFloorNames.at(floorIndex);
-    NSString* nameString = [NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding];
+    NSString* nameString = m_tableViewFloorNames[floorIndex];
 
     BOOL top = (floorIndex==0);
     BOOL bottom = (floorIndex==floorCount-1);

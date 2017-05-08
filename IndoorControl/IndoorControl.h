@@ -33,9 +33,14 @@
     BOOL m_isSliderAnimPlaying;
 
     CGRect m_scrollRect;
+    NSArray<NSString*>* m_tableViewFloorNames;
 }
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale andDelegate:(id<IndoorControlDelegate>)delegate;
+
+- (void) setFloorName:(NSString*)name;
+
+- (void) updateFloors:(NSArray<NSString*>*)floorNumbers withCurrentFloor:(int)currentlySelectedFloor;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
 
