@@ -12,7 +12,11 @@ typedef NS_ENUM(NSInteger, MarkerElevationMode)
 
 @interface WRLDMarker : NSObject
 
-+ (instancetype)marker;
++ (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
++ (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate
+                       inIndoorMap:(NSString *)indoorMapId
+                           onFloor:(NSInteger)floorId;
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 

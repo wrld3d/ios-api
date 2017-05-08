@@ -24,21 +24,38 @@
     bool m_addedToMapView;
 }
 
-+ (instancetype)marker
++ (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    return [[self alloc] initProperties];
+    return [[self alloc] initWithCoordinate:coordinate
+                             andIndoorMapId:@""
+                                 andFloorId:0];
 }
 
-- (instancetype)initProperties
++ (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate
+                       inIndoorMap:(NSString *)indoorMapId
+                           onFloor:(NSInteger)floorId;
+{
+    return [[self alloc] initWithCoordinate:coordinate
+                             andIndoorMapId:indoorMapId
+                                 andFloorId:floorId];
+}
+
+- (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate
+                    andIndoorMapId:(NSString *)indoorMapId
+                        andFloorId:(NSInteger)floorId
 {
     if (self = [super init])
     {
+        _coordinate = coordinate;
+        _elevation = 0;
         _elevationMode = MarkerElevationMode::HeightAboveSeaLevel;
+        _drawOrder = 0;
         _title = @"";
         _styleName = @"marker_default";
         _userData = @"";
         _iconKey = @"misc";
-        _indoorMapId = @"";
+        _indoorMapId = indoorMapId;
+        _indoorFloorId = floorId;
 
         m_pMarkersApi = NULL;
         m_addedToMapView = false;
@@ -66,6 +83,7 @@
     builder.SetLabelText([_title UTF8String]);
     builder.SetLabelStyle([_styleName UTF8String]);
     builder.SetLabelIcon([_iconKey UTF8String]);
+    builder.SetInterior([_indoorMapId UTF8String], _indoorFloorId);
     m_markerId = m_pMarkersApi->CreateMarker(builder.Build());
     m_addedToMapView = true;
 }
