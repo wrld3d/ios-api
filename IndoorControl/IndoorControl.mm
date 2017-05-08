@@ -139,7 +139,7 @@ namespace
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
 
-        [self addSubview:self.pDetailsPanel];
+//        [self addSubview:self.pDetailsPanel];
 
         self.pDetailsPanel.alpha = 0.0f;
 
@@ -253,7 +253,6 @@ namespace
 
 - (void) setSelectedFloor:(int)floorIndex
 {
-//    Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range 0 << %d << %d", floorIndex, m_tableViewFloorNames.size());
     [self refreshFloorIndicator:floorIndex];
 
     if(!m_draggingFloorButton)
@@ -500,6 +499,8 @@ namespace
     CGPoint localButtonCenter = CGPointMake(0.0f, m_halfButtonHeight);
     CGPoint pointInTable = [self.pFloorChangeButton convertPoint:localButtonCenter toView:self.pFloorListView];
     m_floorSelection = 1.0f - static_cast<float>((pointInTable.y-m_halfDivisionHeight)/(self.pFloorListView.contentSize.height-m_floorDivisionHeight));
+    
+    [m_delegate onFloorSliderDragged:m_floorSelection];
 
     [self refreshArrowState];
 }
@@ -509,7 +510,6 @@ namespace
     if(recognizer.state == UIGestureRecognizerStateChanged ||
        recognizer.state == UIGestureRecognizerStateEnded)
     {
-
         CGPoint translation = [recognizer translationInView:self.pFloorChangeButton];
         CGRect buttonFrame = self.pFloorChangeButton.frame;
         buttonFrame.origin.y += translation.y;
@@ -554,6 +554,7 @@ namespace
     if(m_draggingFloorButton)
     {
         [self.pFloorChangeButton setSelected:YES];
+        [m_delegate onFloorSliderPressed];
     }
     else
     {

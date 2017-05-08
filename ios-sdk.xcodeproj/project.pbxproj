@@ -19,6 +19,8 @@
 		2C32D2261EBB42AD00FC1B12 /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */; };
 		2C32D2281EBB42F200FC1B12 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2C32D2271EBB42F200FC1B12 /* images */; };
 		2C4A1F321EBB6C7A007D74C3 /* IndoorControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */; };
+		2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */; };
 		521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */; };
 		521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */; };
@@ -113,6 +115,8 @@
 		2C4A1F301EBB6C7A007D74C3 /* IndoorControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorControlViewController.h; sourceTree = "<group>"; };
 		2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndoorControlViewController.m; sourceTree = "<group>"; };
 		2CFE0A591EC08B04006D51E6 /* IndoorControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorControlDelegate.h; sourceTree = "<group>"; };
+		2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorMap.h; sourceTree = "<group>"; };
+		2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDIndoorMap.m; sourceTree = "<group>"; };
 		3D2236C4A4CFE03870348C69 /* Pods-WrldSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.debug.xcconfig"; sourceTree = "<group>"; };
 		521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapCamera.mm; sourceTree = "<group>"; };
 		521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapCamera.h; sourceTree = "<group>"; };
@@ -208,7 +212,6 @@
 		2C32D1E71EBB42AD00FC1B12 /* IndoorControl */ = {
 			isa = PBXGroup;
 			children = (
-				2CFE0A591EC08B04006D51E6 /* IndoorControlDelegate.h */,
 				2C32D2271EBB42F200FC1B12 /* images */,
 				2C32D1E81EBB42AD00FC1B12 /* ImageHelpers.h */,
 				2C32D1E91EBB42AD00FC1B12 /* ImageHelpers.mm */,
@@ -216,6 +219,9 @@
 				2C32D1FE1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm */,
 				2C32D1FF1EBB42AD00FC1B12 /* IndoorControl.h */,
 				2C32D2001EBB42AD00FC1B12 /* IndoorControl.mm */,
+				2CFE0A591EC08B04006D51E6 /* IndoorControlDelegate.h */,
+				2C4A1F301EBB6C7A007D74C3 /* IndoorControlViewController.h */,
+				2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */,
 				2C32D2011EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.h */,
 				2C32D2021EBB42AD00FC1B12 /* InteriorsExplorerFloorItemView.mm */,
 				2C32D2031EBB42AD00FC1B12 /* UIButton+DefaultStates.h */,
@@ -226,8 +232,6 @@
 				2C32D2081EBB42AD00FC1B12 /* UIHelpers.mm */,
 				2C32D2091EBB42AD00FC1B12 /* UIView+TouchExclusivity.h */,
 				2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */,
-				2C4A1F301EBB6C7A007D74C3 /* IndoorControlViewController.h */,
-				2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */,
 			);
 			path = IndoorControl;
 			sourceTree = "<group>";
@@ -337,6 +341,7 @@
 				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 				521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */,
+				2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
+				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
+				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +553,7 @@
 				521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */,
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
+				2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */,
 				E0F4E1761EB347FB00949ACE /* WRLDMapView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

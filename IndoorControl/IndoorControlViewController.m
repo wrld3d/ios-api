@@ -52,6 +52,15 @@
     {
         [self.pIndoorControl setFullyOnScreen];
         [self.pIndoorControl setTouchEnabled:YES];
+        
+        NSMutableArray<NSString*>* floorNames = [NSMutableArray array];
+        WRLDIndoorMap* indoorMap = [_mapView activeIndoorMap];
+        for (WRLDIndoorMapFloor* floor in indoorMap.floors)
+        {
+            [floorNames addObject:floor.name];
+        }
+        
+        [self.pIndoorControl updateFloors:floorNames withCurrentFloor:0];
     }
     else
     {
@@ -65,9 +74,22 @@
     [_mapView exitIndoorMap];
 }
 
+- (void) onFloorSliderPressed
+{
+    [_mapView expandIndoorMapView];
+}
+
 - (void) onFloorSliderReleased:(int)floorIndex
 {
     [_mapView setFloorByIndex:floorIndex];
+    [_mapView collapseIndoorMapView];
+}
+
+- (void) onFloorSliderDragged:(float)floorInterpolation
+{
+    int numberOfFloors = [[_mapView activeIndoorMap].floors count];
+    float interpolation = floorInterpolation * (numberOfFloors - 1);
+    [_mapView setFloorInterpolation:interpolation];
 }
 
 @end
