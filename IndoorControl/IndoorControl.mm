@@ -559,7 +559,8 @@ namespace
     {
         int floorCount = [m_tableViewFloorNames count] - 1;
         int floorIndex = (int)roundf(m_floorSelection*floorCount);
-        // m_pInterop->SelectFloor(floorIndex);
+        
+        [m_delegate onFloorSliderReleased:floorIndex];
 
         [self moveButtonToFloorIndex:floorIndex :YES];
         [self.pFloorChangeButton setSelected:NO];

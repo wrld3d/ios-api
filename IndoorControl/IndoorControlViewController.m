@@ -65,4 +65,9 @@
     [_mapView exitIndoorMap];
 }
 
+- (void) onFloorSliderReleased:(int)floorIndex
+{
+    [_mapView setFloorByIndex:floorIndex];
+}
+
 @end
