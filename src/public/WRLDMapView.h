@@ -6,6 +6,7 @@
 #import "WRLDMapViewDelegate.h"
 #import "WRLDMapCamera.h"
 #import "WRLDCoordinateBounds.h"
+#import "WRLDIndoorMap.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -97,9 +98,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isIndoors;
 
+- (WRLDIndoorMap*)activeIndoorMap;
+
 - (int)currentFloorIndex;
 
 - (void)setFloorByIndex:(int)floorIndex;
+
+- (void)setFloorInterpolation:(float)floorInterpolation;
 
 - (void)moveUpFloor;
 

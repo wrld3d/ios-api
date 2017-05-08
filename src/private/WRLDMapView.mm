@@ -12,6 +12,7 @@
 #include "EegeoIndoorsApi.h"
 #include "InteriorInteractionModel.h"
 #include "EegeoApiHost.h"
+#include "EegeoIndoorMapData.h"
 
 #include <string>
 
@@ -567,6 +568,30 @@ const NSUInteger targetFrameInterval = 1;
     return [self getMapApi].GetIndoorsApi().HasActiveIndoorMap();
 }
 
+- (WRLDIndoorMap*) activeIndoorMap
+{
+    const Eegeo::Api::EegeoIndoorMapData& indoorMapData = [self getMapApi].GetIndoorsApi().GetIndoorMapData();
+    
+    NSString* indoorMapId = [NSString stringWithCString:indoorMapData.indoorMapId.c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString* indoorMapName = [NSString stringWithCString:indoorMapData.indoorMapName.c_str() encoding:[NSString defaultCStringEncoding]];
+    NSMutableArray<WRLDIndoorMapFloor*>* floors = [NSMutableArray array];
+    for (int i=0; i<indoorMapData.floorCount; ++i)
+    {
+        const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
+        NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString* floorName = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+        int floorIndex = floorData.floorNumber;
+        
+        WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];
+        [floors addObject:floor];
+    }
+    NSString* userData = [NSString stringWithCString:indoorMapData.userData.c_str() encoding:[NSString defaultCStringEncoding]];
+    
+    WRLDIndoorMap* indoorMap = [[WRLDIndoorMap alloc] initWithId:indoorMapId name:indoorMapName floors:[floors copy] userData:userData];
+    
+    return indoorMap;
+}
+
 - (int)currentFloorIndex
 {
     return [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
@@ -575,6 +600,12 @@ const NSUInteger targetFrameInterval = 1;
 - (void)setFloorByIndex:(int)floorIndex
 {
     [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(floorIndex);
+}
+
+- (void)setFloorInterpolation:(float)floorInterpolation
+{
+    Eegeo::Resources::Interiors::InteriorInteractionModel& interactionModel = [self getMapApi].GetExpandFloorsApi().GetInteriorInteractionModel();
+    interactionModel.SetFloorParam(floorInterpolation);
 }
 
 - (void)moveUpFloors:(int)numberOfFloors
