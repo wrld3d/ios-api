@@ -28,11 +28,15 @@
         _mapView = (WRLDMapView*)[self view];
     }
     
-     _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-     _mapViewDelegate = _mapView.delegate ? _mapView.delegate : [AppMapViewDelegate alloc];
+    _mapViewDelegate = _mapView.delegate ? _mapView.delegate : [AppMapViewDelegate alloc];
 
-     _mapView.delegate = _mapViewDelegate;
+    _mapView.delegate = _mapViewDelegate;
+    
+    [_mapView setCenterCoordinate:CLLocationCoordinate2DMake(56.4599662, -2.9781313)
+                        zoomLevel:15
+                         animated:NO];
 }
 
 
@@ -74,9 +78,10 @@
 
 #pragma mark - AppMapViewDelegate
 
--(void)initialMapSceneLoaded:(WRLDMapView *)mapView
+- (void)initialMapSceneLoaded:(WRLDMapView *)mapView
 {
     NSLog(@"ViewController - streaming of initial map scene completed.");
 
 }
+
 @end

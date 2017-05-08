@@ -142,10 +142,10 @@ const NSUInteger targetFrameInterval = 1;
     
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
 
-    const double latitude = 37.7858;
-    const double longitude = -122.401;
+    const double latitude = 0.0;
+    const double longitude = 0.0;
     const double interestAltitude = 0.0;
-    const double distanceToInterest = 1781.0;
+    const double distanceToInterest = 800000;
     const double heading = 0.0;
     const double pitch = 0.0;
     const double setPitch = false;
