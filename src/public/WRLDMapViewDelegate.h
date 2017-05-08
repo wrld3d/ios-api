@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @class WRLDMapView;
+@class WRLDMarker;
 
 //! define optional methods which can be implemented in order to receive update messages from the map
 
@@ -9,5 +10,7 @@
 @optional
 
 - (void)initialMapSceneLoaded:(WRLDMapView *)mapView;
+
+- (void)markerTapped:(WRLDMarker *)marker;
 
 @end

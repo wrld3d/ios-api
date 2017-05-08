@@ -6,6 +6,7 @@
 #include "EegeoApiHostDeclarations.h"
 #include "EegeoApi.h"
 #include "ICallback.h"
+#include "IMarker.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -17,6 +18,7 @@ public:
 private:
     
     void OnInitialStreamingComplete();
+    void OnMarkerTapped(const Eegeo::Markers::IMarker& marker);
     
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
@@ -25,7 +27,7 @@ private:
     
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_initialStreamingCompleteHandler;
     
-    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Markers::IMarker> m_markerTappedHandler;
 };
 
 

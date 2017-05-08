@@ -10,6 +10,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeFromMapView;
 
+- (int)getId;
+
+- (bool)isOnMapView;
+
 @end
 
 NS_ASSUME_NONNULL_END

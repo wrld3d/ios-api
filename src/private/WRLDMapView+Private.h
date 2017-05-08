@@ -11,9 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMapView (Private)
 
--(void)notifyInitialStreamingCompleted;
+- (void)notifyInitialStreamingCompleted;
 
--(Eegeo::Api::EegeoMapApi&)getMapApi;
+- (void)notifyMarkerTapped:(int)markerId;
+
+- (Eegeo::Api::EegeoMapApi&)getMapApi;
 
 @end
 

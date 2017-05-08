@@ -42,6 +42,8 @@
     CLLocationDegrees m_startLocationLongitude;
     bool m_startLocationLatitudeSet;
     bool m_startLocationLongitudeSet;
+
+    std::map<int, WRLDMarker *> m_markersOnMap;
 }
 
 
@@ -92,6 +94,8 @@ const NSUInteger targetFrameInterval = 1;
     m_startLocationLongitude = 0.0;
     m_startLocationLatitudeSet = false;
     m_startLocationLongitudeSet = false;
+
+    m_markersOnMap = {};
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -550,7 +554,9 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)addMarker:(WRLDMarker *)marker
 {
+    if ([marker isOnMapView]) return;
     [marker addToMapView:self];
+    m_markersOnMap[[marker getId]] = marker;
 }
 
 - (void)addMarkers:(NSArray <WRLDMarker *> *)markers
@@ -562,6 +568,8 @@ const NSUInteger targetFrameInterval = 1;
 }
 - (void)removeMarker:(WRLDMarker *)marker
 {
+    if (![marker isOnMapView]) return;
+    m_markersOnMap.erase([marker getId]);
     [marker removeFromMapView];
 }
 
@@ -647,8 +655,18 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)notifyInitialStreamingCompleted
 {
-    if ([self.delegate respondsToSelector:@selector(initialMapSceneLoaded:)]) {
+    if ([self.delegate respondsToSelector:@selector(initialMapSceneLoaded:)])
+    {
         [self.delegate initialMapSceneLoaded:self];
+    }
+}
+
+- (void)notifyMarkerTapped:(int)markerId
+{
+    if (m_markersOnMap.count(markerId) == 0) return;
+    if ([self.delegate respondsToSelector:@selector(markerTapped:)])
+    {
+        [self.delegate markerTapped:m_markersOnMap.at(markerId)];
     }
 }
 
