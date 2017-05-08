@@ -664,9 +664,9 @@ const NSUInteger targetFrameInterval = 1;
 - (void)notifyMarkerTapped:(int)markerId
 {
     if (m_markersOnMap.count(markerId) == 0) return;
-    if ([self.delegate respondsToSelector:@selector(markerTapped:)])
+    if ([self.delegate respondsToSelector:@selector(didTapMarker:)])
     {
-        [self.delegate markerTapped:m_markersOnMap.at(markerId)];
+        [self.delegate didTapMarker:m_markersOnMap.at(markerId)];
     }
 }
 

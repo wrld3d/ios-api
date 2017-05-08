@@ -11,6 +11,6 @@
 
 - (void)initialMapSceneLoaded:(WRLDMapView *)mapView;
 
-- (void)markerTapped:(WRLDMarker *)marker;
+- (void)didTapMarker:(WRLDMarker *)marker;
 
 @end

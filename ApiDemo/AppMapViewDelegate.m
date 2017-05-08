@@ -9,7 +9,7 @@
     NSLog(@"AppMapViewDelegate - streaming of initial map scene completed.");
 }
 
-- (void)markerTapped:(WRLDMarker *)marker
+- (void)didTapMarker:(WRLDMarker *)marker
 {
     NSLog(@"AppMapViewDelegate - marker tapped: %@", marker.title);
 }
