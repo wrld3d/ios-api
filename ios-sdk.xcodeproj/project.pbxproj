@@ -352,15 +352,12 @@
 				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
 				E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */,
 				521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */,
-<<<<<<< HEAD
 				2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */,
-=======
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 				E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */,
 				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
 				D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */,
 				D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */,
->>>>>>> ios-api-host
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -373,11 +370,8 @@
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
-<<<<<<< HEAD
 				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
-=======
 				D0AAB6581EBB8C6600384605 /* WRLDMarker.h */,
->>>>>>> ios-api-host
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -528,17 +522,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				2C32D2281EBB42F200FC1B12 /* images in Resources */,
-				E0F4E1631EB3464600949ACE /* MainStoryboard_iPad.storyboard in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
-				2C32D20C1EBB42AD00FC1B12 /* DebugIndoorControl.xib in Resources */,
 				E0F4E1641EB3464600949ACE /* MainStoryboard_iPhone.storyboard in Resources */,
-=======
 				E0F4E1631EB3464600949ACE /* Main.storyboard in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
 				2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */,
->>>>>>> ios-api-host
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
