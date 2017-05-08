@@ -95,7 +95,7 @@
 {
     _drawOrder = drawOrder;
     if (!m_addedToMapView) return;
-    m_pMarkersApi->SetSubPriority(m_markerId, _drawOrder);
+    m_pMarkersApi->SetSubPriority(m_markerId, static_cast<int>(_drawOrder));
 }
 
 - (void)setTitle:(NSString *)title
@@ -127,7 +127,7 @@
     Eegeo::Markers::MarkerBuilder builder;
     builder.SetLocation(_coordinate.latitude, _coordinate.longitude);
     builder.SetAnchorHeight(_elevation);
-    builder.SetSubPriority(_drawOrder);
+    builder.SetSubPriority(static_cast<int>(_drawOrder));
     if (_elevationMode == MarkerElevationMode::HeightAboveGround)
     {
         builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
@@ -139,7 +139,7 @@
     builder.SetLabelText([_title UTF8String]);
     builder.SetLabelStyle([_styleName UTF8String]);
     builder.SetLabelIcon([_iconKey UTF8String]);
-    builder.SetInterior([_indoorMapId UTF8String], _indoorFloorId);
+    builder.SetInterior([_indoorMapId UTF8String], static_cast<int>(_indoorFloorId));
     m_markerId = m_pMarkersApi->CreateMarker(builder.Build());
     m_addedToMapView = true;
 }
