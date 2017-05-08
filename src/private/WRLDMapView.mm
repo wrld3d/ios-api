@@ -548,22 +548,29 @@ const NSUInteger targetFrameInterval = 1;
 #pragma mark - markers -
 
 
-- (WRLDMarker *)addMarker:(WRLDMarkerOptions *)markerOptions
+- (void)addMarker:(WRLDMarker *)marker
 {
-    return [[WRLDMarker alloc] initWithMarkerOptions:markerOptions
-                                     andAddToMapView:self];
+    [marker addToMapView:self];
 }
 
-- (NSArray <WRLDMarker *> *)addMarkers:(NSArray <WRLDMarkerOptions *> *)markerOptionsArray
+- (void)addMarkers:(NSArray <WRLDMarker *> *)markers
 {
-    NSMutableArray* markersArray = [[NSMutableArray alloc] init];
-    
-    for (WRLDMarkerOptions* markerOptions in markerOptionsArray)
+    for (WRLDMarker* marker in markers)
     {
-        [markersArray addObject:[self addMarker:markerOptions]];
+        [self addMarker:marker];
     }
-    
-    return markersArray;
+}
+- (void)removeMarker:(WRLDMarker *)marker
+{
+    [marker removeFromMapView];
+}
+
+- (void)removeMarkers:(NSArray <WRLDMarker *> *)markers
+{
+    for (WRLDMarker* marker in markers)
+    {
+        [self removeMarker:marker];
+    }
 }
 
 #pragma mark - controlling the indoor map view -

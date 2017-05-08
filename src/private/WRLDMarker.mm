@@ -7,24 +7,54 @@
 #include "EegeoMarkersApi.h"
 #include "MarkerTypes.h"
 
+@interface WRLDMarker ()
+
+@property (nonatomic, readwrite, copy) NSString* styleName;
+
+@property (nonatomic, readwrite, copy) NSString* indoorMapId;
+
+@property (nonatomic, readwrite) NSInteger indoorFloorId;
+
+@end
 
 @implementation WRLDMarker
 {
     Eegeo::Api::EegeoMarkersApi* m_pMarkersApi;
-    NSInteger m_markerId;
+    int m_markerId;
+    bool m_addedToMapView;
 }
 
-- (instancetype)initWithMarkerOptions:(WRLDMarkerOptions *)markerOptions
-                      andAddToMapView:(WRLDMapView*) mapView
++ (instancetype)marker
 {
-    self = [super init];
-    
+    return [[self alloc] initProperties];
+}
+
+- (instancetype)initProperties
+{
+    if (self = [super init])
+    {
+        _elevationMode = MarkerElevationMode::HeightAboveSeaLevel;
+        _title = @"";
+        _styleName = @"marker_default";
+        _userData = @"";
+        _iconKey = @"misc";
+        _indoorMapId = @"";
+
+        m_pMarkersApi = NULL;
+        m_addedToMapView = false;
+    }
+    return self;
+}
+
+- (void)addToMapView:(WRLDMapView *) mapView
+{
+    if (m_addedToMapView) return;
     m_pMarkersApi = &[mapView getMapApi].GetMarkersApi();
 
     Eegeo::Markers::MarkerBuilder builder;
-    builder.SetLocation(markerOptions.coordinate.latitude, markerOptions.coordinate.longitude);
-    builder.SetAnchorHeight(markerOptions.elevation);
-    builder.SetSubPriority(markerOptions.drawOrder);
+    builder.SetLocation(_coordinate.latitude, _coordinate.longitude);
+    builder.SetAnchorHeight(_elevation);
+    builder.SetSubPriority(_drawOrder);
     if (_elevationMode == MarkerElevationMode::HeightAboveGround)
     {
         builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
@@ -33,38 +63,40 @@
     {
         builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveSeaLevel);
     }
-    builder.SetLabelText([markerOptions.title UTF8String]);
-    builder.SetLabelStyle([markerOptions.styleName UTF8String]);
-    builder.SetLabelIcon([markerOptions.iconKey UTF8String]);
+    builder.SetLabelText([_title UTF8String]);
+    builder.SetLabelStyle([_styleName UTF8String]);
+    builder.SetLabelIcon([_iconKey UTF8String]);
     m_markerId = m_pMarkersApi->CreateMarker(builder.Build());
-    
-    _coordinate = markerOptions.coordinate;
-    _elevation = markerOptions.elevation;
-    _elevationMode = markerOptions.elevationMode;
-    _drawOrder = markerOptions.drawOrder;
-    _title = markerOptions.title;
-    _styleName = markerOptions.styleName;
-    _userData = markerOptions.userData;
-    _iconKey = markerOptions.iconKey;
-    
-    return self;
+    m_addedToMapView = true;
+}
+
+- (void)removeFromMapView
+{
+    if (m_addedToMapView && m_pMarkersApi != NULL)
+    {
+        m_pMarkersApi->DestroyMarker(m_markerId);
+        m_addedToMapView = false;
+    }
 }
 
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate
 {
     _coordinate = coordinate;
+    if (!m_addedToMapView) return;
     m_pMarkersApi->SetLocation(m_markerId, _coordinate.latitude, _coordinate.longitude);
 }
 
 - (void)setElevation:(CLLocationDistance)elevation
 {
     _elevation = elevation;
+    if (!m_addedToMapView) return;
     m_pMarkersApi->SetAnchorHeight(m_markerId, _elevation);
 }
 
 - (void)setElevationMode:(MarkerElevationMode)elevationMode
 {
     _elevationMode = elevationMode;
+    if (!m_addedToMapView) return;
     if (_elevationMode == MarkerElevationMode::HeightAboveGround)
     {
         m_pMarkersApi->SetAnchorHeightMode(m_markerId, Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
@@ -78,12 +110,14 @@
 - (void)setDrawOrder:(NSInteger)drawOrder
 {
     _drawOrder = drawOrder;
+    if (!m_addedToMapView) return;
     m_pMarkersApi->SetSubPriority(m_markerId, _drawOrder);
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = title;
+    if (!m_addedToMapView) return;
     m_pMarkersApi->SetLabelText(m_markerId, [_title UTF8String]);
 }
 
@@ -95,6 +129,7 @@
 - (void)setIconKey:(NSString *)iconKey
 {
     _iconKey = iconKey;
+    if (!m_addedToMapView) return;
     m_pMarkersApi->SetIconKey(m_markerId, [_iconKey UTF8String]);
 }
 

@@ -1,12 +1,18 @@
 #pragma once
 
-#import "WRLDMarkerOptions.h"
+#import <CoreLocation/CoreLocation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class WRLDMapView;
+typedef NS_ENUM(NSInteger, MarkerElevationMode)
+{
+    HeightAboveSeaLevel,
+    HeightAboveGround
+};
 
 @interface WRLDMarker : NSObject
+
++ (instancetype)marker;
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 
@@ -16,13 +22,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSInteger drawOrder;
 
-@property (nonatomic) NSString* title;
+@property (nonatomic, copy) NSString* title;
 
-@property (nonatomic, readonly) NSString* styleName;
+@property (nonatomic, readonly, copy) NSString* styleName;
 
-@property (nonatomic) NSString* userData;
+@property (nonatomic, copy) NSString* userData;
 
-@property (nonatomic) NSString* iconKey;
+@property (nonatomic, copy) NSString* iconKey;
+
+@property (nonatomic, readonly, copy) NSString* indoorMapId;
+
+@property (nonatomic, readonly) NSInteger indoorFloorId;
 
 @end
 
