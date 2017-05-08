@@ -48,7 +48,7 @@
     {
         _coordinate = coordinate;
         _elevation = 0;
-        _elevationMode = MarkerElevationMode::HeightAboveSeaLevel;
+        _elevationMode = MarkerElevationMode::HeightAboveGround;
         _drawOrder = 0;
         _title = @"";
         _styleName = @"marker_default";
