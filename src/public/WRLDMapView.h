@@ -113,19 +113,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isIndoors;
 
-- (int)currentFloorIndex;
+- (NSInteger)currentFloorIndex;
 
-- (void)setFloorByIndex:(int)floorIndex;
+- (void)setFloorByIndex:(NSInteger)floorIndex;
 
-- (void)setFloorInterpolation:(float)floorInterpolation;
+- (void)setFloorInterpolation:(CGFloat)floorInterpolation;
 
 - (void)moveUpFloor;
 
 - (void)moveDownFloor;
 
-- (void)moveUpFloors:(int)numberOfFloors;
+- (void)moveUpFloors:(NSInteger)numberOfFloors;
 
-- (void)moveDownFloors:(int)numberOfFloors;
+- (void)moveDownFloors:(NSInteger)numberOfFloors;
 
 - (void)expandIndoorMapView;
 

@@ -623,32 +623,33 @@ const NSUInteger targetFrameInterval = 1;
     _activeIndoorMap = indoorMap;
 }
 
-- (int)currentFloorIndex
+- (NSInteger)currentFloorIndex
 {
-    return [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
+    int currentFloor = [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
+    return static_cast<NSInteger>(currentFloor);
 }
 
-- (void)setFloorByIndex:(int)floorIndex
+- (void)setFloorByIndex:(NSInteger)floorIndex
 {
-    [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(floorIndex);
+    [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(static_cast<int>(floorIndex));
 }
 
-- (void)setFloorInterpolation:(float)floorInterpolation
+- (void)setFloorInterpolation:(CGFloat)floorInterpolation
 {
     Eegeo::Resources::Interiors::InteriorInteractionModel& interactionModel = [self getMapApi].GetExpandFloorsApi().GetInteriorInteractionModel();
-    interactionModel.SetFloorParam(floorInterpolation);
+    interactionModel.SetFloorParam(static_cast<float>(floorInterpolation));
 }
 
-- (void)moveUpFloors:(int)numberOfFloors
+- (void)moveUpFloors:(NSInteger)numberOfFloors
 {
-    const int currentFloor = [self currentFloorIndex];
+    NSInteger currentFloor = [self currentFloorIndex];
     if (currentFloor != -1)
     {
         [self setFloorByIndex:(currentFloor + numberOfFloors)];
     }
 }
 
-- (void)moveDownFloors:(int)numberOfFloors
+- (void)moveDownFloors:(NSInteger)numberOfFloors
 {
     [self moveUpFloors:-numberOfFloors];
 }
