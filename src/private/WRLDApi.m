@@ -21,6 +21,11 @@
 + (void)load
 {
     [WRLDApi eegeoApiInstance].apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"WrldApiKey"];
+    
+    if([WRLDApi eegeoApiInstance].apiKey.length != 32)
+    {
+        NSLog(@"No valid api key set. Set a valid api key in info.plist");
+    }
 }
 
 + (instancetype)eegeoApiInstance
