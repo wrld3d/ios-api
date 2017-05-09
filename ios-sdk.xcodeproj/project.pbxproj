@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2C32D20B1EBB42AD00FC1B12 /* DebugIndoorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */; };
-		2C32D20C1EBB42AD00FC1B12 /* DebugIndoorControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C32D1E61EBB42AD00FC1B12 /* DebugIndoorControl.xib */; };
 		2C32D20D1EBB42AD00FC1B12 /* ImageHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1E91EBB42AD00FC1B12 /* ImageHelpers.mm */; };
 		2C32D2201EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1FE1EBB42AD00FC1B12 /* ImmediatePanGestureRecognizer.mm */; };
 		2C32D2211EBB42AD00FC1B12 /* IndoorControl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2001EBB42AD00FC1B12 /* IndoorControl.mm */; };
@@ -18,6 +17,7 @@
 		2C32D2251EBB42AD00FC1B12 /* UIHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D2081EBB42AD00FC1B12 /* UIHelpers.mm */; };
 		2C32D2261EBB42AD00FC1B12 /* UIView+TouchExclusivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */; };
 		2C32D2281EBB42F200FC1B12 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2C32D2271EBB42F200FC1B12 /* images */; };
+		2C3401061EC0CED800F8CEF0 /* WRLDIndoorMapDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C4A1F321EBB6C7A007D74C3 /* IndoorControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */; };
 		2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */; };
@@ -117,6 +117,7 @@
 		2C32D2091EBB42AD00FC1B12 /* UIView+TouchExclusivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TouchExclusivity.h"; sourceTree = "<group>"; };
 		2C32D20A1EBB42AD00FC1B12 /* UIView+TouchExclusivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TouchExclusivity.m"; sourceTree = "<group>"; };
 		2C32D2271EBB42F200FC1B12 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorMapDelegate.h; sourceTree = "<group>"; };
 		2C4A1F301EBB6C7A007D74C3 /* IndoorControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorControlViewController.h; sourceTree = "<group>"; };
 		2C4A1F311EBB6C7A007D74C3 /* IndoorControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndoorControlViewController.m; sourceTree = "<group>"; };
 		2CFE0A591EC08B04006D51E6 /* IndoorControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorControlDelegate.h; sourceTree = "<group>"; };
@@ -372,6 +373,7 @@
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
 				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
 				D0AAB6581EBB8C6600384605 /* WRLDMarker.h */,
+				2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -406,6 +408,7 @@
 				E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
+				2C3401061EC0CED800F8CEF0 /* WRLDIndoorMapDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,10 +527,8 @@
 			files = (
 				2C32D2281EBB42F200FC1B12 /* images in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
-				E0F4E1641EB3464600949ACE /* MainStoryboard_iPhone.storyboard in Resources */,
 				E0F4E1631EB3464600949ACE /* Main.storyboard in Resources */,
 				E0F4E1571EB3447E00949ACE /* Assets.xcassets in Resources */,
-				2CF9E7391EB8D1A60086600C /* IndoorControl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

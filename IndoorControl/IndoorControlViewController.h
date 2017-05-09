@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@import Wrld;
 
-@interface IndoorControlViewController : UIView 
+@interface IndoorControlViewController : UIView <WRLDIndoorMapDelegate>
+
+- (void) didEnterIndoorMap;
+- (void) didExitIndoorMap;
 
 @end

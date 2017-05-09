@@ -1,7 +1,6 @@
 #import "IndoorControlViewController.h"
 #import "IndoorControl.h"
 #import "IndoorControlDelegate.h"
-@import Wrld;
 
 
 @interface IndoorControlViewController () <IndoorControlDelegate>
@@ -34,7 +33,6 @@
     
     if (hitView == self)
     {
-        [self dummyUpdate];
         return nil;
     }
     
@@ -44,11 +42,22 @@
 - (void) awakeFromNib
 {
     [super awakeFromNib];
+    [_mapView setIndoorMapDelegate:self];
 }
 
-- (void) dummyUpdate
+- (void) didEnterIndoorMap
 {
-    if (_mapView.isIndoors)
+    [self showIndoorMapSlider];
+}
+
+- (void) didExitIndoorMap
+{
+    [self hideIndoorMapSlider];
+}
+
+- (void) showIndoorMapSlider
+{
+    if ([_mapView isIndoors])
     {
         [self.pIndoorControl setFullyOnScreen];
         [self.pIndoorControl setTouchEnabled:YES];
@@ -62,12 +71,14 @@
         
         [self.pIndoorControl updateFloors:floorNames withCurrentFloor:0];
     }
-    else
-    {
-        [self.pIndoorControl setTouchEnabled:NO];
-        [self.pIndoorControl setFullyOffScreen];
-    }
 }
+
+- (void) hideIndoorMapSlider
+{
+    [self.pIndoorControl setTouchEnabled:NO];
+    [self.pIndoorControl setFullyOffScreen];
+}
+
 
 - (void) onCancelButtonPressed
 {
@@ -89,6 +100,9 @@
 {
     int numberOfFloors = [[_mapView activeIndoorMap].floors count];
     float interpolation = floorInterpolation * (numberOfFloors - 1);
+    int floorIndex = lroundf(interpolation);
+    
+    [_pIndoorControl setSelectedFloor:floorIndex];
     [_mapView setFloorInterpolation:interpolation];
 }
 

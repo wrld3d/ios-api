@@ -599,7 +599,7 @@ const NSUInteger targetFrameInterval = 1;
     return [self getMapApi].GetIndoorsApi().HasActiveIndoorMap();
 }
 
-- (WRLDIndoorMap*) activeIndoorMap
+- (void) updateActiveIndoorMap
 {
     const Eegeo::Api::EegeoIndoorMapData& indoorMapData = [self getMapApi].GetIndoorsApi().GetIndoorMapData();
 
@@ -620,7 +620,7 @@ const NSUInteger targetFrameInterval = 1;
 
     WRLDIndoorMap* indoorMap = [[WRLDIndoorMap alloc] initWithId:indoorMapId name:indoorMapName floors:[floors copy] userData:userData];
 
-    return indoorMap;
+    _activeIndoorMap = indoorMap;
 }
 
 - (int)currentFloorIndex
@@ -697,6 +697,24 @@ const NSUInteger targetFrameInterval = 1;
     if ([self.delegate respondsToSelector:@selector(markerTapped:)])
     {
         [self.delegate markerTapped:m_markersOnMap.at(markerId)];
+    }
+}
+
+- (void)notifyEnteredIndoorMap
+{
+    if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
+    {
+        [self updateActiveIndoorMap];
+        [self.indoorMapDelegate didEnterIndoorMap];
+    }
+}
+
+- (void)notifyExitedIndoorMap
+{
+    if ([self.indoorMapDelegate respondsToSelector:@selector(didExitIndoorMap)])
+    {
+        _activeIndoorMap = nil;
+        [self.indoorMapDelegate didExitIndoorMap];
     }
 }
 

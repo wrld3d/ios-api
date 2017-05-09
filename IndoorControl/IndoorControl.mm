@@ -156,11 +156,6 @@ namespace
         [self hideFloorLabels];
         [self setHidden:YES];
         [self setArrowState:NO :NO];
-        
-        [self updateFloors: [NSArray arrayWithObjects: @"G", @"1", @"2", @"3", nil] withCurrentFloor:0];
-        [self setTouchEnabled:YES];
-        [self show];
-        [self setFullyOnScreen];
     }
 
     return self;
