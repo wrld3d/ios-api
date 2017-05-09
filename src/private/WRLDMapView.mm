@@ -599,28 +599,35 @@ const NSUInteger targetFrameInterval = 1;
     return [self getMapApi].GetIndoorsApi().HasActiveIndoorMap();
 }
 
-- (void) updateActiveIndoorMap
+- (void) refreshActiveIndoorMap
 {
-    const Eegeo::Api::EegeoIndoorMapData& indoorMapData = [self getMapApi].GetIndoorsApi().GetIndoorMapData();
-
-    NSString* indoorMapId = [NSString stringWithCString:indoorMapData.indoorMapId.c_str() encoding:[NSString defaultCStringEncoding]];
-    NSString* indoorMapName = [NSString stringWithCString:indoorMapData.indoorMapName.c_str() encoding:[NSString defaultCStringEncoding]];
-    NSMutableArray<WRLDIndoorMapFloor*>* floors = [NSMutableArray array];
-    for (int i=0; i<indoorMapData.floorCount; ++i)
+    if ([self isIndoors])
     {
-        const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
-        NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
-        NSString* floorName = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
-        int floorIndex = floorData.floorNumber;
+        const Eegeo::Api::EegeoIndoorMapData& indoorMapData = [self getMapApi].GetIndoorsApi().GetIndoorMapData();
 
-        WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];
-        [floors addObject:floor];
+        NSString* indoorMapId = [NSString stringWithCString:indoorMapData.indoorMapId.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString* indoorMapName = [NSString stringWithCString:indoorMapData.indoorMapName.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSMutableArray<WRLDIndoorMapFloor*>* floors = [NSMutableArray array];
+        for (int i=0; i<indoorMapData.floorCount; ++i)
+        {
+            const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
+            NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+            NSString* floorName = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+            int floorIndex = floorData.floorNumber;
+
+            WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];
+            [floors addObject:floor];
+        }
+        NSString* userData = [NSString stringWithCString:indoorMapData.userData.c_str() encoding:[NSString defaultCStringEncoding]];
+
+        WRLDIndoorMap* indoorMap = [[WRLDIndoorMap alloc] initWithId:indoorMapId name:indoorMapName floors:[floors copy] userData:userData];
+
+        _activeIndoorMap = indoorMap;
     }
-    NSString* userData = [NSString stringWithCString:indoorMapData.userData.c_str() encoding:[NSString defaultCStringEncoding]];
-
-    WRLDIndoorMap* indoorMap = [[WRLDIndoorMap alloc] initWithId:indoorMapId name:indoorMapName floors:[floors copy] userData:userData];
-
-    _activeIndoorMap = indoorMap;
+    else
+    {
+        _activeIndoorMap = nil;
+    }
 }
 
 - (NSInteger)currentFloorIndex
@@ -705,7 +712,7 @@ const NSUInteger targetFrameInterval = 1;
 {
     if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
     {
-        [self updateActiveIndoorMap];
+        [self refreshActiveIndoorMap];
         [self.indoorMapDelegate didEnterIndoorMap];
     }
 }
@@ -714,7 +721,7 @@ const NSUInteger targetFrameInterval = 1;
 {
     if ([self.indoorMapDelegate respondsToSelector:@selector(didExitIndoorMap)])
     {
-        _activeIndoorMap = nil;
+        [self refreshActiveIndoorMap];
         [self.indoorMapDelegate didExitIndoorMap];
     }
 }
