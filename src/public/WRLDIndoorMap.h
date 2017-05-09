@@ -6,7 +6,7 @@
 
 @property (readonly) NSString* floorId;
 @property (readonly) NSString* name;
-@property (readonly) int floorIndex;
+@property (readonly) NSInteger floorIndex;
 
 @end
 

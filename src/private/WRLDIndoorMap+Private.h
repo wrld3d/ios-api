@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDIndoorMapFloor (Private)
 
-- (id) initWithId: (NSString*)floorId name: (NSString*)name floorIndex:(int)floorIndex;
+- (id) initWithId: (NSString*)floorId name: (NSString*)name floorIndex:(NSInteger)floorIndex;
 
 @end
 

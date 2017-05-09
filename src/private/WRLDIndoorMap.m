@@ -20,7 +20,7 @@
 
 @implementation WRLDIndoorMapFloor
 
-- (id) initWithId:(NSString *)floorId name:(NSString *)name floorIndex:(int)floorIndex
+- (id) initWithId:(NSString *)floorId name:(NSString *)name floorIndex:(NSInteger)floorIndex
 {
     _floorId = floorId;
     _name = name;
