@@ -5,7 +5,6 @@
 
 @interface WRLDIndoorControlView () <IndoorControlDelegate>
 
-@property (nonatomic) IBOutlet WRLDMapView *mapView;
 @property (nonatomic, retain) IndoorControl* pIndoorControl;
 
 - (void) onCancelButtonPressed;
@@ -14,17 +13,34 @@
 
 @implementation WRLDIndoorControlView
 
-- (id) initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
-    self = [super initWithCoder:aDecoder];
+    if(self = [super initWithCoder:coder])
+    {
+        [self initView];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame])
+    {
+        [self initView];
+    }
+    
+    return self;
+}
+
+- (void) initView
+{
     self.backgroundColor = [UIColor clearColor];
     
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
     CGFloat pixelScale = [[UIScreen mainScreen] scale];
     self.pIndoorControl = [[IndoorControl alloc] initWithParams: screenSize.width : screenSize.height : pixelScale andDelegate: self];
     [self addSubview:self.pIndoorControl];
-    
-    return self;
 }
 
 - (UIView*) hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -42,6 +58,11 @@
 - (void) awakeFromNib
 {
     [super awakeFromNib];
+}
+
+- (void) setMapView:(WRLDMapView *)mapView
+{
+    _mapView = mapView;
     [_mapView setIndoorMapDelegate:self];
 }
 

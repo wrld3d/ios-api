@@ -711,18 +711,18 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)notifyEnteredIndoorMap
 {
+    [self refreshActiveIndoorMap];
     if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
     {
-        [self refreshActiveIndoorMap];
         [self.indoorMapDelegate didEnterIndoorMap];
     }
 }
 
 - (void)notifyExitedIndoorMap
 {
+    [self refreshActiveIndoorMap];
     if ([self.indoorMapDelegate respondsToSelector:@selector(didExitIndoorMap)])
     {
-        [self refreshActiveIndoorMap];
         [self.indoorMapDelegate didExitIndoorMap];
     }
 }
