@@ -57,9 +57,11 @@ namespace
 
         self.pFloorPanel = [[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 110, 200)];
         [self addSubview:self.pFloorPanel];
+        
+        NSBundle* widgetsBundle = [NSBundle bundleForClass:[IndoorControl class]];
 
-        self.pFloorListArrowDown = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"images/arrow3_down"]];
-        self.pFloorListArrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"images/arrow3_up"]];
+        self.pFloorListArrowDown = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"images/arrow3_down" inBundle:widgetsBundle compatibleWithTraitCollection:nil]];
+        self.pFloorListArrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"images/arrow3_up" inBundle:widgetsBundle compatibleWithTraitCollection:nil]];
 
         [self.pFloorPanel addSubview:self.pFloorListArrowDown];
         [self.pFloorPanel addSubview:self.pFloorListArrowUp];
@@ -75,8 +77,8 @@ namespace
         [self.pFloorPanel addSubview:self.pFloorListView];
 
         self.pFloorChangeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"images/floor_selection_button") forState:UIControlStateNormal];
-        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"images/floor_selection_button_down") forState:UIControlStateSelected];
+        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"images/floor_selection_button", widgetsBundle) forState:UIControlStateNormal];
+        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"images/floor_selection_button_down", widgetsBundle) forState:UIControlStateSelected];
         m_draggingFloorButton = NO;
 
         ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
@@ -119,7 +121,7 @@ namespace
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
 
         self.pDismissButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)];
-        [self.pDismissButton setDefaultStatesWithImageNames:@"images/button_exit_interior_off" :@"images/button_exit_interior_on"];
+        [self.pDismissButton setDefaultStatesWithImageNames:@"images/button_exit_interior_off" :@"images/button_exit_interior_on" fromBundle:widgetsBundle];
 
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];

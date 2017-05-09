@@ -27,8 +27,9 @@
 }
 
 - (void)setDefaultStatesWithImageName:(NSString*)imageName
+                           fromBundle:(NSBundle*)bundle
 {
-    UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(imageName);
+    UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(imageName, bundle);
     
     [self setDefaultStatesWithImages:image
                                     :image];
@@ -36,9 +37,10 @@
 
 - (void)setDefaultStatesWithImageNames:(NSString*)normalImageName
                                       :(NSString*)highlightImageName
+                            fromBundle:(NSBundle*)bundle
 {
-    UIImage* normalImage = ExampleApp::Helpers::ImageHelpers::LoadImage(normalImageName);
-    UIImage* highlightImage = ExampleApp::Helpers::ImageHelpers::LoadImage(highlightImageName);
+    UIImage* normalImage = ExampleApp::Helpers::ImageHelpers::LoadImage(normalImageName, bundle);
+    UIImage* highlightImage = ExampleApp::Helpers::ImageHelpers::LoadImage(highlightImageName, bundle);
     
     [self setDefaultStatesWithImages:normalImage
                                     :highlightImage];

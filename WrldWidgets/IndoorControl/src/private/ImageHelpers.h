@@ -35,9 +35,9 @@ namespace ExampleApp
 
             UIImageView* AddPngHighlightedImageToParentView(UIView* pParentView, const std::string& name, const std::string& highlightedName, OffsetValue offsetInParent);
 
-            UIImage* LoadImage(const std::string& name, bool permitFallbackToNonNativeResolution=false);
+            UIImage* LoadImage(const std::string& name, NSBundle* bundle, bool permitFallbackToNonNativeResolution=false);
 
-            UIImage* LoadImage(const NSString* name, bool permitFallbackToNonNativeResolution=false);
+            UIImage* LoadImage(const NSString* name, NSBundle* bundle, bool permitFallbackToNonNativeResolution=false);
 
             UIImage* ImageFromColor(UIColor* color);
         }

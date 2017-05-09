@@ -11,9 +11,10 @@
 - (void)setDefaultStatesWithImages:(UIImage*)normalImage
                                   :(UIImage*)highlightImage;
 
-- (void)setDefaultStatesWithImageName:(NSString*)imageName;
+- (void)setDefaultStatesWithImageName:(NSString*)imageName fromBundle:(NSBundle*)bundle;
 
 - (void)setDefaultStatesWithImageNames:(NSString*)normalImageName
-                                      :(NSString*)highlightImageName;
+                                      :(NSString*)highlightImageName
+                            fromBundle:(NSBundle*)bundle;
 
 @end

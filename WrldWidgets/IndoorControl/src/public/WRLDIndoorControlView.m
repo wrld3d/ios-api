@@ -1,9 +1,9 @@
-#import "IndoorControlViewController.h"
+#import "WRLDIndoorControlView.h"
 #import "IndoorControl.h"
 #import "IndoorControlDelegate.h"
 
 
-@interface IndoorControlViewController () <IndoorControlDelegate>
+@interface WRLDIndoorControlView () <IndoorControlDelegate>
 
 @property (nonatomic) IBOutlet WRLDMapView *mapView;
 @property (nonatomic, retain) IndoorControl* pIndoorControl;
@@ -12,7 +12,7 @@
 
 @end
 
-@implementation IndoorControlViewController
+@implementation WRLDIndoorControlView
 
 - (id) initWithCoder:(NSCoder *)aDecoder
 {
