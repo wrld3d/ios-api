@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
 		2C32D20B1EBB42AD00FC1B12 /* DebugIndoorControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */; };
 		2C3401061EC0CED800F8CEF0 /* WRLDIndoorMapDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CB2C5421EC1D76400C0B401 /* WrldWidgets.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB2C5401EC1D76400C0B401 /* WrldWidgets.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -119,6 +120,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
 		2C32D1E61EBB42AD00FC1B12 /* DebugIndoorControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugIndoorControl.xib; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
 				D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */,
 				D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */,
+				2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
 				521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */,
+				2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,

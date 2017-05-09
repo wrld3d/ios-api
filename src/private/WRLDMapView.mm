@@ -2,6 +2,7 @@
 #import "WRLDGestureDelegate.h"
 #import "WRLDNativeMapView.h"
 #import "WRLDMarker+Private.h"
+#import "WRLDIndoorMap+Private.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
