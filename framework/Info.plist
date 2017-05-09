@@ -17,10 +17,12 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1</string>
+	<string>$(PRODUCT_BUNDLE_SHORT_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>$(PRODUCT_BUNDLE_VERSION)</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
+	<key>WRLD_Commit_Hash</key>
+	<string>$(WRLD_COMMIT_HASH)</string>
 </dict>
 </plist>
