@@ -19,6 +19,8 @@ private:
     
     void OnInitialStreamingComplete();
     void OnMarkerTapped(const Eegeo::Markers::IMarker& marker);
+    void OnEnteredIndoorMap();
+    void OnExitedIndoorMap();
     
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
@@ -28,6 +30,10 @@ private:
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_initialStreamingCompleteHandler;
     
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Markers::IMarker> m_markerTappedHandler;
+    
+    Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_enteredIndoorMapHandler;
+    
+    Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_exitedIndoorMapHandler;
 };
 
 

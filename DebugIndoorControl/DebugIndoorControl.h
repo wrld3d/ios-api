@@ -1,5 +1,5 @@
 //
-//  IndoorControl.h
+//  DebugIndoorControl.h
 //  ios-sdk
 //
 //  Created by Paul Harris on 02/05/2017.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IndoorControl : UIView
+@interface DebugIndoorControl : UIView
 
 @end

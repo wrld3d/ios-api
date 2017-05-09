@@ -4,8 +4,10 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "WRLDMapViewDelegate.h"
+#import "WRLDIndoorMapDelegate.h"
 #import "WRLDMapCamera.h"
 #import "WRLDCoordinateBounds.h"
+#import "WRLDIndoorMap.h"
 #import "WRLDMarker.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -102,30 +104,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - controlling the indoor map view -
 
+@property(nonatomic, weak, nullable) IBOutlet id<WRLDIndoorMapDelegate> indoorMapDelegate;
+@property(nonatomic, readonly, copy, nullable) WRLDIndoorMap* activeIndoorMap;
+
 - (void)enterIndoorMap:(NSString*)indoorMapId;
 
 - (void)exitIndoorMap;
 
 - (BOOL)isIndoors;
 
-- (int)currentFloorIndex;
+- (NSInteger)currentFloorIndex;
 
-- (void)setFloorByIndex:(int)floorIndex;
+- (void)setFloorByIndex:(NSInteger)floorIndex;
+
+- (void)setFloorInterpolation:(CGFloat)floorInterpolation;
 
 - (void)moveUpFloor;
 
 - (void)moveDownFloor;
 
-- (void)moveUpFloors:(int)numberOfFloors;
+- (void)moveUpFloors:(NSInteger)numberOfFloors;
 
-- (void)moveDownFloors:(int)numberOfFloors;
+- (void)moveDownFloors:(NSInteger)numberOfFloors;
 
 - (void)expandIndoorMapView;
 
 - (void)collapseIndoorMapView;
-
-
-
 
 @end
 

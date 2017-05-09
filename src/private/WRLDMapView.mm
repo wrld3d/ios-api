@@ -1,8 +1,8 @@
-
 #import "Wrld.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDNativeMapView.h"
 #import "WRLDMarker+Private.h"
+#import "WRLDIndoorMap+Private.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -14,6 +14,7 @@
 #include "EegeoIndoorsApi.h"
 #include "InteriorInteractionModel.h"
 #include "EegeoApiHost.h"
+#include "EegeoIndoorMapData.h"
 
 #include <string>
 
@@ -36,8 +37,8 @@
 @implementation WRLDMapView
 {
     Eegeo::ApiHost::iOS::iOSApiRunner* m_pApiRunner;
-    
-    
+
+
     CLLocationDegrees m_startLocationLatitude;
     CLLocationDegrees m_startLocationLongitude;
     bool m_startLocationLatitudeSet;
@@ -69,7 +70,7 @@ const NSUInteger targetFrameInterval = 1;
     {
         [self initView];
     }
-    
+
     return self;
 }
 
@@ -96,7 +97,7 @@ const NSUInteger targetFrameInterval = 1;
     m_startLocationLongitudeSet = false;
 
     m_markersOnMap = {};
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
                                                  name:UIApplicationWillEnterForegroundNotification
@@ -138,8 +139,8 @@ const NSUInteger targetFrameInterval = 1;
 
 
     [self refreshDisplayLink];
-    
-    
+
+
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
 
     const double latitude = 0.0;
@@ -228,7 +229,7 @@ const NSUInteger targetFrameInterval = 1;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
     m_pApiRunner->NotifyViewFrameChanged();
 }
 
@@ -490,9 +491,9 @@ const NSUInteger targetFrameInterval = 1;
                     animated:(BOOL)animated
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    
+
     const double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
-    
+
     [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
 }
 
@@ -534,7 +535,7 @@ const NSUInteger targetFrameInterval = 1;
 - (void)_setView:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    
+
     const bool animated = duration > 0;
     const bool modifyPosition = true;
     const bool modifyDistance = true;
@@ -543,9 +544,9 @@ const NSUInteger targetFrameInterval = 1;
     const bool hasTransitionDuration = animated;
     const bool jumpIfFarAway = true;
     const bool allowInterruption = true;
-    
+
     const double altitude = 0.0;
-    
+
     cameraApi.SetViewUsingZenithAngle(animated, coordinate.latitude, coordinate.longitude, altitude, modifyPosition, distance, modifyDistance, heading, modifyHeading, pitch, modifyPitch, duration, hasTransitionDuration, jumpIfFarAway, allowInterruption);
 }
 
@@ -599,26 +600,64 @@ const NSUInteger targetFrameInterval = 1;
     return [self getMapApi].GetIndoorsApi().HasActiveIndoorMap();
 }
 
-- (int)currentFloorIndex
+- (void) refreshActiveIndoorMap
 {
-    return [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
+    if ([self isIndoors])
+    {
+        const Eegeo::Api::EegeoIndoorMapData& indoorMapData = [self getMapApi].GetIndoorsApi().GetIndoorMapData();
+
+        NSString* indoorMapId = [NSString stringWithCString:indoorMapData.indoorMapId.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSString* indoorMapName = [NSString stringWithCString:indoorMapData.indoorMapName.c_str() encoding:[NSString defaultCStringEncoding]];
+        NSMutableArray<WRLDIndoorMapFloor*>* floors = [NSMutableArray array];
+        for (int i=0; i<indoorMapData.floorCount; ++i)
+        {
+            const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
+            NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+            NSString* floorName = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+            NSInteger floorIndex = static_cast<int>(floorData.floorNumber);
+
+            WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];
+            [floors addObject:floor];
+        }
+        NSString* userData = [NSString stringWithCString:indoorMapData.userData.c_str() encoding:[NSString defaultCStringEncoding]];
+
+        WRLDIndoorMap* indoorMap = [[WRLDIndoorMap alloc] initWithId:indoorMapId name:indoorMapName floors:[floors copy] userData:userData];
+
+        _activeIndoorMap = indoorMap;
+    }
+    else
+    {
+        _activeIndoorMap = nil;
+    }
 }
 
-- (void)setFloorByIndex:(int)floorIndex
+- (NSInteger)currentFloorIndex
 {
-    [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(floorIndex);
+    int currentFloor = [self isIndoors] ? [self getMapApi].GetIndoorsApi().GetSelectedFloorIndex() : -1;
+    return static_cast<NSInteger>(currentFloor);
 }
 
-- (void)moveUpFloors:(int)numberOfFloors
+- (void)setFloorByIndex:(NSInteger)floorIndex
 {
-    const int currentFloor = [self currentFloorIndex];
+    [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(static_cast<int>(floorIndex));
+}
+
+- (void)setFloorInterpolation:(CGFloat)floorInterpolation
+{
+    Eegeo::Resources::Interiors::InteriorInteractionModel& interactionModel = [self getMapApi].GetExpandFloorsApi().GetInteriorInteractionModel();
+    interactionModel.SetFloorParam(static_cast<float>(floorInterpolation));
+}
+
+- (void)moveUpFloors:(NSInteger)numberOfFloors
+{
+    NSInteger currentFloor = [self currentFloorIndex];
     if (currentFloor != -1)
     {
         [self setFloorByIndex:(currentFloor + numberOfFloors)];
     }
 }
 
-- (void)moveDownFloors:(int)numberOfFloors
+- (void)moveDownFloors:(NSInteger)numberOfFloors
 {
     [self moveUpFloors:-numberOfFloors];
 }
@@ -670,6 +709,24 @@ const NSUInteger targetFrameInterval = 1;
     }
 }
 
+- (void)notifyEnteredIndoorMap
+{
+    if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
+    {
+        [self refreshActiveIndoorMap];
+        [self.indoorMapDelegate didEnterIndoorMap];
+    }
+}
+
+- (void)notifyExitedIndoorMap
+{
+    if ([self.indoorMapDelegate respondsToSelector:@selector(didExitIndoorMap)])
+    {
+        [self refreshActiveIndoorMap];
+        [self.indoorMapDelegate didExitIndoorMap];
+    }
+}
+
 @end
 
 
@@ -697,7 +754,7 @@ const NSUInteger targetFrameInterval = 1;
         return;
     if (!m_startLocationLongitudeSet)
         return;
-    
+
     self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
 }
 

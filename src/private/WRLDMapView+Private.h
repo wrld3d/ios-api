@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyMarkerTapped:(int)markerId;
 
+- (void)notifyEnteredIndoorMap;
+
+- (void)notifyExitedIndoorMap;
+
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
 @end
