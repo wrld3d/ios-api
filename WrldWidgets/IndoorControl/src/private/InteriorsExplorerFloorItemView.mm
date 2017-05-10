@@ -4,7 +4,7 @@
 
 @implementation InteriorsExplorerFloorItemView
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseId
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(NSString*)reuseId
 {
     if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId])
     {

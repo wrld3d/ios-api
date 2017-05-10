@@ -29,7 +29,7 @@ namespace
     return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale andDelegate:(id<IndoorControlDelegate>)delegate
+- (id) initWithParams:(float)width :(float)height andDelegate:(id<IndoorControlDelegate>)delegate
 {
     if (self = [super init])
     {
@@ -37,9 +37,8 @@ namespace
         
         const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
 
-        m_pixelScale = 1.f;
-        m_screenWidth = width/pixelScale;
-        m_screenHeight = height/pixelScale;
+        m_screenWidth = width;
+        m_screenHeight = height;
 
         m_stateChangeAnimationTimeSeconds = 0.2f;
 
@@ -681,7 +680,6 @@ static NSString *CellIdentifier = @"floorCell";
                                                                       :divisionLabelSpacing
                                                                       :divisionWidth
                                                                       :m_floorDivisionHeight
-                                                                      :m_pixelScale
                                                                       :CellIdentifier];
 
         cell.selectionStyle = UITableViewCellSelectionStyleGray;

@@ -38,8 +38,7 @@
     self.backgroundColor = [UIColor clearColor];
     
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
-    CGFloat pixelScale = [[UIScreen mainScreen] scale];
-    self.pIndoorControl = [[IndoorControl alloc] initWithParams: screenSize.width : screenSize.height : pixelScale andDelegate: self];
+    self.pIndoorControl = [[IndoorControl alloc] initWithParams: screenSize.width : screenSize.height andDelegate: self];
     [self addSubview:self.pIndoorControl];
 }
 

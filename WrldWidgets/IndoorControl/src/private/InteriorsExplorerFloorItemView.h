@@ -13,7 +13,7 @@
     
 }
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseIdentifier;
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(NSString*)reuseIdentifier;
 
 - (void) setFloor :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom;
 

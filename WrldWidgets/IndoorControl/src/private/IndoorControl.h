@@ -36,7 +36,7 @@
     NSArray<NSString*>* m_tableViewFloorNames;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale andDelegate:(id<IndoorControlDelegate>)delegate;
+- (id) initWithParams:(float)width :(float)height andDelegate:(id<IndoorControlDelegate>)delegate;
 
 - (void) setFloorName:(NSString*)name;
 
