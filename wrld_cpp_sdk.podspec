@@ -17,7 +17,7 @@ Pod::Spec.new do |m|
   m.ios.deployment_target = '8.0'
 
   m.source_files = '**/*.h', 'version.txt'
-  m.vendored_library = 'libapps-on-maps-cpp11.a', 'libapps-on-maps-cpp11-sim.a', 'libeegeo-api.a', 'libeegeo-api-host.a', 'libturbojpeg.a', 'libuv.a', 'libcurl.a'
+  m.vendored_library = 'libapps-on-maps-cpp11.a', 'libapps-on-maps-cpp11-sim.a', 'libeegeo-api.a', 'libeegeo-api-sim.a', 'libeegeo-api-host.a', 'libeegeo-api-host-sim.a', 'libturbojpeg.a', 'libuv.a', 'libcurl.a'
 
   m.module_name = 'WrldSdk'
   m.frameworks = 'CoreLocation', 'SystemConfiguration', 'MobileCoreServices', 'GLKit', 'QuartzCore', 'OpenGLES', 'CoreGraphics', 'UIKit'
