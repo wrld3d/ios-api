@@ -1,171 +1,50 @@
-<a href="http://www.eegeo.com/">
-    <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
+<a href="https://www.wrld3d.com/">
+    <img src="https://cdn2.wrld3d.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
 </a>
 
-# eeGeo 3D Maps iOS API
+# WRLD iOS SDK
+A framework for displaying beautiful, interactive 3D maps on iOS devices.
 
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+This repository contains source code for the Objective-C framework alongside a demo app, intended for developers contributing to the library itself.
 
-- [Support](#support)
-- [Getting started](#getting-started)
-    - [eeGeo API Key](#eegeo-api-key)
-- [Contributing](#contributing)
-- [API Overview](#api-overview)
-    - [EGMapView](#egmapview)
-    - [EGMapDelegate](#egmapdelegate)
-    - [EGMapAPI](#egmapapi)
-        - [Annotations](#annotations)
-        - [Themes](#themes)
-- [License](#license)
+If you want to use the framework in your iOS application, then see our [documentation](https://docs.wrld3d.com/ios/latest/docs/api/) for guidance on how to add WRLD 3D maps to your iOS app. Our [example github repository](https://github.com/wrld3d/ios-api-example) contains example apps to help get you started.
 
-Objective-C iOS bindings for the [eeGeo SDK](http://www.eegeo.com/developers/), an OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
+The framework is available on [CocoaPods](https://cocoapods.org/pods/wrld).
 
-The eeGeo 3D Maps API is simple to use and can be dropped unobtrusively into an app. It follows common idioms for mapping APIs, so should be familiar to anyone with prior experience in this area.
+## Status
+This framework is currently in alpha, and is undergoing active development. We plan to add further features in the near future. Got something you want to do in your app? Let us know via the [issues](https://github.com/wrld3d/ios-api/issues) page.
 
-## Support
+## Building the SDK
 
-If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/ios-api/issues) for this repository.
+### Requirements
+* Latest Xcode (Tested 7.x and 8.x)
+* [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
 
-## Getting Started 
+### Building
+This section will walk you through the process of getting up and running quickly.
 
-The easiest way to get started is with the [eeGeo iOS API example app](https://github.com/eegeo/ios-api-example), which demonstrates the usage of eeGeo's 3D maps in an iOS application. Instructions for getting started can be found under that repo's [README](https://github.com/eegeo/ios-api-example/blob/master/README.md#getting-started) file.
+1.  Install CocoaPods as described in the [CocoaPods guide](https://guides.cocoapods.org/using/getting-started.html#getting-started).
+2.  Clone this repo: `git clone https://github.com/wrld3d/ios-api.git`
+3.  Install dependencies by running `pod install` from the root of the repo.
+4.  Obtain a [WRLD API key](https://www.wrld3d.com/developers/apikeys) and place it in the [Info.plist](https://github.com/wrld3d/ios-api/blob/master/ApiDemo/Info.plist#L49) file.
+5.  Open, build, and run **ios-sdk.xcworkspace** in Xcode.
 
-### eeGeo API Key 
+**Note:** Run `pod update` followed by `pod install` to update the pod to the latest version if you have already setup your pod as above.
 
-In order to use the eeGeo 3D Maps API, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an [API key](https://www.eegeo.com/developers/apikeys) for your apps. 
+### WRLD API Key 
+In order to use the WRLD iOS API, you must sign up for a free developer account at https://www.wrld3d.com/developers. After signing up, you'll be able to create an [API key](https://www.wrld3d.com/developers/apikeys) for your apps. 
 
-If you are creating a new app, or integrating eeGeo 3D Maps into an existing app, the API key should be present in the main bundle info dictionary for the key "eeGeoMapsApiKey" at the time the [EGMapView](https://github.com/eegeo/ios-api/blob/master/src/private/EGMapView.mm) is created.
+After signing up for a developer account and creating an API key, add it to the demo app [plist file](https://github.com/wrld3d/ios-api/blob/master/ApiDemo/Info.plist#L49) as described [above](#getting-started).
 
-## Contributing 
+If you are creating a new app, or integrating WRLD 3D Maps into an existing app, the API key should be present in the main bundle info dictionary for the key "WrldApiKey" at the time the [WRLDMapView](https://github.com/wrld3d/ios-api/blob/master/src/private/WRLDMapView.mm) is created.
 
-The following step by step guide details the process for contributing to the iOS API.
+## Further information
+See our [api samples](https://github.com/wrld3d/ios-api-example) for complete applications using the SDK, and our [documentation](https://docs.wrld3d.com/ios/latest/docs/api/) for additional information.
 
-1. **Download the following:**
-    * Clone this repo: `git clone git@github.com:eegeo/ios-api.git`
-    * Clone the [ios-api-example](https://github.com/eegeo/ios-api-example) repo: `git clone git@github.com:eegeo/ios-api-example.git`
-    * Download the latest [eeGeo SDK](http://s3.amazonaws.com/eegeo-static/sdk.package.ios.cpp11.tar.gz).
+Questions, comments, or problems? All feedback is welcome -- just [create an issue](https://github.com/wrld3d/ios-api/issues).
 
-2. **Setup the project:**
-    * Modify the Podfile in the example app to remove the eeGeo pod and add the SMCalloutView pod. It should look like this:
-        ```ruby
-        target :eeGeoApiExample do
-        
-            platform :ios, "7.0"
-        
-            pod 'SMCalloutView', '~> 2.1'
-            pod 'GoogleMaps', '1.10.1'
-            pod 'FPPopover', '1.4.1'
-        end
-        ```
-    * Build the example app [as normal](https://github.com/eegeo/ios-api-example#getting-started).
-    * Drag the ios-api and the eeGeo SDK into the Xcode workspace.
-        ![Dragging in the ios-api and SDK](http://cdn2.eegeo.com/wp-content/uploads/2016/03/DraggingSources.gif)
-    * Add both to the include path of the example app, and add the SDK to the library path.
-
-3. **Make a change**
-    * Expose additional functionality as required.
-    * Submit a pull request to this repo containing the new functionality.
-    * Submit a pull request to [ios-api-example](https://github.com/eegeo/ios-api-example) demonstrating the new functionality in the example app.
-
-## API Overview 
-
-There are three main types that the app interacts with when using the eeGeo iOS API, described below: EGMapView, EGMapDelegate, and EGMapApi.
-
-For more detailed documentation of the API as a whole, see the [eeGeo CocoaDocs](http://cocoadocs.org/docsets/eeGeo/) page.
-
-### [EGMapView](https://github.com/eegeo/ios-api/blob/master/src/public/EGMapView.h)
-
-The EGMapView is a UIView subclass that can be added to the application view hierarchy. It contains the surface that the eeGeo 3D map is rendered to. Adding a EGMapView to the view hierarchy begins the process of constructing the EGMapApi instance, which will be made available to the application via the EGMapDelegate delegate.
-
-The EGMapView is internally responsible for managing the streaming and drawing of map data, as well as processing touch input to move the camera. From within a ViewController implementing the EGMapDelegate protocol, you can add a view:
-
-```objective-c
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.eegeoMapView = [[[EGMapView alloc] initWithFrame:self.view.bounds] autorelease];
-    self.eegeoMapView.eegeoMapDelegate = self;
-    [self.view insertSubview:self.eegeoMapView atIndex:0];
-}
-```
-
-### [EGMapDelegate](https://github.com/eegeo/ios-api/blob/master/src/public/EGMapDelegate.h)
-
-Adding an EGMapDelegate is important, as the main EGMapApi instance is provided to the app via the delegate. The method to do this is the only required method in the delegate protocol. When the API is ready for use by the app, the EGMapView will call the **eegeoMapReady** method, which should be implemented like so:
-
-```objective-c
-- (void)eegeoMapReady:(id<EGMapApi>)api
-{
-    self.eegeoMapApi = api;
-
-    // App code to handle the API becoming available...
-}
-```
-
-The EGMapDelegate also provides optional methods to handle events generated by the map, such as the selection and deselection of annotations, as well as various options to customise the behaviour of the map.
-
-
-### [EGMapApi](https://github.com/eegeo/ios-api/blob/master/src/public/EGMapApi.h) 
-
-The EGMapApi is the main interface through which the app can manipulate the map. It provides methods for drawing polygons, displaying annotations, and changing the theme of the map.
-
-#### Annotations
-
-Adding an annotation is simple:
-
-```
-EGPointAnnotation* annotation = [[[EGPointAnnotation alloc] init] autorelease];
-annotation.coordinate = CLLocationCoordinate2DMake(37.794851, -122.402650);
-annotation.title = @"Three Embarcadero";
-annotation.subtitle = @"(Default Callout)";
-[self.eegeoMapApi addAnnotation:annotation];
-```
-
-The annotation added to the map will show a default callout when selected. The default callout is implemented using the [SMCalloutView](https://github.com/nfarina/calloutview) library, which resembles the familiar built-in MapKit callout. We can handle the selection of the annotation by implementing the EGMapDelegate method:
-
-```
-- (void)didSelectAnnotation:(id<EGAnnotation>)annotation
-{
-    // Add a nice left callout accessory.
-    EGAnnotationView* view = [self.eegeoMapApi viewForAnnotation:annotation];
-    view.leftCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    printf("Selected annotation with title: %s\n", [[annotation title] UTF8String]);
-}
-```
-
-Visually, this results in something like:
-
-![Annotation](http://cdn2.eegeo.com/wp-content/uploads/2015/09/annotation.jpg)
-
-
-#### Themes
-
-The presentation of the map can be changed depending on the theme being used. Themes allow environment textures, lighting parameters, and overlay effects to be modified allowing for significant variation in how the map looks. A collection of preset themes are included, allowing the season, weather, and time of day to be altered. New themes can also be created.
-
-Changing the theme to use an existing preset is simple. Here are a couple of examples:
-
-```objc
-// Spring, dawn, rainy weather
-EGMapTheme* mapTheme = [[[EGMapTheme alloc] initWithSeason: EGMapThemeSeasonSpring
-                                                   andTime: EGMapThemeTimeDawn
-                                                andWeather: EGMapThemeWeatherRainy] autorelease];
-
-[self.eegeoMapApi setMapTheme: mapTheme];
-```
-```objc
-// Summer, day-time, clear weather
-EGMapTheme* mapTheme = [[[EGMapTheme alloc] initWithSeason: EGMapThemeSeasonSummer
-                                                   andTime: EGMapThemeTimeDay
-                                                andWeather: EGMapThemeWeatherClear] autorelease];
-
-[self.eegeoMapApi setMapTheme: mapTheme];
-```
-
-Many other presets are available, allowing developers to create a distinctive and unique style for their maps.
-
-![Four different seasons, weathers, and times of day](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo-four-seasons-themes.jpg)
+## Contributing
+If you wish to contribute to this repo, [pull requests](https://github.com/wrld3d/wrld.js) on GitHub are welcomed.
 
 ## License
-
-The eeGeo 3D Maps iOS API is released under the Simplified BSD License. See [LICENSE.md](https://github.com/eegeo/ios-api/blob/master/LICENSE.md) for details.
+The WRLD iOS SDK is released under the Simplified BSD License. See the [LICENSE.md](https://github.com/wrld3d/ios-api/blob/master/LICENSE.md) file for details.
