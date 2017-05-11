@@ -44,7 +44,6 @@
 		526F9AC91EC4B92A006F49C4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC11EC4B92A006F49C4 /* AppDelegate.m */; };
 		526F9ACA1EC4B92A006F49C4 /* AppMapViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC31EC4B92A006F49C4 /* AppMapViewDelegate.m */; };
 		526F9ACB1EC4B92A006F49C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526F9AC41EC4B92A006F49C4 /* Assets.xcassets */; };
-		526F9ACC1EC4B92A006F49C4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526F9AC51EC4B92A006F49C4 /* Info.plist */; };
 		526F9ACD1EC4B92A006F49C4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC61EC4B92A006F49C4 /* main.m */; };
 		526F9ACE1EC4B92A006F49C4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC81EC4B92A006F49C4 /* ViewController.m */; };
 		526F9AD11EC4B93B006F49C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526F9ACF1EC4B93B006F49C4 /* Main.storyboard */; };
@@ -367,7 +366,6 @@
 				526F9ACF1EC4B93B006F49C4 /* Main.storyboard */,
 				E0601E4D1EAFBF510050EB45 /* Supporting Files */,
 			);
-			name = DevApp;
 			path = DevApp;
 			sourceTree = "<group>";
 		};
@@ -653,7 +651,6 @@
 			files = (
 				526F9AD11EC4B93B006F49C4 /* Main.storyboard in Resources */,
 				526F9ACB1EC4B92A006F49C4 /* Assets.xcassets in Resources */,
-				526F9ACC1EC4B92A006F49C4 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
