@@ -24,7 +24,7 @@
     
     if([WRLDApi eegeoApiInstance].apiKey.length != 32)
     {
-        NSLog(@"No valid api key set. Set a valid api key in info.plist");
+        NSLog(@"No valid API key set. Set a valid API key in the Info.plist file");
     }
 }
 

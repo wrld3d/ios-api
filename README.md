@@ -5,7 +5,7 @@
 # WRLD iOS SDK
 A framework for displaying beautiful, interactive 3D maps on iOS devices.
 
-This repository contains source code for the Objective-C framework alongside a demo app, intended for developers contributing to the library itself.
+This repository contains source code for the Objective-C framework alongside a dev app, intended for developers contributing to the library itself.
 
 If you want to use the framework in your iOS application, then see our [documentation](https://docs.wrld3d.com/ios/latest/docs/api/) for guidance on how to add WRLD 3D maps to your iOS app. Our [example github repository](https://github.com/wrld3d/ios-api-example) contains example apps to help get you started.
 
@@ -26,7 +26,7 @@ This section will walk you through the process of getting up and running quickly
 1.  Install CocoaPods as described in the [CocoaPods guide](https://guides.cocoapods.org/using/getting-started.html#getting-started).
 2.  Clone this repo: `git clone https://github.com/wrld3d/ios-api.git`
 3.  Install dependencies by running `pod install` from the root of the repo.
-4.  Obtain a [WRLD API key](https://www.wrld3d.com/developers/apikeys) and place it in the [Info.plist](https://github.com/wrld3d/ios-api/blob/master/ApiDemo/Info.plist#L49) file.
+4.  Obtain a [WRLD API key](https://www.wrld3d.com/developers/apikeys) and place it in the [Info.plist](https://github.com/wrld3d/ios-api/blob/master/DevApp/Info.plist#L49) file.
 5.  Open, build, and run **ios-sdk.xcworkspace** in Xcode.
 
 **Note:** Run `pod update` followed by `pod install` to update the pod to the latest version if you have already setup your pod as above.
@@ -34,7 +34,7 @@ This section will walk you through the process of getting up and running quickly
 ### WRLD API Key 
 In order to use the WRLD iOS API, you must sign up for a free developer account at https://www.wrld3d.com/developers. After signing up, you'll be able to create an [API key](https://www.wrld3d.com/developers/apikeys) for your apps. 
 
-After signing up for a developer account and creating an API key, add it to the demo app [plist file](https://github.com/wrld3d/ios-api/blob/master/ApiDemo/Info.plist#L49) as described [above](#getting-started).
+After signing up for a developer account and creating an API key, add it to the dev app [plist file](https://github.com/wrld3d/ios-api/blob/master/DevApp/Info.plist#L49) as described [above](#getting-started).
 
 If you are creating a new app, or integrating WRLD 3D Maps into an existing app, the API key should be present in the main bundle info dictionary for the key "WrldApiKey" at the time the [WRLDMapView](https://github.com/wrld3d/ios-api/blob/master/src/private/WRLDMapView.mm) is created.
 
