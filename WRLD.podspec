@@ -1,5 +1,5 @@
 #
-# run `pod spec lint Wrld-iOS-SDK.podspec' before submitting.
+# run `pod spec lint WRLD.podspec' before submitting.
 #
 
 Pod::Spec.new do |s|
@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   semanticVersion = '##WRLD_IOS_SDK_VERSION##'
   buildNumber = '##WRLD_IOS_SDK_BUILD_NUMBER##'
 
-  s.name             = 'Wrld-iOS-SDK'
+  s.name             = 'WRLD'
   s.version          = semanticVersion
   s.summary          = 'Dynamic 3D maps for iOS'
 

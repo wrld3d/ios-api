@@ -3,3 +3,4 @@
 *.xcworkspace
 Pods/
 Podfile.lock
+build/
