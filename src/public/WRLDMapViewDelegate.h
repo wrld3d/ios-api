@@ -9,8 +9,8 @@
 
 @optional
 
-- (void)initialMapSceneLoaded:(WRLDMapView *)mapView;
+- (void)mapViewDidFinishLoadingInitialMap:(WRLDMapView *)mapView;
 
-- (void)didTapMarker:(WRLDMarker *)marker;
+- (void)mapView:(WRLDMapView *)mapView didTapMarker:(WRLDMarker *)marker;
 
 @end

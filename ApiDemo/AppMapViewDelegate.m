@@ -4,12 +4,12 @@
 
 @implementation AppMapViewDelegate
 
-- (void)initialMapSceneLoaded:(WRLDMapView *)mapView
+- (void)mapViewDidFinishLoadingInitialMap:(WRLDMapView *)mapView
 {
     NSLog(@"AppMapViewDelegate - streaming of initial map scene completed.");
 }
 
-- (void)didTapMarker:(WRLDMarker *)marker
+- (void)mapView:(WRLDMapView *)mapView didTapMarker:(WRLDMarker *)marker
 {
     NSLog(@"AppMapViewDelegate - marker tapped: %@", marker.title);
 }

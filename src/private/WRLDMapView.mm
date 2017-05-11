@@ -694,18 +694,18 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)notifyInitialStreamingCompleted
 {
-    if ([self.delegate respondsToSelector:@selector(initialMapSceneLoaded:)])
+    if ([self.delegate respondsToSelector:@selector(mapViewDidFinishLoadingInitialMap:)])
     {
-        [self.delegate initialMapSceneLoaded:self];
+        [self.delegate mapViewDidFinishLoadingInitialMap:self];
     }
 }
 
 - (void)notifyMarkerTapped:(int)markerId
 {
     if (m_markersOnMap.count(markerId) == 0) return;
-    if ([self.delegate respondsToSelector:@selector(didTapMarker:)])
+    if ([self.delegate respondsToSelector:@selector(mapView:didTapMarker:)])
     {
-        [self.delegate didTapMarker:m_markersOnMap.at(markerId)];
+        [self.delegate mapView:self didTapMarker:m_markersOnMap.at(markerId)];
     }
 }
 

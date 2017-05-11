@@ -2,22 +2,16 @@
 #import "AppMapViewDelegate.h"
 @import Wrld;
 
-
 @interface ViewController () <WRLDMapViewDelegate>
 
-
 @property (nonatomic) IBOutlet WRLDMapView *mapView;
-
-
 @property (nonatomic) AppMapViewDelegate *mapViewDelegate;
 
 @end
 
-
 @implementation ViewController
 {
 }
-
 
 - (void)viewDidLoad
 {
@@ -38,8 +32,6 @@
                         zoomLevel:15
                          animated:NO];
 }
-
-
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -74,14 +66,6 @@
 - (IBAction)enterButton:(id)sender
 {
     [_mapView enterIndoorMap:@"westport_house"];
-}
-
-#pragma mark - AppMapViewDelegate
-
-- (void)initialMapSceneLoaded:(WRLDMapView *)mapView
-{
-    NSLog(@"ViewController - streaming of initial map scene completed.");
-
 }
 
 @end
