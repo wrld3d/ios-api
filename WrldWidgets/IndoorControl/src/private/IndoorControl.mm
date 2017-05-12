@@ -140,7 +140,7 @@ namespace
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
 
-//        [self addSubview:self.pDetailsPanel];
+        [self addSubview:self.pDetailsPanel];
 
         self.pDetailsPanel.alpha = 0.0f;
 

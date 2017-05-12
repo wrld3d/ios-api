@@ -613,7 +613,7 @@ const NSUInteger targetFrameInterval = 1;
         {
             const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
             NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
-            NSString* floorName = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
+            NSString* floorName = [NSString stringWithCString:floorData.floorName.c_str() encoding:[NSString defaultCStringEncoding]];
             NSInteger floorIndex = static_cast<int>(floorData.floorNumber);
 
             WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];

@@ -82,11 +82,14 @@
         [self.pIndoorControl setFullyOnScreen];
         [self.pIndoorControl setTouchEnabled:YES];
         
+        NSString* floorName = [[_mapView activeIndoorMap].floors[0] name];
+        [_pIndoorControl setFloorName:floorName];
+        
         NSMutableArray<NSString*>* floorNames = [NSMutableArray array];
         WRLDIndoorMap* indoorMap = [_mapView activeIndoorMap];
         for (WRLDIndoorMapFloor* floor in indoorMap.floors)
         {
-            [floorNames addObject:floor.name];
+            [floorNames addObject:floor.floorId];
         }
         
         [self.pIndoorControl updateFloors:floorNames withCurrentFloor:0];
@@ -121,7 +124,9 @@
     int numberOfFloors = [[_mapView activeIndoorMap].floors count];
     float interpolation = floorInterpolation * (numberOfFloors - 1);
     int floorIndex = lroundf(interpolation);
+    NSString* floorName = [[_mapView activeIndoorMap].floors[floorIndex] name];
     
+    [_pIndoorControl setFloorName:floorName];
     [_pIndoorControl setSelectedFloor:floorIndex];
     [_mapView setFloorInterpolation:interpolation];
 }
