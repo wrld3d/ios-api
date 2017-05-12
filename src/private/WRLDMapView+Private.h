@@ -10,6 +10,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMapView (Private)
+    
+- (void)notifyMapViewRegionWillChange;
+    
+- (void)notifyMapViewRegionIsChanging;
+    
+- (void)notifyMapViewRegionDidChange;
 
 - (void)notifyInitialStreamingCompleted;
 

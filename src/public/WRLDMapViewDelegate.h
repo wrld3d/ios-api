@@ -8,6 +8,12 @@
 @protocol WRLDMapViewDelegate <NSObject>
 
 @optional
+    
+- (void)mapViewRegionWillChange:(WRLDMapView *)mapView;
+    
+- (void)mapViewRegionIsChanging:(WRLDMapView *)mapView;
+    
+- (void)mapViewRegionDidChange:(WRLDMapView *)mapView;
 
 - (void)mapViewDidFinishLoadingInitialMap:(WRLDMapView *)mapView;
 

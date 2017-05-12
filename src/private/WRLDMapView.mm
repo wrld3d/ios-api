@@ -691,8 +691,33 @@ const NSUInteger targetFrameInterval = 1;
 }
 
 #pragma mark - WRLDMapView (Private)
+    
+    
+- (void)notifyMapViewRegionWillChange
+{
+    if ([self.delegate respondsToSelector:@selector(mapViewRegionWillChange:)])
+    {
+        [self.delegate mapViewRegionWillChange:self];
+    }
+}
+    
+- (void)notifyMapViewRegionIsChanging
+{
+    if ([self.delegate respondsToSelector:@selector(mapViewRegionIsChanging:)])
+    {
+        [self.delegate mapViewRegionIsChanging:self];
+    }
+}
 
-- (void)notifyInitialStreamingCompleted
+- (void)notifyMapViewRegionDidChange
+{
+    if ([self.delegate respondsToSelector:@selector(mapViewRegionDidChange:)])
+    {
+        [self.delegate mapViewRegionDidChange:self];
+    }
+}
+    
+-(void)notifyInitialStreamingCompleted
 {
     if ([self.delegate respondsToSelector:@selector(mapViewDidFinishLoadingInitialMap:)])
     {

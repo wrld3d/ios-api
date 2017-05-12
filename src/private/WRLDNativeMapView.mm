@@ -13,6 +13,7 @@
 WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::iOSApiRunner& apiRunner)
 : m_mapView(mapView)
 , m_apiRunner(apiRunner)
+, m_cameraHandler(this, &WRLDNativeMapView::OnCameraChange)
 , m_initialStreamingCompleteHandler(this, &WRLDNativeMapView::OnInitialStreamingComplete)
 , m_markerTappedHandler(this, &WRLDNativeMapView::OnMarkerTapped)
 , m_enteredIndoorMapHandler(this, &WRLDNativeMapView::OnEnteredIndoorMap)
@@ -20,6 +21,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
+    mapApi.GetCameraApi().RegisterEventCallback(m_cameraHandler);
     mapApi.RegisterInitialStreamingCompleteCallback(m_initialStreamingCompleteHandler);
     mapApi.GetMarkersApi().RegisterMarkerPickedCallback(m_markerTappedHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
@@ -32,8 +34,36 @@ WRLDNativeMapView::~WRLDNativeMapView()
     
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
-    mapApi.UnregisterInitialStreamingCompleteCallback(m_initialStreamingCompleteHandler);
     mapApi.GetMarkersApi().UnregisterMarkerPickedCallback(m_markerTappedHandler);
+    mapApi.UnregisterInitialStreamingCompleteCallback(m_initialStreamingCompleteHandler);
+    mapApi.GetCameraApi().UnregisterEventCallback(m_cameraHandler);
+}
+
+void WRLDNativeMapView::OnCameraChange(const Eegeo::Api::CameraEventType& type)
+{
+    switch (type)
+    {
+        case Eegeo::Api::CameraEventType::MoveStart:
+        {
+            [m_mapView notifyMapViewRegionWillChange];
+            break;
+        }
+        
+        case Eegeo::Api::CameraEventType::Move:
+        {
+            [m_mapView notifyMapViewRegionIsChanging];
+            break;
+        }
+        
+        case Eegeo::Api::CameraEventType::MoveEnd:
+        {
+            [m_mapView notifyMapViewRegionDidChange];
+            break;
+        }
+        
+        default:
+            break;
+    }
 }
 
 void WRLDNativeMapView::OnInitialStreamingComplete()

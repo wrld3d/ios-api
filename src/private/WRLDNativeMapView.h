@@ -7,6 +7,7 @@
 #include "EegeoApi.h"
 #include "ICallback.h"
 #include "IMarker.h"
+#include "EegeoCameraApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -17,6 +18,7 @@ public:
     
 private:
     
+    void OnCameraChange(const Eegeo::Api::CameraEventType& type);
     void OnInitialStreamingComplete();
     void OnMarkerTapped(const Eegeo::Markers::IMarker& marker);
     void OnEnteredIndoorMap();
@@ -26,6 +28,9 @@ private:
     
     __weak WRLDMapView* m_mapView;
     Eegeo::ApiHost::iOS::iOSApiRunner& m_apiRunner;
+    
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::CameraEventType> m_cameraHandler;
     
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_initialStreamingCompleteHandler;
     
