@@ -182,7 +182,7 @@ const NSUInteger targetFrameInterval = 1;
 
     [_apiGestureDelegate bind:self];
 
-    _nativeMapView = new WRLDNativeMapView(self, *m_pApiRunner);
+    _nativeMapView = Eegeo_NEW(WRLDNativeMapView)(self, *m_pApiRunner);
 }
 
 
@@ -218,7 +218,7 @@ const NSUInteger targetFrameInterval = 1;
 
 - (void)onAppWillTerminate
 {
-    [self commonTeardown];
+
 }
 
 - (void)onDeviceOrientationDidChange
@@ -241,7 +241,7 @@ const NSUInteger targetFrameInterval = 1;
 - (void)dealloc
 {
     [self commonTeardown];
-
+    
 }
 
 - (void)commonTeardown
@@ -261,6 +261,7 @@ const NSUInteger targetFrameInterval = 1;
 
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 
+    Eegeo_DELETE _nativeMapView;
     Eegeo_DELETE m_pApiRunner;
 }
 
@@ -304,8 +305,6 @@ const NSUInteger targetFrameInterval = 1;
 
 -(void) removeFromSuperview
 {
-    [self commonTeardown];
-
     [super removeFromSuperview];
 }
 

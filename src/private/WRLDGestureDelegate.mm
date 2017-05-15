@@ -15,7 +15,7 @@
 @property (nonatomic) UITapGestureRecognizer* gestureDoubleTap;
 @property (nonatomic) UILongPressGestureRecognizer* gestureTouch;
 
-@property (nonatomic) UIView* view;
+@property (weak, nonatomic) UIView* view;
 
 @end
 

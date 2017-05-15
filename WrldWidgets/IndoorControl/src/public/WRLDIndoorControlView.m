@@ -5,7 +5,7 @@
 
 @interface WRLDIndoorControlView () <IndoorControlDelegate>
 
-@property (nonatomic, retain) IndoorControl* pIndoorControl;
+@property (nonatomic) IndoorControl* pIndoorControl;
 
 - (void) onCancelButtonPressed;
 
@@ -121,7 +121,7 @@
 
 - (void) onFloorSliderDragged:(float)floorInterpolation
 {
-    int numberOfFloors = [[_mapView activeIndoorMap].floors count];
+    NSUInteger numberOfFloors = [[_mapView activeIndoorMap].floors count];
     float interpolation = floorInterpolation * (numberOfFloors - 1);
     int floorIndex = lroundf(interpolation);
     NSString* floorName = [[_mapView activeIndoorMap].floors[floorIndex] name];

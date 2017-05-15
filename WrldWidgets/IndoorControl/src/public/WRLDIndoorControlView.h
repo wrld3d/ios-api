@@ -3,7 +3,7 @@
 
 @interface WRLDIndoorControlView : UIView <WRLDIndoorMapDelegate>
 
-@property (nonatomic) IBOutlet WRLDMapView *mapView;
+@property (weak, nonatomic) IBOutlet WRLDMapView *mapView;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
