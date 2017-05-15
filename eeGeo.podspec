@@ -2,7 +2,8 @@ Pod::Spec.new do |m|
 
   m.name    = 'eeGeo'
   m.version = '##EEGEO_API_VERSION##'
-
+  m.deprecated = true
+  m.deprecated_in_favor_of = 'WRLD',
   m.summary          = 'Stunning, Interactive 3D Maps'
   m.description      = 'The eeGeo SDK, a C++11 OpenGL-based library for beautiful and customisable 3D maps. Includes Objective-C bindings for iOS.'
   m.homepage         = 'http://www.eegeo.com'
