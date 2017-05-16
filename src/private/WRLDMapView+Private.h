@@ -1,10 +1,10 @@
-
 #pragma once
+
 #import <Foundation/Foundation.h>
+
+#import "WRLDMapView.h"
+
 #include "EegeoMapApi.h"
-
-
-@class WRLDMapView;
 
 
 NS_ASSUME_NONNULL_BEGIN

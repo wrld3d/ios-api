@@ -36,11 +36,12 @@
 		2CB2C5E01EC1D95500C0B401 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 2CB2C5DF1EC1D95500C0B401 /* images */; };
 		2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */; };
+		5200BC491ECB607600B6E263 /* WRLDMapView+IBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5200BC481ECB5FCF00B6E263 /* WRLDMapView+IBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5200BC4A1ECB608100B6E263 /* WRLDMapView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 5200BC471ECB5FBC00B6E263 /* WRLDMapView+Private.h */; };
 		521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */; };
 		521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */; };
 		521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */; };
 		526F9AC91EC4B92A006F49C4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC11EC4B92A006F49C4 /* AppDelegate.m */; };
 		526F9ACA1EC4B92A006F49C4 /* AppMapViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F9AC31EC4B92A006F49C4 /* AppMapViewDelegate.m */; };
 		526F9ACB1EC4B92A006F49C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526F9AC41EC4B92A006F49C4 /* Assets.xcassets */; };
@@ -56,7 +57,6 @@
 		E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E031100B1EB0E13B00002E88 /* GLKit.framework */; };
 		E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */; };
 		E0A48C001EBB32B900DD387F /* WRLDNativeMapView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */; };
-		E0A48C031EBB86E500DD387F /* WRLDMapView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */; };
 		E0F4E0FF1EB339EA00949ACE /* embedded_manifest.bin in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0B61EB339E900949ACE /* embedded_manifest.bin */; };
 		E0F4E1371EB339EA00949ACE /* label_category_icon_map.json in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0EF1EB339EA00949ACE /* label_category_icon_map.json */; };
 		E0F4E1381EB339EA00949ACE /* label_category_mapping.json in Resources */ = {isa = PBXBuildFile; fileRef = E0F4E0F01EB339EA00949ACE /* label_category_mapping.json */; };
@@ -151,11 +151,12 @@
 		2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorMap.h; sourceTree = "<group>"; };
 		2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDIndoorMap.m; sourceTree = "<group>"; };
 		3D2236C4A4CFE03870348C69 /* Pods-WrldSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.debug.xcconfig"; sourceTree = "<group>"; };
+		5200BC471ECB5FBC00B6E263 /* WRLDMapView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+Private.h"; sourceTree = "<group>"; };
+		5200BC481ECB5FCF00B6E263 /* WRLDMapView+IBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+IBAdditions.h"; sourceTree = "<group>"; };
 		521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapCamera.mm; sourceTree = "<group>"; };
 		521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapCamera.h; sourceTree = "<group>"; };
 		521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDCoordinateBounds.m; sourceTree = "<group>"; };
 		521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDCoordinateBounds.h; sourceTree = "<group>"; };
-		521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+IBAdditions.h"; sourceTree = "<group>"; };
 		526F9AC01EC4B92A006F49C4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = DevApp/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		526F9AC11EC4B92A006F49C4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = DevApp/AppDelegate.m; sourceTree = SOURCE_ROOT; };
 		526F9AC21EC4B92A006F49C4 /* AppMapViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMapViewDelegate.h; path = DevApp/AppMapViewDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -176,7 +177,6 @@
 		E0601E4A1EAFBF510050EB45 /* DevApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDNativeMapView.h; sourceTree = "<group>"; };
 		E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDNativeMapView.mm; sourceTree = "<group>"; };
-		E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMapView+Private.h"; sourceTree = "<group>"; };
 		E0F4E0B61EB339E900949ACE /* embedded_manifest.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = embedded_manifest.bin; sourceTree = "<group>"; };
 		E0F4E0EF1EB339EA00949ACE /* label_category_icon_map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = label_category_icon_map.json; sourceTree = "<group>"; };
 		E0F4E0F01EB339EA00949ACE /* label_category_mapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = label_category_mapping.json; sourceTree = "<group>"; };
@@ -421,9 +421,8 @@
 				E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */,
 				E0F4E16B1EB347FB00949ACE /* WRLDGestureDelegate.mm */,
 				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
-				E0A48C021EBB86E500DD387F /* WRLDMapView+Private.h */,
-				521807BE1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h */,
 				2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */,
+				5200BC471ECB5FBC00B6E263 /* WRLDMapView+Private.h */,
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 				E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */,
 				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
@@ -441,6 +440,7 @@
 				521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */,
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
+				5200BC481ECB5FCF00B6E263 /* WRLDMapView+IBAdditions.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
 				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
 				D0AAB6581EBB8C6600384605 /* WRLDMarker.h */,
@@ -483,17 +483,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5200BC491ECB607600B6E263 /* WRLDMapView+IBAdditions.h in Headers */,
 				521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */,
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
+				5200BC4A1ECB608100B6E263 /* WRLDMapView+Private.h in Headers */,
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
-				521807BF1EBA209A0070ACDD /* WRLDMapView+IBAdditions.h in Headers */,
 				2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
-				E0A48C031EBB86E500DD387F /* WRLDMapView+Private.h in Headers */,
 				D0AAB6661EBCDEEB00384605 /* WRLDMarker+Private.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi_Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,

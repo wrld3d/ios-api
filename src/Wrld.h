@@ -11,6 +11,7 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDCoordinateBounds.h"
 #import "WRLDMapCamera.h"
 #import "WRLDMapView.h"
+#import "WRLDMapView+IBAdditions.h"
 #import "WRLDMapViewDelegate.h"
 #import "WRLDIndoorMapDelegate.h"
 #import "WRLDMarker.h"
