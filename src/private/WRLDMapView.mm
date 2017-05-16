@@ -758,6 +758,17 @@ const NSUInteger targetFrameInterval = 1;
 
 @implementation WRLDMapView (IBAdditions)
 
+- (double)latitude
+{
+    return self.centerCoordinate.latitude;
+    
+}
+
+- (double)longitude
+{
+    return self.centerCoordinate.longitude;
+}
+
 - (void)setLatitude:(double)latitude
 {
     m_startLocationLatitude = latitude;
