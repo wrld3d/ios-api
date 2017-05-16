@@ -17,10 +17,9 @@ Pod::Spec.new do |s|
   s.social_media_url  = 'https://twitter.com/eegeo'
 
   s.source = {
-    :http => "https://s3.amazonaws.com/eegeo-static/wrld-ios-sdk/builds/test/wrld-ios-sdk-v#{s.version.to_s}.zip",
+    :http => "https://s3.amazonaws.com/eegeo-static/wrld-ios-sdk/builds/wrld-ios-sdk-v#{s.version.to_s}.zip",
     :flatten => true
   }
-
 
   s.platform = :ios
   s.ios.deployment_target = '8.0'
