@@ -121,6 +121,10 @@
 
 - (void) onFloorSliderDragged:(float)floorInterpolation
 {
+    if ([_mapView activeIndoorMap] == nil)
+    {
+        return;
+    }
     NSUInteger numberOfFloors = [[_mapView activeIndoorMap].floors count];
     float interpolation = floorInterpolation * (numberOfFloors - 1);
     int floorIndex = lroundf(interpolation);
