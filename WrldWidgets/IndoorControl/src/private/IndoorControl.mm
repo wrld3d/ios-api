@@ -438,7 +438,11 @@ namespace
      }
                      completion:^(BOOL FINISHED)
      {
-
+         if (!isOnScreenAnim)
+         {
+             [self.pTimer invalidate];
+             self.pTimer = nil;
+         }
      }];
 }
 
