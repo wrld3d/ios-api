@@ -10,11 +10,11 @@ Pod::Spec.new do |s|
 
   s.description      = 'Display 3D outdoor and indoor maps and markers using OpenGL'
 
-  s.homepage         = 'https://github.com/eegeo/ios-api'
+  s.homepage         = 'https://github.com/wrld3d/ios-api'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'BSD 2-Clause', :file => 'LICENSE.md' }
-  s.author           = { 'eeGeo' => 'support@eegeo.com' }
-  s.social_media_url  = 'https://twitter.com/eegeo'
+  s.author           = { 'WRLD' => 'support@wrld3d.com' }
+  s.social_media_url  = 'https://twitter.com/wrld3d'
 
   s.source = {
     :http => "https://s3.amazonaws.com/eegeo-static/wrld-ios-sdk/builds/wrld-ios-sdk-v#{s.version.to_s}.zip",
