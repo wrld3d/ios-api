@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, MarkerElevationMode)
 + (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate;
 
 /*!
- @brief Instantiate a marker at a given location, optionally indoors.
+ Instantiate a marker at a given location, optionally indoors.
  @param coordinate The coordinate to place this marker at.
  @param indoorMapId The ID of an indoor map this marker should be inside. (See WRLDIndoorMap).
  @param floorId An index specifying which floor of the indoor map this marker should be on. (See WRLDIndoorMap).
@@ -39,7 +39,13 @@ typedef NS_ENUM(NSInteger, MarkerElevationMode)
 /// The height of the marker above either the ground, or sea-level, depending on the elevationMode property.
 @property (nonatomic) CLLocationDistance elevation;
 
-/// Whether this marker should be positioned relative to the ground, or sea-level.
+/*!
+ Whether this marker should be positioned relative to the ground, or sea-level.
+ Takes one of the following values:
+ 
+ - `HeightAboveSeaLevel`: The markers elevation should be relative to sea-level.
+ - `HeightAboveGround`: The markers elevation should be relative to the ground directly below it.
+ */
 @property (nonatomic) MarkerElevationMode elevationMode;
 
 /// When markers overlap, this property determines which one appears on top of the other.
@@ -48,6 +54,7 @@ typedef NS_ENUM(NSInteger, MarkerElevationMode)
 /// The text label to display next to the marker.
 @property (nonatomic, copy) NSString* title;
 
+/// The name of the label style to use. The list of supported styles has not been stabilized yet and this can be left as the default value.
 @property (nonatomic, readonly, copy) NSString* styleName;
 
 /// Optional JSON user data associated with this marker.

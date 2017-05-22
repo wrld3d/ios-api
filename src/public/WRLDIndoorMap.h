@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 
+/// An object containing information about a floor of an indoor map.
 @interface WRLDIndoorMapFloor: NSObject
 
 /// A short string identifier for a floor, unique within its indoor map. For example, "G".
