@@ -6,6 +6,7 @@ namespace Eegeo {
     class ITouchController;
 }
 
+@class WRLDMapView;
 
 @interface WRLDGestureDelegate : NSObject<UIGestureRecognizerDelegate>
 
@@ -15,7 +16,7 @@ namespace Eegeo {
                          :(float)height
                          :(float)pixelScale;
 
--(void) bind:(UIView*)pView;
+-(void) bind:(WRLDMapView*)pView;
 
 -(void) unbind;
 

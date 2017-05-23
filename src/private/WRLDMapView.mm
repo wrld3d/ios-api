@@ -3,6 +3,7 @@
 #import "WRLDNativeMapView.h"
 #import "WRLDMarker+Private.h"
 #import "WRLDIndoorMap+Private.h"
+#import "WRLDCoordinateWithAltitude.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -15,6 +16,7 @@
 #include "InteriorInteractionModel.h"
 #include "EegeoApiHost.h"
 #include "EegeoIndoorMapData.h"
+#include "EegeoSpacesApi.h"
 
 #include <string>
 
@@ -721,6 +723,26 @@ const NSUInteger targetFrameInterval = 1;
     if ([self.delegate respondsToSelector:@selector(mapViewDidFinishLoadingInitialMap:)])
     {
         [self.delegate mapViewDidFinishLoadingInitialMap:self];
+    }
+}
+
+-(void)notifyTouchTapped:(CGPoint)point
+{
+    if ([self.delegate respondsToSelector:@selector(mapView:didTapMap:)])
+    {
+        Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
+        
+        Eegeo::v2 p = Eegeo::v2(static_cast<float>(point.x), static_cast<float>(point.y));
+        Eegeo::Space::LatLongAltitude lla(0.0, 0.0, 0.0);
+        
+        bool success = spacesApi.TryGetScreenToTerrainPoint(p, lla);
+        
+        if (success)
+        {
+            WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
+            
+            [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+        }
     }
 }
 

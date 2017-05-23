@@ -1,6 +1,7 @@
 #include "WRLDGestureDelegate.h"
 #include "AppInterface.h"
 #include "ITouchController.h"
+#include "WRLDMapView+Private.h"
 
 
 #include <algorithm>
@@ -15,7 +16,7 @@
 @property (nonatomic) UITapGestureRecognizer* gestureDoubleTap;
 @property (nonatomic) UILongPressGestureRecognizer* gestureTouch;
 
-@property (weak, nonatomic) UIView* view;
+@property (weak, nonatomic) WRLDMapView* view;
 
 @end
 
@@ -46,7 +47,7 @@
 
 
 
--(void) bind:(UIView*)pView
+-(void) bind:(WRLDMapView*)pView
 {
     _view = pView;
 
@@ -74,6 +75,8 @@
     _gestureDoubleTap.cancelsTouchesInView = FALSE;
     _gestureDoubleTap.delaysTouchesEnded = FALSE;
     _gestureDoubleTap.numberOfTapsRequired = 2;
+    
+    [_gestureTap requireGestureRecognizerToFail:_gestureDoubleTap];
     
     _gestureTouch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTouch_Callback:)];
     _gestureTouch.delegate = self;
@@ -281,7 +284,8 @@ namespace
         data.point = CGPointToEegeoV2(position);
         
         m_pTouchController->Event_TouchTap (data);
-        
+                
+        [_view notifyTouchTapped:position];
     }
 }
 

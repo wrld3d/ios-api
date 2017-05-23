@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "WRLDCoordinateWithAltitude.h"
 
 @class WRLDMapView;
 @class WRLDMarker;
@@ -34,6 +35,13 @@
  @param mapView The WRLDMapView that is being observed.
  */
 - (void)mapViewDidFinishLoadingInitialMap:(WRLDMapView *)mapView;
+
+/*!
+ Notifies the delegate that the user has tapped a point on the map.
+ @param mapView The map view that has been tapped
+ @param coordinateWithAltitude The location on the terrain of the tapped point.
+ */
+- (void)mapView:(WRLDMapView *)mapView didTapMap:(WRLDCoordinateWithAltitude)coordinateWithAltitude;
 
 /*!
  A message sent when the user has tapped a marker on the map.

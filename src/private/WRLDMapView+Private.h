@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyInitialStreamingCompleted;
 
+- (void)notifyTouchTapped:(CGPoint)point;
+
 - (void)notifyMarkerTapped:(int)markerId;
 
 - (void)notifyEnteredIndoorMap;
