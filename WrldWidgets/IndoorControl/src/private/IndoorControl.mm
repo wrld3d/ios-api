@@ -72,6 +72,7 @@ namespace
         self.pFloorListView.backgroundColor = [UIColor clearColor];
         self.pFloorListView.backgroundView = nil;
         self.pFloorListView.autoresizesSubviews = YES;
+        self.pFloorListView.scrollEnabled = NO;
 
         [self.pFloorPanel addSubview:self.pFloorListView];
 
