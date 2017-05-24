@@ -27,10 +27,6 @@
     _mapViewDelegate = _mapView.delegate ? _mapView.delegate : [AppMapViewDelegate alloc];
 
     _mapView.delegate = _mapViewDelegate;
-    
-    [_mapView setCenterCoordinate:CLLocationCoordinate2DMake(56.4599662, -2.9781313)
-                        zoomLevel:15
-                         animated:NO];
 }
 
 - (BOOL)prefersStatusBarHidden

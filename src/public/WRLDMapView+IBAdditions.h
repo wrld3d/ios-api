@@ -8,17 +8,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMapView (IBAdditions)
 
-/// The latitude in degrees that the map is currently centered on.
-@property (nonatomic) IBInspectable double latitude;
+// Properties for use inside Interface Builder for setting the initial location and orientation of the map.
 
-/// The longitude in degrees that the map is currently centered on.
-@property (nonatomic) IBInspectable double longitude;
+/*! The latitude in degrees of the location that the map is initially centered on - for use inside Interface Builder only.
+*/
+@property (nonatomic) IBInspectable double startLatitude;
 
-/// The current zoom level of the map.
-@property (nonatomic) IBInspectable double zoomLevel;
+/*! The longitude in degrees of the location that the map is initially centered on - for use inside Interface Builder only.
+ */
+@property (nonatomic) IBInspectable double startLongitude;
 
-/// The current heading direction of the map, in degrees.
-@property (nonatomic) IBInspectable double direction;
+/*! The zoom level that the map will initially be displayed with - for use inside Interface Builder only.
+ */
+@property (nonatomic) IBInspectable double startZoomLevel;
+
+/*! The direction in degrees clockwise from north of the initial map view - for use inside Interface Builder only.
+ */
+@property (nonatomic) IBInspectable double startDirection;
 
 @end
 

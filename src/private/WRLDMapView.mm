@@ -40,19 +40,19 @@
 {
     Eegeo::ApiHost::iOS::iOSApiRunner* m_pApiRunner;
 
-
-    CLLocationDegrees m_startLocationLatitude;
-    CLLocationDegrees m_startLocationLongitude;
-    bool m_startLocationLatitudeSet;
-    bool m_startLocationLongitudeSet;
+    NSNumber* m_startLocationLatitude;
+    NSNumber* m_startLocationLongitude;
+    NSNumber* m_startZoomLevel;
+    NSNumber* m_startDirection;
 
     std::map<int, WRLDMarker *> m_markersOnMap;
 }
 
 
-// todo make configurable? Was previously 2 in ios-api
+
 const NSUInteger targetFrameInterval = 1;
 
+const double defaultStartZoomLevel = 8;
 
 
 
@@ -93,10 +93,11 @@ const NSUInteger targetFrameInterval = 1;
 
     m_pApiRunner = NULL;
 
-    m_startLocationLatitude = 0.0;
-    m_startLocationLongitude = 0.0;
-    m_startLocationLatitudeSet = false;
-    m_startLocationLongitudeSet = false;
+    m_startLocationLatitude = nil;
+    m_startLocationLongitude = nil;
+    m_startZoomLevel = nil;
+    m_startDirection = nil;
+
 
     m_markersOnMap = {};
 
@@ -142,23 +143,37 @@ const NSUInteger targetFrameInterval = 1;
 
     [self refreshDisplayLink];
 
-
-    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-
-    const double latitude = 0.0;
-    const double longitude = 0.0;
-    const double interestAltitude = 0.0;
-    const double distanceToInterest = 800000;
-    const double heading = 0.0;
-    const double pitch = 0.0;
-    const double setPitch = false;
-
-    cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
+    [self _initialiseCameraView];
 
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
     apiHost.OnStart();
 }
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    // awakeFromNib after IBAdditions properties have been set from 
+    [self _initialiseCameraView];
+}
+
+-(void)_initialiseCameraView
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    
+    // require both latitude and longitude IB properties to be set
+    const bool hasStartLocation = (m_startLocationLatitude != nil && m_startLocationLongitude != nil);
+    
+    const double latitude = hasStartLocation ? [self startLatitude] : 0.0;
+    const double longitude = hasStartLocation ? [self startLongitude] : 0.0;
+    const double distanceToInterest = cameraApi.GetDistanceFromZoomLevel(static_cast<float>([self startZoomLevel]));
+    const double heading = [self startDirection];
+    const double interestAltitude = 0.0;
+    const double pitch = 0.0;
+    const double setPitch = false;
+    
+    cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
+}
 
 
 -(void) createPlatform
@@ -780,39 +795,46 @@ const NSUInteger targetFrameInterval = 1;
 
 @implementation WRLDMapView (IBAdditions)
 
-- (double)latitude
+
+- (double)startLatitude
 {
-    return self.centerCoordinate.latitude;
-    
+    return (m_startLocationLatitude != nil) ? m_startLocationLatitude.doubleValue : 0.0;
 }
 
-- (double)longitude
+- (double)startLongitude
 {
-    return self.centerCoordinate.longitude;
+    return (m_startLocationLongitude != nil) ? m_startLocationLongitude.doubleValue : 0.0;
 }
 
-- (void)setLatitude:(double)latitude
+- (double)startZoomLevel
 {
-    m_startLocationLatitude = latitude;
-    m_startLocationLatitudeSet = true;
-    [self _trySetCenterCoordinateFromStartLocation];
+    return (m_startZoomLevel != nil) ? m_startZoomLevel.doubleValue : defaultStartZoomLevel;
 }
 
-- (void)setLongitude:(double)longitude
+- (double)startDirection
 {
-    m_startLocationLongitude = longitude;
-    m_startLocationLongitudeSet = true;
-    [self _trySetCenterCoordinateFromStartLocation];
+    return (m_startDirection != nil) ? m_startDirection.doubleValue : 0.0;
 }
 
-- (void)_trySetCenterCoordinateFromStartLocation
+- (void)setStartLatitude:(double)latitude
 {
-    if (!m_startLocationLatitudeSet)
-        return;
-    if (!m_startLocationLongitudeSet)
-        return;
-
-    self.centerCoordinate = CLLocationCoordinate2DMake(m_startLocationLatitude, m_startLocationLongitude);
+    m_startLocationLatitude = [NSNumber numberWithDouble:latitude];
 }
+
+- (void)setStartLongitude:(double)longitude
+{
+    m_startLocationLongitude = [NSNumber numberWithDouble:longitude];
+}
+
+- (void)setStartZoomLevel:(double)zoomLevel
+{
+    m_startZoomLevel = [NSNumber numberWithDouble:zoomLevel];
+}
+
+- (void)setStartDirection:(double)direction
+{
+    m_startDirection = [NSNumber numberWithDouble:direction];
+}
+
 
 @end
