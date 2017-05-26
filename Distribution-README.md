@@ -7,16 +7,20 @@ The WRLD iOS SDK is a framework for displaying beautiful, interactive 3D map vie
 
 For more information, see the [WRLD iOS API documentation page](https://docs.eegeo.com/ios/latest/docs/api/).
 
-## Status
-The WRLD iOS SDK is currently in alpha, and is undergoing active development. We plan to add more features and improvements in the near future. 
-If you have questions, or would like to see a feature for use in your app, please let us know using the [issues page](https://github.com/wrld3d/ios-api/issues).
 
 ## Installing
 The WRLD iOS SDK is provided as a dynamic framework. To integrate the SDK with an app, you will need Xcode 7.3 or later.
 
-You can install either using CocoaPods, or as a direct download.
+You can install either using a direct download, or via CocoaPods.
 
-### CocoaPods
+### Install using direct download
+1. From the [lastest github release](https://github.com/wrld3d/ios-api/releases/latest) page, download the ```wrld-ios-sdk``` zip file.
+2. In Xcode, select your app's project in Project Navigator to display Project Editor. Select the app's target, then on the ```General``` tab, find the  ```Embedded Binaries``` section.
+3. Unzip the ```wrld-ios-sdk``` zip file and drag ```WRLD.framework``` into the ```Embedded Binaries``` section. Check "Copy items if needed" in the resulting dialog box, then click "Finish". This links the WRLD.framework with your project.     
+4. Obtain a [WRLD API key](#wrldApiKey) and set this in your app's ```Info.plist``` file.
+
+
+### Install using CocoaPods
 
 1. Install [CocoaPods](https://guides.cocoapods.org/using/getting-started.html#getting-started).
 2. Create a Podfile in the root folder of you app project (replacing 'MyAppTargetName' as appropriate for your app)
@@ -30,17 +34,11 @@ end
 3. In Terminal, run ```pod install```. This will download the SDK and create an ```xcworkspace``` file. Open this file in Xcode.
 4. Obtain a [WRLD API key](#wrldApiKey) and set this in your app's ```Info.plist``` file.
 
-### Direct download
-1. From the [lastest github release](https://github.com/wrld3d/ios-api/releases/latest) page, download the ```wrld-ios-sdk``` zip file.
-2. In Xcode, select your app's project in Project Navigator to display Project Editor. Select the app's target, then on the ```General``` tab, find the  ```Embedded Binaries``` section.
-3. Unzip the ```wrld-ios-sdk``` zip file and drag ```WRLD.framework``` into the ```Embedded Binaries``` section. Check "Copy items if needed" in the resulting dialog box, then click "Finish". This links the WRLD.framework with your project.     
-4. Obtain a [WRLD API key](#wrldApiKey) and set this in your app's ```Info.plist``` file.
 
-## Build your app
-Now that you have the WRLD iOS SDK installed, you are ready to start building your app. See our [walkthrough guide](https://docs.eegeo.com/ios/latest/docs/api/walkthrough/).
+## Use a map view in your app
+Now that you have the WRLD iOS SDK installed, you are ready to integrate a WRLD 3d map view into your app.
 
-You can also look at our [examples documentation](https://docs.eegeo.com/ios/latest/docs/examples/) that describes how to interact with the map view using sample code snippets.
-We also have an [example project](https://github.com/wrld3d/ios-api-example) available, that collects these sample snippets into an iOS app. 
+See our [walkthrough guide](https://docs.eegeo.com/ios/latest/docs/api/walkthrough/) for simple step-by-step instructions.
 
 
 ## <a name="wrldApiKey"></a>WRLD API Key 
@@ -56,4 +54,18 @@ Add an entry with the columns set as follows:
 * Value: [your api key]
 
 
+## Status
+The WRLD iOS SDK is currently in alpha, and is undergoing active development - we will be expanding with further features and improvements.
+
+## Further information
+
+See our [API documentation](https://docs.wrld3d.com/ios/latest/docs/api/) and [examples](https://docs.wrld3d.com/ios/latest/docs/examples/).
+
+The [example GitHub repository](https://github.com/wrld3d/ios-api-example) contains an open-source iOS app that illustrates the API features.
+
+Questions, comments, or problems? All feedback is welcome - get in touch on the [issues](https://github.com/wrld3d/ios-api/issues) page.
+
+
+## License
+The WRLD iOS SDK is released under the Simplified BSD License. See the [LICENSE.md](https://github.com/wrld3d/ios-api/blob/master/LICENSE.md) file for details.
 
