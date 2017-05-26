@@ -22,17 +22,19 @@ You can install either using a direct download, or via CocoaPods.
 
 ### Install using CocoaPods
 
-1. Install [CocoaPods](https://guides.cocoapods.org/using/getting-started.html#getting-started).
-2. Create a Podfile in the root folder of you app project (replacing 'MyAppTargetName' as appropriate for your app)
-```
+* Install [CocoaPods](https://guides.cocoapods.org/using/getting-started.html#getting-started).
+* Create a Podfile in the root folder of you app project (replacing 'MyAppTargetName' as appropriate for your app)
+
+```ruby
 platform :ios, '8.0'
 
 target 'MyAppTargetName' do
   pod 'WRLD'
 end
 ``` 
-3. In Terminal, run ```pod install```. This will download the SDK and create an ```xcworkspace``` file. Open this file in Xcode.
-4. Obtain a [WRLD API key](#wrldApiKey) and set this in your app's ```Info.plist``` file.
+
+* In Terminal, run ```pod install```. This will download the SDK and create an ```xcworkspace``` file. Open this file in Xcode.
+* Obtain a [WRLD API key](#wrldApiKey) and set this in your app's ```Info.plist``` file.
 
 
 ## Use a map view in your app
