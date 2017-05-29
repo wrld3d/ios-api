@@ -121,6 +121,38 @@ Add an entry with the columns set as follows:
 * Value: [your api key]
 
 
+### Creating a WRLDMapView in code
+The walkthough above shows how to use Xcode Interface Builder to embed a WRLDMapView in an iOS app.
+
+A WRLDMapView instance can also be instantiated and added to a view controller using Objective-C - see the following snippet.
+
+```objc
+@import Wrld;
+
+@interface ViewController : UIViewController
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    WRLDMapView *mapView = [[WRLDMapView alloc] initWithFrame:self.view.bounds];
+    
+    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    // set the center of the map and the zoom level
+    [mapView setCenterCoordinate:CLLocationCoordinate2DMake(37.7858, -122.401)
+                        zoomLevel:15
+                         animated:NO];
+    
+    [self.view addSubview:mapView];
+}
+
+@end
+```
+
 ## Status
 The WRLD iOS SDK is currently in alpha, and is undergoing active development - we will be expanding with further features and improvements.
 
