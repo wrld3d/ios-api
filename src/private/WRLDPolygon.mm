@@ -10,6 +10,7 @@
 
 @property (nonatomic) NSUInteger count;
 @property (nonatomic) Eegeo::v4 color;
+@property (nonatomic) NSArray <WRLDPolygon *>* interiorPolygons;
 
 @end
 
@@ -20,23 +21,35 @@
     bool m_addedToMapView;
 }
 
-+ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coordinates
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
                                  count:(NSUInteger)count;
 {
-    return [[self alloc] initWithCoordinates:coordinates
-                                       count:count];
+    return [[self alloc] initWithCoordinates:coords
+                                       count:count
+                            interiorPolygons:@[]];
 }
 
-- (instancetype)initWithCoordinates:(CLLocationCoordinate2D *)coordinates
-                              count:(NSUInteger)count;
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
+                                 count:(NSUInteger)count
+                      interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons;
+{
+    return [[self alloc] initWithCoordinates:coords
+                                       count:count
+                            interiorPolygons:interiorPolygons];
+}
+
+- (instancetype)initWithCoordinates:(CLLocationCoordinate2D *)coords
+                              count:(NSUInteger)count
+                   interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons;
 {
     if (self = [super init])
     {
-        _coordinates = coordinates;
+        _coordinates = coords;
         _count = count;
         _color = Eegeo::v4(0, 0, 1, 0.5);
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
+        _interiorPolygons = interiorPolygons;
         
         m_pGeofenceApi = NULL;
         m_addedToMapView = false;
@@ -71,12 +84,8 @@
     m_pGeofenceApi->SetGeofenceIsOffsetFromSeaLevel(m_polygonId, offsetFromSeaLevel);
 }
 
-#pragma mark - WRLDPolygon (Private)
-
-- (void)addToMapView:(WRLDMapView *) mapView
+- (std::vector<Eegeo::Space::LatLongAltitude>)_getPoints
 {
-    if (m_addedToMapView) return;
-    m_pGeofenceApi = &[mapView getMapApi].GetGeofenceApi();
     std::vector<Eegeo::Space::LatLongAltitude> points;
     
     for (int i = 0; i < _count; ++i)
@@ -85,9 +94,33 @@
         points.push_back(point);
     }
     
+    return points;
+}
+
+- (std::vector<std::vector<Eegeo::Space::LatLongAltitude>>)_getInteriorRingPoints
+{
+    std::vector<std::vector<Eegeo::Space::LatLongAltitude>> interiorRings;
+    
+    for (WRLDPolygon *polygon in _interiorPolygons)
+    {
+        interiorRings.push_back([polygon _getPoints]);
+    }
+    
+    return interiorRings;
+}
+
+#pragma mark - WRLDPolygon (Private)
+
+- (void)addToMapView:(WRLDMapView *) mapView
+{
+    if (m_addedToMapView) return;
+    m_pGeofenceApi = &[mapView getMapApi].GetGeofenceApi();
+    
+    std::vector<Eegeo::Space::LatLongAltitude> points = [self _getPoints];
+    std::vector<std::vector<Eegeo::Space::LatLongAltitude>> interiorRingPoints = [self _getInteriorRingPoints];
     bool offsetFromSeaLevel = _elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel;
     
-    m_polygonId = m_pGeofenceApi->CreateGeofence(points, _color, offsetFromSeaLevel, _elevation);
+    m_polygonId = m_pGeofenceApi->CreateGeofence(points, interiorRingPoints, _color, offsetFromSeaLevel, _elevation);
     m_addedToMapView = true;
 }
 

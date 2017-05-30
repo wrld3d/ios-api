@@ -19,6 +19,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coordinates
                                  count:(NSUInteger)count;
 
+/*!
+ Instantiate a polygon with coordinates.
+ @param coordinates The coordinate to place this marker at.
+ @param count
+ @param interiorPolygons
+ @returns A WRLDPolygon instance.
+ */
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coordinates
+                                 count:(NSUInteger)count
+                      interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons;
+
 /// The coordinates of the polygon.
 @property (nonatomic) CLLocationCoordinate2D* coordinates;
 
