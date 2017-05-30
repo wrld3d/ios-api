@@ -121,11 +121,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - markers -
 
+
 /*! @name Markers */
 
 /*!
  Add a marker to the map.
- @param marker The <WRLDMarker> object to add.
+ @param marker The <WRLDMarker> object to add to the map.
  */
 - (void)addMarker:(WRLDMarker *)marker;
 
@@ -137,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Remove a marker from the map.
- @param marker The <WRLDMarker> to remove from the map.
+ @param marker The <WRLDMarker> object to remove from the map.
  */
 - (void)removeMarker:(WRLDMarker *)marker;
 

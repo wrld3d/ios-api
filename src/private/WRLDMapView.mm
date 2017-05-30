@@ -1,9 +1,12 @@
-#import "Wrld.h"
-#import "WRLDGestureDelegate.h"
-#import "WRLDNativeMapView.h"
-#import "WRLDMarker+Private.h"
-#import "WRLDIndoorMap+Private.h"
+#import "WRLDMapView.h"
+#import "WRLDMapView+IBAdditions.h"
+
+#import "WRLDApi.h"
 #import "WRLDCoordinateWithAltitude.h"
+#import "WRLDGestureDelegate.h"
+#import "WRLDIndoorMap+Private.h"
+#import "WRLDMarker+Private.h"
+#import "WRLDNativeMapView.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -568,7 +571,6 @@ const double defaultStartZoomLevel = 8;
 
 #pragma mark - markers -
 
-
 - (void)addMarker:(WRLDMarker *)marker
 {
     if ([marker isOnMapView]) return;
@@ -583,6 +585,7 @@ const double defaultStartZoomLevel = 8;
         [self addMarker:marker];
     }
 }
+
 - (void)removeMarker:(WRLDMarker *)marker
 {
     if (![marker isOnMapView]) return;

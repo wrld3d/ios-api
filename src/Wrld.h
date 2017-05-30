@@ -9,10 +9,10 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 
 #import "WRLDApi.h"
 #import "WRLDCoordinateBounds.h"
+#import "WRLDIndoorMap.h"
+#import "WRLDIndoorMapDelegate.h"
 #import "WRLDMapCamera.h"
 #import "WRLDMapView.h"
 #import "WRLDMapView+IBAdditions.h"
 #import "WRLDMapViewDelegate.h"
-#import "WRLDIndoorMapDelegate.h"
 #import "WRLDMarker.h"
-#import "WRLDIndoorMap.h"

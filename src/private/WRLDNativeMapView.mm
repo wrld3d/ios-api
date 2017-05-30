@@ -1,7 +1,6 @@
-#import <Foundation/Foundation.h>
-
 #import "WRLDNativeMapView.h"
 #import "WRLDMapView+Private.h"
+
 #include "EegeoMapApi.h"
 #include "EegeoMarkersApi.h"
 #include "EegeoIndoorsApi.h"

@@ -119,7 +119,7 @@
 
 #pragma mark - WRLDMarker (Private)
 
-- (void)addToMapView:(WRLDMapView*) mapView
+- (void)addToMapView:(WRLDMapView *) mapView
 {   
     if (m_addedToMapView) return;
     m_pMarkersApi = &[mapView getMapApi].GetMarkersApi();
