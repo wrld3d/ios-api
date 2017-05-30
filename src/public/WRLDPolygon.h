@@ -2,6 +2,8 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+#import "WRLDElevationMode.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 
@@ -19,6 +21,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The coordinates of the polygon.
 @property (nonatomic) CLLocationCoordinate2D* coordinates;
+
+/// The height of the polygon above either the ground, or sea-level, depending on the elevationMode property.
+@property (nonatomic) CLLocationDistance elevation;
+
+/*!
+ Whether this polygon should be positioned relative to the ground, or sea-level.
+ Takes one of the following values:
+ 
+ - `WRLDElevationModeHeightAboveSeaLevel`: The polygons elevation should be relative to sea-level.
+ - `WRLDElevationModeHeightAboveGround`: The polygons elevation should be relative to the ground directly below it.
+ */
+@property (nonatomic) WRLDElevationMode elevationMode;
 
 /*!
  @method setColor

@@ -2,18 +2,9 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+#import "WRLDElevationMode.h"
+
 NS_ASSUME_NONNULL_BEGIN
-
-
-/// The method of determining a markers altitude.
-typedef NS_ENUM(NSInteger, WRLDMarkerElevationMode)
-{
-    /// A markers elevation should be relative to sea-level.
-    WRLDMarkerElevationModeHeightAboveSeaLevel,
-
-    /// A markers elevation should be relative to the ground directly below it.
-    WRLDMarkerElevationModeHeightAboveGround
-};
 
 
 /// A Marker is an icon placed at a point on or above the map’s surface.
@@ -43,10 +34,10 @@ typedef NS_ENUM(NSInteger, WRLDMarkerElevationMode)
  Whether this marker should be positioned relative to the ground, or sea-level.
  Takes one of the following values:
  
- - `WRLDMarkerElevationModeHeightAboveSeaLevel`: The markers elevation should be relative to sea-level.
- - `WRLDMarkerElevationModeHeightAboveGround`: The markers elevation should be relative to the ground directly below it.
+ - `WRLDElevationModeHeightAboveSeaLevel`: The markers elevation should be relative to sea-level.
+ - `WRLDElevationModeHeightAboveGround`: The markers elevation should be relative to the ground directly below it.
  */
-@property (nonatomic) WRLDMarkerElevationMode elevationMode;
+@property (nonatomic) WRLDElevationMode elevationMode;
 
 /// When markers overlap, this property determines which one appears on top of the other.
 @property (nonatomic) NSInteger drawOrder;

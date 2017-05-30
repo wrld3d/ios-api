@@ -9,6 +9,8 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 
 #import "WRLDApi.h"
 #import "WRLDCoordinateBounds.h"
+#import "WRLDCoordinateWithAltitude.h"
+#import "WRLDElevationMode.h"
 #import "WRLDIndoorMap.h"
 #import "WRLDIndoorMapDelegate.h"
 #import "WRLDMapCamera.h"

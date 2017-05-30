@@ -51,6 +51,7 @@
 		528A5C7D1EDD9BDA00C5454F /* WRLDPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 528A5C7C1EDD9B8600C5454F /* WRLDPolygon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		528A5C7E1EDD9BDE00C5454F /* WRLDPolygon+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 528A5C7A1EDD9B7800C5454F /* WRLDPolygon+Private.h */; };
 		528A5C7F1EDD9BE200C5454F /* WRLDPolygon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 528A5C791EDD9B7800C5454F /* WRLDPolygon.mm */; };
+		528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
 		D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */; };
 		D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6581EBB8C6600384605 /* WRLDMarker.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -175,6 +176,7 @@
 		528A5C791EDD9B7800C5454F /* WRLDPolygon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPolygon.mm; sourceTree = "<group>"; };
 		528A5C7A1EDD9B7800C5454F /* WRLDPolygon+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDPolygon+Private.h"; sourceTree = "<group>"; };
 		528A5C7C1EDD9B8600C5454F /* WRLDPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDPolygon.h; sourceTree = "<group>"; };
+		528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDElevationMode.h; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
 		D0AAB6581EBB8C6600384605 /* WRLDMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMarker.h; sourceTree = "<group>"; };
 		D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMarker.mm; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				E0F4E16E1EB347FB00949ACE /* WRLDApi.h */,
 				521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */,
 				E0E9B9101ED334AF00F94099 /* WRLDCoordinateWithAltitude.h */,
+				528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */,
 				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
 				2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */,
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
@@ -504,6 +507,7 @@
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
 				5200BC4A1ECB608100B6E263 /* WRLDMapView+Private.h in Headers */,
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
+				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
 				2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,

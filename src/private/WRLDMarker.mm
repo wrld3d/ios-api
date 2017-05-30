@@ -48,7 +48,7 @@
     {
         _coordinate = coordinate;
         _elevation = 0;
-        _elevationMode = WRLDMarkerElevationMode::WRLDMarkerElevationModeHeightAboveGround;
+        _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         _drawOrder = 0;
         _title = @"";
         _styleName = @"marker_default";
@@ -77,15 +77,15 @@
     m_pMarkersApi->SetAnchorHeight(m_markerId, _elevation);
 }
 
-- (void)setElevationMode:(WRLDMarkerElevationMode)elevationMode
+- (void)setElevationMode:(WRLDElevationMode)elevationMode
 {
     _elevationMode = elevationMode;
     if (!m_addedToMapView) return;
-    if (_elevationMode == WRLDMarkerElevationMode::WRLDMarkerElevationModeHeightAboveGround)
+    if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
     {
         m_pMarkersApi->SetAnchorHeightMode(m_markerId, Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
     }
-    else if (_elevationMode == WRLDMarkerElevationMode::WRLDMarkerElevationModeHeightAboveSeaLevel)
+    else if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel)
     {
         m_pMarkersApi->SetAnchorHeightMode(m_markerId, Eegeo::Markers::AnchorHeight::Type::HeightAboveSeaLevel);
     }
@@ -128,11 +128,11 @@
     builder.SetLocation(_coordinate.latitude, _coordinate.longitude);
     builder.SetAnchorHeight(_elevation);
     builder.SetSubPriority(static_cast<int>(_drawOrder));
-    if (_elevationMode == WRLDMarkerElevationMode::WRLDMarkerElevationModeHeightAboveGround)
+    if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
     {
         builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
     }
-    else if (_elevationMode == WRLDMarkerElevationMode::WRLDMarkerElevationModeHeightAboveSeaLevel)
+    else if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel)
     {
         builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveSeaLevel);
     }

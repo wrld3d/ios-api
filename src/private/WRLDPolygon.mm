@@ -35,9 +35,10 @@
         _coordinates = coordinates;
         _count = count;
         _color = Eegeo::v4(0, 0, 1, 0.5);
+        _elevation = 0;
+        _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         
         m_pGeofenceApi = NULL;
-        m_polygonId = 0;
         m_addedToMapView = false;
     }
     return self;
@@ -52,14 +53,22 @@
 {
     _color = Eegeo::v4(r, g, b, a);
     if (!m_addedToMapView) return;
-    [self _applyColor];
+    m_pGeofenceApi->SetGeofenceColor(m_polygonId, _color);
 }
 
-- (void)_applyColor
+- (void)setElevation:(CLLocationDistance)elevation
 {
-    if (m_pGeofenceApi == NULL) return;
-    Eegeo::Data::Geofencing::GeofenceModel& geofence = m_pGeofenceApi->GetGeofence(m_polygonId);
-    geofence.SetPolygonColor(_color);
+    _elevation = elevation;
+    if (!m_addedToMapView) return;
+    m_pGeofenceApi->SetGeofenceAltitude(m_polygonId, _elevation);
+}
+
+- (void)setElevationMode:(WRLDElevationMode)elevationMode
+{
+    _elevationMode = elevationMode;
+    if (!m_addedToMapView) return;
+    bool offsetFromSeaLevel = _elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel;
+    m_pGeofenceApi->SetGeofenceIsOffsetFromSeaLevel(m_polygonId, offsetFromSeaLevel);
 }
 
 #pragma mark - WRLDPolygon (Private)
@@ -76,9 +85,9 @@
         points.push_back(point);
     }
     
-    m_pGeofenceApi->CreateGeofence(m_polygonId, points);
-    [self _applyColor];
+    bool offsetFromSeaLevel = _elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel;
     
+    m_polygonId = m_pGeofenceApi->CreateGeofence(points, _color, offsetFromSeaLevel, _elevation);
     m_addedToMapView = true;
 }
 
