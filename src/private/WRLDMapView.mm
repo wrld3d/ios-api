@@ -7,6 +7,7 @@
 #import "WRLDIndoorMap+Private.h"
 #import "WRLDMarker+Private.h"
 #import "WRLDNativeMapView.h"
+#import "WRLDPolygon+Private.h"
 
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
@@ -49,6 +50,7 @@
     NSNumber* m_startDirection;
 
     std::map<int, WRLDMarker *> m_markersOnMap;
+    std::map<int, WRLDPolygon *> m_polygonsOnMap;
 }
 
 
@@ -103,6 +105,7 @@ const double defaultStartZoomLevel = 8;
 
 
     m_markersOnMap = {};
+    m_polygonsOnMap = {};
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -599,6 +602,21 @@ const double defaultStartZoomLevel = 8;
     {
         [self removeMarker:marker];
     }
+}
+
+#pragma mark - polygons -
+
+- (void)addPolygon:(WRLDPolygon *)polygon
+{
+    if ([polygon isOnMapView]) return;
+    [polygon addToMapView:self];
+    m_polygonsOnMap[[polygon getId]] = polygon;
+}
+- (void)removePolygon:(WRLDPolygon *)polygon
+{
+    if (![polygon isOnMapView]) return;
+    m_polygonsOnMap.erase([polygon getId]);
+    [polygon removeFromMapView];
 }
 
 #pragma mark - controlling the indoor map view -
