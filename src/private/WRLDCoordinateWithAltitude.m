@@ -1,4 +1,3 @@
-#import <CoreLocation/CoreLocation.h>
 #import "WRLDCoordinateWithAltitude.h"
 
 WRLDCoordinateWithAltitude WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2D coordinate, CLLocationDistance altitude)
@@ -8,4 +7,3 @@ WRLDCoordinateWithAltitude WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2D
     coordWithAltitude.altitude = altitude;
     return coordWithAltitude;
 }
-

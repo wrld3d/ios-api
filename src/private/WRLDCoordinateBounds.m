@@ -1,4 +1,3 @@
-#import <CoreLocation/CoreLocation.h>
 #import "WRLDCoordinateBounds.h"
 
 WRLDCoordinateBounds WRLDCoordinateBoundsMake(CLLocationCoordinate2D sw, CLLocationCoordinate2D ne)
@@ -15,7 +14,7 @@ WRLDCoordinateBounds WRLDCoordinateBoundsFromCoordinatesMake(CLLocationCoordinat
     
     if (count == 0)
     {
-        bounds.sw = bounds.ne = CLLocationCoordinate2DMake(0.f, 0.f);
+        bounds.sw = bounds.ne = CLLocationCoordinate2DMake(0, 0);
         return bounds;
     }
     
