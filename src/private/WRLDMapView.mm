@@ -612,11 +612,28 @@ const double defaultStartZoomLevel = 8;
     [polygon addToMapView:self];
     m_polygonsOnMap[[polygon getId]] = polygon;
 }
+
+- (void)addPolygons:(NSArray <WRLDPolygon *> *)polygons
+{
+    for (WRLDPolygon* polygon in polygons)
+    {
+        [self addPolygon:polygon];
+    }
+}
+
 - (void)removePolygon:(WRLDPolygon *)polygon
 {
     if (![polygon isOnMapView]) return;
     m_polygonsOnMap.erase([polygon getId]);
     [polygon removeFromMapView];
+}
+
+- (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons
+{
+    for (WRLDPolygon* polygon in polygons)
+    {
+        [self removePolygon:polygon];
+    }
 }
 
 #pragma mark - controlling the indoor map view -

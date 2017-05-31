@@ -161,10 +161,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addPolygon:(WRLDPolygon *)polygon;
 
 /*!
+ Add multiple polygons to the map.
+ @param polygons An array of <WRLDPolygon> objects to add to the map.
+ */
+- (void)addPolygons:(NSArray <WRLDPolygon *> *)polygons;
+
+/*!
  Remove a polygon from the map.
  @param polygon The <WRLDPolygon> object to remove from the map.
  */
 - (void)removePolygon:(WRLDPolygon *)polygon;
+
+/*!
+ Remove multiple polygons from the map.
+ @param polygons An array of <WRLDPolygon> objects to remove from the map.
+ */
+- (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons;
 
 
 #pragma mark - controlling the indoor map view -
