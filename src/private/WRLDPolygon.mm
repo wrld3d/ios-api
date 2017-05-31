@@ -8,10 +8,6 @@
 
 @interface WRLDPolygon ()
 
-@property (nonatomic) NSUInteger count;
-@property (nonatomic) Eegeo::v4 color;
-@property (nonatomic) NSArray <WRLDPolygon *>* interiorPolygons;
-
 @end
 
 @implementation WRLDPolygon
@@ -19,6 +15,8 @@
     Eegeo::Api::EegeoGeofenceApi* m_pGeofenceApi;
     int m_polygonId;
     bool m_addedToMapView;
+    std::vector<Eegeo::Space::LatLongAltitude> m_outerPolygon;
+    std::vector<std::vector<Eegeo::Space::LatLongAltitude>> m_interiorPolygons;
 }
 
 + (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
@@ -44,12 +42,22 @@
 {
     if (self = [super init])
     {
-        _coordinates = coords;
-        _count = count;
-        _color = Eegeo::v4(0, 0, 1, 0.5);
+        m_outerPolygon.reserve(count);
+        for (int i = 0; i < count; ++i)
+        {
+            Eegeo::Space::LatLongAltitude coord = Eegeo::Space::LatLongAltitude::FromDegrees(coords[i].latitude, coords[i].longitude, 0);
+            m_outerPolygon.push_back(coord);
+        }
+        
+        m_interiorPolygons.reserve([interiorPolygons count]);
+        for (WRLDPolygon *polygon in interiorPolygons)
+        {
+            m_interiorPolygons.push_back([polygon _getOuterPolygon]);
+        }
+        
+        _color = [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:0.5f];
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
-        _interiorPolygons = interiorPolygons;
         
         m_pGeofenceApi = NULL;
         m_addedToMapView = false;
@@ -57,16 +65,21 @@
     return self;
 }
 
-- (void)setColor:(double)r g:(double)g b:(double)b
+- (void)setColor:(UIColor *)color
 {
-    [self setColor:r g:g b:b a:1];
+    _color = color;
+    if (!m_addedToMapView) return;
+    m_pGeofenceApi->SetGeofenceColor(m_polygonId, [self _getColor]);
 }
 
-- (void)setColor:(double)r g:(double)g b:(double)b a:(double)a
+- (Eegeo::v4)_getColor
 {
-    _color = Eegeo::v4(r, g, b, a);
-    if (!m_addedToMapView) return;
-    m_pGeofenceApi->SetGeofenceColor(m_polygonId, _color);
+    CGFloat red, green, blue, alpha;
+    [_color getRed:&red
+             green:&green
+              blue:&blue
+             alpha:&alpha];
+    return Eegeo::v4(red, green, blue, alpha);
 }
 
 - (void)setElevation:(CLLocationDistance)elevation
@@ -84,29 +97,9 @@
     m_pGeofenceApi->SetGeofenceIsOffsetFromSeaLevel(m_polygonId, offsetFromSeaLevel);
 }
 
-- (std::vector<Eegeo::Space::LatLongAltitude>)_getPoints
+- (const std::vector<Eegeo::Space::LatLongAltitude>)_getOuterPolygon
 {
-    std::vector<Eegeo::Space::LatLongAltitude> points;
-    
-    for (int i = 0; i < _count; ++i)
-    {
-        Eegeo::Space::LatLongAltitude point = Eegeo::Space::LatLongAltitude::FromDegrees(_coordinates[i].latitude, _coordinates[i].longitude, 0);
-        points.push_back(point);
-    }
-    
-    return points;
-}
-
-- (std::vector<std::vector<Eegeo::Space::LatLongAltitude>>)_getInteriorRingPoints
-{
-    std::vector<std::vector<Eegeo::Space::LatLongAltitude>> interiorRings;
-    
-    for (WRLDPolygon *polygon in _interiorPolygons)
-    {
-        interiorRings.push_back([polygon _getPoints]);
-    }
-    
-    return interiorRings;
+    return m_outerPolygon;
 }
 
 #pragma mark - WRLDPolygon (Private)
@@ -116,11 +109,10 @@
     if (m_addedToMapView) return;
     m_pGeofenceApi = &[mapView getMapApi].GetGeofenceApi();
     
-    std::vector<Eegeo::Space::LatLongAltitude> points = [self _getPoints];
-    std::vector<std::vector<Eegeo::Space::LatLongAltitude>> interiorRingPoints = [self _getInteriorRingPoints];
+    Eegeo::v4 color = [self _getColor];
     bool offsetFromSeaLevel = _elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel;
     
-    m_polygonId = m_pGeofenceApi->CreateGeofence(points, interiorRingPoints, _color, offsetFromSeaLevel, _elevation);
+    m_polygonId = m_pGeofenceApi->CreateGeofence(m_outerPolygon, m_interiorPolygons, color, offsetFromSeaLevel, _elevation);
     m_addedToMapView = true;
 }
 
