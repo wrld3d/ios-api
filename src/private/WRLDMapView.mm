@@ -176,7 +176,7 @@ const double defaultStartZoomLevel = 8;
     const double heading = [self startDirection];
     const double interestAltitude = 0.0;
     const double pitch = 0.0;
-    const double setPitch = false;
+    const bool setPitch = false;
     
     cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
 }
@@ -514,7 +514,7 @@ const double defaultStartZoomLevel = 8;
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
 
-    const double distance = cameraApi.GetDistanceFromZoomLevel(zoomLevel);
+    const double distance = cameraApi.GetDistanceFromZoomLevel(static_cast<float>(zoomLevel));
 
     [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
 }

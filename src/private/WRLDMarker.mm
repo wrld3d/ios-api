@@ -126,7 +126,7 @@
     
     Eegeo::Markers::MarkerBuilder builder;
     builder.SetLocation(_coordinate.latitude, _coordinate.longitude);
-    builder.SetAnchorHeight(_elevation);
+    builder.SetAnchorHeight(static_cast<float>(_elevation));
     builder.SetSubPriority(static_cast<int>(_drawOrder));
     if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
     {

@@ -28,7 +28,7 @@
         
         distance = sqrt(pow(eyeAltitude, 2) + pow(groundEyeToCenter, 2));
         
-        pitch = (M_PI_2 - atan(eyeAltitude / groundEyeToCenter)) * 180 / M_PI;
+        pitch = static_cast<float>((M_PI_2 - atan(eyeAltitude / groundEyeToCenter))) * 180 / static_cast<float>(M_PI);
         
         const double centerLatRadians = centerCoordinate.latitude * M_PI / 180;
         const double centerLongRadians = centerCoordinate.longitude * M_PI / 180;
@@ -94,7 +94,7 @@
         _centerCoordinate = CLLocationCoordinate2DMake([decoder decodeDoubleForKey:@"centerCoordinateLatitude"],
                                                        [decoder decodeDoubleForKey:@"centerCoordinateLongitude"]);
         _distance = [decoder decodeDoubleForKey:@"distance"];
-        _pitch = [decoder decodeDoubleForKey:@"pitch"];
+        _pitch = [decoder decodeFloatForKey:@"pitch"];
         _heading = [decoder decodeDoubleForKey:@"heading"];
     }
     return self;

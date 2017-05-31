@@ -322,7 +322,7 @@ namespace
 
     m_isSliderAnimPlaying = true;
 
-    [UIView animateWithDuration:1.1 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+    [UIView animateWithDuration:1.1 delay:0.0 usingSpringWithDamping:0.3f initialSpringVelocity:0.2f options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
 
         [UIView animateKeyframesWithDuration:0.1 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
             CGRect floorFrame = self.pFloorPanel.frame;
@@ -486,7 +486,7 @@ namespace
     if(m_floorButtonParameter <= joystickScrollThresholdDistance)
     {
         float localT = m_floorButtonParameter/joystickScrollThresholdDistance;
-        scrollDelta = [self getScrollSpeed:(1.0 - localT)];
+        scrollDelta = [self getScrollSpeed:(1.0f - localT)];
     }
     else if(m_floorButtonParameter >= 1.0f-joystickScrollThresholdDistance)
     {
@@ -516,9 +516,9 @@ namespace
         buttonFrame.origin.y += translation.y;
 
         {
-            double y = buttonFrame.origin.y;
-            double minY = 0.0;
-            double maxY = self.pFloorPanel.frame.size.height-buttonFrame.size.height;
+            float y = buttonFrame.origin.y;
+            float minY = 0.f;
+            float maxY = self.pFloorPanel.frame.size.height-buttonFrame.size.height;
             y = (y < minY) ? minY : y;
             y = (y > maxY) ? maxY : y;
             buttonFrame.origin.y = y;
