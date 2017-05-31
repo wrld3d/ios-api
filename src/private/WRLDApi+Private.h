@@ -1,4 +1,3 @@
-#import "WRLDApi.h"
 
 @interface WRLDApi (Private)
 

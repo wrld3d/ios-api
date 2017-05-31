@@ -1,7 +1,5 @@
-#import <Foundation/Foundation.h>
-
 #import "WRLDApi.h"
-#import "WRLDApi_Private.h"
+#import "WRLDApi+Private.h"
 
 
 @interface WRLDApi ()

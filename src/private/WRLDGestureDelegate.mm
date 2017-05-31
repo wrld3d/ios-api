@@ -1,6 +1,7 @@
 #include "WRLDGestureDelegate.h"
 #include "AppInterface.h"
 #include "ITouchController.h"
+#include "WRLDMapView.h"
 #include "WRLDMapView+Private.h"
 
 

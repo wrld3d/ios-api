@@ -9,6 +9,7 @@
 #import "WRLDCoordinateBounds.h"
 #import "WRLDIndoorMap.h"
 #import "WRLDMarker.h"
+#import "WRLDPolygon.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -121,11 +122,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - markers -
 
+
 /*! @name Markers */
 
 /*!
  Add a marker to the map.
- @param marker The <WRLDMarker> object to add.
+ @param marker The <WRLDMarker> object to add to the map.
  */
 - (void)addMarker:(WRLDMarker *)marker;
 
@@ -137,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Remove a marker from the map.
- @param marker The <WRLDMarker> to remove from the map.
+ @param marker The <WRLDMarker> object to remove from the map.
  */
 - (void)removeMarker:(WRLDMarker *)marker;
 
@@ -146,6 +148,23 @@ NS_ASSUME_NONNULL_BEGIN
  @param markers An array of <WRLDMarker> objects to remove from the map.
  */
 - (void)removeMarkers:(NSArray <WRLDMarker *> *)markers;
+
+
+#pragma mark - polygons -
+
+/*! @name Polygons */
+
+/*!
+ Add a polygon to the map.
+ @param polygon The <WRLDPolygon> object to add to the map.
+ */
+- (void)addPolygon:(WRLDPolygon *)polygon;
+
+/*!
+ Remove a polygon from the map.
+ @param polygon The <WRLDPolygon> object to remove from the map.
+ */
+- (void)removePolygon:(WRLDPolygon *)polygon;
 
 
 #pragma mark - controlling the indoor map view -
