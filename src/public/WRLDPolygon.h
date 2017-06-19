@@ -47,6 +47,21 @@ NS_ASSUME_NONNULL_BEGIN
                            onIndoorMap:(NSString *)indoorMapId
                                onFloor:(NSInteger)floorId;
 
+/*!
+ Instantiate a polygon with coordinates.
+ @param coords The array of coordinates that define the exterior polygon. The data 
+ in this array is copied to the new object.
+ @param count The number of items in the exterior coordinates array.
+ @param interiorPolygons An array of WRLDPolygon objects that define cutout regions in the polygon
+ @param indoorMapId The id of the indoor map on which the polygon will be displayed.
+ @param floorId The id of the indoor map floor on which the polygon will be displayed.
+ @returns A WRLDPolygon instance.
+ */
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
+                              count:(NSUInteger)count
+                   interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons
+                        onIndoorMap:(NSString *)indoorMapId
+                               onFloor:(NSInteger)floorId;
 
 
 /// The color of the polygon.

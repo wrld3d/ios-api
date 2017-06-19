@@ -56,6 +56,20 @@
                                      ];
 }
 
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
+                                count:(NSUInteger)count
+                     interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons
+                          onIndoorMap:(NSString *)indoorMapId
+                              onFloor:(NSInteger)floorId
+{
+    return [[self alloc] initWithCoordinates:coords
+                                       count:count
+                            interiorPolygons:interiorPolygons
+                                 onIndoorMap:indoorMapId
+                                     onFloor:floorId
+                            ];
+}
+
 - (instancetype)initWithCoordinates:(CLLocationCoordinate2D *)coords
                               count:(NSUInteger)count
                    interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons
