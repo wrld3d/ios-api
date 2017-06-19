@@ -261,6 +261,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setFloorInterpolation:(CGFloat)floorInterpolation;
 
+/*!
+ Sets whether the map view should display with vertical scaling applied so that terrain and other map features appear flattened.
+ @param isMapCollapsed If YES, map appears flattened; If NO, map displays with default vertical scaling.
+ */
+- (void)setMapCollapsed:(BOOL)isMapCollapsed;
+
 @end
 
 NS_ASSUME_NONNULL_END

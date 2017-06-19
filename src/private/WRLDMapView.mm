@@ -21,6 +21,7 @@
 #include "EegeoApiHost.h"
 #include "EegeoIndoorMapData.h"
 #include "EegeoSpacesApi.h"
+#include "EegeoRenderingApi.h"
 
 #include <string>
 
@@ -742,6 +743,11 @@ const double defaultStartZoomLevel = 8;
     {
         interactionModel.ToggleExpanded();
     }
+}
+
+- (void)setMapCollapsed:(BOOL)isMapCollapsed
+{
+    [self getMapApi].GetRenderingApi().SetMapCollapsed(isMapCollapsed);
 }
 
 #pragma mark - WRLDMapView (Private)

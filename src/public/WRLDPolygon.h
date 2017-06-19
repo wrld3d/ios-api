@@ -33,6 +33,22 @@ NS_ASSUME_NONNULL_BEGIN
                                  count:(NSUInteger)count
                       interiorPolygons:(NSArray <WRLDPolygon *> *)interiorPolygons;
 
+/*!
+ Instantiate a polygon with coordinates.
+ @param coords The array of coordinates that define the polygon. The data in this
+ array is copied to the new object.
+ @param count The number of items in the coordinates array.
+ @param indoorMapId The id of the indoor map on which the polygon will be displayed.
+ @param floorId The id of the indoor map floor on which the polygon will be displayed.
+ @returns A WRLDPolygon instance.
+ */
++ (instancetype)polygonWithCoordinates:(CLLocationCoordinate2D *)coords
+                                 count:(NSUInteger)count
+                           onIndoorMap:(NSString *)indoorMapId
+                               onFloor:(NSInteger)floorId;
+
+
+
 /// The color of the polygon.
 @property (nonatomic) UIColor* color;
 
@@ -47,6 +63,13 @@ NS_ASSUME_NONNULL_BEGIN
  - `WRLDElevationModeHeightAboveGround`: The polygons elevation should be relative to the ground directly below it.
  */
 @property (nonatomic) WRLDElevationMode elevationMode;
+
+
+/// For a polygon to be displayed on an indoor map, the id of the indoor map (else nil).
+@property (nonatomic, readonly, copy) NSString* indoorMapId;
+
+/// For an indoor map polygon, the floor id of the floor on which the polygon will be displayed
+@property (nonatomic, readonly) NSInteger indoorFloorId;
 
 @end
 

@@ -24,6 +24,13 @@
     bool m_addedToMapView;
 }
 
+const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
+{
+    return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
+        ? Eegeo::Positioning::ElevationMode::HeightAboveGround
+        : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
+}
+
 + (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     return [[self alloc] initWithCoordinate:coordinate
@@ -74,21 +81,15 @@
 {
     _elevation = elevation;
     if (!m_addedToMapView) return;
-    m_pMarkersApi->SetAnchorHeight(m_markerId, _elevation);
+    m_pMarkersApi->SetElevation(m_markerId, _elevation);
 }
 
 - (void)setElevationMode:(WRLDElevationMode)elevationMode
 {
     _elevationMode = elevationMode;
     if (!m_addedToMapView) return;
-    if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
-    {
-        m_pMarkersApi->SetAnchorHeightMode(m_markerId, Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
-    }
-    else if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel)
-    {
-        m_pMarkersApi->SetAnchorHeightMode(m_markerId, Eegeo::Markers::AnchorHeight::Type::HeightAboveSeaLevel);
-    }
+
+    m_pMarkersApi->SetElevationMode(m_markerId, ToPositioningElevationMode(elevationMode));
 }
 
 - (void)setDrawOrder:(NSInteger)drawOrder
@@ -124,23 +125,18 @@
     if (m_addedToMapView) return;
     m_pMarkersApi = &[mapView getMapApi].GetMarkersApi();
     
-    Eegeo::Markers::MarkerBuilder builder;
-    builder.SetLocation(_coordinate.latitude, _coordinate.longitude);
-    builder.SetAnchorHeight(static_cast<float>(_elevation));
-    builder.SetSubPriority(static_cast<int>(_drawOrder));
-    if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
-    {
-        builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveGround);
-    }
-    else if (_elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveSeaLevel)
-    {
-        builder.SetAnchorHeightMode(Eegeo::Markers::AnchorHeight::Type::HeightAboveSeaLevel);
-    }
-    builder.SetLabelText([_title UTF8String]);
-    builder.SetLabelStyle([_styleName UTF8String]);
-    builder.SetLabelIcon([_iconKey UTF8String]);
-    builder.SetInterior([_indoorMapId UTF8String], static_cast<int>(_indoorFloorId));
-    m_markerId = m_pMarkersApi->CreateMarker(builder.Build());
+    const Eegeo::Markers::MarkerCreateParams& markerCreateParams = Eegeo::Markers::MarkerBuilder()
+        .SetLocation(_coordinate.latitude, _coordinate.longitude)
+        .SetElevation(_elevation)
+        .SetSubPriority(static_cast<int>(_drawOrder))
+        .SetElevationMode(ToPositioningElevationMode(_elevationMode))
+        .SetLabelText([_title UTF8String])
+        .SetLabelStyle([_styleName UTF8String])
+        .SetLabelIcon([_iconKey UTF8String])
+        .SetInterior([_indoorMapId UTF8String], static_cast<int>(_indoorFloorId))
+        .Build();
+    
+    m_markerId = m_pMarkersApi->CreateMarker(markerCreateParams);
     m_addedToMapView = true;
 }
 
