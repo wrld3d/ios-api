@@ -19,3 +19,4 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDMapViewDelegate.h"
 #import "WRLDMarker.h"
 #import "WRLDPolygon.h"
+#import "WRLDPolygonRenderer.h"

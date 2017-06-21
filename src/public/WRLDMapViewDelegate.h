@@ -1,8 +1,10 @@
 #import <UIKit/UIKit.h>
 #import "WRLDCoordinateWithAltitude.h"
+#import "WRLDPolygon.h"
 
 @class WRLDMapView;
 @class WRLDMarker;
+@class WRLDOverlayRenderer;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -50,4 +52,5 @@
  */
 - (void)mapView:(WRLDMapView *)mapView didTapMarker:(WRLDMarker *)marker;
 
+- (WRLDOverlayRenderer *)mapView:(WRLDMapView *)mapView rendererForOverlay:(id <WRLDOverlay>)overlay;
 @end

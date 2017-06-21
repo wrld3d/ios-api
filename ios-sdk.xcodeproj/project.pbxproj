@@ -56,6 +56,8 @@
 		D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */; };
 		D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6581EBB8C6600384605 /* WRLDMarker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0AAB6661EBCDEEB00384605 /* WRLDMarker+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */; };
+		E0225E451EF97FC600301330 /* WRLDPolygonRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0225E431EF97FBF00301330 /* WRLDPolygonRenderer.mm */; };
+		E0225E471EF97FD300301330 /* WRLDPolygonRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0225E461EF97FCE00301330 /* WRLDPolygonRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; };
 		E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E031100B1EB0E13B00002E88 /* GLKit.framework */; };
@@ -182,6 +184,8 @@
 		D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMarker.mm; sourceTree = "<group>"; };
 		D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMarker+Private.h"; sourceTree = "<group>"; };
 		D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WrldSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0225E431EF97FBF00301330 /* WRLDPolygonRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPolygonRenderer.mm; sourceTree = "<group>"; };
+		E0225E461EF97FCE00301330 /* WRLDPolygonRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDPolygonRenderer.h; sourceTree = "<group>"; };
 		E0310FFC1EB0E08B00002E88 /* Wrld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wrld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E031100B1EB0E13B00002E88 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E0601E4A1EAFBF510050EB45 /* DevApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +431,7 @@
 		E0F4E1671EB347FB00949ACE /* private */ = {
 			isa = PBXGroup;
 			children = (
+				E0225E431EF97FBF00301330 /* WRLDPolygonRenderer.mm */,
 				E0F4E1691EB347FB00949ACE /* WRLDApi+Private.h */,
 				E0F4E1681EB347FB00949ACE /* WRLDApi.m */,
 				521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */,
@@ -451,6 +456,7 @@
 		E0F4E16D1EB347FB00949ACE /* public */ = {
 			isa = PBXGroup;
 			children = (
+				E0225E461EF97FCE00301330 /* WRLDPolygonRenderer.h */,
 				E0F4E16E1EB347FB00949ACE /* WRLDApi.h */,
 				521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */,
 				E0E9B9101ED334AF00F94099 /* WRLDCoordinateWithAltitude.h */,
@@ -506,6 +512,7 @@
 				521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */,
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
 				5200BC4A1ECB608100B6E263 /* WRLDMapView+Private.h in Headers */,
+				E0225E471EF97FD300301330 /* WRLDPolygonRenderer.h in Headers */,
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
@@ -750,6 +757,7 @@
 				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
 				E0E9B9131ED347EB00F94099 /* WRLDCoordinateWithAltitude.m in Sources */,
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
+				E0225E451EF97FC600301330 /* WRLDPolygonRenderer.mm in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
 				2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */,
 				528A5C7F1EDD9BE200C5454F /* WRLDPolygon.mm in Sources */,

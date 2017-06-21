@@ -2,12 +2,20 @@
 #import "WRLDMapView.h"
 #import "WRLDMapView+Private.h"
 #import "WRLDPolygon.h"
+#import "WRLDPolygonRenderer.h"
 
 #include "EegeoGeofenceApi.h"
 #include "GeofenceModel.h"
 #include "GeofenceBuilder.h"
 
 @interface WRLDPolygon ()
+
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *subtitle;
+
+@property (nonatomic) WRLDCoordinateBounds bounds;
 
 @end
 
@@ -91,7 +99,7 @@
             m_innerRings.push_back([polygon _getOuterRing]);
         }
         
-        _color = [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:0.5f];
+       // _color = [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:0.5f];
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         _indoorMapId = indoorMapId;
@@ -103,20 +111,30 @@
     return self;
 }
 
-- (void)setColor:(UIColor *)color
-{
-    _color = color;
-    if (!m_addedToMapView)
-    {
-        return;
-    }
-    m_pGeofenceApi->SetGeofenceColor(m_polygonId, [self _getColor]);
-}
+//- (void)setColor:(UIColor *)color
+//{
+//    _color = color;
+//    if (!m_addedToMapView)
+//    {
+//        return;
+//    }
+//    m_pGeofenceApi->SetGeofenceColor(m_polygonId, [self _getColor]);
+//}
+//
+//- (Eegeo::v4)_getColor
+//{
+//    CGFloat red, green, blue, alpha;
+//    [_color getRed:&red
+//             green:&green
+//              blue:&blue
+//             alpha:&alpha];
+//    return Eegeo::v4(static_cast<float>(red), static_cast<float>(green), static_cast<float>(blue), static_cast<float>(alpha));
+//}
 
-- (Eegeo::v4)_getColor
++ (Eegeo::v4)_makeEegeoColor:(UIColor *)color
 {
     CGFloat red, green, blue, alpha;
-    [_color getRed:&red
+    [color getRed:&red
              green:&green
               blue:&blue
              alpha:&alpha];
@@ -165,6 +183,11 @@
     if (m_addedToMapView)
         return;
     
+    WRLDPolygonRenderer* renderer = (WRLDPolygonRenderer*)[mapView rendererForOverlay:self];
+    if (renderer == nil)
+    {
+        return;
+    }
     
     Eegeo::Data::Geofencing::GeofenceBuilder geofenceBuilder;
     geofenceBuilder.SetOuterRing(m_outerRing);
@@ -175,9 +198,9 @@
     }
     
     const Eegeo::Positioning::ElevationMode::Type elevationMode = [WRLDPolygon MakeElevationMode:_elevationMode];
-    
+
     geofenceBuilder
-        .SetPolygonColor([self _getColor])
+        .SetPolygonColor([WRLDPolygon _makeEegeoColor:renderer.fillColor])
         .SetElevationMode(elevationMode)
         .SetElevation(_elevation);
     
@@ -190,6 +213,9 @@
     
     m_pGeofenceApi = &[mapView getMapApi].GetGeofenceApi();
     m_polygonId = m_pGeofenceApi->CreateGeofence(createParams);
+    
+    
+
     m_addedToMapView = true;
 }
 

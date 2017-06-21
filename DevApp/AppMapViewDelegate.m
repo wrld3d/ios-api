@@ -29,6 +29,20 @@
     NSLog(@"AppMapViewDelegate - marker tapped: %@", marker.title);
 }
 
+- (WRLDOverlayRenderer *)mapView:(WRLDMapView *)mapView rendererForOverlay:(id <WRLDOverlay>)overlay;
+{
+    if ([overlay isKindOfClass:[WRLDPolygon class]])
+    {
+        WRLDPolygonRenderer* renderer = [[WRLDPolygonRenderer alloc] initWithPolygon:(WRLDPolygon*)overlay];
+        
+        renderer.fillColor = [[UIColor cyanColor] colorWithAlphaComponent:0.2];
+        
+        return renderer;
+    }
+    
+    return nil;
+}
+
 @end
 
 

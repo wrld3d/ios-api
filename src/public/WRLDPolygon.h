@@ -3,14 +3,37 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "WRLDElevationMode.h"
+#import "WRLDCoordinateBounds.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 
+
+@protocol WRLDAnnotation <NSObject>
+
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+
+@optional
+
+@property (nonatomic, readonly, copy, nullable) NSString *title;
+@property (nonatomic, readonly, copy, nullable) NSString *subtitle;
+
+@end
+
+@protocol WRLDOverlay <WRLDAnnotation>
+
+@property (nonatomic, readonly) WRLDCoordinateBounds bounds;
+
+@end
+
+
+
+////////--------
+
 /// A Polygon is an shape consisting of three or more vertivces and is placed on or above the map.
 /// Optionally polygons can contain one or more interior polygons which define cutout regions in the polygon.
 /// Their color can also be modified.
-@interface WRLDPolygon : NSObject
+@interface WRLDPolygon : NSObject<WRLDOverlay>
 
 /*!
  Instantiate a polygon with coordinates.
@@ -65,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// The color of the polygon.
-@property (nonatomic) UIColor* color;
+//@property (nonatomic) UIColor* color;
 
 /// The height of the polygon above either the ground, or sea-level, depending on the elevationMode property.
 @property (nonatomic) CLLocationDistance elevation;

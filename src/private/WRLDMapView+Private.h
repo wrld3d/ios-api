@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
+
+- (nullable WRLDOverlayRenderer *) rendererForOverlay:(id <WRLDOverlay>)overlay;
+
 @end
 
 NS_ASSUME_NONNULL_END

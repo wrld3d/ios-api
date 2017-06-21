@@ -832,6 +832,14 @@ const double defaultStartZoomLevel = 8;
     }
 }
 
+- (nullable WRLDOverlayRenderer *) rendererForOverlay:(id <WRLDOverlay>)overlay
+{
+    if ([self.delegate respondsToSelector:@selector(mapView:rendererForOverlay:)])
+    {
+        return [self.delegate mapView:self rendererForOverlay:overlay];
+    }
+    return nil;
+}
 @end
 
 
