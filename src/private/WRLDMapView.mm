@@ -9,6 +9,7 @@
 #import "WRLDNativeMapView.h"
 #import "WRLDPolygon+Private.h"
 
+#include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
 #include "iOSGlDisplayService.h"
 
@@ -45,6 +46,7 @@
 {
     Eegeo::ApiHost::iOS::iOSApiRunner* m_pApiRunner;
 
+    WRLDMapOptions* m_mapOptions;
     NSNumber* m_startLocationLatitude;
     NSNumber* m_startLocationLongitude;
     NSNumber* m_startZoomLevel;
@@ -64,8 +66,9 @@ const double defaultStartZoomLevel = 8;
 
 - (instancetype)initWithCoder:(NSCoder*)coder
 {
-    if(self = [super initWithCoder:coder])
+    if (self = [super initWithCoder:coder])
     {
+        m_mapOptions = NULL;
         [self initView];
     }
 
@@ -74,22 +77,35 @@ const double defaultStartZoomLevel = 8;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if(self = [super initWithFrame:frame])
+    if (self = [super initWithFrame:frame])
     {
+        m_mapOptions = NULL;
         [self initView];
     }
+    
+    return self;
+}
 
+- (instancetype)initWithFrame:(CGRect)frame
+                andMapOptions:(WRLDMapOptions *)mapOptions
+{
+    if (self = [super initWithFrame:frame])
+    {
+        m_mapOptions = mapOptions;
+        [self initView];
+    }
+    
     return self;
 }
 
 
--(BOOL)isAppBackgrounded
+- (BOOL)isAppBackgrounded
 {
     return [UIApplication sharedApplication].applicationState == UIApplicationStateBackground;
 }
 
 
--(void)initView
+- (void)initView
 {
     _glContext = nil;
     _displayLink = nil;
@@ -156,7 +172,7 @@ const double defaultStartZoomLevel = 8;
     apiHost.OnStart();
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
     [super awakeFromNib];
     
@@ -164,7 +180,7 @@ const double defaultStartZoomLevel = 8;
     [self _initialiseCameraView];
 }
 
--(void)_initialiseCameraView
+- (void)_initialiseCameraView
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     
@@ -183,18 +199,16 @@ const double defaultStartZoomLevel = 8;
 }
 
 
--(void) createPlatform
+- (void)createPlatform
 {
     Eegeo_ASSERT(![self isAppBackgrounded]);
 
     [self createGLContextAndView];
 
-    std::string apiKey = [[WRLDApi apiKey] UTF8String];
-
     NSBundle *frameworkBundle = [NSBundle bundleForClass:[self class]];
     std::string frameworkBundleId = [[frameworkBundle bundleIdentifier] UTF8String];
 
-    m_pApiRunner = Eegeo::ApiHost::iOS::iOSApiRunner::Create(apiKey, frameworkBundleId, _glkView);
+    m_pApiRunner = Eegeo::ApiHost::iOS::iOSApiRunner::Create([self getPlatformConfigOptions], frameworkBundleId, _glkView);
 
     const Eegeo::Rendering::ScreenProperties& screenProperties = m_pApiRunner->GetDisplayScreenProperties();
 
@@ -207,6 +221,22 @@ const double defaultStartZoomLevel = 8;
     [_apiGestureDelegate bind:self];
 
     _nativeMapView = Eegeo_NEW(WRLDNativeMapView)(self, *m_pApiRunner);
+}
+
+- (Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions)getPlatformConfigOptions
+{
+    std::string apiKey = [[WRLDApi apiKey] UTF8String];
+    std::string coverageTreeManifest, environmentThemesManifest;
+    
+    if (m_mapOptions != NULL)
+    {
+        coverageTreeManifest = [m_mapOptions.coverageTreeManifest UTF8String];
+        environmentThemesManifest = [m_mapOptions.environmentThemesManifest UTF8String];
+    }
+    
+    Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions configOptions(apiKey, coverageTreeManifest, environmentThemesManifest);
+    
+    return configOptions;
 }
 
 

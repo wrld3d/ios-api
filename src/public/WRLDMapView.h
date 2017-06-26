@@ -10,6 +10,7 @@
 #import "WRLDIndoorMap.h"
 #import "WRLDMarker.h"
 #import "WRLDPolygon.h"
+#import "WRLDMapOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,11 +25,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak, nullable) IBOutlet id<WRLDMapViewDelegate> delegate;
 
 /*!
- Allocates and initializes a new <WRLDMapView> object with the given frame.
+ Allocates and initializes a new <WRLDMapView> object with the given frame and default map options.
  @param frame The frame rectangle for the view, measured in pts.
  @returns The initialized view.
  */
-- (instancetype) initWithFrame: (CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame;
+
+/*!
+ Allocates and initializes a new <WRLDMapView> object with the given frame and map options.
+ @param frame The frame rectangle for the view, measured in pts.
+ @param mapOptions The map options to initialize the map with. Specify nil for the default map options.
+ @returns The initialized view.
+ */
+- (instancetype)initWithFrame:(CGRect)frame
+                andMapOptions:(nullable WRLDMapOptions *)mapOptions;
+
+
 
 
 
