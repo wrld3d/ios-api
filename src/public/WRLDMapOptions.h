@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDMapOptions : NSObject
 
 /*!
- Initialize an instance of WLRDMapOptions with the default options.
+ Instantiate an instance of WLRDMapOptions with default options.
  
  @returns A WRLDMapOptions instance.
  */
