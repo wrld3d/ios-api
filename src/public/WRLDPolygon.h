@@ -7,7 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-/// A Polygon is an shape consisting of three or more vertivces and is placed on or above the map.
+/// A Polygon is a shape consisting of three or more vertices and is placed on or above the map.
 /// Optionally polygons can contain one or more interior polygons which define cutout regions in the polygon.
 /// Their color can also be modified.
 @interface WRLDPolygon : NSObject
