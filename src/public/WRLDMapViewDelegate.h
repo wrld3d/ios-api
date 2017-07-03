@@ -19,7 +19,7 @@
 - (void)mapViewRegionWillChange:(WRLDMapView *)mapView;
 
 /*!
- A message sent every frame while the map view is changing. For example, during an animaped camera transition.
+ A message sent every frame while the map view is changing. For example, during an animated camera transition.
  @param mapView The WRLDMapView that is being observed.
  */
 - (void)mapViewRegionIsChanging:(WRLDMapView *)mapView;
