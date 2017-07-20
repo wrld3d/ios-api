@@ -8,6 +8,7 @@
 #import "WRLDMarker+Private.h"
 #import "WRLDNativeMapView.h"
 #import "WRLDPolygon+Private.h"
+#import "WRLDBlueSphere+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -167,6 +168,8 @@ const double defaultStartZoomLevel = 8;
     [self refreshDisplayLink];
 
     [self _initialiseCameraView];
+    
+    [self _initialiseBlueSphere];
 
     Eegeo::ApiHost::IEegeoApiHost& apiHost = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoApiHost();
     apiHost.OnStart();
@@ -198,6 +201,10 @@ const double defaultStartZoomLevel = 8;
     cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
 }
 
+- (void)_initialiseBlueSphere
+{
+    _blueSphere = [[WRLDBlueSphere alloc] initWithMapView:self];
+}
 
 - (void)createPlatform
 {

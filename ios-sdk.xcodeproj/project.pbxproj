@@ -55,6 +55,16 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		D01C9D781F19184E00714D7F /* libeegeo-api-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D751F19184E00714D7F /* libeegeo-api-host.a */; };
+		D01C9D791F19184E00714D7F /* libeegeo-api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D761F19184E00714D7F /* libeegeo-api.a */; };
+		D01C9D7A1F19184E00714D7F /* libeegeo-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D771F19184E00714D7F /* libeegeo-sdk.a */; };
+		D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D7B1F20DF0100714D7F /* WRLDBlueSphere.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */ = {isa = PBXBuildFile; fileRef = D01C9D7D1F20E01600714D7F /* WRLDBlueSphere.mm */; };
+		D01C9D881F20FC3200714D7F /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01C9D801F20FC1F00714D7F /* Sphere_8bit.pvr */; };
+		D01C9D891F20FC3200714D7F /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01C9D811F20FC1F00714D7F /* Sphere_Night_8bit.pvr */; };
+		D01C9D8A1F20FC3200714D7F /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01C9D821F20FC1F00714D7F /* Sphere.POD */; };
+		D01C9D8B1F20FC3200714D7F /* Stalk.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01C9D831F20FC1F00714D7F /* Stalk.POD */; };
+		D01C9D8D1F20FE6600714D7F /* WRLDBlueSphere+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D8C1F20FE6600714D7F /* WRLDBlueSphere+Private.h */; };
 		D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */; };
 		D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6581EBB8C6600384605 /* WRLDMarker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0AAB6661EBCDEEB00384605 /* WRLDMarker+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */; };
@@ -182,6 +192,16 @@
 		52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapOptions.h; sourceTree = "<group>"; };
 		52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMapOptions.m; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
+		D01C9D751F19184E00714D7F /* libeegeo-api-host.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libeegeo-api-host.a"; path = "../../eegeo-mobile/eegeo-stream-app-ios/build/eegeo-sdk/eegeo-api-host/Debug-iphoneos/libeegeo-api-host.a"; sourceTree = "<group>"; };
+		D01C9D761F19184E00714D7F /* libeegeo-api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libeegeo-api.a"; path = "../../eegeo-mobile/eegeo-stream-app-ios/build/eegeo-sdk/eegeo-api/Debug-iphoneos/libeegeo-api.a"; sourceTree = "<group>"; };
+		D01C9D771F19184E00714D7F /* libeegeo-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libeegeo-sdk.a"; path = "../../eegeo-mobile/eegeo-stream-app-ios/build/eegeo-sdk/Debug-iphoneos/libeegeo-sdk.a"; sourceTree = "<group>"; };
+		D01C9D7B1F20DF0100714D7F /* WRLDBlueSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDBlueSphere.h; sourceTree = "<group>"; };
+		D01C9D7D1F20E01600714D7F /* WRLDBlueSphere.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDBlueSphere.mm; sourceTree = "<group>"; };
+		D01C9D801F20FC1F00714D7F /* Sphere_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_8bit.pvr; sourceTree = "<group>"; };
+		D01C9D811F20FC1F00714D7F /* Sphere_Night_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_Night_8bit.pvr; sourceTree = "<group>"; };
+		D01C9D821F20FC1F00714D7F /* Sphere.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere.POD; sourceTree = "<group>"; };
+		D01C9D831F20FC1F00714D7F /* Stalk.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Stalk.POD; sourceTree = "<group>"; };
+		D01C9D8C1F20FE6600714D7F /* WRLDBlueSphere+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDBlueSphere+Private.h"; sourceTree = "<group>"; };
 		D0AAB6581EBB8C6600384605 /* WRLDMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMarker.h; sourceTree = "<group>"; };
 		D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMarker.mm; sourceTree = "<group>"; };
 		D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMarker+Private.h"; sourceTree = "<group>"; };
@@ -237,6 +257,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01C9D781F19184E00714D7F /* libeegeo-api-host.a in Frameworks */,
+				D01C9D791F19184E00714D7F /* libeegeo-api.a in Frameworks */,
+				D01C9D7A1F19184E00714D7F /* libeegeo-sdk.a in Frameworks */,
 				E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */,
 				544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */,
 			);
@@ -337,6 +360,9 @@
 		D39018B2402324986ABDDC69 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D01C9D751F19184E00714D7F /* libeegeo-api-host.a */,
+				D01C9D761F19184E00714D7F /* libeegeo-api.a */,
+				D01C9D771F19184E00714D7F /* libeegeo-sdk.a */,
 				E031100B1EB0E13B00002E88 /* GLKit.framework */,
 				D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */,
 			);
@@ -396,6 +422,10 @@
 		E0F4E0B51EB339E900949ACE /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				D01C9D801F20FC1F00714D7F /* Sphere_8bit.pvr */,
+				D01C9D811F20FC1F00714D7F /* Sphere_Night_8bit.pvr */,
+				D01C9D821F20FC1F00714D7F /* Sphere.POD */,
+				D01C9D831F20FC1F00714D7F /* Stalk.POD */,
 				E0F4E1471EB339FB00949ACE /* EmbeddedTheme */,
 				E0F4E0B61EB339E900949ACE /* embedded_manifest.bin */,
 				E0F4E0EF1EB339EA00949ACE /* label_category_icon_map.json */,
@@ -433,6 +463,8 @@
 			children = (
 				E0F4E1691EB347FB00949ACE /* WRLDApi+Private.h */,
 				E0F4E1681EB347FB00949ACE /* WRLDApi.m */,
+				D01C9D7D1F20E01600714D7F /* WRLDBlueSphere.mm */,
+				D01C9D8C1F20FE6600714D7F /* WRLDBlueSphere+Private.h */,
 				521807B01EB9E30D0070ACDD /* WRLDCoordinateBounds.m */,
 				E0E9B9121ED347EB00F94099 /* WRLDCoordinateWithAltitude.m */,
 				E0F4E16A1EB347FB00949ACE /* WRLDGestureDelegate.h */,
@@ -457,6 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				E0F4E16E1EB347FB00949ACE /* WRLDApi.h */,
+				D01C9D7B1F20DF0100714D7F /* WRLDBlueSphere.h */,
 				521807B21EB9E34B0070ACDD /* WRLDCoordinateBounds.h */,
 				E0E9B9101ED334AF00F94099 /* WRLDCoordinateWithAltitude.h */,
 				528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */,
@@ -515,6 +548,7 @@
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
+				D01C9D8D1F20FE6600714D7F /* WRLDBlueSphere+Private.h in Headers */,
 				2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
@@ -523,6 +557,7 @@
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				D0AAB6661EBCDEEB00384605 /* WRLDMarker+Private.h in Headers */,
+				D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi+Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
@@ -656,16 +691,20 @@
 				E0F4E1391EB339EA00949ACE /* label_style_sheet.json in Resources */,
 				E0F4E0FF1EB339EA00949ACE /* embedded_manifest.bin in Resources */,
 				E0F4E1441EB339EA00949ACE /* placeholder_cube_posX.png in Resources */,
+				D01C9D8A1F20FC3200714D7F /* Sphere.POD in Resources */,
+				D01C9D8B1F20FC3200714D7F /* Stalk.POD in Resources */,
 				E0F4E1371EB339EA00949ACE /* label_category_icon_map.json in Resources */,
 				E0F4E17F1EB3480800949ACE /* modulemap in Resources */,
 				E0F4E13C1EB339EA00949ACE /* pin_sheet.json in Resources */,
 				E0F4E1381EB339EA00949ACE /* label_category_mapping.json in Resources */,
 				E0F4E1451EB339EA00949ACE /* placeholder_cube_posY.png in Resources */,
 				E0F4E1481EB339FB00949ACE /* EmbeddedTheme in Resources */,
+				D01C9D881F20FC3200714D7F /* Sphere_8bit.pvr in Resources */,
 				E0F4E13D1EB339EA00949ACE /* pin_sheet_0.png in Resources */,
 				E0F4E13B1EB339EA00949ACE /* opensans_semibold_sdf_0.png in Resources */,
 				E0F4E13F1EB339EA00949ACE /* pin_sheet_0@3x.png in Resources */,
 				E0F4E1421EB339EA00949ACE /* placeholder_cube_negY.png in Resources */,
+				D01C9D891F20FC3200714D7F /* Sphere_Night_8bit.pvr in Resources */,
 				E0F4E13A1EB339EA00949ACE /* opensans_semibold_sdf.fnt in Resources */,
 				E0F4E13E1EB339EA00949ACE /* pin_sheet_0@2x.png in Resources */,
 				E0F4E1411EB339EA00949ACE /* placeholder_cube_negX.png in Resources */,
@@ -755,6 +794,7 @@
 				52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */,
 				521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */,
 				521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */,
+				D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */,
 				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
 				E0E9B9131ED347EB00F94099 /* WRLDCoordinateWithAltitude.m in Sources */,
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,

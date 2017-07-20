@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EegeoMapApi.h"
-
+#include "PositioningTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyExitedIndoorMap;
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
+
+const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode);
 
 @end
 

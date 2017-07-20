@@ -11,6 +11,7 @@
 #import "WRLDMarker.h"
 #import "WRLDPolygon.h"
 #import "WRLDMapOptions.h"
+#import "WRLDBlueSphere.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -202,6 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The currently active indoor map, or `nil` if currently outdoors.
 @property(nonatomic, readonly, copy, nullable) WRLDIndoorMap* activeIndoorMap;
 
+@property(nonatomic, readonly, copy) WRLDBlueSphere* blueSphere;
 
 /*! @name Indoor Map methods */
 
