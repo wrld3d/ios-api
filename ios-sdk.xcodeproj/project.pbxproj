@@ -68,6 +68,8 @@
 		D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */; };
 		D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6581EBB8C6600384605 /* WRLDMarker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0AAB6661EBCDEEB00384605 /* WRLDMarker+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */; };
+		D22AA32C1F2F89A8002A902D /* WRLDIndoorGeoreferencer.h in Headers */ = {isa = PBXBuildFile; fileRef = D22AA3291F2F8992002A902D /* WRLDIndoorGeoreferencer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D22AA32D1F2F89BF002A902D /* WRLDIndoorGeoreferencer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D22AA32A1F2F8999002A902D /* WRLDIndoorGeoreferencer.mm */; };
 		E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; };
 		E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0310FFC1EB0E08B00002E88 /* Wrld.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E031100B1EB0E13B00002E88 /* GLKit.framework */; };
@@ -205,6 +207,8 @@
 		D0AAB6581EBB8C6600384605 /* WRLDMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMarker.h; sourceTree = "<group>"; };
 		D0AAB6591EBB8E7D00384605 /* WRLDMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMarker.mm; sourceTree = "<group>"; };
 		D0AAB6651EBCDEEB00384605 /* WRLDMarker+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDMarker+Private.h"; sourceTree = "<group>"; };
+		D22AA3291F2F8992002A902D /* WRLDIndoorGeoreferencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorGeoreferencer.h; sourceTree = "<group>"; };
+		D22AA32A1F2F8999002A902D /* WRLDIndoorGeoreferencer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDIndoorGeoreferencer.mm; sourceTree = "<group>"; };
 		D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WrldSdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0310FFC1EB0E08B00002E88 /* Wrld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wrld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E031100B1EB0E13B00002E88 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -471,6 +475,7 @@
 				E0F4E16B1EB347FB00949ACE /* WRLDGestureDelegate.mm */,
 				2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */,
 				2CFE0A5E1EC0A3F4006D51E6 /* WRLDIndoorMap.m */,
+				D22AA32A1F2F8999002A902D /* WRLDIndoorGeoreferencer.mm */,
 				521807AC1EB8F9D90070ACDD /* WRLDMapCamera.mm */,
 				52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */,
 				5200BC471ECB5FBC00B6E263 /* WRLDMapView+Private.h */,
@@ -495,6 +500,7 @@
 				528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */,
 				2CFE0A5A1EC08F83006D51E6 /* WRLDIndoorMap.h */,
 				2C3401051EC0CED300F8CEF0 /* WRLDIndoorMapDelegate.h */,
+				D22AA3291F2F8992002A902D /* WRLDIndoorGeoreferencer.h */,
 				521807AE1EB8F9ED0070ACDD /* WRLDMapCamera.h */,
 				52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */,
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
@@ -553,6 +559,7 @@
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				E0E9B9111ED345D600F94099 /* WRLDCoordinateWithAltitude.h in Headers */,
+				D22AA32C1F2F89A8002A902D /* WRLDIndoorGeoreferencer.h in Headers */,
 				528A5C7E1EDD9BDE00C5454F /* WRLDPolygon+Private.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
@@ -765,7 +772,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -793,6 +800,7 @@
 			files = (
 				52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */,
 				521807AD1EB8F9D90070ACDD /* WRLDMapCamera.mm in Sources */,
+				D22AA32D1F2F89BF002A902D /* WRLDIndoorGeoreferencer.mm in Sources */,
 				521807B11EB9E30D0070ACDD /* WRLDCoordinateBounds.m in Sources */,
 				D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */,
 				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
