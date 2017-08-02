@@ -18,10 +18,9 @@
     if (self = [super init])
     {
         [self setCoordinate:CLLocationCoordinate2DMake(0.0, 0.0)];
-        [self setHeading: 0.0];
+        [self setDirection: 0.0];
         [self setIndoorMap:@"" withIndoorMapFloorId:0];
         [self setElevation:0.0];
-        [self setElevationMode: WRLDElevationMode::WRLDElevationModeHeightAboveGround];
     }
 
     return self;
@@ -39,16 +38,10 @@
     m_pBlueSphereApi->SetElevation(_elevation);
 }
 
-- (void)setElevationMode:(WRLDElevationMode)elevationMode
+- (void)setDirection:(CLLocationDirection)direction
 {
-    _elevationMode = elevationMode;
-    m_pBlueSphereApi->SetElevationMode(ToPositioningElevationMode(elevationMode));
-}
-
-- (void)setHeading:(CLLocationDirection)heading
-{
-    _heading = heading;
-    m_pBlueSphereApi->SetHeadingRadians(static_cast<float>(Eegeo::Math::Deg2Rad(_heading)));
+    _direction = direction;
+    m_pBlueSphereApi->SetHeadingRadians(static_cast<float>(Eegeo::Math::Deg2Rad(_direction)));
 }
 
 - (void)setIndoorFloorId:(NSInteger)indoorFloorId
@@ -68,6 +61,13 @@ withIndoorMapFloorId:(NSInteger)indoorMapFloorId
 {
     _enabled = enabled;
     m_pBlueSphereApi->SetEnabled(_enabled);
+}
+
+- (void)setCoordinate:(CLLocationCoordinate2D)coordinate
+            direction:(CLLocationDirection) direction
+{
+    [self setCoordinate:coordinate];
+    [self setDirection:direction];
 }
 
 

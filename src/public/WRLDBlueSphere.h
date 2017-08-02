@@ -10,22 +10,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 
-@property (nonatomic) CLLocationDirection heading;
+@property (nonatomic) CLLocationDirection direction;
 
 @property (nonatomic, readonly, copy) NSString* indoorMapId;
 
 @property (nonatomic) NSInteger indoorFloorId;
 
-
 @property (nonatomic) CLLocationDistance elevation;
 
 @property (nonatomic) bool enabled;
 
-@property (nonatomic) WRLDElevationMode elevationMode;
-
 - (void)setIndoorMap:(NSString * _Nonnull)indoorMapId
 withIndoorMapFloorId:(NSInteger)indoorMapFloorId;
 
+- (void)setCoordinate:(CLLocationCoordinate2D)coordinate
+            direction:(CLLocationDirection) direction;
 
 
 @end
