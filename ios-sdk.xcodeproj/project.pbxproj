@@ -59,9 +59,6 @@
 		D01B67671F31DE5800B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
 		D01B67681F31DE5800B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
 		D01B67691F31DE5800B164FB /* Stalk.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67651F31DE5800B164FB /* Stalk.POD */; };
-		D01C9D781F19184E00714D7F /* libeegeo-api-host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D751F19184E00714D7F /* libeegeo-api-host.a */; };
-		D01C9D791F19184E00714D7F /* libeegeo-api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D761F19184E00714D7F /* libeegeo-api.a */; };
-		D01C9D7A1F19184E00714D7F /* libeegeo-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C9D771F19184E00714D7F /* libeegeo-sdk.a */; };
 		D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D7B1F20DF0100714D7F /* WRLDBlueSphere.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */ = {isa = PBXBuildFile; fileRef = D01C9D7D1F20E01600714D7F /* WRLDBlueSphere.mm */; };
 		D01C9D8D1F20FE6600714D7F /* WRLDBlueSphere+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D8C1F20FE6600714D7F /* WRLDBlueSphere+Private.h */; };
@@ -261,9 +258,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D01C9D781F19184E00714D7F /* libeegeo-api-host.a in Frameworks */,
-				D01C9D791F19184E00714D7F /* libeegeo-api.a in Frameworks */,
-				D01C9D7A1F19184E00714D7F /* libeegeo-sdk.a in Frameworks */,
 				E031100C1EB0E13B00002E88 /* GLKit.framework in Frameworks */,
 				544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */,
 			);
