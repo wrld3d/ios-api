@@ -55,10 +55,10 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
-		D01B67661F31DE5800B164FB /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */; };
-		D01B67671F31DE5800B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
-		D01B67681F31DE5800B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
-		D01B67691F31DE5800B164FB /* Stalk.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67651F31DE5800B164FB /* Stalk.POD */; };
+		D01B67731F338B7600B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
+		D01B67751F338B7D00B164FB /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */; };
+		D01B67761F338B7D00B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
+		D01B67771F338B7D00B164FB /* Stalk.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67651F31DE5800B164FB /* Stalk.POD */; };
 		D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D7B1F20DF0100714D7F /* WRLDBlueSphere.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */ = {isa = PBXBuildFile; fileRef = D01C9D7D1F20E01600714D7F /* WRLDBlueSphere.mm */; };
 		D01C9D8D1F20FE6600714D7F /* WRLDBlueSphere+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D01C9D8C1F20FE6600714D7F /* WRLDBlueSphere+Private.h */; };
@@ -693,8 +693,10 @@
 				E0F4E0FF1EB339EA00949ACE /* embedded_manifest.bin in Resources */,
 				E0F4E1441EB339EA00949ACE /* placeholder_cube_posX.png in Resources */,
 				E0F4E1371EB339EA00949ACE /* label_category_icon_map.json in Resources */,
+				D01B67771F338B7D00B164FB /* Stalk.POD in Resources */,
 				E0F4E17F1EB3480800949ACE /* modulemap in Resources */,
 				E0F4E13C1EB339EA00949ACE /* pin_sheet.json in Resources */,
+				D01B67751F338B7D00B164FB /* Sphere_8bit.pvr in Resources */,
 				E0F4E1381EB339EA00949ACE /* label_category_mapping.json in Resources */,
 				E0F4E1451EB339EA00949ACE /* placeholder_cube_posY.png in Resources */,
 				E0F4E1481EB339FB00949ACE /* EmbeddedTheme in Resources */,
@@ -706,7 +708,9 @@
 				E0F4E13E1EB339EA00949ACE /* pin_sheet_0@2x.png in Resources */,
 				E0F4E1411EB339EA00949ACE /* placeholder_cube_negX.png in Resources */,
 				E0F4E1401EB339EA00949ACE /* placeholder.pvr in Resources */,
+				D01B67731F338B7600B164FB /* Sphere.POD in Resources */,
 				E0F4E1431EB339EA00949ACE /* placeholder_cube_negZ.png in Resources */,
+				D01B67761F338B7D00B164FB /* Sphere_Night_8bit.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,11 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				526F9AD11EC4B93B006F49C4 /* Main.storyboard in Resources */,
-				D01B67671F31DE5800B164FB /* Sphere_Night_8bit.pvr in Resources */,
-				D01B67661F31DE5800B164FB /* Sphere_8bit.pvr in Resources */,
-				D01B67681F31DE5800B164FB /* Sphere.POD in Resources */,
 				526F9ACB1EC4B92A006F49C4 /* Assets.xcassets in Resources */,
-				D01B67691F31DE5800B164FB /* Stalk.POD in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,7 +766,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
