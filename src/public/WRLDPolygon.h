@@ -4,13 +4,14 @@
 
 #import "WRLDElevationMode.h"
 
-NS_ASSUME_NONNULL_BEGIN
+#import "WRLDOverlay.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 /// A Polygon is a shape consisting of three or more vertices and is placed on or above the map.
 /// Optionally polygons can contain one or more interior polygons which define cutout regions in the polygon.
 /// Their color can also be modified.
-@interface WRLDPolygon : NSObject
+@interface WRLDPolygon : NSObject<WRLDOverlay>
 
 /*!
  Instantiate a polygon with coordinates.
@@ -65,26 +66,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// The color of the polygon.
-@property (nonatomic) UIColor* color;
+@property (nonatomic, copy) UIColor* color;
 
 /// The height of the polygon above either the ground, or sea-level, depending on the elevationMode property.
 @property (nonatomic) CLLocationDistance elevation;
 
 /*!
- Whether this polygon should be positioned relative to the ground, or sea-level.
- Takes one of the following values:
+ Specifies how the elevation property of this polygon is interpreted:
  
- - `WRLDElevationModeHeightAboveSeaLevel`: The polygons elevation should be relative to sea-level.
- - `WRLDElevationModeHeightAboveGround`: The polygons elevation should be relative to the ground directly below it.
+ - `WRLDElevationModeHeightAboveSeaLevel`: The elevation is an absolute altitude above mean sea level, in meters.
+ - `WRLDElevationModeHeightAboveGround`: The elevation is a height relative to the map's terrain, in meters.
  */
 @property (nonatomic) WRLDElevationMode elevationMode;
 
 
 /// For a polygon to be displayed on an indoor map, the id of the indoor map (else nil).
-@property (nonatomic, readonly, copy) NSString* indoorMapId;
+@property (nonatomic, copy) NSString* indoorMapId;
 
 /// For an indoor map polygon, the floor id of the floor on which the polygon will be displayed
-@property (nonatomic, readonly) NSInteger indoorFloorId;
+@property (nonatomic) NSInteger indoorFloorId;
 
 @end
 

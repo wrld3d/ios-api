@@ -2,12 +2,13 @@
 #import "WRLDMapView.h"
 #import "WRLDMapView+Private.h"
 #import "WRLDMarker.h"
+#import "WRLDOverlayImpl.h"
 
 #include "MarkerBuilder.h"
 #include "EegeoMarkersApi.h"
 #include "MarkerTypes.h"
 
-@interface WRLDMarker ()
+@interface WRLDMarker () <WRLDOverlayImpl>
 
 @property (nonatomic, readwrite, copy) NSString* styleName;
 
@@ -21,8 +22,9 @@
 {
     Eegeo::Api::EegeoMarkersApi* m_pMarkersApi;
     int m_markerId;
-    bool m_addedToMapView;
 }
+
+
 
 const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
 {
@@ -65,7 +67,6 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         _indoorFloorId = floorId;
 
         m_pMarkersApi = NULL;
-        m_addedToMapView = false;
     }
     return self;
 }
@@ -73,21 +74,30 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate
 {
     _coordinate = coordinate;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
     m_pMarkersApi->SetLocation(m_markerId, _coordinate.latitude, _coordinate.longitude);
 }
 
 - (void)setElevation:(CLLocationDistance)elevation
 {
     _elevation = elevation;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
     m_pMarkersApi->SetElevation(m_markerId, _elevation);
 }
 
 - (void)setElevationMode:(WRLDElevationMode)elevationMode
 {
     _elevationMode = elevationMode;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
 
     m_pMarkersApi->SetElevationMode(m_markerId, ToPositioningElevationMode(elevationMode));
 }
@@ -95,14 +105,20 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 - (void)setDrawOrder:(NSInteger)drawOrder
 {
     _drawOrder = drawOrder;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
     m_pMarkersApi->SetSubPriority(m_markerId, static_cast<int>(_drawOrder));
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = title;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
     m_pMarkersApi->SetLabelText(m_markerId, [_title UTF8String]);
 }
 
@@ -114,16 +130,23 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 - (void)setIconKey:(NSString *)iconKey
 {
     _iconKey = iconKey;
-    if (!m_addedToMapView) return;
+    if (![self nativeCreated])
+    {
+        return;
+    }
     m_pMarkersApi->SetIconKey(m_markerId, [_iconKey UTF8String]);
 }
 
 #pragma mark - WRLDMarker (Private)
 
-- (void)addToMapView:(WRLDMapView *) mapView
+- (void)createNative:(Eegeo::Api::EegeoMapApi&) mapApi
 {   
-    if (m_addedToMapView) return;
-    m_pMarkersApi = &[mapView getMapApi].GetMarkersApi();
+    if ([self nativeCreated])
+    {
+        return;
+    }
+    
+    m_pMarkersApi = &mapApi.GetMarkersApi();
     
     const Eegeo::Markers::MarkerCreateParams& markerCreateParams = Eegeo::Markers::MarkerBuilder()
         .SetLocation(_coordinate.latitude, _coordinate.longitude)
@@ -137,26 +160,26 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         .Build();
     
     m_markerId = m_pMarkersApi->CreateMarker(markerCreateParams);
-    m_addedToMapView = true;
 }
 
-- (void)removeFromMapView
+- (void)destroyNative
 {
-    if (m_addedToMapView && m_pMarkersApi != NULL)
+    if ([self nativeCreated] && m_pMarkersApi != nullptr)
     {
         m_pMarkersApi->DestroyMarker(m_markerId);
-        m_addedToMapView = false;
+        m_markerId = 0;
+        m_pMarkersApi = nullptr;
     }
 }
 
-- (int)getId
+- (WRLDOverlayId)getOverlayId
 {
-    return m_markerId;
+    return { WRLDOverlayMarker, m_markerId };
 }
 
-- (bool)isOnMapView
+- (bool)nativeCreated
 {
-    return m_addedToMapView;
+    return m_markerId != 0;
 }
 
 @end

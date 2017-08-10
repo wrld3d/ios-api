@@ -4,12 +4,14 @@
 
 #import "WRLDElevationMode.h"
 
+#import "WRLDOverlay.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 
 /// A Marker is an icon placed at a point on or above the map’s surface.
 /// They can have some title text attached to them, and can additionally be placed indoors.
-@interface WRLDMarker : NSObject
+@interface WRLDMarker : NSObject<WRLDOverlay>
 
 + (instancetype)markerAtCoordinate:(CLLocationCoordinate2D)coordinate;
 
@@ -31,11 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CLLocationDistance elevation;
 
 /*!
- Whether this marker should be positioned relative to the ground, or sea-level.
- Takes one of the following values:
+ Specifies how the elevation property of this marker is interpreted:
  
- - `WRLDElevationModeHeightAboveSeaLevel`: The markers elevation should be relative to sea-level.
- - `WRLDElevationModeHeightAboveGround`: The markers elevation should be relative to the ground directly below it.
+ - `WRLDElevationModeHeightAboveSeaLevel`: The elevation is an absolute altitude above mean sea level, in meters.
+ - `WRLDElevationModeHeightAboveGround`: The elevation is a height relative to the map's terrain, in meters.
  */
 @property (nonatomic) WRLDElevationMode elevationMode;
 

@@ -2,20 +2,19 @@
 #import "WRLDMapView.h"
 #import "WRLDMapView+Private.h"
 #import "WRLDPolygon.h"
+#import "WRLDOverlayImpl.h"
 
-#include "EegeoGeofenceApi.h"
-#include "GeofenceModel.h"
-#include "GeofenceBuilder.h"
+#include "EegeoPolygonApi.h"
+#include "PolygonShapeBuilder.h"
 
-@interface WRLDPolygon ()
+@interface WRLDPolygon () <WRLDOverlayImpl>
 
 @end
 
 @implementation WRLDPolygon
 {
-    Eegeo::Api::EegeoGeofenceApi* m_pGeofenceApi;
+    Eegeo::Api::EegeoPolygonApi* m_pPolygonApi;
     int m_polygonId;
-    bool m_addedToMapView;
     std::vector<Eegeo::Space::LatLong> m_outerRing;
     std::vector<std::vector<Eegeo::Space::LatLong> > m_innerRings;
 }
@@ -91,14 +90,13 @@
             m_innerRings.push_back([polygon _getOuterRing]);
         }
         
-        _color = [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:0.5f];
+        _color = [UIColor blackColor];
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         _indoorMapId = indoorMapId;
         _indoorFloorId = floorId;
         
-        m_pGeofenceApi = NULL;
-        m_addedToMapView = false;
+        m_pPolygonApi = nil;
     }
     return self;
 }
@@ -106,11 +104,11 @@
 - (void)setColor:(UIColor *)color
 {
     _color = color;
-    if (!m_addedToMapView)
+    if (![self nativeCreated])
     {
         return;
     }
-    m_pGeofenceApi->SetGeofenceColor(m_polygonId, [self _getColor]);
+    m_pPolygonApi->SetFillColor(m_polygonId, [self _getColor]);
 }
 
 - (Eegeo::v4)_getColor
@@ -123,25 +121,54 @@
     return Eegeo::v4(static_cast<float>(red), static_cast<float>(green), static_cast<float>(blue), static_cast<float>(alpha));
 }
 
-- (void)setElevation:(CLLocationDistance)elevation
+- (std::string)getIndoorMapIdAsStdString
 {
-    _elevation = elevation;
-    if (!m_addedToMapView)
+    return (_indoorMapId != nil)
+        ? std::string([_indoorMapId UTF8String])
+        : std::string();
+}
+
+- (void)setIndoorMapId:(NSString * _Nonnull)indoorMapId
+{
+    _indoorMapId = indoorMapId;
+    if (![self nativeCreated])
     {
         return;
     }
-    m_pGeofenceApi->SetGeofenceElevation(m_polygonId, _elevation);
+    
+    m_pPolygonApi->SetIndoorMapId(m_polygonId, [self getIndoorMapIdAsStdString]);
+}
+
+- (void)setIndoorFloorId:(NSInteger)indoorFloorId
+{
+    _indoorFloorId = indoorFloorId;
+    if (![self nativeCreated])
+    {
+        return;
+    }
+    
+    m_pPolygonApi->SetIndoorMapFloorId(m_polygonId, _indoorFloorId);
+}
+
+- (void)setElevation:(CLLocationDistance)elevation
+{
+    _elevation = elevation;
+    if (![self nativeCreated])
+    {
+        return;
+    }
+    m_pPolygonApi->SetElevation(m_polygonId, _elevation);
 }
 
 - (void)setElevationMode:(WRLDElevationMode)elevationMode
 {
     _elevationMode = elevationMode;
-    if (!m_addedToMapView)
+    if (![self nativeCreated])
     {
         return;
     }
 
-    m_pGeofenceApi->SetGeofenceElevationMode(m_polygonId, [WRLDPolygon MakeElevationMode:_elevationMode]);
+    m_pPolygonApi->SetElevationMode(m_polygonId, [WRLDPolygon MakeElevationMode:_elevationMode]);
 }
 
 - (const std::vector<Eegeo::Space::LatLong>&)_getOuterRing
@@ -160,56 +187,50 @@
     return Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
 }
 
-- (void)addToMapView:(WRLDMapView *) mapView
+- (void)createNative:(Eegeo::Api::EegeoMapApi&) mapApi
 {
-    if (m_addedToMapView)
+    if ([self nativeCreated])
         return;
-    
-    
-    Eegeo::Data::Geofencing::GeofenceBuilder geofenceBuilder;
-    geofenceBuilder.SetOuterRing(m_outerRing);
+
+    Eegeo::Shapes::Polygons::PolygonShapeBuilder builder;
+    builder
+        .SetFillColor([self _getColor])
+        .SetElevationMode([WRLDPolygon MakeElevationMode:_elevationMode])
+        .SetElevation(_elevation)
+        .SetOuterRing(m_outerRing);
     
     for (auto innerRing : m_innerRings)
     {
-        geofenceBuilder.AddInnerRing(innerRing);
+        builder.AddInnerRing(innerRing);
     }
-    
-    const Eegeo::Positioning::ElevationMode::Type elevationMode = [WRLDPolygon MakeElevationMode:_elevationMode];
-    
-    geofenceBuilder
-        .SetPolygonColor([self _getColor])
-        .SetElevationMode(elevationMode)
-        .SetElevation(_elevation);
     
     if (_indoorMapId != nil)
     {
-        geofenceBuilder.SetIndoorMap(std::string([_indoorMapId UTF8String]), static_cast<int>(_indoorFloorId));
+        builder.SetIndoorMap(std::string([_indoorMapId UTF8String]), static_cast<int>(_indoorFloorId));
     }
-    const Eegeo::Data::Geofencing::GeofenceCreateParams& createParams = geofenceBuilder.Build();
     
-    
-    m_pGeofenceApi = &[mapView getMapApi].GetGeofenceApi();
-    m_polygonId = m_pGeofenceApi->CreateGeofence(createParams);
-    m_addedToMapView = true;
+    m_pPolygonApi = &mapApi.GetPolygonApi();
+    m_polygonId = m_pPolygonApi->CreateShape(builder.Build());
 }
 
-- (void)removeFromMapView
+- (void)destroyNative
 {
-    if (m_addedToMapView && m_pGeofenceApi != NULL)
+    if ([self nativeCreated] && m_pPolygonApi != nullptr)
     {
-        m_pGeofenceApi->RemoveGeofence(m_polygonId);
-        m_addedToMapView = false;
+        m_pPolygonApi->DestroyShape(m_polygonId);
+        m_polygonId = false;
+        m_pPolygonApi = nullptr;
     }
 }
 
-- (int)getId
+- (WRLDOverlayId)getOverlayId
 {
-    return m_polygonId;
+    return { WRLDOverlayPolygon, m_polygonId };
 }
 
-- (bool)isOnMapView
+- (bool)nativeCreated
 {
-    return m_addedToMapView;
+    return m_polygonId != 0;
 }
 
 @end

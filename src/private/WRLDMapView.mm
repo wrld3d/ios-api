@@ -5,10 +5,9 @@
 #import "WRLDCoordinateWithAltitude.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDIndoorMap+Private.h"
-#import "WRLDMarker+Private.h"
 #import "WRLDNativeMapView.h"
-#import "WRLDPolygon+Private.h"
 #import "WRLDBlueSphere+Private.h"
+#import "WRLDOverlayImpl.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -53,8 +52,8 @@
     NSNumber* m_startZoomLevel;
     NSNumber* m_startDirection;
 
-    std::map<int, WRLDMarker *> m_markersOnMap;
-    std::map<int, WRLDPolygon *> m_polygonsOnMap;
+    std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
+
 }
 
 
@@ -121,9 +120,7 @@ const double defaultStartZoomLevel = 8;
     m_startZoomLevel = nil;
     m_startDirection = nil;
 
-
-    m_markersOnMap = {};
-    m_polygonsOnMap = {};
+    m_overlays = {};
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -614,9 +611,7 @@ const double defaultStartZoomLevel = 8;
 
 - (void)addMarker:(WRLDMarker *)marker
 {
-    if ([marker isOnMapView]) return;
-    [marker addToMapView:self];
-    m_markersOnMap[[marker getId]] = marker;
+    [self addOverlay: marker];
 }
 
 - (void)addMarkers:(NSArray <WRLDMarker *> *)markers
@@ -629,9 +624,7 @@ const double defaultStartZoomLevel = 8;
 
 - (void)removeMarker:(WRLDMarker *)marker
 {
-    if (![marker isOnMapView]) return;
-    m_markersOnMap.erase([marker getId]);
-    [marker removeFromMapView];
+    [self removeOverlay: marker];
 }
 
 - (void)removeMarkers:(NSArray <WRLDMarker *> *)markers
@@ -646,9 +639,7 @@ const double defaultStartZoomLevel = 8;
 
 - (void)addPolygon:(WRLDPolygon *)polygon
 {
-    if ([polygon isOnMapView]) return;
-    [polygon addToMapView:self];
-    m_polygonsOnMap[[polygon getId]] = polygon;
+    [self addOverlay: polygon];
 }
 
 - (void)addPolygons:(NSArray <WRLDPolygon *> *)polygons
@@ -661,9 +652,7 @@ const double defaultStartZoomLevel = 8;
 
 - (void)removePolygon:(WRLDPolygon *)polygon
 {
-    if (![polygon isOnMapView]) return;
-    m_polygonsOnMap.erase([polygon getId]);
-    [polygon removeFromMapView];
+    [self removeOverlay: polygon];
 }
 
 - (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons
@@ -673,6 +662,35 @@ const double defaultStartZoomLevel = 8;
         [self removePolygon:polygon];
     }
 }
+
+#pragma mark - overlays -
+
+- (void) addOverlay:(NSObject<WRLDOverlay>*) overlay
+{
+    if (![overlay conformsToProtocol:@protocol(WRLDOverlayImpl)])
+    {
+        return;
+    }
+    id<WRLDOverlayImpl> overlayImpl = (id<WRLDOverlayImpl>)(overlay);
+    
+    [overlayImpl createNative: [self getMapApi]];
+    
+    m_overlays[[overlayImpl getOverlayId]] = overlay;
+}
+
+- (void) removeOverlay:(NSObject<WRLDOverlay>*) overlay
+{
+    if (![overlay conformsToProtocol:@protocol(WRLDOverlayImpl)])
+    {
+        return;
+    }
+    id<WRLDOverlayImpl> overlayImpl = (id<WRLDOverlayImpl>)(overlay);
+    
+    m_overlays.erase([overlayImpl getOverlayId]);
+
+    [overlayImpl destroyNative];
+}
+
 
 #pragma mark - controlling the indoor map view -
 
@@ -842,12 +860,37 @@ const double defaultStartZoomLevel = 8;
     }
 }
 
+template<typename T> inline T* safe_cast(id instance)
+{
+    if ([instance isKindOfClass:[T class]])
+    {
+        return static_cast<T*>(instance);
+    }
+    return nil;
+}
+
 - (void)notifyMarkerTapped:(int)markerId
 {
-    if (m_markersOnMap.count(markerId) == 0) return;
+    WRLDOverlayId overlayId;
+    overlayId.overlayType = WRLDOverlayMarker;
+    overlayId.nativeHandle = markerId;
+    
+    if (m_overlays.find(overlayId) == m_overlays.end())
+    {
+        return;
+    }
+    
+    id<WRLDOverlay> overlay = m_overlays.at(overlayId);
+
+    WRLDMarker* marker = safe_cast<WRLDMarker>(overlay);
+    if (marker == nil)
+    {
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(mapView:didTapMarker:)])
     {
-        [self.delegate mapView:self didTapMarker:m_markersOnMap.at(markerId)];
+        [self.delegate mapView:self didTapMarker:marker];
     }
 }
 

@@ -10,6 +10,7 @@
 #import "WRLDIndoorMap.h"
 #import "WRLDMarker.h"
 #import "WRLDPolygon.h"
+#import "WRLDPolyline.h"
 #import "WRLDMapOptions.h"
 #import "WRLDBlueSphere.h"
 
@@ -141,24 +142,28 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  Add a marker to the map.
  @param marker The <WRLDMarker> object to add to the map.
+  !Deprecated prefer to use addOverlay
  */
 - (void)addMarker:(WRLDMarker *)marker;
 
 /*!
  Add multiple markers to the map.
  @param markers An array of <WRLDMarker> objects to add to the map.
+  !Deprecated prefer to use addOverlay
  */
 - (void)addMarkers:(NSArray <WRLDMarker *> *)markers;
 
 /*!
  Remove a marker from the map.
  @param marker The <WRLDMarker> object to remove from the map.
+  !Deprecated prefer to use removeOverlay
  */
 - (void)removeMarker:(WRLDMarker *)marker;
 
 /*!
  Remove multiple markers from the map.
  @param markers An array of <WRLDMarker> objects to remove from the map.
+  !Deprecated prefer to use removeOverlay
  */
 - (void)removeMarkers:(NSArray <WRLDMarker *> *)markers;
 
@@ -170,26 +175,49 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  Add a polygon to the map.
  @param polygon The <WRLDPolygon> object to add to the map.
+ 
+ !Deprecated prefer to use addOverlay
  */
 - (void)addPolygon:(WRLDPolygon *)polygon;
 
 /*!
  Add multiple polygons to the map.
  @param polygons An array of <WRLDPolygon> objects to add to the map.
+ !Deprecated prefer to use addOverlay
  */
 - (void)addPolygons:(NSArray <WRLDPolygon *> *)polygons;
 
 /*!
  Remove a polygon from the map.
  @param polygon The <WRLDPolygon> object to remove from the map.
+ !Deprecated prefer to use removeOverlay
  */
 - (void)removePolygon:(WRLDPolygon *)polygon;
 
 /*!
  Remove multiple polygons from the map.
  @param polygons An array of <WRLDPolygon> objects to remove from the map.
+ !Deprecated prefer to use removeOverlay
  */
 - (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons;
+
+
+
+#pragma mark - overlays -
+
+/*! @name Overlays */
+
+/*!
+ Add an overlay to the map.
+ @param overlay The <WRLDOverlay> object to add to the map.
+ */
+- (void) addOverlay:(id<WRLDOverlay>) overlay;
+
+/*!
+ Remove an overlay from the map.
+ @param overlay The <WRLDOverlay> object to remove from the map.
+ */
+- (void) removeOverlay:(id<WRLDOverlay>) overlay;
 
 
 #pragma mark - controlling the indoor map view -
@@ -203,6 +231,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The currently active indoor map, or `nil` if currently outdoors.
 @property(nonatomic, readonly, copy, nullable) WRLDIndoorMap* activeIndoorMap;
 
+/// The 'Blue Sphere' instance for this map view.
 @property(nonatomic, readonly, copy) WRLDBlueSphere* blueSphere;
 
 /*! @name Indoor Map methods */

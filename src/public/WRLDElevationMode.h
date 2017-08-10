@@ -1,11 +1,11 @@
 #pragma once
 
-/// The method of determining an altitude.
+/// Indicates how an elevation property of WRLDOverlay is interpreted.
 typedef NS_ENUM(NSInteger, WRLDElevationMode)
 {
-    /// An elevation should be relative to sea-level.
+    /// The elevation property is interpreted as an absolute altitude above mean sea level, in meters.
     WRLDElevationModeHeightAboveSeaLevel,
     
-    /// An elevation should be relative to the ground directly below.
+    /// The elevation property is interpreted as a height relative to the map's terrain, in meters.
     WRLDElevationModeHeightAboveGround
 };
