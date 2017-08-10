@@ -147,7 +147,7 @@
         return;
     }
     
-    m_pPolygonApi->SetIndoorMapFloorId(m_polygonId, _indoorFloorId);
+    m_pPolygonApi->SetIndoorMapFloorId(m_polygonId, static_cast<int>(_indoorFloorId));
 }
 
 - (void)setElevation:(CLLocationDistance)elevation
