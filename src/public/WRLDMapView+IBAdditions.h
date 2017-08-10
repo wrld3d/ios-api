@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) IBInspectable double startZoomLevel;
 
-/*! The direction in degrees clockwise from north of the initial map view - for use inside Interface Builder only.
+/*! The heading in degrees clockwise from north of the initial map view - for use inside Interface Builder only.
  */
 @property (nonatomic) IBInspectable double startDirection;
 
