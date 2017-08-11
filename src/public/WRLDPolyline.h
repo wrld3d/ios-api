@@ -39,16 +39,26 @@ NS_ASSUME_NONNULL_BEGIN
                                onFloor:(NSInteger)floorId;
 
 
-/// The color of the polyline.
+/// The color of the polyline. The default value is opaque black.
 @property (nonatomic, copy) UIColor* color;
 
-/// The thickness in pixels of the polyline.
+/// The thickness in pixels of the polyline. The default value is 10.
 @property (nonatomic) CGFloat lineWidth;
+
+/*! A value used to limit the extent of spikes where line segments join at small
+ (acute) angles. The value of miterLimit represents the maximum ratio between the
+ length of the miter join diagonal, and lineWidth. The default value is 10, which
+ results in clamping of the miter diagonal when the join angle is less than
+ approximately 11 degrees.
+ */
+@property (nonatomic) CGFloat miterLimit;
 
 /// If YES, line width scales with perspective as the map viewpoint zooms in and out (default NO)
 @property (nonatomic) Boolean scalesWithMap;
 
-/// The height of the polyline above either the ground, or sea-level, depending on the elevationMode property.
+/*! The height of the polyline above either the ground, or sea-level, depending on the elevationMode property.
+ The default value is 0
+ */
 @property (nonatomic) CLLocationDistance elevation;
 
 /*!
@@ -56,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
  
  - `WRLDElevationModeHeightAboveSeaLevel`: The elevation is an absolute altitude above mean sea level, in meters.
  - `WRLDElevationModeHeightAboveGround`: The elevation is a height relative to the map's terrain, in meters.
+ 
+ The default value is WRLDElevationModeHeightAboveGround
  */
 @property (nonatomic) WRLDElevationMode elevationMode;
 

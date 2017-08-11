@@ -59,6 +59,7 @@
         
         _color = [UIColor blackColor];
         _lineWidth = 10.0f;
+        _miterLimit = 10.0f;
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         _indoorMapId = indoorMapId;
@@ -98,6 +99,16 @@
         return;
     }
     m_pPolylineApi->SetThickness(m_polylineId, static_cast<float>(_lineWidth));
+}
+
+- (void)setMiterLimit:(CGFloat)miterLimit
+{
+    _miterLimit = miterLimit;
+    if (![self nativeCreated])
+    {
+        return;
+    }
+    m_pPolylineApi->SetMiterLimit(m_polylineId, static_cast<float>(_miterLimit));
 }
 
 - (void)setScalesWithMap:(Boolean)scalesWithMap
@@ -188,6 +199,7 @@
         .SetCoordinates(m_coords)
         .SetFillColor([self _getColor])
         .SetThickness(static_cast<float>(_lineWidth))
+        .SetMiterLimit(static_cast<float>(_miterLimit))
         .SetShouldScaleWithMap(_scalesWithMap)
         .SetElevationMode(elevationMode)
         .SetElevation(_elevation)
