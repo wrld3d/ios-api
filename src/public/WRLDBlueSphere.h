@@ -22,7 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The index of the floor the blue sphere is associated with - if any.
 @property (nonatomic) NSInteger indoorFloorId;
 
-/// The height of the blue sphere above either the ground, or sea-level, depending on the elevationMode property.
+/// For outdoor maps, the height above ground of the sphere model's center, in meters.
+/// For indoor maps, the height above the floor of the base of the leader-line, in meters.
 @property (nonatomic) CLLocationDistance elevation;
 
 /// The property that determines if the blue sphere should be displayed and assets loaded.
