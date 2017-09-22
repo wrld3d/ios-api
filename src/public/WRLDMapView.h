@@ -16,6 +16,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Notification fired whenever the map view enters an indoor map
+extern NSString * const WRLDMapViewDidEnterIndoorMapNotification;
+/// Notification fired whenever the map view exits an indoor map
+extern NSString * const WRLDMapViewDidExitIndoorMapNotification;
+/// Notification fired whenever the map view changes floors an indoor map
+extern NSString * const WRLDMapViewDidChangeFloorNotification;
+
+/// A key in the userinfo dictionary in a WRLDMapViewDidChangeFloorNotification
+extern NSString * const WRLDMapViewNotificationPreviousFloorIndex;
+/// A key in the userinfo dictionary in a WRLDMapViewDidChangeFloorNotification
+extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
+
 @protocol WRLDMapViewDelegate;
 
 /// A view which displays a 3D map. Also exposes most of the methods for manipulating the map.
@@ -226,6 +238,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @name Indoor Map properties */
 
 /// An object implementing the <WRLDIndoorMapDelegate> protocol to receive events when entering or exiting an indoor map.
+
 @property(nonatomic, weak, nullable) IBOutlet id<WRLDIndoorMapDelegate> indoorMapDelegate;
 
 /// The currently active indoor map, or `nil` if currently outdoors.
@@ -313,3 +326,4 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+

@@ -59,10 +59,43 @@
     [super awakeFromNib];
 }
 
+- (void) dealloc
+{
+    [self removeObservers];
+}
+
+- (void) addObservers
+{
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didEnterIndoorMap)
+               name:WRLDMapViewDidEnterIndoorMapNotification object:_mapView];
+    [center addObserver:self selector:@selector(didExitIndoorMap)
+               name:WRLDMapViewDidExitIndoorMapNotification object:_mapView];
+}
+
+- (void) removeObservers
+{
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:WRLDMapViewDidEnterIndoorMapNotification object:_mapView];
+    [center removeObserver:self name:WRLDMapViewDidExitIndoorMapNotification object:_mapView];
+}
+
 - (void) setMapView:(WRLDMapView *)mapView
 {
-    _mapView = mapView;
-    [_mapView setIndoorMapDelegate:self];
+    if (_mapView != mapView)
+    {
+        if (_mapView)
+        {
+            [self removeObservers];
+        }
+        
+        _mapView = mapView;
+        
+        if (_mapView)
+        {
+            [self addObservers];
+        }
+    }
 }
 
 - (void) didEnterIndoorMap

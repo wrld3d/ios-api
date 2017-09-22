@@ -28,6 +28,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+NSString * const WRLDMapViewDidEnterIndoorMapNotification = @"WRLDMapViewDidEnterIndoorMapNotification";
+NSString * const WRLDMapViewDidExitIndoorMapNotification = @"WRLDMapViewDidExitIndoorMapNotification";
+NSString * const WRLDMapViewDidChangeFloorNotification = @"WRLDMapViewDidChangeFloorNotification";
+
+NSString * const WRLDMapViewNotificationPreviousFloorIndex = @"WRLDMapViewNotificationPreviousFloorIndex";
+NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotificationCurrentFloorIndex";
+
 @interface WRLDMapView () <GLKViewDelegate>
 
 @property (nonatomic) GLKView *glkView;
@@ -749,7 +756,19 @@ const double defaultStartZoomLevel = 8;
 
 - (void)setFloorByIndex:(NSInteger)floorIndex
 {
+    NSInteger previousFloor = [self currentFloorIndex];
     [self getMapApi].GetIndoorsApi().SetSelectedFloorIndex(static_cast<int>(floorIndex));
+    
+    if (previousFloor != floorIndex)
+    {
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                  @(previousFloor), WRLDMapViewNotificationPreviousFloorIndex,
+                                  @(floorIndex), WRLDMapViewNotificationCurrentFloorIndex,
+                                  nil];
+        [center postNotificationName:WRLDMapViewDidChangeFloorNotification
+                              object:self userInfo: userInfo];
+    }
 }
 
 - (void)setFloorInterpolation:(CGFloat)floorInterpolation
@@ -897,19 +916,27 @@ template<typename T> inline T* safe_cast(id instance)
 - (void)notifyEnteredIndoorMap
 {
     [self refreshActiveIndoorMap];
+    
     if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
     {
         [self.indoorMapDelegate didEnterIndoorMap];
     }
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:WRLDMapViewDidEnterIndoorMapNotification object:self];
 }
 
 - (void)notifyExitedIndoorMap
 {
     [self refreshActiveIndoorMap];
+    
     if ([self.indoorMapDelegate respondsToSelector:@selector(didExitIndoorMap)])
     {
         [self.indoorMapDelegate didExitIndoorMap];
     }
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:WRLDMapViewDidExitIndoorMapNotification object:self];
 }
 
 @end
