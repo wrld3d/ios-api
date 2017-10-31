@@ -8,6 +8,7 @@
 #import "WRLDNativeMapView.h"
 #import "WRLDBlueSphere+Private.h"
 #import "WRLDOverlayImpl.h"
+#import "WRLDPositioner+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -61,6 +62,7 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
 
+    std::unordered_map<int, WRLDPositioner*> m_positioners;
 }
 
 
@@ -128,6 +130,8 @@ const double defaultStartZoomLevel = 8;
     m_startDirection = nil;
 
     m_overlays = {};
+
+    m_positioners = {};
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -642,6 +646,20 @@ const double defaultStartZoomLevel = 8;
     }
 }
 
+#pragma mark - positioners -
+
+- (void)addPositioner:(WRLDPositioner *)positioner
+{
+    [positioner createNative: [self getMapApi]];    
+    m_positioners[[positioner getPositionerId]] = positioner;
+}
+
+- (void)removePositioner:(WRLDPositioner *)positioner
+{
+    [positioner destroyNative];
+    m_positioners.erase([positioner getPositionerId]);
+}
+
 #pragma mark - polygons -
 
 - (void)addPolygon:(WRLDPolygon *)polygon
@@ -910,6 +928,14 @@ template<typename T> inline T* safe_cast(id instance)
     if ([self.delegate respondsToSelector:@selector(mapView:didTapMarker:)])
     {
         [self.delegate mapView:self didTapMarker:marker];
+    }
+}
+
+- (void)notifyPositionerProjectionChanged
+{
+    for(std::unordered_map<int, WRLDPositioner*>::const_iterator i=m_positioners.begin(); i!=m_positioners.end(); ++i)
+    {
+        [i->second notifyPositionerProjectionChanged];
     }
 }
 

@@ -9,6 +9,7 @@
 #import "WRLDCoordinateBounds.h"
 #import "WRLDIndoorMap.h"
 #import "WRLDMarker.h"
+#import "WRLDPositioner.h"
 #import "WRLDPolygon.h"
 #import "WRLDPolyline.h"
 #import "WRLDMapOptions.h"
@@ -178,6 +179,24 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
   !Deprecated prefer to use removeOverlay
  */
 - (void)removeMarkers:(NSArray <WRLDMarker *> *)markers;
+
+
+#pragma mark - positioners -
+
+
+/*! @name Positioners */
+
+/*!
+ Add a positioner to the map.
+ @param positioner The <WRLDPositioner> object to add to the map.
+ */
+- (void)addPositioner:(WRLDPositioner *)positioner;
+
+/*!
+ Remove a positioner from the map.
+ @param positioner The <WRLDPositioner> object to remove from the map.
+ */
+- (void)removePositioner:(WRLDPositioner *)positioner;
 
 
 #pragma mark - polygons -
