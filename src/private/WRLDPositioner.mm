@@ -15,6 +15,13 @@
     WRLDCoordinateWithAltitude m_transformedPoint;
 }
 
++ (const Eegeo::Positioning::ElevationMode::Type) ToPositioningElevationMode:(WRLDElevationMode)elevationMode
+{
+    return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
+    ? Eegeo::Positioning::ElevationMode::HeightAboveGround
+    : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
+}
+
 + (instancetype)positionerAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
     return [[self alloc] initWithCoordinate:coordinate
@@ -24,16 +31,16 @@
 
 + (instancetype)positionerAtCoordinate:(CLLocationCoordinate2D)coordinate
                        inIndoorMap:(NSString *)indoorMapId
-                           onFloor:(NSInteger)floorId;
+                           onFloor:(NSInteger)indoorMapFloorId;
 {
     return [[self alloc] initWithCoordinate:coordinate
                              andIndoorMapId:indoorMapId
-                                 andFloorId:floorId];
+                                 andFloorId:indoorMapFloorId];
 }
 
 - (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate
                     andIndoorMapId:(NSString *)indoorMapId
-                        andFloorId:(NSInteger)floorId
+                        andFloorId:(NSInteger)indoorMapFloorId
 {
     if (self = [super init])
     {
@@ -41,7 +48,7 @@
         _elevation = 0;
         _elevationMode = WRLDElevationMode::WRLDElevationModeHeightAboveGround;
         _indoorMapId = indoorMapId;
-        _indoorFloorId = floorId;
+        _indoorMapFloorId = indoorMapFloorId;
         
         m_pPositionersApi = NULL;
     }
@@ -76,7 +83,7 @@
         return;
     }
     
-    //m_pPositionersApi->SetElevationMode(m_positionerId, ToPositioningElevationMode(elevationMode));
+    m_pPositionersApi->SetElevationMode(m_positionerId, [WRLDPositioner ToPositioningElevationMode:elevationMode]);
 }
 
 - (nullable CGPoint *) screenPointOrNull
@@ -140,8 +147,8 @@
     const Eegeo::Positioners::PositionerModelCreateParams& positionerCreateParams = Eegeo::Positioners::PositionerBuilder()
     .SetCoordinate(_coordinate.latitude, _coordinate.longitude)
     .SetElevation(_elevation)
-    .SetElevationMode(ToPositioningElevationMode(_elevationMode))
-    .SetIndoorMap([_indoorMapId UTF8String], static_cast<int>(_indoorFloorId))
+    .SetElevationMode([WRLDPositioner ToPositioningElevationMode:_elevationMode])
+    .SetIndoorMap([_indoorMapId UTF8String], static_cast<int>(_indoorMapFloorId))
     .Build();
 
     m_positionerId = m_pPositionersApi->CreatePositioner(positionerCreateParams);
