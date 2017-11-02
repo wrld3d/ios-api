@@ -8,14 +8,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDPositioner (Private)
 
-- (void) createNative:(Eegeo::Api::EegeoMapApi&) mapApi;
-
-- (void) destroyNative;
-
-- (bool)nativeCreated;
-
-- (int) getPositionerId;
-
 - (void)notifyPositionerProjectionChanged;
 
 @end

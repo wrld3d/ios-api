@@ -3,9 +3,14 @@
 #import "WRLDMapView+Private.h"
 #import "WRLDPositioner.h"
 #import "WRLDPositioner+Private.h"
+#import "WRLDOverlayImpl.h"
 
 #include "EegeoPositionerApi.h"
 #include "PositionerTypes.h"
+
+@interface WRLDPositioner () <WRLDOverlayImpl>
+
+@end
 
 @implementation WRLDPositioner
 {
@@ -169,9 +174,9 @@
     return m_positionerId != 0;
 }
 
-- (int)getPositionerId
+- (WRLDOverlayId)getOverlayId
 {
-    return m_positionerId;
+    return { WRLDOverlayPositioner, m_positionerId };
 }
 
 - (void)notifyPositionerProjectionChanged

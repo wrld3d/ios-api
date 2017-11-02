@@ -4,6 +4,9 @@
 
 #import "WRLDElevationMode.h"
 #import "WRLDPositionerDelegate.h"
+#import "WRLDCoordinateWithAltitude.h"
+
+#import "WRLDOverlay.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  * expose a point on the map as a 2D coordinate in screen space. This could be used for example to
  * position a View.
  */
-@interface WRLDPositioner : NSObject
+@interface WRLDPositioner : NSObject<WRLDOverlay>
 
 /// A WRLDPositionerDelegate object to receive events when the screen point changes.
 @property (nonatomic) id <WRLDPositionerDelegate> delegate;

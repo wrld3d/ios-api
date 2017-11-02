@@ -61,8 +61,6 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
     NSNumber* m_startDirection;
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
-
-    std::unordered_map<int, WRLDPositioner*> m_positioners;
 }
 
 
@@ -130,8 +128,6 @@ const double defaultStartZoomLevel = 8;
     m_startDirection = nil;
 
     m_overlays = {};
-
-    m_positioners = {};
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -650,14 +646,12 @@ const double defaultStartZoomLevel = 8;
 
 - (void)addPositioner:(WRLDPositioner *)positioner
 {
-    [positioner createNative: [self getMapApi]];    
-    m_positioners[[positioner getPositionerId]] = positioner;
+    [self addOverlay: positioner];
 }
 
 - (void)removePositioner:(WRLDPositioner *)positioner
 {
-    [positioner destroyNative];
-    m_positioners.erase([positioner getPositionerId]);
+    [self removeOverlay: positioner];
 }
 
 #pragma mark - polygons -
@@ -933,9 +927,13 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyPositionerProjectionChanged
 {
-    for(std::unordered_map<int, WRLDPositioner*>::const_iterator i=m_positioners.begin(); i!=m_positioners.end(); ++i)
+    for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
     {
-        [i->second notifyPositionerProjectionChanged];
+        WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
+        if (positioner != nil)
+        {
+            [positioner notifyPositionerProjectionChanged];
+        }
     }
 }
 
