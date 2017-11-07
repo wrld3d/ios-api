@@ -60,7 +60,6 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
     NSNumber* m_startDirection;
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
-
 }
 
 
@@ -642,6 +641,18 @@ const double defaultStartZoomLevel = 8;
     }
 }
 
+#pragma mark - positioners -
+
+- (void)addPositioner:(WRLDPositioner *)positioner
+{
+    [self addOverlay: positioner];
+}
+
+- (void)removePositioner:(WRLDPositioner *)positioner
+{
+    [self removeOverlay: positioner];
+}
+
 #pragma mark - polygons -
 
 - (void)addPolygon:(WRLDPolygon *)polygon
@@ -910,6 +921,21 @@ template<typename T> inline T* safe_cast(id instance)
     if ([self.delegate respondsToSelector:@selector(mapView:didTapMarker:)])
     {
         [self.delegate mapView:self didTapMarker:marker];
+    }
+}
+
+- (void)notifyPositionerProjectionChanged
+{
+    if ([self.delegate respondsToSelector:@selector(mapView:positionerDidChange:)])
+    {
+        for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
+        {
+            WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
+            if (positioner != nil)
+            {
+                [self.delegate mapView:self positionerDidChange:positioner];
+            }
+        }
     }
 }
 

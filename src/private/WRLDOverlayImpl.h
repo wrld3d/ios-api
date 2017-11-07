@@ -11,8 +11,10 @@ typedef NS_ENUM(NSInteger, WRLDOverlayType)
     WRLDOverlayMarker,
     
     WRLDOverlayPolygon,
-    
-    WRLDOverlayPolyline
+
+    WRLDOverlayPolyline,
+
+    WRLDOverlayPositioner
 };
 
 typedef struct _WRLDOverlayId

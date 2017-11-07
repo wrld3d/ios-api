@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyMarkerTapped:(int)markerId;
 
+- (void)notifyPositionerProjectionChanged;
+
 - (void)notifyEnteredIndoorMap;
 
 - (void)notifyExitedIndoorMap;

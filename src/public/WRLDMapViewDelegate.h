@@ -3,6 +3,7 @@
 
 @class WRLDMapView;
 @class WRLDMarker;
+@class WRLDPositioner;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -49,5 +50,12 @@
  @param marker The WRLDMarker that was tapped.
  */
 - (void)mapView:(WRLDMapView *)mapView didTapMarker:(WRLDMarker *)marker;
+
+/*!
+A message sent when a WRLDPositioner object has changed.
+@param mapView The WRLDMapView that is being observed.
+@param positioner The WRLDPositioner that has changed.
+*/
+- (void)mapView:(WRLDMapView *)mapView positionerDidChange: (WRLDPositioner*)positioner;
 
 @end

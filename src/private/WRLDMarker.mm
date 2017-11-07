@@ -24,9 +24,7 @@
     int m_markerId;
 }
 
-
-
-const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
++ (const Eegeo::Positioning::ElevationMode::Type) ToPositioningElevationMode:(WRLDElevationMode)elevationMode
 {
     return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
         ? Eegeo::Positioning::ElevationMode::HeightAboveGround
@@ -99,7 +97,7 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         return;
     }
 
-    m_pMarkersApi->SetElevationMode(m_markerId, ToPositioningElevationMode(elevationMode));
+    m_pMarkersApi->SetElevationMode(m_markerId, [WRLDMarker ToPositioningElevationMode:elevationMode]);
 }
 
 - (void)setDrawOrder:(NSInteger)drawOrder
@@ -152,7 +150,7 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         .SetLocation(_coordinate.latitude, _coordinate.longitude)
         .SetElevation(_elevation)
         .SetSubPriority(static_cast<int>(_drawOrder))
-        .SetElevationMode(ToPositioningElevationMode(_elevationMode))
+        .SetElevationMode([WRLDMarker ToPositioningElevationMode:_elevationMode])
         .SetLabelText([_title UTF8String])
         .SetLabelStyle([_styleName UTF8String])
         .SetLabelIcon([_iconKey UTF8String])

@@ -15,6 +15,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_cameraHandler(this, &WRLDNativeMapView::OnCameraChange)
 , m_initialStreamingCompleteHandler(this, &WRLDNativeMapView::OnInitialStreamingComplete)
 , m_markerTappedHandler(this, &WRLDNativeMapView::OnMarkerTapped)
+, m_positionersProjectionChangedHandler(this, &WRLDNativeMapView::OnPositionerProjectionChanged)
 , m_enteredIndoorMapHandler(this, &WRLDNativeMapView::OnEnteredIndoorMap)
 , m_exitedIndoorMapHandler(this, &WRLDNativeMapView::OnExitedIndoorMap)
 {
@@ -23,6 +24,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetCameraApi().RegisterEventCallback(m_cameraHandler);
     mapApi.RegisterInitialStreamingCompleteCallback(m_initialStreamingCompleteHandler);
     mapApi.GetMarkersApi().RegisterMarkerPickedCallback(m_markerTappedHandler);
+    mapApi.GetPositionerApi().RegisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
 }
@@ -33,6 +35,7 @@ WRLDNativeMapView::~WRLDNativeMapView()
     
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
+    mapApi.GetPositionerApi().UnregisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
     mapApi.GetMarkersApi().UnregisterMarkerPickedCallback(m_markerTappedHandler);
     mapApi.UnregisterInitialStreamingCompleteCallback(m_initialStreamingCompleteHandler);
     mapApi.GetCameraApi().UnregisterEventCallback(m_cameraHandler);
@@ -73,6 +76,11 @@ void WRLDNativeMapView::OnInitialStreamingComplete()
 void WRLDNativeMapView::OnMarkerTapped(const Eegeo::Markers::IMarker& marker)
 {
     [m_mapView notifyMarkerTapped:marker.GetId()];
+}
+
+void WRLDNativeMapView::OnPositionerProjectionChanged()
+{
+    [m_mapView notifyPositionerProjectionChanged];
 }
 
 void WRLDNativeMapView::OnEnteredIndoorMap()
