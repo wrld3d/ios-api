@@ -2,7 +2,6 @@
 #import "WRLDMapView.h"
 #import "WRLDMapView+Private.h"
 #import "WRLDPositioner.h"
-#import "WRLDPositioner+Private.h"
 #import "WRLDOverlayImpl.h"
 
 #include "EegeoPositionerApi.h"
@@ -31,7 +30,7 @@
 {
     return [[self alloc] initWithCoordinate:coordinate
                              andIndoorMapId:@""
-                                 andFloorId:0];
+                        andIndoorMapFloorId:0];
 }
 
 + (instancetype)positionerAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -40,12 +39,12 @@
 {
     return [[self alloc] initWithCoordinate:coordinate
                              andIndoorMapId:indoorMapId
-                                 andFloorId:indoorMapFloorId];
+                        andIndoorMapFloorId:indoorMapFloorId];
 }
 
 - (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate
                     andIndoorMapId:(NSString *)indoorMapId
-                        andFloorId:(NSInteger)indoorMapFloorId
+               andIndoorMapFloorId:(NSInteger)indoorMapFloorId
 {
     if (self = [super init])
     {
@@ -177,11 +176,6 @@
 - (WRLDOverlayId)getOverlayId
 {
     return { WRLDOverlayPositioner, m_positionerId };
-}
-
-- (void)notifyPositionerProjectionChanged
-{
-    [self.delegate onPositionerChanged: self];
 }
 
 @end

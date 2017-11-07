@@ -3,7 +3,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "WRLDElevationMode.h"
-#import "WRLDPositionerDelegate.h"
 #import "WRLDCoordinateWithAltitude.h"
 
 #import "WRLDOverlay.h"
@@ -18,9 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface WRLDPositioner : NSObject<WRLDOverlay>
 
-/// A WRLDPositionerDelegate object to receive events when the screen point changes.
-@property (nonatomic) id <WRLDPositionerDelegate> delegate;
-
 /*!
  Instantiate a positioner at a given location.
  @param coordinate The coordinate to place this positioner at.
@@ -32,12 +28,12 @@ NS_ASSUME_NONNULL_BEGIN
  Instantiate a positioner at a given location, optionally indoors.
  @param coordinate The coordinate to place this positioner at.
  @param indoorMapId The ID of an indoor map this positioner should be inside. (See WRLDIndoorMap).
- @param floorId An index specifying which floor of the indoor map this positioner should be on. (See WRLDIndoorMap).
+ @param indoorMapFloorId An index specifying which floor of the indoor map this positioner should be on. (See WRLDIndoorMap).
  @returns A WRLDPositioner instance.
  */
 + (instancetype)positionerAtCoordinate:(CLLocationCoordinate2D)coordinate
                        inIndoorMap:(NSString *)indoorMapId
-                           onFloor:(NSInteger)floorId;
+                           onFloor:(NSInteger)indoorMapFloorId;
 
 /// The geographic location of the positioner.
 @property (nonatomic) CLLocationCoordinate2D coordinate;

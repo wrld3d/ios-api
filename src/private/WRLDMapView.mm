@@ -8,7 +8,6 @@
 #import "WRLDNativeMapView.h"
 #import "WRLDBlueSphere+Private.h"
 #import "WRLDOverlayImpl.h"
-#import "WRLDPositioner+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -927,12 +926,15 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyPositionerProjectionChanged
 {
-    for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
+    if ([self.delegate respondsToSelector:@selector(mapView:positionerDidChange:)])
     {
-        WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
-        if (positioner != nil)
+        for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
         {
-            [positioner notifyPositionerProjectionChanged];
+            WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
+            if (positioner != nil)
+            {
+                [self.delegate mapView:self positionerDidChange:positioner];
+            }
         }
     }
 }
