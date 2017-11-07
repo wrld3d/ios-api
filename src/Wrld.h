@@ -23,3 +23,4 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDPolygon.h"
 #import "WRLDIndoorGeoreferencer.h"
 #import "WRLDBlueSphere.h"
+#import "WRLDViewAnchor.h"
