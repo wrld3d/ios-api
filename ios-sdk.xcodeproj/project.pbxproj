@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 024286931F0BFFC400D63CCA /* WRLDOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -144,6 +145,7 @@
 
 /* Begin PBXFileReference section */
 		024286931F0BFFC400D63CCA /* WRLDOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDOverlay.h; sourceTree = "<group>"; };
+		26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchModule.h; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -287,6 +289,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26772FDD1FB33AB7007D2D52 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				26772FDE1FB33ACB007D2D52 /* src */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		26772FDE1FB33ACB007D2D52 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				26772FDF1FB33AD2007D2D52 /* public */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		26772FDF1FB33AD2007D2D52 /* public */ = {
+			isa = PBXGroup;
+			children = (
+				26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */,
+			);
+			path = public;
+			sourceTree = "<group>";
+		};
 		26F70EBED6F5A479EFCF6860 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +335,7 @@
 		2CB2C53F1EC1D76400C0B401 /* WrldWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				26772FDD1FB33AB7007D2D52 /* Search */,
 				2CB2C56B1EC1D93F00C0B401 /* IndoorControl */,
 				2CB2C5401EC1D76400C0B401 /* WrldWidgets.h */,
 				2CB2C5411EC1D76400C0B401 /* Info.plist */,
@@ -541,6 +568,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CB2C5B21EC1D93F00C0B401 /* UIColors.h in Headers */,
+				26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */,
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
@@ -781,13 +809,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WrldSdk-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
