@@ -24,6 +24,7 @@ readonly objectToRemove=$3
 echo "Will remove $objectToRemove.o from $libPath/$libName.a"
 
 pushd .
+mkdir -p $libPath
 cd $libPath
 
 echo ""
