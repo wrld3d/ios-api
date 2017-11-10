@@ -56,6 +56,10 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		6F48E70F1FB5C01800DDD668 /* SearchModuleFacade.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F48E70B1FB5C01800DDD668 /* SearchModuleFacade.h */; };
+		6F48E7101FB5C01800DDD668 /* SearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F48E70C1FB5C01800DDD668 /* SearchProvider.h */; };
+		6F48E7111FB5C01800DDD668 /* SearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F48E70D1FB5C01800DDD668 /* SearchResult.h */; };
+		6F48E7121FB5C01800DDD668 /* SearchResultProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F48E70E1FB5C01800DDD668 /* SearchResultProperty.h */; };
 		A83FFABB1FA21E6E0096DE13 /* WRLDPositioner.h in Headers */ = {isa = PBXBuildFile; fileRef = A88643AC1FA1F9F8001D65A0 /* WRLDPositioner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A83FFABC1FA21E7C0096DE13 /* WRLDPositioner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A88643AD1FA1FA04001D65A0 /* WRLDPositioner.mm */; };
 		A88D8E861FB0C492009039A1 /* WRLDViewAnchor.h in Headers */ = {isa = PBXBuildFile; fileRef = A88D8E851FB0C492009039A1 /* WRLDViewAnchor.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,6 +202,10 @@
 		528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDElevationMode.h; sourceTree = "<group>"; };
 		52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapOptions.h; sourceTree = "<group>"; };
 		52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMapOptions.m; sourceTree = "<group>"; };
+		6F48E70B1FB5C01800DDD668 /* SearchModuleFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModuleFacade.h; sourceTree = "<group>"; };
+		6F48E70C1FB5C01800DDD668 /* SearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchProvider.h; sourceTree = "<group>"; };
+		6F48E70D1FB5C01800DDD668 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		6F48E70E1FB5C01800DDD668 /* SearchResultProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultProperty.h; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
 		A88643AC1FA1F9F8001D65A0 /* WRLDPositioner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDPositioner.h; sourceTree = "<group>"; };
 		A88643AD1FA1FA04001D65A0 /* WRLDPositioner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPositioner.mm; sourceTree = "<group>"; };
@@ -300,6 +308,7 @@
 		26772FDE1FB33ACB007D2D52 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6F48E70A1FB5C01800DDD668 /* private */,
 				26772FDF1FB33AD2007D2D52 /* public */,
 			);
 			path = src;
@@ -392,6 +401,17 @@
 				2CB2C5941EC1D93F00C0B401 /* WRLDIndoorControlView.m */,
 			);
 			path = public;
+			sourceTree = "<group>";
+		};
+		6F48E70A1FB5C01800DDD668 /* private */ = {
+			isa = PBXGroup;
+			children = (
+				6F48E70B1FB5C01800DDD668 /* SearchModuleFacade.h */,
+				6F48E70C1FB5C01800DDD668 /* SearchProvider.h */,
+				6F48E70D1FB5C01800DDD668 /* SearchResult.h */,
+				6F48E70E1FB5C01800DDD668 /* SearchResultProperty.h */,
+			);
+			path = private;
 			sourceTree = "<group>";
 		};
 		D39018B2402324986ABDDC69 /* Frameworks */ = {
@@ -572,9 +592,13 @@
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
+				6F48E7111FB5C01800DDD668 /* SearchResult.h in Headers */,
+				6F48E7121FB5C01800DDD668 /* SearchResultProperty.h in Headers */,
 				2CB2C5A91EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.h in Headers */,
 				2CB2C5B41EC1D93F00C0B401 /* UIHelpers.h in Headers */,
 				2CB2C5AB1EC1D93F00C0B401 /* IndoorControl.h in Headers */,
+				6F48E70F1FB5C01800DDD668 /* SearchModuleFacade.h in Headers */,
+				6F48E7101FB5C01800DDD668 /* SearchProvider.h in Headers */,
 				2CB2C5A71EC1D93F00C0B401 /* ImageHelpers.h in Headers */,
 				2CB2C5AD1EC1D93F00C0B401 /* IndoorControlDelegate.h in Headers */,
 				2CB2C5B01EC1D93F00C0B401 /* UIButton+DefaultStates.h in Headers */,
