@@ -5,6 +5,7 @@
 #include "EegeoMarkersApi.h"
 #include "EegeoIndoorsApi.h"
 #include "EegeoApiHostModule.h"
+#include "EegeoPoiApi.h"
 #include "iOSApiRunner.h"
 
 
@@ -18,6 +19,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_positionersProjectionChangedHandler(this, &WRLDNativeMapView::OnPositionerProjectionChanged)
 , m_enteredIndoorMapHandler(this, &WRLDNativeMapView::OnEnteredIndoorMap)
 , m_exitedIndoorMapHandler(this, &WRLDNativeMapView::OnExitedIndoorMap)
+, m_poiSearchCompletedHandler(this, &WRLDNativeMapView::OnPoiSearchCompleted)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -27,12 +29,14 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetPositionerApi().RegisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
+    mapApi.GetPoiApi().RegisterSearchCompletedCallback(m_poiSearchCompletedHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
+    mapApi.GetPoiApi().UnregisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetPositionerApi().UnregisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
@@ -91,6 +95,11 @@ void WRLDNativeMapView::OnEnteredIndoorMap()
 void WRLDNativeMapView::OnExitedIndoorMap()
 {
     [m_mapView notifyExitedIndoorMap];
+}
+
+void WRLDNativeMapView::OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults)
+{
+    [m_mapView notifyPoiSearchCompleted:poiSearchResults];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()
