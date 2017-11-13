@@ -4,73 +4,126 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ A set of parameters for an free-text search.
+ */
 @interface WRLDTextSearchOptions : NSObject
 
-
-// document me
+/*!
+ @returns The text to search for.
+ */
 - (NSString*)getQuery;
 
-// document me
+/*!
+ Set the query text.
+ @param query - The text to search for.
+ */
 - (void)setQuery:(NSString*)query;
 
-// document me
+/*!
+ @returns The latitude and longitude to search around.
+ */
 - (CLLocationCoordinate2D)getCenter;
 
-// document me
+/*!
+ Set the center coordinate.
+ @param center - The latitude and longitude to search around.
+ */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
-// document me -- remember to set useRadius in setRadius()
+/*!
+ @returns True if setRadius has been called.
+ */
 - (BOOL)usesRadius;
 
-// document me
+/*!
+ @returns The search radius in meters.
+ */
 - (double)getRadius;
 
-// document me
+/*!
+ @param radius - Set the search radius in meters.
+ */
 - (void)setRadius:(double)radius;
 
-// document me
+/*!
+ @returns True if setNumber has been called.
+ */
 - (BOOL)usesNumber;
 
-// document me
+/*!
+ @returns The search result limit.
+ */
 - (NSInteger)getNumber;
 
-// document me
+/*!
+ Sets the maximum number of search results to return.
+ @param number - The search result limit.
+ */
 - (void)setNumber:(NSInteger)number;
 
-// document me
+/*!
+ @returns True if setMinScore has been called.
+ */
 - (BOOL)usesMinScore;
 
-// document me
+/*!
+ @returns The minimum acceptable score for results.
+ */
 - (double)getMinScore;
 
-// document me
+/*!
+ Sets the minimum score of results. The higher this is set, the fewer results will match.
+ @param minScore - The minimum acceptable score for results.
+ */
 - (void)setMinScore:(double)minScore;
 
-// document me
+/*!
+ @returns True if setIndoorMapId has been called.
+ */
 - (BOOL)usesIndoorMapId;
 
-// document me
+/*!
+ @returns The indoor map ID to search in.
+ */
 - (NSString*)getIndoorMapId;
 
-// document me
+/*!
+ Sets the ID of the indoor map to search in. If not specified, search outdoors.
+ @param indoorMapId - The indoor map ID to search in.
+ */
 - (void)setIndoorMapId:(NSString*)indoorMapId;
 
-// document me
+/*!
+ @returns True if setIndoorMapFloorId has been called.
+ */
 - (BOOL)usesIndoorMapFloorId;
 
-// document me
+/*!
+ @returns The floor number to search on.
+ */
 - (NSInteger)getIndoorMapFloorId;
 
-// document me
+/*!
+ Sets the floor number to search on. If searching indoors and not specified, defaults to floor 0.
+ @param indoorMapFloorId - The floor number to search on.
+ */
 - (void)setIndoorMapFloorId:(NSInteger)indoorMapFloorId;
 
-// document me
+/*!
+ @returns True if setFloorDropoff has been called.
+ */
 - (BOOL)usesFloorDropoff;
 
-// document me
+/*!
+ @returns The number of floors above and below to search on.
+ */
 - (NSInteger)getFloorDropoff;
 
-// document me
+/*!
+ Sets the floor dropoff. Defaults to 15.
+ @param floorDropoff - The number of floors above and below to search on.
+ */
 - (void)setFloorDropoff:(NSInteger)floorDropoff;
 
 @end

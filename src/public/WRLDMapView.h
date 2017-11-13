@@ -344,7 +344,7 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 - (void)setMapCollapsed:(BOOL)isMapCollapsed;
 
 /*!
- docs
+ @returns The POI service.
  */
 - (WRLDPoiService*)createPoiService;
 

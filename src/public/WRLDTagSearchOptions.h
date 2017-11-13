@@ -4,36 +4,62 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ A set of parameters for a tag search.
+ */
 @interface WRLDTagSearchOptions : NSObject
 
-// document me
+/*!
+ @returns The tag to search for.
+ */
 - (NSString*)getQuery;
 
-// document me
+/*!
+ Sets the tag to search for.
+ @param query - The tag to search for.
+ */
 - (void)setQuery:(NSString*)query;
 
-// document me
+/*!
+ @returns The latitude and longitude to search around.
+ */
 - (CLLocationCoordinate2D)getCenter;
 
-// document me
+/*!
+ Set the latitude and longitude to search around.
+ @param center - The latitude and longitude to search around.
+ */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
-// document me -- remember to set useRadius in setRadius()
+/*!
+ @returns True if setRadius has been called.
+ */
 - (BOOL)usesRadius;
 
-// document me
+/*!
+ @returns The search radius in meters.
+ */
 - (double)getRadius;
 
-// document me
+/*!
+ @param radius - Set the search radius in meters.
+ */
 - (void)setRadius:(double)radius;
 
-// document me
+/*!
+ @returns True if setNumber has been called.
+ */
 - (BOOL)usesNumber;
 
-// document me
+/*!
+ @returns The search result limit.
+ */
 - (NSInteger)getNumber;
 
-// document me
+/*!
+ Sets the maximum number of search results to return.
+ @param number - The search result limit.
+ */
 - (void)setNumber:(NSInteger)number;
 
 @end

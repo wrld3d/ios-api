@@ -58,10 +58,7 @@
 		A82B34781FB4B966009B21D3 /* WRLDPoiService.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34771FB4B966009B21D3 /* WRLDPoiService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347A1FB4BC10009B21D3 /* WRLDPoiSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347C1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A82B347E1FB4C18C009B21D3 /* WRLDTextSearchOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B347D1FB4C18C009B21D3 /* WRLDTextSearchOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A82B34801FB4C6E8009B21D3 /* WRLDTagSearchOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B347F1FB4C6E8009B21D3 /* WRLDTagSearchOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A82B34821FB4C731009B21D3 /* WRLDTagSearchOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34811FB4C731009B21D3 /* WRLDTagSearchOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A82B34841FB4C766009B21D3 /* WRLDAutocompleteOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34831FB4C766009B21D3 /* WRLDAutocompleteOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A82B34861FB4C785009B21D3 /* WRLDAutocompleteOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34851FB4C785009B21D3 /* WRLDAutocompleteOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A83FFABB1FA21E6E0096DE13 /* WRLDPositioner.h in Headers */ = {isa = PBXBuildFile; fileRef = A88643AC1FA1F9F8001D65A0 /* WRLDPositioner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A83FFABC1FA21E7C0096DE13 /* WRLDPositioner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A88643AD1FA1FA04001D65A0 /* WRLDPositioner.mm */; };
@@ -219,10 +216,7 @@
 		A82B34771FB4B966009B21D3 /* WRLDPoiService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiService.h; sourceTree = "<group>"; };
 		A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiSearch.h; sourceTree = "<group>"; };
 		A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDTextSearchOptions.h; sourceTree = "<group>"; };
-		A82B347D1FB4C18C009B21D3 /* WRLDTextSearchOptions+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDTextSearchOptions+Private.h"; sourceTree = "<group>"; };
-		A82B347F1FB4C6E8009B21D3 /* WRLDTagSearchOptions+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDTagSearchOptions+Private.h"; sourceTree = "<group>"; };
 		A82B34811FB4C731009B21D3 /* WRLDTagSearchOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDTagSearchOptions.h; sourceTree = "<group>"; };
-		A82B34831FB4C766009B21D3 /* WRLDAutocompleteOptions+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDAutocompleteOptions+Private.h"; sourceTree = "<group>"; };
 		A82B34851FB4C785009B21D3 /* WRLDAutocompleteOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDAutocompleteOptions.h; sourceTree = "<group>"; };
 		A88643AC1FA1F9F8001D65A0 /* WRLDPositioner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDPositioner.h; sourceTree = "<group>"; };
 		A88643AD1FA1FA04001D65A0 /* WRLDPositioner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPositioner.mm; sourceTree = "<group>"; };
@@ -532,11 +526,8 @@
 				E04885901F38B2070031D631 /* WRLDOverlayImpl.h */,
 				A88643AD1FA1FA04001D65A0 /* WRLDPositioner.mm */,
 				A88D8E871FB0C4F8009039A1 /* WRLDViewAnchor.m */,
-				A82B347D1FB4C18C009B21D3 /* WRLDTextSearchOptions+Private.h */,
-				A82B347F1FB4C6E8009B21D3 /* WRLDTagSearchOptions+Private.h */,
 				A89A8FD71FB5C6B90041ABD3 /* WRLDTagSearchOptions.mm */,
 				A89A8FD91FB5C70B0041ABD3 /* WRLDAutocompleteOptions.mm */,
-				A82B34831FB4C766009B21D3 /* WRLDAutocompleteOptions+Private.h */,
 				A89A8FD51FB5BDF50041ABD3 /* WRLDTextSearchOptions.mm */,
 				A89A8FDB1FB5C8230041ABD3 /* WRLDPoiService.mm */,
 				A8E599701FB5D0D100695193 /* WRLDPoiService+Private.h */,
@@ -574,8 +565,8 @@
 				A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */,
 				A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */,
 				A82B34811FB4C731009B21D3 /* WRLDTagSearchOptions.h */,
-				A82B34851FB4C785009B21D3 /* WRLDAutocompleteOptions.h */,
 				A89A8FD31FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h */,
+				A82B34851FB4C785009B21D3 /* WRLDAutocompleteOptions.h */,
 				A8E599781FB5F65C00695193 /* WRLDPoiSearchResult.h */,
 			);
 			path = public;
@@ -632,16 +623,13 @@
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				A82B34861FB4C785009B21D3 /* WRLDAutocompleteOptions.h in Headers */,
-				A82B347E1FB4C18C009B21D3 /* WRLDTextSearchOptions+Private.h in Headers */,
 				E0E9B9111ED345D600F94099 /* WRLDCoordinateWithAltitude.h in Headers */,
 				D22AA32C1F2F89A8002A902D /* WRLDIndoorGeoreferencer.h in Headers */,
-				A82B34801FB4C6E8009B21D3 /* WRLDTagSearchOptions+Private.h in Headers */,
 				024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi+Private.h in Headers */,
-				A82B34841FB4C766009B21D3 /* WRLDAutocompleteOptions+Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				A89A8FD41FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,

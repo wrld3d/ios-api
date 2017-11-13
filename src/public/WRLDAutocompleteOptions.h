@@ -4,27 +4,47 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ A set of parameters for an autocomplete search.
+ */
 @interface WRLDAutocompleteOptions : NSObject
 
-// document me
+/*!
+ @returns The text to search for.
+ */
 - (NSString*)getQuery;
 
-// document me
+/*!
+ Set the query text.
+ @param query - The text to search for.
+ */
 - (void)setQuery:(NSString*)query;
 
-// document me
+/*!
+ @returns The latitude and longitude to search around.
+ */
 - (CLLocationCoordinate2D)getCenter;
 
-// document me
+/*!
+ Set the center coordinate.
+ @param center - The latitude and longitude to search around.
+ */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
-// document me
+/*!
+ @returns True if setNumber has been called.
+ */
 - (BOOL)usesNumber;
 
-// document me
+/*!
+ @returns The search result limit.
+ */
 - (NSInteger)getNumber;
 
-// document me
+/*!
+ Sets the maximum number of search results to return.
+ @param The search result limit.
+ */
 - (void)setNumber:(NSInteger)number;
 
 @end
