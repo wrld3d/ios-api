@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)cancel;
 
+/*!
+ @returns The ID of this search.
+ */
+- (int)poiSearchId;
+
 @end
 
 NS_ASSUME_NONNULL_END

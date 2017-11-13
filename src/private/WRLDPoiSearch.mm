@@ -28,4 +28,9 @@
     m_poiApi->CancelSearch(m_searchId);
 }
 
+- (int)poiSearchId
+{
+    return m_searchId;
+}
+
 @end

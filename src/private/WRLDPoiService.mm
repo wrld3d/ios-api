@@ -6,10 +6,6 @@
 
 #include "PoiSearchOptions.h"
 
-//@interface WRLDPoiService ()
-
-//@end
-
 @implementation WRLDPoiService
 {
     Eegeo::Api::EegeoPoiApi* m_poiApi;
@@ -25,9 +21,6 @@
     return self;
 }
 
-/*
- do docs
- */
 - (WRLDPoiSearch*)searchText:(WRLDTextSearchOptions*)options
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees([options getCenter].latitude, [options getCenter].longitude);
@@ -47,9 +40,6 @@
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginTextSearch(textOptions) poiApi:*m_poiApi];
 }
 
-/*
- do more docs
- */
 - (WRLDPoiSearch*)searchTag:(WRLDTagSearchOptions*)options
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees([options getCenter].latitude, [options getCenter].longitude);
@@ -65,9 +55,6 @@
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginTagSearch(tagOptions) poiApi:*m_poiApi];
 }
 
-/*
- docs
- */
 - (WRLDPoiSearch*)searchAutocomplete:(WRLDAutocompleteOptions*)options
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees([options getCenter].latitude, [options getCenter].longitude);
