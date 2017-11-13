@@ -13,6 +13,7 @@
 		26327FBD1FB5AEA70006B954 /* DefaultSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 26327FBC1FB5AEA70006B954 /* DefaultSearchProvider.h */; };
 		2664239C1FB5FECA009767F0 /* DefaultSearchProvider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2664239A1FB5FECA009767F0 /* DefaultSearchProvider.mm */; };
 		2664239D1FB603D3009767F0 /* WRLDSearchModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 266423991FB5FEC9009767F0 /* WRLDSearchModule.mm */; };
+		266423A71FB99863009767F0 /* Results.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266423A61FB99863009767F0 /* Results.xib */; };
 		26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -165,6 +166,7 @@
 		26327FBE1FB5AF6A0006B954 /* DefaultSearchProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultSearchProvider.m; sourceTree = "<group>"; };
 		266423991FB5FEC9009767F0 /* WRLDSearchModule.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = WRLDSearchModule.mm; sourceTree = "<group>"; };
 		2664239A1FB5FECA009767F0 /* DefaultSearchProvider.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = DefaultSearchProvider.mm; sourceTree = "<group>"; };
+		266423A61FB99863009767F0 /* Results.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Results.xib; sourceTree = "<group>"; };
 		26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchModule.h; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			children = (
 				26327FB31FB5A19B0006B954 /* SimpleResultLayout.xib */,
 				26327FB51FB5A1D10006B954 /* ResultSetContainer.xib */,
+				266423A61FB99863009767F0 /* Results.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -812,6 +815,7 @@
 			files = (
 				26327FB61FB5A1D10006B954 /* ResultSetContainer.xib in Resources */,
 				26327FB41FB5A19B0006B954 /* SimpleResultLayout.xib in Resources */,
+				266423A71FB99863009767F0 /* Results.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
