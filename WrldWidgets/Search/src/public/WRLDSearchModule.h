@@ -3,11 +3,12 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#import "SearchProvider.h"
+
+@class SearchProvider;
 
 @interface WRLDSearchModule : UIView
 
 - (instancetype) initWithFrame:(CGRect) frame;
-- (void) addSearchProvider:(SearchProvider) searchProvider;
+- (void) addSearchProvider: (SearchProvider*) searchProvider;
 
 @end

@@ -4,14 +4,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class SearchResultFactory;
+@class OnResultRecievedCallback;
+
 @protocol SearchProvider <NSObject>
 
--(NSString)getTitle();
--(void)getSearchResults(NSString);
-
--(void)addOnResultsRecievedCallback(OnResultRecievedCallback);
--(void)setResultViewFactory(SearchResultFactory);
--(SearchResultFactory)getResultViewFactory();
+    @property (readonly) NSString *title;
+    - (void)getSearchResults: (NSString*) query;
+    - (void) addOnResultsRecievedCallback: (OnResultRecievedCallback*) resultReceivedCallback;
+    - (void) setResultViewFactory: (SearchResultFactory*) viewFactory;
+    - (SearchResultFactory*) getResultViewFactor;
 
 @end
 

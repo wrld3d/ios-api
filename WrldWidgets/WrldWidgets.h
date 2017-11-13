@@ -8,3 +8,4 @@ FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 
 #import "WRLDIndoorControlView.h"
 #import "WRLDSearchModule.h"
+#import "SearchProvider.h"
