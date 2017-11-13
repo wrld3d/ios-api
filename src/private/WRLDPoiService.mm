@@ -37,11 +37,11 @@
         [[options getQuery] UTF8String],
         {latLng.GetLatitude(), latLng.GetLongitude()},
         static_cast<bool>([options usesRadius]),            [options getRadius],
-        static_cast<bool>([options usesNumber]),            [options getNumber],
+        static_cast<bool>([options usesNumber]),            static_cast<int>([options getNumber]),
         static_cast<bool>([options usesMinScore]),          [options getMinScore],
         static_cast<bool>([options usesIndoorMapId]),       [[options getIndoorMapId] UTF8String],
-        static_cast<bool>([options usesIndoorMapFloorId]),  [options getIndoorMapFloorId],
-        static_cast<bool>([options usesFloorDropoff]),      [options getFloorDropoff]
+        static_cast<bool>([options usesIndoorMapFloorId]),  static_cast<int>([options getIndoorMapFloorId]),
+        static_cast<bool>([options usesFloorDropoff]),      static_cast<int>([options getFloorDropoff])
     };
     
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginTextSearch(textOptions) poiApi:*m_poiApi];
@@ -59,7 +59,7 @@
         [[options getQuery] UTF8String],
         {latLng.GetLatitude(), latLng.GetLongitude()},
         static_cast<bool>([options usesRadius]),            [options getRadius],
-        static_cast<bool>([options usesNumber]),            [options getNumber]
+        static_cast<bool>([options usesNumber]),            static_cast<int>([options getNumber])
     };
     
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginTagSearch(tagOptions) poiApi:*m_poiApi];
@@ -76,7 +76,7 @@
     {
         [[options getQuery] UTF8String],
         {latLng.GetLatitude(), latLng.GetLongitude()},
-        static_cast<bool>([options usesNumber]),            [options getNumber]
+        static_cast<bool>([options usesNumber]),            static_cast<int>([options getNumber])
     };
     
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginAutocompleteSearch(autoCompleteOptions) poiApi:*m_poiApi];
