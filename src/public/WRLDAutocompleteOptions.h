@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the maximum number of search results to return.
- @param The search result limit.
+ @param number - The search result limit.
  */
 - (void)setNumber:(NSInteger)number;
 
