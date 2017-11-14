@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the query text.
- @param query - The text to search for.
+ @param query The text to search for.
  */
 - (void)setQuery:(NSString*)query;
 
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the center coordinate.
- @param center - The latitude and longitude to search around.
+ @param center The latitude and longitude to search around.
  */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the maximum number of search results to return.
- @param number - The search result limit.
+ @param number The search result limit.
  */
 - (void)setNumber:(NSInteger)number;
 

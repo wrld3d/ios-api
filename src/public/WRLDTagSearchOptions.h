@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the tag to search for.
- @param query - The tag to search for.
+ @param query The tag to search for.
  */
 - (void)setQuery:(NSString*)query;
 
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the latitude and longitude to search around.
- @param center - The latitude and longitude to search around.
+ @param center The latitude and longitude to search around.
  */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (double)getRadius;
 
 /*!
- @param radius - Set the search radius in meters.
+ @param radius Set the search radius in meters.
  */
 - (void)setRadius:(double)radius;
 
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the maximum number of search results to return.
- @param number - The search result limit.
+ @param number The search result limit.
  */
 - (void)setNumber:(NSInteger)number;
 

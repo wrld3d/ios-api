@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  Begins a free-text search for POIs with the given query options. The results of the search will be
  passed as a WRLDPoiSearchResponse to the poiSearchDidComplete method on WRLDMapViewDelegate.
 
- @param options - The text search query.
+ @param options The text search options containing the query and other search criteria.
  @returns A handle to the ongoing search, which can be used to cancel it.
  */
 - (WRLDPoiSearch*)searchText:(WRLDTextSearchOptions*)options;
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  Begins a tag search for POIs with the given query options. The results of the search will be passed
  as a WRLDPoiSearchResponse to the poiSearchDidComplete method on WRLDMapViewDelegate.
 
- @param options - The tag search query.
+ @param options The tag search options containing the query and other search criteria.
  @returns A handle to the ongoing search, which can be used to cancel it.
  */
 - (WRLDPoiSearch*)searchTag:(WRLDTagSearchOptions*)options;
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
  Begins an autocomplete search for POIs with the given query options. The results of the search will
  be passed as a WRLDPoiSearchResponse to the poiSearchDidComplete method on WRLDMapViewDelegate.
 
- @param options - The autocomplete search query.
+ @param options The autocomplete search options containing the query and other search criteria.
  @returns A handle to the ongoing search, which can be used to cancel it.
  */
 - (WRLDPoiSearch*)searchAutocomplete:(WRLDAutocompleteOptions*)options;

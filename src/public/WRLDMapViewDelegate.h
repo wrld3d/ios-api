@@ -63,8 +63,8 @@ A message sent when a WRLDPositioner object has changed.
 /*!
 A message sent when a POI search completes.
 @param mapView The WRLDMapView that is being observed.
-@param poiSearchId - The ID of the WRLDPoiSearch.
-@param poiSearchResponse - The POI search results.
+@param poiSearchId The ID of the WRLDPoiSearch.
+@param poiSearchResponse The POI search results.
  */
 - (void)mapView:(WRLDMapView *)mapView poiSearchDidComplete: (int) poiSearchId
 poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;

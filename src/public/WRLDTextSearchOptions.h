@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the query text.
- @param query - The text to search for.
+ @param query The text to search for.
  */
 - (void)setQuery:(NSString*)query;
 
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the center coordinate.
- @param center - The latitude and longitude to search around.
+ @param center The latitude and longitude to search around.
  */
 - (void)setCenter:(CLLocationCoordinate2D)center;
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (double)getRadius;
 
 /*!
- @param radius - Set the search radius in meters.
+ @param radius Set the search radius in meters.
  */
 - (void)setRadius:(double)radius;
 
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the maximum number of search results to return.
- @param number - The search result limit.
+ @param number The search result limit.
  */
 - (void)setNumber:(NSInteger)number;
 
@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the minimum score of results. The higher this is set, the fewer results will match.
- @param minScore - The minimum acceptable score for results.
+ @param minScore The minimum acceptable score for results.
  */
 - (void)setMinScore:(double)minScore;
 
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the ID of the indoor map to search in. If not specified, search outdoors.
- @param indoorMapId - The indoor map ID to search in.
+ @param indoorMapId The indoor map ID to search in.
  */
 - (void)setIndoorMapId:(NSString*)indoorMapId;
 
@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the floor number to search on. If searching indoors and not specified, defaults to floor 0.
- @param indoorMapFloorId - The floor number to search on.
+ @param indoorMapFloorId The floor number to search on.
  */
 - (void)setIndoorMapFloorId:(NSInteger)indoorMapFloorId;
 
@@ -122,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Sets the floor dropoff. Defaults to 15.
- @param floorDropoff - The number of floors above and below to search on.
+ @param floorDropoff The number of floors above and below to search on.
  */
 - (void)setFloorDropoff:(NSInteger)floorDropoff;
 

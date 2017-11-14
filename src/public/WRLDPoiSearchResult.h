@@ -14,13 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int id;
 
 /// The title text for this POI.
-@property (nonatomic) NSString* title;
+@property (nonatomic, copy) NSString* title;
 
 /// The subtitle text for this POI.
-@property (nonatomic) NSString* subtitle;
+@property (nonatomic, copy) NSString* subtitle;
 
 /// A tag, or a space-separated list of tags, for this POI.
-@property (nonatomic) NSString* tags;
+@property (nonatomic, copy) NSString* tags;
 
 /// The geographic location of this POI.
 @property (nonatomic) CLLocationCoordinate2D latLng;
@@ -32,13 +32,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL indoor;
 
 /// The ID of the indoor map this POI is inside. If the POI is outdoors, this is an empty string.
-@property (nonatomic) NSString* indoorMapId;
+@property (nonatomic, copy) NSString* indoorMapId;
 
 /// The floor number that this POI is on. If the POI is outdoors, this defaults to 0.
 @property (nonatomic) int indoorMapFloorId;
 
 /// Arbitrary JSON user data. This can be empty, or can be any JSON data this POI has associated.
-@property (nonatomic) NSString* userData;
+@property (nonatomic, copy) NSString* userData;
 
 @end
 
