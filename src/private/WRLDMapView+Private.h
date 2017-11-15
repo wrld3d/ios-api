@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EegeoMapApi.h"
+#include "PoiSearchResults.h"
 #include "PositioningTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyEnteredIndoorMap;
 
 - (void)notifyExitedIndoorMap;
+
+- (void)notifyPoiSearchCompleted:(const Eegeo::PoiSearch::PoiSearchResults&)result;
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 

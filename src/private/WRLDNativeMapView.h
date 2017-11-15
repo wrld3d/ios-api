@@ -9,6 +9,7 @@
 #include "IMarker.h"
 #include "EegeoCameraApi.h"
 #include "EegeoPositionerApi.h"
+#include "EegeoPoiApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -25,6 +26,7 @@ private:
     void OnPositionerProjectionChanged();
     void OnEnteredIndoorMap();
     void OnExitedIndoorMap();
+    void OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults);
     
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
@@ -43,6 +45,8 @@ private:
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_enteredIndoorMapHandler;
     
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_exitedIndoorMapHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::PoiSearch::PoiSearchResults> m_poiSearchCompletedHandler;
 };
 
 
