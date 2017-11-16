@@ -4,20 +4,20 @@
 
 @interface SearchResultSet : NSObject
 
-- (NSMutableArray<SearchResult*>*)sortOn: (NSString*)propertyKey;
+//- (NSMutableArray<SearchResult*>*)sortOn: (NSString*)propertyKey;
 
 - (NSMutableArray<SearchResult*>*)getAllResults;
 
-- (SearchResult*)getResult: (NSInteger) index;
+//- (SearchResult*)getResult: (NSInteger) index;
 
-- (NSInteger)getResultCount;
+//- (NSInteger)getResultCount;
 
 - (void)addResult: (SearchResult*) searchResult;
 
-- (void)removeResult: (SearchResult*) searchResult;
+//- (void)removeResult: (SearchResult*) searchResult;
 
-- (void)removeResultByIndex: (NSInteger) index;
+//- (void)removeResultByIndex: (NSInteger) index;
 
-- (void)clear;
+//- (void)clear;
 
 @end

@@ -8,12 +8,13 @@
 #pragma once
 
 #import "SearchProvider.h"
+#import "OnResultsRecievedCallback.h"
 
 @protocol SuggestionProvider <SearchProvider>
 
 -(void)getSuggestions: (NSString*) query;
 
--(void)addOnSuggestionsRecievedCallback: (OnResultsRecievedCallback*) resultsReceivedCallback;
+-(void)addOnSuggestionsRecievedCallback: (id<OnResultsRecievedCallback>) resultsReceivedCallback;
 
 -(void)setSuggestionViewFactory: (SearchResultViewFactory*) searchResultFactory;
 

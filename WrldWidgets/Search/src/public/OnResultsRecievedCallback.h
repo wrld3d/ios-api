@@ -2,7 +2,7 @@
 
 #import "SearchResult.h"
 
-@interface OnResultsRecievedCallback : NSObject
+@protocol OnResultsRecievedCallback <NSObject>
 
 -(void)onResultsRecieved: (NSMutableArray<SearchResult*>*) searchResults;
 

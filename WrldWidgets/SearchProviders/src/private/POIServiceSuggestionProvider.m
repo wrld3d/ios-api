@@ -6,9 +6,6 @@
 #import "WRLDPoiSearchResult.h"
 #import "WRLDPoiSearchResponse.h"
 #import "POIServiceSuggestionProvider.h"
-#import "POIServiceSuggestionProvider+Private.h"
-
-
 
 #import "SuggestionProvider.h"
 #import "SearchResultSet.h"
@@ -19,39 +16,43 @@
     WRLDPoiService* m_poiService;
     WRLDMapView* m_mapView;
     
-    OnResultsRecievedCallback* m_resultsReceivedCallback;
+    id<OnResultsRecievedCallback> m_resultsReceivedCallback;
     SearchResultViewFactory* m_searchResultViewFactory;
 }
 
-- (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService: (WRLDPoiService*)poiService
+- (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService
 {
     if (self = [super init])
     {
         m_mapView = mapView;
         m_poiService = poiService;
         
-        m_mapView.delegate = self;
+        [m_mapView setPoiSearchCompletedDelegate: self];
     }
     
     return self;
 }
 
--(void)mapView:(WRLDMapView *)mapView poiSearchDidComplete:(int)poiSearchId poiSearchResponse:(WRLDPoiSearchResponse *)poiSearchResponse
+-(void)poiSearchDidComplete:(int)poiSearchId poiSearchResponse:(WRLDPoiSearchResponse *)poiSearchResponse
 {
     // Unpack search results, fill structures up
-    SearchResultSet* searchResultSet;
+    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
 
-    for(WRLDPoiSearchResult *poiSearchResult in [poiSearchResponse results])
+    if([poiSearchResponse succeeded] && [[poiSearchResponse results] count] > 0)
     {
-        SearchResult* searchResult = [[SearchResult alloc] init];
-        
-        // Set title
-        [searchResult setTitle: [poiSearchResult title]];
-        
-        // todo - Set other properties
-        
-        // Add to result set
-        [searchResultSet addResult: searchResult];
+        for(WRLDPoiSearchResult *poiSearchResult in [poiSearchResponse results])
+        {
+            SearchResult* searchResult = [[SearchResult alloc] init];
+            
+            // Set title
+            [searchResult setTitle: [poiSearchResult title]];
+            [searchResult setLatLng: [poiSearchResult latLng]];
+            
+            // todo - Set other properties
+            
+            // Add to result set
+            [searchResultSet addResult: searchResult];
+        }
     }
     
     // Invoke callback
@@ -89,7 +90,7 @@
     [m_poiService searchAutocomplete: autocompleteOptions];
 }
 
-- (void)addOnResultsRecievedCallback:(OnResultsRecievedCallback*)resultsReceivedCallback
+- (void)addOnResultsRecievedCallback:(id<OnResultsRecievedCallback>)resultsReceivedCallback
 {
     m_resultsReceivedCallback = resultsReceivedCallback;
 }
