@@ -1,19 +1,14 @@
-//
-//  SearchResult.h
-//  ios-sdk
-//
-//  Created by Sam Ainsworth on 10/11/2017.
-//  Copyright © 2017 eeGeo. All rights reserved.
-//
 
-#ifndef SearchResult_h
-#define SearchResult_h
+#pragma once
 
-@protocol SearchResult <NSObject>
+#import "SearchResultProperty.h"
 
--(NSString)getTitle();
--(SearchResultProperty)getSearchProperty(NSString);
+@interface SearchResult : NSObject
+
+@property (nonatomic, copy) NSString* title;
+
+- (SearchResultProperty*)getSearchProperty: (NSString*) propertyKey;
 
 @end
 
-#endif /* SearchResult_h */
+

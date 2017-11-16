@@ -1,34 +1,23 @@
-//
-//  SearchResultSet.h
-//  ios-sdk
-//
-//  Created by Sam Ainsworth on 10/11/2017.
-//  Copyright © 2017 eeGeo. All rights reserved.
-//
+#pragma once
 
-#ifndef SearchResultSet_h
-#define SearchResultSet_h
+#import "SearchResult.h"
 
-@protocol SearchResultSet <NSObject>
+@interface SearchResultSet : NSObject
 
--(SearchResult[])sortOn(NSString propertyKey);
--(SearchResult[])getAllResults();
--(SearchResult)getResult(int);
+- (NSMutableArray<SearchResult*>*)sortOn: (NSString*)propertyKey;
 
--(int)getResultCount();
+- (NSMutableArray<SearchResult*>*)getAllResults;
 
--(void)addResult(SearchResult);
--(void)removeResult(SearchResult);
--(void)removeResult(int);
--(void)clear();
+- (SearchResult*)getResult: (NSInteger) index;
 
--(void)addOnResultChangedHandler(OnResultChanged);
+- (NSInteger)getResultCount;
 
-@protocol OnResultChanged{
-    -(void)invoke();
-}
+- (void)addResult: (SearchResult*) searchResult;
 
+- (void)removeResult: (SearchResult*) searchResult;
+
+- (void)removeResultByIndex: (NSInteger) index;
+
+- (void)clear;
 
 @end
-
-#endif /* SearchResultSet_h */

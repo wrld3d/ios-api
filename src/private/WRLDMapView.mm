@@ -8,6 +8,11 @@
 #import "WRLDNativeMapView.h"
 #import "WRLDBlueSphere+Private.h"
 #import "WRLDOverlayImpl.h"
+#import "WRLDPoiService.h"
+#import "WRLDPoiService+Private.h"
+#import "WRLDPoiSearchResponse.h"
+#import "WRLDPoiSearchResult.h"
+
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -23,6 +28,7 @@
 #include "EegeoIndoorMapData.h"
 #include "EegeoSpacesApi.h"
 #include "EegeoRenderingApi.h"
+#include "PoiSearchResults.h"
 
 #include <string>
 
@@ -835,6 +841,13 @@ const double defaultStartZoomLevel = 8;
     [self getMapApi].GetRenderingApi().SetMapCollapsed(isMapCollapsed);
 }
 
+#pragma mark - POI search service
+
+- (WRLDPoiService*)createPoiService
+{
+    return [[WRLDPoiService alloc] initWithApi: [self getMapApi].GetPoiApi() ];
+}
+
 #pragma mark - WRLDMapView (Private)
     
     
@@ -963,6 +976,32 @@ template<typename T> inline T* safe_cast(id instance)
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:WRLDMapViewDidExitIndoorMapNotification object:self];
+}
+
+- (void)notifyPoiSearchCompleted:(const Eegeo::PoiSearch::PoiSearchResults&)result
+{
+    WRLDPoiSearchResponse* poiSearchResponse = [[WRLDPoiSearchResponse alloc] init];
+    [poiSearchResponse setSucceeded: result.Succeeded];
+    poiSearchResponse.results = [[NSMutableArray alloc] initWithCapacity:(result.Results.size())];
+    for(auto& poi : result.Results)
+    {
+        WRLDPoiSearchResult* searchResult = [[WRLDPoiSearchResult alloc] init];
+        
+        [searchResult setId: poi.Id];
+        [searchResult setTitle: [NSString stringWithCString: poi.Title.c_str() encoding:NSUTF8StringEncoding]];
+        [searchResult setSubtitle: [NSString stringWithCString: poi.Subtitle.c_str() encoding:NSUTF8StringEncoding]];
+        [searchResult setTags: [NSString stringWithCString: poi.Tags.c_str() encoding:NSUTF8StringEncoding]];
+        [searchResult setLatLng: CLLocationCoordinate2DMake(poi.LatLong.GetLatitudeInDegrees(), poi.LatLong.GetLongitudeInDegrees())];
+        [searchResult setHeightOffset: poi.HeightOffset];
+        [searchResult setIndoor: poi.Indoor];
+        [searchResult setIndoorMapId: [NSString stringWithCString: poi.IndoorId.c_str() encoding:NSUTF8StringEncoding]];
+        [searchResult setIndoorMapFloorId: poi.FloorId];
+        [searchResult setUserData: [NSString stringWithCString: poi.UserData.c_str() encoding:NSUTF8StringEncoding]];
+
+        [poiSearchResponse.results addObject:searchResult];
+    }
+
+    [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
 }
 
 @end

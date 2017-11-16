@@ -4,6 +4,8 @@
 @class WRLDMapView;
 @class WRLDMarker;
 @class WRLDPositioner;
+@class WRLDPoiSearch;
+@class WRLDPoiSearchResponse;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -57,5 +59,15 @@ A message sent when a WRLDPositioner object has changed.
 @param positioner The WRLDPositioner that has changed.
 */
 - (void)mapView:(WRLDMapView *)mapView positionerDidChange: (WRLDPositioner*)positioner;
+
+/*!
+A message sent when a POI search completes.
+@param mapView The WRLDMapView that is being observed.
+@param poiSearchId The ID of the WRLDPoiSearch.
+@param poiSearchResponse The POI search results.
+ */
+- (void)mapView:(WRLDMapView *)mapView poiSearchDidComplete: (int) poiSearchId
+poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
+
 
 @end

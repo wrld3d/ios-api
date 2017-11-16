@@ -14,6 +14,7 @@
 #import "WRLDPolyline.h"
 #import "WRLDMapOptions.h"
 #import "WRLDBlueSphere.h"
+#import "WRLDPoiService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -341,6 +342,11 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @param isMapCollapsed If YES, map appears flattened; If NO, map displays with default vertical scaling.
  */
 - (void)setMapCollapsed:(BOOL)isMapCollapsed;
+
+/*!
+ @returns The POI service.
+ */
+- (WRLDPoiService*)createPoiService;
 
 @end
 
