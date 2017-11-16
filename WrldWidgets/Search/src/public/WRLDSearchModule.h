@@ -6,9 +6,9 @@
 
 @class SearchProvider;
 
-@interface WRLDSearchModule : UIView
+@interface WRLDSearchModule : UIViewController <UITableViewDataSource>
 
-- (instancetype) initWithFrame:(CGRect) frame;
+
 - (void) addSearchProvider: (SearchProvider*) searchProvider;
 
 @end

@@ -7,24 +7,35 @@
 
 @implementation WRLDSearchModule
 
-- (instancetype)initWithFrame:(CGRect)frame
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"WRLDSearchModule::initWithFrame");
-    if(self = [super initWithFrame:frame])
-    {
-        [self initView];
-    }
-    
-    return self;
+    return 2;
 }
 
-- (void) initView
+-(NSInteger)tableView:(UITableView *)tableView
+numberOfRowsInSection:(NSInteger) section
 {
-    NSLog(@"WRLDSearchModule::initView");
-    self.backgroundColor = [UIColor whiteColor];
+    return 5;
+}
+
+-(UITableViewCell*) tableView:(UITableView *)tableView
+        cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"resultCell"];
     
-    UIView *rootView = [[[NSBundle mainBundle] loadNibNamed:@"Results" owner:self options:nil] objectAtIndex:0];
-    [self addSubview:rootView];
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:@"resultCell"];
+    }
+    
+    NSString* text = [NSString stringWithFormat:@"Hello WRLD Section:%d Row:%d",
+     (int)[indexPath section],
+     (int)[indexPath row]];
+    
+    [cell.textLabel setText:text];
+    
+    return cell;
 }
 
 - (void) addSearchProvider: (SearchProvider*) provider {

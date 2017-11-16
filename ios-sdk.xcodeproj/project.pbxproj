@@ -264,6 +264,9 @@
 		6F48E7191FB5E62E00DDD668 /* SearchResultViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResultViewFactory.h; path = ../private/SearchResultViewFactory.h; sourceTree = "<group>"; };
 		6F48E71B1FB5F03200DDD668 /* SearchResultViewHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResultViewHolder.h; path = ../private/SearchResultViewHolder.h; sourceTree = "<group>"; };
 		6F48E71D1FB5FB6100DDD668 /* SuggestionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestionProvider.h; sourceTree = "<group>"; };
+		6F48E7321FB9BB7C00DDD668 /* SearchWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchWidgetView.xib; sourceTree = "<group>"; };
+		6F48E7341FB9E4BC00DDD668 /* ResultSetContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultSetContainerView.h; sourceTree = "<group>"; };
+		6F48E7351FB9E4BC00DDD668 /* ResultSetContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultSetContainerView.m; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
 		A82B34771FB4B966009B21D3 /* WRLDPoiService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiService.h; sourceTree = "<group>"; };
 		A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiSearch.h; sourceTree = "<group>"; };
@@ -380,6 +383,7 @@
 				26327FB31FB5A19B0006B954 /* SimpleResultLayout.xib */,
 				26327FB51FB5A1D10006B954 /* ResultSetContainer.xib */,
 				266423A61FB99863009767F0 /* Results.xib */,
+				6F48E7321FB9BB7C00DDD668 /* SearchWidgetView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -550,6 +554,8 @@
 				6F48E70B1FB5C01800DDD668 /* SearchModuleFacade.h */,
 				6F48E7171FB5CEAF00DDD668 /* SearchResultsContainer.h */,
 				6F48E7181FB5CEE700DDD668 /* SearchResultSet.h */,
+				6F48E7341FB9E4BC00DDD668 /* ResultSetContainerView.h */,
+				6F48E7351FB9E4BC00DDD668 /* ResultSetContainerView.m */,
 				27ED5EED1FBCB07500A9447E /* SearchResult.mm */,
 				27053FAE1FBDE551009078BF /* SearchResultSet.m */,
 			);
@@ -751,6 +757,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */,
+				6F48E7361FB9E4BC00DDD668 /* ResultSetContainerView.h in Headers */,
 				2CB2C5B21EC1D93F00C0B401 /* UIColors.h in Headers */,
 				6F48E7111FB5C01800DDD668 /* SearchResult.h in Headers */,
 				6F48E7121FB5C01800DDD668 /* SearchResultProperty.h in Headers */,
@@ -895,7 +902,6 @@
 				TargetAttributes = {
 					2CB2C53D1EC1D76400C0B401 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = QBCVJ28BRW;
 						ProvisioningStyle = Automatic;
 					};
 					E0310FFB1EB0E08B00002E88 = {
@@ -936,6 +942,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26327FB61FB5A1D10006B954 /* ResultSetContainer.xib in Resources */,
+				6F48E7331FB9BB7C00DDD668 /* SearchWidgetView.xib in Resources */,
 				26327FB41FB5A19B0006B954 /* SimpleResultLayout.xib in Resources */,
 				266423A71FB99863009767F0 /* Results.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
@@ -1037,6 +1044,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F48E7371FB9E4BC00DDD668 /* ResultSetContainerView.m in Sources */,
 				27ED5EEE1FBCB07500A9447E /* SearchResult.mm in Sources */,
 				2664239D1FB603D3009767F0 /* WRLDSearchModule.mm in Sources */,
 				2664239C1FB5FECA009767F0 /* DefaultSearchProvider.mm in Sources */,
