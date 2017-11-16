@@ -1,20 +1,16 @@
-
-#ifndef SearchProvider_h
-#define SearchProvider_h
+#pragma once
 
 #import <Foundation/Foundation.h>
 
-@class SearchResultFactory;
-@class OnResultRecievedCallback;
+@class SearchResultViewFactory;
+@class OnResultsRecievedCallback;
 
 @protocol SearchProvider <NSObject>
 
-    @property (readonly) NSString *title;
+    @property (nonatomic, readonly, copy) NSString *title;
     - (void)getSearchResults: (NSString*) query;
-    - (void) addOnResultsRecievedCallback: (OnResultRecievedCallback*) resultReceivedCallback;
-    - (void) setResultViewFactory: (SearchResultFactory*) viewFactory;
-    - (SearchResultFactory*) getResultViewFactor;
+    - (void) addOnResultsRecievedCallback: (OnResultsRecievedCallback*) resultsReceivedCallback;
+    - (void) setResultViewFactory: (SearchResultViewFactory*) viewFactory;
+    - (SearchResultViewFactory*) getResultViewFactory;
 
 @end
-
-#endif /* SearchProvider_h */

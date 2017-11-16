@@ -1,18 +1,12 @@
-//
-//  SearchResultsContainer.h
-//  ios-sdk
-//
-//  Created by Sam Ainsworth on 10/11/2017.
-//  Copyright © 2017 eeGeo. All rights reserved.
-//
+#pragma once
 
-#ifndef SearchResultsContainer_h
-#define SearchResultsContainer_h
+#import <Foundation/Foundation.h>
 
-@protocol SearchResultsContainer <NSObject>
+
+@interface SearchResultsContainer : NSObject
 
 -(void)refresh();
 
 @end
 
-#endif /* SearchResultsContainer_h */
+

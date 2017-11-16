@@ -6,5 +6,7 @@
 #import "SearchProvider.h"
 
 @interface DefaultSearchProvider : NSObject <SearchProvider>
+
+
 @end
 

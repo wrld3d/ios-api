@@ -11,11 +11,11 @@ NSString* _title;
 
 @synthesize title = _title;
 
-- (void)addOnResultsRecievedCallback:(OnResultRecievedCallback *)resultReceivedCallback {
+- (void)addOnResultsRecievedCallback:(OnResultsRecievedCallback *)resultReceivedCallback {
     //TODO
 }
 
-- (SearchResultFactory *)getResultViewFactor {
+- (SearchResultViewFactory *)getResultViewFactory {
     //TODO
     return nil;
 }
@@ -24,7 +24,7 @@ NSString* _title;
     //TODO
 }
 
-- (void)setResultViewFactory:(SearchResultFactory *)viewFactory {
+- (void)setResultViewFactory:(SearchResultViewFactory *)viewFactory {
     //TODO
 }
 
