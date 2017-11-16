@@ -15,6 +15,7 @@
 #import "WRLDMapOptions.h"
 #import "WRLDBlueSphere.h"
 #import "WRLDPoiService.h"
+#import "WRLDPoiSearchCompletedDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -251,6 +252,10 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void) removeOverlay:(id<WRLDOverlay>) overlay;
 
+
+#pragma mark - poi service custom delegate
+
+@property(nonatomic, weak, nullable) IBOutlet id<WRLDPoiSearchCompletedDelegate> poiSearchCompletedDelegate;
 
 #pragma mark - controlling the indoor map view -
 

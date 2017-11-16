@@ -69,7 +69,6 @@
     return [[WRLDPoiSearch alloc] initWithIdAndApi: m_poiApi->BeginAutocompleteSearch(autoCompleteOptions) poiApi:*m_poiApi];
 }
 
-
 @end
 
 

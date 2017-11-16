@@ -1001,7 +1001,14 @@ template<typename T> inline T* safe_cast(id instance)
         [poiSearchResponse.results addObject:searchResult];
     }
 
-    [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+    if ([self poiSearchCompletedDelegate] != nil)
+    {
+        [self.poiSearchCompletedDelegate poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+    }
+    else
+    {
+        [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+    }
 }
 
 @end
