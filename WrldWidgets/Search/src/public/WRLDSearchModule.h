@@ -3,12 +3,19 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
+#import "OnResultsRecievedCallback.h"
+#import "SearchProvider.h"
+#import "SuggestionProvider.h"
 
-@class SearchProvider;
-
-@interface WRLDSearchModule : UIViewController <UITableViewDataSource>
+@interface WRLDSearchModule : UIViewController <UITableViewDataSource, OnResultsRecievedCallback>
 
 
-- (void) addSearchProvider: (SearchProvider*) searchProvider;
+- (void) addSearchProvider: (id<SearchProvider>) searchProvider;
+
+- (void) addSuggestionProvider: (id<SuggestionProvider>) suggestionProvider;
+
+- (void) doSearch: (NSString*) query;
+
+- (void) doAutoCompleteQuery: (NSString*) query;
 
 @end

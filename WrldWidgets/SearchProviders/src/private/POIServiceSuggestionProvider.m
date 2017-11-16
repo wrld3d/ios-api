@@ -72,7 +72,7 @@
     return [self getResultViewFactory];
 }
 
-- (void)addOnSuggestionsRecievedCallback:(OnResultsRecievedCallback *)resultsReceivedCallback
+- (void)addOnSuggestionsRecievedCallback:(id<OnResultsRecievedCallback>)resultsReceivedCallback
 {
     [self addOnResultsRecievedCallback: resultsReceivedCallback];
 }

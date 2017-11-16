@@ -11,7 +11,7 @@ NSString* _title;
 
 @synthesize title = _title;
 
-- (void)addOnResultsRecievedCallback:(OnResultsRecievedCallback *)resultReceivedCallback {
+- (void)addOnResultsRecievedCallback:(id<OnResultsRecievedCallback>)resultReceivedCallback {
     //TODO
 }
 
