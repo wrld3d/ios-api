@@ -18,4 +18,6 @@
 
 - (SearchResultViewFactory*) getResultViewFactory;
 
+- (void) onSelectedResult: (SearchResult*) searchResult;
+
 @end

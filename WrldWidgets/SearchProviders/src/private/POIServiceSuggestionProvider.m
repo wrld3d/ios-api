@@ -41,7 +41,7 @@
     // Unpack search results, fill structures up
     NSMutableArray<SearchResult*>* searchResultSet = [[NSMutableArray<SearchResult*> alloc] init];
 
-    if([poiSearchResponse succeeded])
+    if(![poiSearchResponse succeeded])
     {
         [searchResultSet addObject: [self createSearchResult: @"Failed to get poi service results" latLng: [m_mapView centerCoordinate]]];
     }
@@ -124,6 +124,12 @@
 - (void)setResultViewFactory:(SearchResultViewFactory *)viewFactory
 {
     m_searchResultViewFactory = viewFactory;
+}
+
+- (void) onSelectedResult: (SearchResult*) selectedResult
+{
+    [m_mapView setCenterCoordinate:[selectedResult latLng]
+                         animated:NO];
 }
 
 

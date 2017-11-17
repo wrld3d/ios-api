@@ -54,6 +54,7 @@
 
 -(void)setSearchModule:(WRLDSearchModule*) searchModule{
     [_tableView setDataSource:searchModule];
+    [_tableView setDelegate: searchModule];
     [self onResultsModelUpdate];
     [searchModule addUpdateDelegate: self];
 }

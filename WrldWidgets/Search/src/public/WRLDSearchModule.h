@@ -7,7 +7,7 @@
 @protocol SuggestionProvider;
 @protocol SearchProvider;
 
-@interface WRLDSearchModule : UIViewController <UITableViewDataSource, OnResultsModelUpdateDelegate>
+@interface WRLDSearchModule : UIViewController <UITableViewDataSource, UITableViewDelegate, OnResultsModelUpdateDelegate>
 
 - (void) addSearchProvider: (id<SearchProvider>) searchProvider;
 

@@ -140,4 +140,10 @@ numberOfRowsInSection:(NSInteger) section
     [m_modelUpdateDelegates addObject:delegate];
 }
 
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SearchResult* searchResult = [self getSearchResult: indexPath];
+    [m_searchProviders [[indexPath section]] onSelectedResult:searchResult];
+}
+
 @end
