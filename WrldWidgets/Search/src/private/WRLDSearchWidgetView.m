@@ -54,6 +54,14 @@
 
 -(void)setSearchModule:(WRLDSearchModule*) searchModule{
     [_tableView setDataSource:searchModule];
+    [self onResultsModelUpdate];
+    [searchModule addUpdateDelegate: self];
+}
+
+
+-(void) onResultsModelUpdate
+{
+    [_tableView reloadData];
 }
 
 - (IBAction)optionClicked:(id)sender {

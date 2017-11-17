@@ -8,15 +8,18 @@
 #import "POIServiceSuggestionProvider.h"
 
 #import "SuggestionProvider.h"
-#import "SearchResultSet.h"
-#import "OnResultsRecievedCallback.h"
+#import "OnResultsReceivedDelegate.h"
+#import "OnSuggestionsReceivedDelegate.h"
+#import "SearchResult.h"
+
 
 @implementation POIServiceSuggestionProvider
 {
     WRLDPoiService* m_poiService;
     WRLDMapView* m_mapView;
     
-    id<OnResultsRecievedCallback> m_resultsReceivedCallback;
+    id<OnResultsReceivedDelegate> m_resultsReceivedDelegate;
+    id<OnSuggestionsReceivedDelegate> m_suggestionsReceivedDelegate;
     SearchResultViewFactory* m_searchResultViewFactory;
 }
 
@@ -36,30 +39,47 @@
 -(void)poiSearchDidComplete:(int)poiSearchId poiSearchResponse:(WRLDPoiSearchResponse *)poiSearchResponse
 {
     // Unpack search results, fill structures up
-    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
+    NSMutableArray<SearchResult*>* searchResultSet = [[NSMutableArray<SearchResult*> alloc] init];
 
-    if([poiSearchResponse succeeded] && [[poiSearchResponse results] count] > 0)
+    if([poiSearchResponse succeeded])
+    {
+        [searchResultSet addObject: [self createSearchResult: @"Failed to get poi service results" latLng: [m_mapView centerCoordinate]]];
+    }
+    else if([[poiSearchResponse results] count] == 0)
+    {
+        [searchResultSet addObject: [self createSearchResult: @"No results found" latLng: [m_mapView centerCoordinate]]];
+    }
+    else
     {
         for(WRLDPoiSearchResult *poiSearchResult in [poiSearchResponse results])
         {
-            SearchResult* searchResult = [[SearchResult alloc] init];
-            
-            // Set title
-            [searchResult setTitle: [poiSearchResult title]];
-            [searchResult setLatLng: [poiSearchResult latLng]];
-            
-            // todo - Set other properties
-            
             // Add to result set
-            [searchResultSet addResult: searchResult];
+            [searchResultSet addObject: [self createSearchResult: [poiSearchResult title] latLng: [poiSearchResult latLng]]];
         }
     }
     
     // Invoke callback
-    if(m_resultsReceivedCallback != nil)
+    if(m_resultsReceivedDelegate != nil)
     {
-        [m_resultsReceivedCallback onResultsRecieved: [searchResultSet getAllResults]];
+        [m_resultsReceivedDelegate clearResults];
+        [m_resultsReceivedDelegate addResults: searchResultSet];
     }
+    
+    if(m_suggestionsReceivedDelegate != nil)
+    {
+        [m_suggestionsReceivedDelegate clearSuggestions];
+        [m_suggestionsReceivedDelegate addSuggestions: searchResultSet];
+    }
+}
+
+- (SearchResult*) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng
+{
+    SearchResult* searchResult = [[SearchResult alloc] init];
+    [searchResult setTitle: title];
+    [searchResult setLatLng: latLng];
+    // todo - Set other properties
+    
+    return searchResult;
 }
 
 -(void)getSuggestions: (NSString*) query
@@ -72,9 +92,9 @@
     return [self getResultViewFactory];
 }
 
-- (void)addOnSuggestionsRecievedCallback:(id<OnResultsRecievedCallback>)resultsReceivedCallback
+- (void)addOnSuggestionsReceivedDelegate:(id<OnSuggestionsReceivedDelegate>)suggestionsReceivedDelegate
 {
-    [self addOnResultsRecievedCallback: resultsReceivedCallback];
+    m_suggestionsReceivedDelegate = suggestionsReceivedDelegate;
 }
 
 - (void)setSuggestionViewFactory:(SearchResultViewFactory *)searchResultFactory
@@ -90,9 +110,9 @@
     [m_poiService searchAutocomplete: autocompleteOptions];
 }
 
-- (void)addOnResultsRecievedCallback:(id<OnResultsRecievedCallback>)resultsReceivedCallback
+- (void)addOnResultsReceivedDelegate:(id<OnResultsReceivedDelegate>)resultsReceivedDelegate
 {
-    m_resultsReceivedCallback = resultsReceivedCallback;
+    m_resultsReceivedDelegate = resultsReceivedDelegate;
 }
 
 - (SearchResultViewFactory *)getResultViewFactory

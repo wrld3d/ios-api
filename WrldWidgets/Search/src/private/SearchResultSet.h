@@ -1,23 +1,24 @@
 #pragma once
 
-#import "SearchResult.h"
+#import "OnResultsReceivedDelegate.h"
+#import "OnSuggestionsReceivedDelegate.h"
 
-@interface SearchResultSet : NSObject
+@protocol OnResultsModelUpdateDelegate;
+
+@ class SearchResult;
+
+@interface SearchResultSet : NSObject <OnResultsReceivedDelegate, OnSuggestionsReceivedDelegate>
 
 //- (NSMutableArray<SearchResult*>*)sortOn: (NSString*)propertyKey;
 
 - (NSMutableArray<SearchResult*>*)getAllResults;
 
-//- (SearchResult*)getResult: (NSInteger) index;
+- (SearchResult*)getResult: (NSInteger) index;
+- (SearchResult*)getSuggestion: (NSInteger) index;
 
-//- (NSInteger)getResultCount;
+- (NSInteger)getResultCount;
+- (NSInteger)getSuggestionCount;
 
-- (void)addResult: (SearchResult*) searchResult;
-
-//- (void)removeResult: (SearchResult*) searchResult;
-
-//- (void)removeResultByIndex: (NSInteger) index;
-
-//- (void)clear;
+- (void)addUpdateDelegate: (id<OnResultsModelUpdateDelegate>) delegate;
 
 @end

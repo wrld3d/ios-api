@@ -1,7 +1,7 @@
 #pragma once
 
 #import <Foundation/Foundation.h>
-#import "OnResultsRecievedCallback.h"
+#import "OnResultsReceivedDelegate.h"
 
 @class SearchResultViewFactory;
 
@@ -12,7 +12,7 @@
 
 - (void)getSearchResults: (NSString*) query;
 
-- (void) addOnResultsRecievedCallback: (id<OnResultsRecievedCallback>) resultsReceivedCallback;
+- (void) addOnResultsReceivedDelegate: (id<OnResultsReceivedDelegate>) resultsReceivedDelegate;
 
 - (void) setResultViewFactory: (SearchResultViewFactory*) viewFactory;
 

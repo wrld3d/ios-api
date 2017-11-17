@@ -3,25 +3,51 @@
 #import <Foundation/Foundation.h>
 
 #import "WRLDSearchModule.h"
+#import "SearchResultSet.h"
+#import "SearchResult.h"
+#import "SearchProvider.h"
+#import "SuggestionProvider.h"
 
 
 @implementation WRLDSearchModule
 {
-    NSMutableArray<id<SearchProvider>>* m_searchProviders;
-    NSMutableArray<id<SuggestionProvider>>* m_suggestionProviders;
+    NSMutableArray<id <SearchProvider> >* m_searchProviders;
+    NSMutableArray<id <SuggestionProvider> >* m_suggestionProviders;
     
-    NSMutableArray<SearchResult*>* m_currentSearchResults;
+    NSMutableArray<SearchResultSet*>* m_searchResultSets;
+    
+    NSMutableArray<id <OnResultsModelUpdateDelegate> >* m_modelUpdateDelegates;
+    
+    bool m_showSuggestions;
+}
+
+-(instancetype) init
+{
+    self = [super init];
+    m_searchProviders = [[NSMutableArray alloc] init];
+    m_suggestionProviders = [[NSMutableArray alloc] init];
+    m_modelUpdateDelegates = [[NSMutableArray alloc] init];
+    m_searchResultSets = [[NSMutableArray alloc] init];
+    
+    m_showSuggestions = true;
+    
+    return self;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return m_searchResultSets.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView
 numberOfRowsInSection:(NSInteger) section
 {
-    return 5;
+    if(m_showSuggestions)
+    {
+        return [m_searchResultSets[section] getSuggestionCount];
+    }
+    
+    return [m_searchResultSets[section] getResultCount];
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView
@@ -33,32 +59,22 @@ numberOfRowsInSection:(NSInteger) section
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:@"resultCell"];
+    }   
+    
+    SearchResult* searchResult = [self getSearchResult:(NSIndexPath *) indexPath];
+    
+    [cell.textLabel setText:[searchResult title]];
+    return cell;        
+}
+
+-(SearchResult*) getSearchResult:(NSIndexPath *) indexPath
+{
+    if(m_showSuggestions)
+    {
+        return [m_searchResultSets[[indexPath section]] getSuggestion:[indexPath row]];
     }
     
-    m_searchProviders = [[NSMutableArray alloc] init];
-    m_suggestionProviders = [[NSMutableArray alloc] init];
-    
-    if(m_currentSearchResults != nil && [m_currentSearchResults count] > 0)
-    {
-        if([indexPath row] < [m_currentSearchResults count])
-        {
-            [cell.textLabel setText:[[m_currentSearchResults objectAtIndex:[indexPath row]] title]];
-        }
-        else
-        {
-            [cell.textLabel setText:@""];
-        }
-    }
-    else
-    {
-        NSString* text = [NSString stringWithFormat:@"Hello WRLD Section:%d Row:%d",
-         (int)[indexPath section],
-         (int)[indexPath row]];
-        
-        [cell.textLabel setText:text];
-    }
-    return cell;
-        
+    return [m_searchResultSets[[indexPath section]] getResult:[indexPath row]];
 }
 
 - (void) addSearchProvider: (id<SearchProvider>) provider
@@ -68,9 +84,11 @@ numberOfRowsInSection:(NSInteger) section
         m_searchProviders = [[NSMutableArray alloc] init];
     }
     
+    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
+    [searchResultSet addUpdateDelegate: self];    
+    [provider addOnResultsReceivedDelegate: searchResultSet];
     
-    [provider addOnResultsRecievedCallback: self];
-
+    [m_searchResultSets addObject:searchResultSet];
     [m_searchProviders addObject:provider];
 }
 
@@ -81,33 +99,45 @@ numberOfRowsInSection:(NSInteger) section
         m_suggestionProviders = [[NSMutableArray alloc] init];
     }
     
+    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
+    [searchResultSet addUpdateDelegate: self];
+    [suggestionProvider addOnResultsReceivedDelegate: searchResultSet];
+    [suggestionProvider addOnSuggestionsReceivedDelegate: searchResultSet];
     
-    [suggestionProvider addOnSuggestionsRecievedCallback: self];
-    
+    [m_searchResultSets addObject:searchResultSet];
+    [m_searchProviders addObject:suggestionProvider];
     [m_suggestionProviders addObject:suggestionProvider];
-    
 }
 
-- (void)onResultsRecieved:(NSMutableArray<SearchResult*>*)searchResults
+-(void) onResultsModelUpdate
 {
-    // add results to table view
-    m_currentSearchResults = searchResults;
     
-    
+    for (id<OnResultsModelUpdateDelegate> delegate in m_modelUpdateDelegates) {
+        [delegate onResultsModelUpdate];
+    }
 }
 
 - (void)doSearch:(NSString*)query
 {
-    
+    m_showSuggestions = false;
+    for(id<SuggestionProvider> provider in m_suggestionProviders)
+    {
+        [provider getSearchResults: query];
+    }
 }
 
 - (void)doAutoCompleteQuery:(NSString*)query
 {
+    m_showSuggestions = true;
     for(id<SuggestionProvider> provider in m_suggestionProviders)
     {
         [provider getSuggestions:query];
     }
 }
 
+-(void) addUpdateDelegate:(id<OnResultsModelUpdateDelegate>)delegate
+{
+    [m_modelUpdateDelegates addObject:delegate];
+}
 
 @end

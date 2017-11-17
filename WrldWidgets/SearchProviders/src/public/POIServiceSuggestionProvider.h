@@ -4,9 +4,6 @@
 @import Wrld;
 #import "SuggestionProvider.h"
 
-
-
-
 @interface POIServiceSuggestionProvider : NSObject <SuggestionProvider, WRLDPoiSearchCompletedDelegate>
 
 - (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService;
