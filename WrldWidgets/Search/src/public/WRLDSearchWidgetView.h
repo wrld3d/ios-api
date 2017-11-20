@@ -1,9 +1,10 @@
+#pragma once
 
 #import <UIKit/UIKit.h>
-#import "OnResultsModelUpdateDelegate.h"
+#import "WRLDSearchModuleDelegate.h"
 #import "WRLDSearchModule.h"
 
-@interface WRLDSearchWidgetView : UIView <OnResultsModelUpdateDelegate>
+@interface WRLDSearchWidgetView : UIView <WRLDSearchModuleDelegate>
 
 -(void)setSearchModule:(WRLDSearchModule*) searchModule;
 

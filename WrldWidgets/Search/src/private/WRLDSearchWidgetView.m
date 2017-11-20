@@ -51,16 +51,15 @@
     self.rootView.frame = self.bounds;
 }
 
-
 -(void)setSearchModule:(WRLDSearchModule*) searchModule{
     [_tableView setDataSource:searchModule];
     [_tableView setDelegate: searchModule];
-    [self onResultsModelUpdate];
-    [searchModule addUpdateDelegate: self];
+    [self dataDidChange];
+    [searchModule addSearchModuleDelegate: self];
 }
 
 
--(void) onResultsModelUpdate
+-(void) dataDidChange
 {
     [_tableView reloadData];
 }
