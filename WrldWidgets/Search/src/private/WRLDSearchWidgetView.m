@@ -56,7 +56,7 @@
 }
 
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText{
-    [m_searchModule doAutoCompleteQuery:searchText];
+    [m_searchModule searchSuggestions:searchText];
     printf("Search Should Update.");
 }
 

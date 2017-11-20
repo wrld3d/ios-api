@@ -56,10 +56,10 @@
     [self addResults:searchResultSet];
 }
 
-- (WRLDSearchResult*) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng
+- (WRLDSearchResult*) createSearchResult: (NSString*) _title latLng: (CLLocationCoordinate2D) latLng
 {
     WRLDSearchResult* searchResult = [[WRLDSearchResult alloc] init];
-    [searchResult setTitle: title];
+    [searchResult setTitle: _title];
     [searchResult setLatLng: latLng];
     // todo - Set other properties
     
