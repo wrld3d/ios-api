@@ -1,38 +1,26 @@
-// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
-
 #import <Foundation/Foundation.h>
 
 #import "WRLDSearchModule.h"
-#import "SearchResultSet.h"
-#import "SearchResult.h"
-#import "SearchProvider.h"
-#import "SuggestionProvider.h"
 #import "WRLDSearchResultView.h"
+#import "WRLDSearchResultSet.h"
+#import "WRLDSearchResult.h"
+#import "WRLDSearchProvider.h"
 
 @implementation WRLDSearchModule
 {
-    NSMutableArray<id <SearchProvider> >* m_searchProviders;
-    NSMutableArray<id <SuggestionProvider> >* m_suggestionProviders;
-    
-    NSMutableArray<SearchResultSet*>* m_searchResultSets;
-    
-    NSMutableArray<id <OnResultsModelUpdateDelegate> >* m_modelUpdateDelegates;
-    
-    bool m_showSuggestions;
+    NSMutableArray<id <WRLDSearchProvider> >* m_searchProviders;
+    NSMutableArray<WRLDSearchResultSet*>* m_searchResultSets;
+    NSMutableArray<id <WRLDSearchModuleDelegate> >* m_updateDelegates;
 }
 
 -(instancetype) init
 {
     self = [super init];
+    
     m_searchProviders = [[NSMutableArray alloc] init];
-    m_suggestionProviders = [[NSMutableArray alloc] init];
-    m_modelUpdateDelegates = [[NSMutableArray alloc] init];
+    m_updateDelegates = [[NSMutableArray alloc] init];
     m_searchResultSets = [[NSMutableArray alloc] init];
-    
-    m_showSuggestions = true;
-    
-    
-    
+
     return self;
 }
 
@@ -44,11 +32,6 @@
 -(NSInteger)tableView:(UITableView *)tableView
 numberOfRowsInSection:(NSInteger) section
 {
-    if(m_showSuggestions)
-    {
-        return [m_searchResultSets[section] getSuggestionCount];
-    }
-    
     return [m_searchResultSets[section] getResultCount];
 }
 
@@ -64,93 +47,74 @@ numberOfRowsInSection:(NSInteger) section
         [tableView registerNib:[UINib nibWithNibName:@"WRLDGenericSearchResultView" bundle:widgetsBundle] forCellReuseIdentifier:@"genericResultCell"];
         cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell" forIndexPath:indexPath];
     }   
-    
-    SearchResult* searchResult = [self getSearchResult:(NSIndexPath *) indexPath];
+
+    WRLDSearchResult* searchResult = [self getSearchResult:(NSIndexPath *) indexPath];
     
     [cell.titleLabel setText:[searchResult title]];
     [cell.descriptionLabel setText:[searchResult subTitle]];
 
-  //[cell.iconImage setImage:]; // get image with eegeo things?
+    // todo - Fetch icon from URL using iconkey as lookup
+  //[cell.iconImage setImage:]; 
+
     return cell;        
 }
 
--(SearchResult*) getSearchResult:(NSIndexPath *) indexPath
+-(WRLDSearchResult*) getSearchResult:(NSIndexPath *) indexPath
 {
-    if(m_showSuggestions)
-    {
-        return [m_searchResultSets[[indexPath section]] getSuggestion:[indexPath row]];
-    }
-    
     return [m_searchResultSets[[indexPath section]] getResult:[indexPath row]];
 }
 
-- (void) addSearchProvider: (id<SearchProvider>) provider
+- (void) addSearchProvider: (id<WRLDSearchProvider>) provider
 {
-    if(m_searchProviders == nil)
-    {
-        m_searchProviders = [[NSMutableArray alloc] init];
-    }
-    
-    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
-    [searchResultSet addUpdateDelegate: self];    
-    [provider addOnResultsReceivedDelegate: searchResultSet];
+    WRLDSearchResultSet* searchResultSet = [[WRLDSearchResultSet alloc] init];
+    [searchResultSet setUpdateDelegate:self];
+    [provider setSearchProviderDelegate: searchResultSet];
     
     [m_searchResultSets addObject:searchResultSet];
     [m_searchProviders addObject:provider];
 }
 
-- (void) addSuggestionProvider:(id<SuggestionProvider>)suggestionProvider
-{
-    if(m_suggestionProviders == nil)
-    {
-        m_suggestionProviders = [[NSMutableArray alloc] init];
-    }
-    
-    SearchResultSet* searchResultSet = [[SearchResultSet alloc] init];
-    [searchResultSet addUpdateDelegate: self];
-    [suggestionProvider addOnResultsReceivedDelegate: searchResultSet];
-    [suggestionProvider addOnSuggestionsReceivedDelegate: searchResultSet];
-    
-    [m_searchResultSets addObject:searchResultSet];
-    [m_searchProviders addObject:suggestionProvider];
-    [m_suggestionProviders addObject:suggestionProvider];
-}
-
 -(void) onResultsModelUpdate
 {
-    
-    for (id<OnResultsModelUpdateDelegate> delegate in m_modelUpdateDelegates) {
-        [delegate onResultsModelUpdate];
-    }
-}
-
-- (void)doSearch:(NSString*)query
-{
-    m_showSuggestions = false;
-    for(id<SuggestionProvider> provider in m_suggestionProviders)
+    for (id<WRLDSearchModuleDelegate> delegate in m_updateDelegates)
     {
-        [provider getSearchResults: query];
+        [delegate dataDidChange];
     }
 }
 
-- (void)doAutoCompleteQuery:(NSString*)query
+- (void)search:(NSString*)query
 {
-    m_showSuggestions = true;
-    for(id<SuggestionProvider> provider in m_suggestionProviders)
+    for(id<WRLDSearchProvider> provider in m_searchProviders)
     {
-        [provider getSuggestions:query];
+        [provider search: query];
     }
 }
 
--(void) addUpdateDelegate:(id<OnResultsModelUpdateDelegate>)delegate
+- (void)searchSuggestions:(NSString*)query
 {
-    [m_modelUpdateDelegates addObject:delegate];
+    for(id<WRLDSearchProvider> provider in m_searchProviders)
+    {
+        [provider searchSuggestions:query];
+    }
+}
+
+-(void) addSearchModuleDelegate:(id<WRLDSearchModuleDelegate>)searchModuleDelegate
+{
+    [m_updateDelegates addObject:searchModuleDelegate];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SearchResult* searchResult = [self getSearchResult: indexPath];
-    [m_searchProviders [[indexPath section]] onSelectedResult:searchResult];
+    //WRLDSearchResult* searchResult = [self getSearchResult: indexPath];
+    //[m_searchProviders [[indexPath section]] onSelectedResult:searchResult];
+}
+
+- (void)dataDidChange
+{
+    for(id<WRLDSearchModuleDelegate> delegate in m_updateDelegates)
+    {
+        [delegate dataDidChange];
+    }
 }
 
 @end
