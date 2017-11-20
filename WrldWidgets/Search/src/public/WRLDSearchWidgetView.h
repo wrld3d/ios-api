@@ -3,7 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "WRLDSearchModuleDelegate.h"
 #import "WRLDSearchModule.h"
-#import "WRLDMapView.h"
+@import Wrld;
 
 @interface WRLDSearchWidgetView : UIView <WRLDSearchModuleDelegate, UISearchBarDelegate>
 
