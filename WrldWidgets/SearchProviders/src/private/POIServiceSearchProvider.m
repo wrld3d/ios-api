@@ -91,7 +91,7 @@
     [autocompleteOptions setQuery: query];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchAutocomplete: autocompleteOptions] poiSearchId];
-    m_searchType = WRLDSuggesgion;
+    m_searchType = WRLDSuggestion;
 }
 
 @synthesize title;

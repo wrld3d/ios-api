@@ -7,7 +7,7 @@
 /// The type of a search result
 typedef enum WRLDSearchResultType : NSUInteger {
     WRLDResult,
-    WRLDSuggesgion
+    WRLDSuggestion
 } WRLDSearchResultType;
 
 /// Describes a single search result
