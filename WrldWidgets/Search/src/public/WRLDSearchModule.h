@@ -1,22 +1,19 @@
-// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
-
 #pragma once
 
 #import <UIKit/UIKit.h>
-#import "OnResultsModelUpdateDelegate.h"
-@protocol SuggestionProvider;
-@protocol SearchProvider;
+#import "WRLDSearchProviderDelegate.h"
+#import "WRLDSearchModuleDelegate.h"
 
-@interface WRLDSearchModule : UIViewController <UITableViewDataSource, UITableViewDelegate, OnResultsModelUpdateDelegate>
+@protocol WRLDSearchProvider;
 
-- (void) addSearchProvider: (id<SearchProvider>) searchProvider;
+@interface WRLDSearchModule : UIViewController <UITableViewDataSource, UITableViewDelegate, WRLDSearchModuleDelegate>
 
-- (void) addSuggestionProvider: (id<SuggestionProvider>) suggestionProvider;
+- (void) addSearchProvider: (id<WRLDSearchProvider>) searchProvider;
 
-- (void) doSearch: (NSString*) query;
+- (void) search: (NSString*) query;
 
-- (void) doAutoCompleteQuery: (NSString*) query;
+- (void) searchSuggestions: (NSString*) query;
 
-- (void)addUpdateDelegate: (id<OnResultsModelUpdateDelegate>) delegate;
+- (void) addSearchModuleDelegate: (id<WRLDSearchModuleDelegate>) searchModuleDelegate;
 
 @end

@@ -60,17 +60,16 @@
     printf("Search Should Update.");
 }
 
-
 -(void)setSearchModule:(WRLDSearchModule*) searchModule{
     [_tableView setDataSource:searchModule];
     [_tableView setDelegate: searchModule];
-    [self onResultsModelUpdate];
-    [searchModule addUpdateDelegate: self];
+    [self dataDidChange];
+    [searchModule addSearchModuleDelegate: self];
     m_searchModule = searchModule;
 }
 
 
--(void) onResultsModelUpdate
+-(void) dataDidChange
 {
     [_tableView reloadData];
 }
