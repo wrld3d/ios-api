@@ -14,7 +14,9 @@
 @end
 
 
-@implementation WRLDSearchWidgetView
+@implementation WRLDSearchWidgetView{
+    WRLDSearchModule *m_searchModule;
+}
 
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder{
@@ -49,6 +51,13 @@
     [self addSubview:self.rootView];
     
     self.rootView.frame = self.bounds;
+    _searchBar.delegate=self;
+    
+}
+
+-(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText{
+    [m_searchModule doAutoCompleteQuery:searchText];
+    printf("Search Should Update.");
 }
 
 
@@ -57,6 +66,7 @@
     [_tableView setDelegate: searchModule];
     [self onResultsModelUpdate];
     [searchModule addUpdateDelegate: self];
+    m_searchModule = searchModule;
 }
 
 
