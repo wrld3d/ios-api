@@ -8,6 +8,10 @@
 
 @property (nonatomic, copy) NSString* title;
 
+@property (nonatomic, copy) NSString* subTitle;
+
+@property (nonatomic, copy) NSString* iconKey;
+
 @property (nonatomic) CLLocationCoordinate2D latLng;
 
 - (SearchResultProperty*)getSearchProperty: (NSString*) propertyKey;

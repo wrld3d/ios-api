@@ -7,7 +7,7 @@
 #import "SearchResult.h"
 #import "SearchProvider.h"
 #import "SuggestionProvider.h"
-
+#import "WRLDSearchResultView.h"
 
 @implementation WRLDSearchModule
 {
@@ -31,6 +31,8 @@
     
     m_showSuggestions = true;
     
+    
+    
     return self;
 }
 
@@ -53,17 +55,22 @@ numberOfRowsInSection:(NSInteger) section
 -(UITableViewCell*) tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"resultCell"];
+    WRLDSearchResultView* cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell"];
     
     if(cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                      reuseIdentifier:@"resultCell"];
+        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultView class]];
+        
+        [tableView registerNib:[UINib nibWithNibName:@"WRLDGenericSearchResultView" bundle:widgetsBundle] forCellReuseIdentifier:@"genericResultCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell" forIndexPath:indexPath];
     }   
     
     SearchResult* searchResult = [self getSearchResult:(NSIndexPath *) indexPath];
     
-    [cell.textLabel setText:[searchResult title]];
+    [cell.titleLabel setText:[searchResult title]];
+    [cell.descriptionLabel setText:[searchResult subTitle]];
+
+  //[cell.iconImage setImage:]; // get image with eegeo things?
     return cell;        
 }
 
