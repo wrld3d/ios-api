@@ -105,8 +105,11 @@ numberOfRowsInSection:(NSInteger) section
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //WRLDSearchResult* searchResult = [self getSearchResult: indexPath];
-    //[m_searchProviders [[indexPath section]] onSelectedResult:searchResult];
+    WRLDSearchResult* searchResult = [self getSearchResult: indexPath];    
+    for (id<WRLDSearchModuleDelegate> delegate in m_updateDelegates)
+    {
+        [delegate didSelectResult: searchResult];
+    }
 }
 
 - (void)dataDidChange
@@ -115,6 +118,11 @@ numberOfRowsInSection:(NSInteger) section
     {
         [delegate dataDidChange];
     }
+}
+
+- (void)didSelectResult:(WRLDSearchResult *)searchResult
+{
+
 }
 
 @end

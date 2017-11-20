@@ -1,5 +1,3 @@
-// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
-
 #import <Foundation/Foundation.h>
 
 #import "WRLDPoiSearchResult.h"
@@ -9,11 +7,13 @@
 #import "WRLDSearchProviderDelegate.h"
 #import "WRLDSearchResult.h"
 
-
 @implementation POIServiceSearchProvider
 {
     WRLDPoiService* m_poiService;
     WRLDMapView* m_mapView;
+    
+    int m_poiSearchId;
+    WRLDSearchResultType m_searchType;
 }
 
 - (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService
@@ -22,6 +22,8 @@
     {
         m_mapView = mapView;
         m_poiService = poiService;
+        m_poiSearchId = 0;
+        m_searchType = WRLDResult;
         
         [m_mapView setPoiSearchCompletedDelegate: self];
     }
@@ -32,6 +34,9 @@
 //Called by the WRLDMapViewDelegate to receive POI search results
 -(void)poiSearchDidComplete:(int)poiSearchId poiSearchResponse:(WRLDPoiSearchResponse *)poiSearchResponse
 {
+    if(m_poiSearchId != poiSearchId)
+        return;
+    
     // Unpack search results, fill structures up
     NSMutableArray<WRLDSearchResult*>* searchResultSet = [[NSMutableArray<WRLDSearchResult*> alloc] init];
 
@@ -63,26 +68,30 @@
     [searchResult setTitle: title];
     [searchResult setLatLng: latLng];
     [searchResult setSubTitle: @"Autocomplete Suggestion"];
-    // todo - Set other properties
-    
+    [searchResult setType:m_searchType];
     return searchResult;
 }
 
 - (void) search: (NSString*) query
 {
-    //TDP Fill in the rest of the required details here.......
+    [self clearResults];
+    
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
     [textSearchOptions setQuery: query];
     [textSearchOptions setCenter:  [m_mapView centerCoordinate]];
-    [m_poiService searchText: textSearchOptions];
+    m_poiSearchId = [[m_poiService searchText: textSearchOptions] poiSearchId];
+    m_searchType = WRLDResult;
 }
 
 - (void) searchSuggestions: (NSString*) query
 {
+    [self clearResults];
+    
     WRLDAutocompleteOptions* autocompleteOptions = [[WRLDAutocompleteOptions alloc] init];
     [autocompleteOptions setQuery: query];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];
-    [m_poiService searchAutocomplete: autocompleteOptions];
+    m_poiSearchId = [[m_poiService searchAutocomplete: autocompleteOptions] poiSearchId];
+    m_searchType = WRLDSuggesgion;
 }
 
 @synthesize title;

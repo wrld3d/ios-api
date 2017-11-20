@@ -24,11 +24,3 @@
 }
 
 @end
-
-
-//- (void) onSelectedResult: (WRLDSearchResult*) selectedResult
-//{
-//    [m_mapView setCenterCoordinate:[selectedResult latLng]
-//                         animated:NO];
-//}
-

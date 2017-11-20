@@ -4,6 +4,8 @@
 
 @protocol WRLDSearchModuleDelegate
 
--(void)dataDidChange;
+- (void) dataDidChange;
+
+- (void) didSelectResult: (WRLDSearchResult*) searchResult;
 
 @end

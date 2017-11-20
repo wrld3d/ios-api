@@ -14,36 +14,37 @@
 @end
 
 
-@implementation WRLDSearchWidgetView{
+@implementation WRLDSearchWidgetView
+{
     WRLDSearchModule *m_searchModule;
+    WRLDMapView *m_mapView;
 }
 
-
--(instancetype)initWithCoder:(NSCoder *)aDecoder{
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
     self = [super initWithCoder:aDecoder];
-    if(self){
+    if(self)
+    {
         [self customInit];
     }
     
     return self;
 }
 
--(instancetype)initWithFrame:(CGRect)frame{
+-(instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     
-    if(self){
+    if(self)
+    {
         [self customInit];
     }
     
     return self;
 }
 
--(void)customInit{
-    //NSString* mainBundlePath = [[NSBundle mainBundle]bundlePath];
- 
-    //NSString* frameworkBundlePath = [[[NSBundle mainBundle] builtInPlugInsPath] @"WrldWidgets.bundle"];
-    //NSBundle* frameworkBundle = [NSBundle bundleWithPath:@"/Library/WrldWidgets.bundle"];
-    
+-(void)customInit
+{
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
     
     [widgetsBundle.self loadNibNamed:@"WRLDSearchWidgetView" owner:self options:nil];
@@ -52,15 +53,18 @@
     
     self.rootView.frame = self.bounds;
     _searchBar.delegate=self;
-    
+    m_searchModule = nil;
+    m_mapView = nil;
 }
 
--(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText{
+-(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
+{
     [m_searchModule searchSuggestions:searchText];
     printf("Search Should Update.");
 }
 
--(void)setSearchModule:(WRLDSearchModule*) searchModule{
+-(void)setSearchModule:(WRLDSearchModule*) searchModule
+{
     [_tableView setDataSource:searchModule];
     [_tableView setDelegate: searchModule];
     [self dataDidChange];
@@ -68,12 +72,28 @@
     m_searchModule = searchModule;
 }
 
+- (void) setMapView: (WRLDMapView*) mapView
+{
+    m_mapView = mapView;
+}
 
 -(void) dataDidChange
 {
     [_tableView reloadData];
 }
 
-- (IBAction)optionClicked:(id)sender {
+- (void)didSelectResult:(WRLDSearchResult *)searchResult
+{
+    if(m_mapView != nil)
+    {
+      [m_mapView setCenterCoordinate:[searchResult latLng]
+                            animated:NO];
+    }
 }
+
+- (IBAction)optionClicked:(id)sender
+{
+    
+}
+
 @end
