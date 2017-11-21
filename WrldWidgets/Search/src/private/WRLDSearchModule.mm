@@ -5,6 +5,7 @@
 #import "WRLDSearchResultSet.h"
 #import "WRLDSearchResult.h"
 #import "WRLDSearchProvider.h"
+#import "WRLDSearchSuggestionView.h"
 
 @implementation WRLDSearchModule
 {
@@ -38,25 +39,19 @@ numberOfRowsInSection:(NSInteger) section
 -(UITableViewCell*) tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WRLDSearchResultView* cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell"];
-    
-    if(cell == nil)
-    {
-        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultView class]];
-        
-        [tableView registerNib:[UINib nibWithNibName:@"WRLDGenericSearchResultView" bundle:widgetsBundle] forCellReuseIdentifier:@"genericResultCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell" forIndexPath:indexPath];
-    }   
-
     WRLDSearchResult* searchResult = [self getSearchResult:(NSIndexPath *) indexPath];
+  
+    for (id<WRLDSearchModuleDelegate> delegate in m_updateDelegates)
+    {
+        UITableViewCell* cell = [delegate createTableViewCellForSearch: tableView cellIndexPath:indexPath searchResult: searchResult];
+        
+        if (cell != nil)
+        {
+            return cell;
+        }
+    }
     
-    [cell.titleLabel setText:[searchResult title]];
-    [cell.descriptionLabel setText:[searchResult subTitle]];
-
-    // todo - Fetch icon from URL using iconkey as lookup
-  //[cell.iconImage setImage:]; 
-
-    return cell;        
+    return nil;
 }
 
 -(WRLDSearchResult*) getSearchResult:(NSIndexPath *) indexPath
@@ -124,5 +119,12 @@ numberOfRowsInSection:(NSInteger) section
 {
 
 }
+
+- (UITableViewCell *)createTableViewCellForSearch:(UITableView *)tableView cellIndexPath:(NSIndexPath *)indexPath searchResult:(WRLDSearchResult *)searchResult
+{
+    return nil;
+}
+
+
 
 @end

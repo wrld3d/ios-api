@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="genericSuggestionCell" rowHeight="48" id="yUz-K0-EP7" customClass="WRLDSearchSuggestionView">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="48"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yUz-K0-EP7" id="2cm-lv-0Hk">
+                <rect key="frame" x="0.0" y="0.0" width="380" height="47.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon1_pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="kX9-Om-jGc">
+                        <rect key="frame" x="0.0" y="0.0" width="46" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="uwa-4U-mwF"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suggestion Result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSx-uS-8Zy">
+                        <rect key="frame" x="54" y="13" width="310" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kX9-Om-jGc" firstAttribute="leading" secondItem="2cm-lv-0Hk" secondAttribute="leading" id="87s-h1-goS"/>
+                    <constraint firstItem="kX9-Om-jGc" firstAttribute="centerY" secondItem="2cm-lv-0Hk" secondAttribute="centerY" id="BcB-7R-9zg"/>
+                    <constraint firstItem="kX9-Om-jGc" firstAttribute="top" secondItem="2cm-lv-0Hk" secondAttribute="top" id="Joh-FD-RQw"/>
+                    <constraint firstItem="kX9-Om-jGc" firstAttribute="centerY" secondItem="oSx-uS-8Zy" secondAttribute="centerY" id="KJB-tv-aYn"/>
+                    <constraint firstItem="oSx-uS-8Zy" firstAttribute="trailing" secondItem="2cm-lv-0Hk" secondAttribute="trailingMargin" id="S5F-44-em2"/>
+                    <constraint firstItem="oSx-uS-8Zy" firstAttribute="leading" secondItem="kX9-Om-jGc" secondAttribute="trailing" constant="8" symbolic="YES" id="nEv-Mi-hU7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconImage" destination="kX9-Om-jGc" id="4D0-Hs-uf8"/>
+                <outlet property="titleLabel" destination="oSx-uS-8Zy" id="cr6-aH-dvA"/>
+            </connections>
+            <point key="canvasLocation" x="28" y="54"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon1_pin.png" width="36" height="36"/>
+    </resources>
+</document>

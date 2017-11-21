@@ -42,18 +42,18 @@
 
     if(![poiSearchResponse succeeded])
     {
-        [searchResultSet addObject: [self createSearchResult: @"Failed to get poi service results" latLng: [m_mapView centerCoordinate] subTitle:@""]];
+        [searchResultSet addObject: [self createSearchResult: @"Failed to get poi service results" latLng: [m_mapView centerCoordinate] subTitle:@"" tags:@""]];
     }
     else if([[poiSearchResponse results] count] == 0)
     {
-        [searchResultSet addObject: [self createSearchResult: @"No results found" latLng: [m_mapView centerCoordinate] subTitle:@""]];
+        [searchResultSet addObject: [self createSearchResult: @"No results found" latLng: [m_mapView centerCoordinate] subTitle:@"" tags:@""]];
     }
     else
     {
         for(WRLDPoiSearchResult *poiSearchResult in [poiSearchResponse results])
         {
             // Add to result set
-            [searchResultSet addObject: [self createSearchResult: [poiSearchResult title] latLng: [poiSearchResult latLng] subTitle:[poiSearchResult subtitle]]];
+            [searchResultSet addObject: [self createSearchResult: [poiSearchResult title] latLng: [poiSearchResult latLng] subTitle:[poiSearchResult subtitle] tags:[poiSearchResult tags]]];
         }
     }
     
@@ -62,12 +62,13 @@
 
 }
 
-- (WRLDSearchResult*) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng subTitle: (NSString*)subTitle
+- (WRLDSearchResult*) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng subTitle: (NSString*)subTitle tags: (NSString*)tags
 {
     WRLDSearchResult* searchResult = [[WRLDSearchResult alloc] init];
     [searchResult setTitle: title];
     [searchResult setLatLng: latLng];
-    [searchResult setSubTitle: @"Autocomplete Suggestion"];
+    [searchResult setSubTitle: subTitle];
+    [searchResult setTags: tags];
     [searchResult setType:m_searchType];
     return searchResult;
 }

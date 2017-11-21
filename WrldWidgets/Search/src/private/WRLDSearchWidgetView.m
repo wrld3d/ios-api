@@ -1,5 +1,7 @@
 
 #import "WRLDSearchWidgetView.h"
+#import "WRLDSearchResultView.h"
+#import "WRLDSearchSuggestionView.h"
 
 @interface WRLDSearchWidgetView()
 
@@ -98,4 +100,63 @@
 - (IBAction)WRLDButtonClicked:(id)sender {
     //Open The menu
 }
+
+- (UITableViewCell*) createTableViewCellForSearch: (UITableView*)tableView cellIndexPath: (NSIndexPath*)indexPath searchResult: (WRLDSearchResult*)searchResult
+{
+    // Default search/suggestion result views
+    if([searchResult type] == WRLDResult)
+    {
+        WRLDSearchResultView* cell = nil;
+        cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell"];
+        
+        if(cell == nil)
+        {
+            NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultView class]];
+            
+            [tableView registerNib:[UINib nibWithNibName:@"WRLDGenericSearchResultView" bundle:widgetsBundle] forCellReuseIdentifier:@"genericResultCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"genericResultCell" forIndexPath:indexPath];
+        }
+
+        [cell.titleLabel setText:[searchResult title]];
+        [cell.descriptionLabel setText:[searchResult subTitle]];
+        
+        if([searchResult tags] != nil && [[searchResult tags] length] > 0)
+        {
+            [cell.tagsIcon setHidden:NO];
+            [cell.tagsLabel setText:[[searchResult tags] stringByReplacingOccurrencesOfString:@" " withString:@", "]];
+        }
+        else
+        {
+            [cell.tagsIcon setHidden:YES];
+            [cell.tagsLabel setText:@""];
+        }
+        
+        // todo - Fetch icon from URL using iconkey as lookup
+        //[cell.iconImage setImage:];
+        
+        return cell;
+    }
+    else if([searchResult type] == WRLDSuggestion)
+    {
+        WRLDSearchSuggestionView* cell = nil;
+        cell = [tableView dequeueReusableCellWithIdentifier:@"genericSuggestionCell"];
+        
+        if(cell == nil)
+        {
+            NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchSuggestionView class]];
+            
+            [tableView registerNib:[UINib nibWithNibName:@"WRLDGenericSearchSuggestionView" bundle:widgetsBundle] forCellReuseIdentifier:@"genericSuggestionCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"genericSuggestionCell" forIndexPath:indexPath];
+        }
+
+        [cell.titleLabel setText:[searchResult title]];
+
+        // todo - Fetch icon from URL using iconkey as lookup
+        //[cell.iconImage setImage:];
+        
+        return cell;
+    }
+    return nil;
+}
+
 @end

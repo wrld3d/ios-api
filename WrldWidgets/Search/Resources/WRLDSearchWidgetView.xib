@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetView">
             <connections>
-                <outlet property="optionButton" destination="Gsy-aj-hKu" id="Qhq-Eu-jmO"/>
+                <outlet property="WRLDMenuButton" destination="Gsy-aj-hKu" id="rnb-Cl-rVK"/>
                 <outlet property="rootView" destination="iN0-l3-epB" id="ppT-g9-SMm"/>
                 <outlet property="searchBar" destination="nwq-hq-zts" id="bOh-Z0-Z2c"/>
                 <outlet property="tableView" destination="kLV-vb-myt" id="ZHj-iQ-9sh"/>
@@ -31,6 +31,7 @@
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <state key="normal" title="Button"/>
                             <connections>
+                                <action selector="WRLDButtonClicked:" destination="-1" eventType="touchUpInside" id="8V1-LW-Qvr"/>
                                 <action selector="optionClicked:" destination="-1" eventType="touchUpInside" id="dYL-77-WDc"/>
                             </connections>
                         </button>
@@ -46,7 +47,7 @@
                     </constraints>
                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kLV-vb-myt">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kLV-vb-myt">
                     <rect key="frame" x="10" y="64" width="355" height="593"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>

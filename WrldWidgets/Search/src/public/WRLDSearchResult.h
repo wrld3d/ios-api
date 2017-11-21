@@ -26,6 +26,8 @@ typedef enum WRLDSearchResultType : NSUInteger {
 
 @property (nonatomic, copy) NSString* iconKey;
 
+@property (nonatomic, copy) NSString* tags;
+
 /// The coordinate of this result
 @property (nonatomic) CLLocationCoordinate2D latLng;
 

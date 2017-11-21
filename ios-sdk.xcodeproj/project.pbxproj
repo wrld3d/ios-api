@@ -18,6 +18,10 @@
 		27053FAD1FBDD9D3009078BF /* WRLDPoiSearchCompletedDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27053FA51FBDBD69009078BF /* WRLDPoiSearchCompletedDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27053FB91FC2F840009078BF /* WRLDSearchResultView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27053FB81FC2F840009078BF /* WRLDSearchResultView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27053FBC1FC302E8009078BF /* WRLDGenericSearchResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27053FB41FC2EC1B009078BF /* WRLDGenericSearchResultView.xib */; };
+		27B90EB81FC3527700ED18C9 /* poi_tag@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B90EB71FC3527700ED18C9 /* poi_tag@3x.png */; };
+		27B90EBA1FC4374500ED18C9 /* WRLDGenericSearchSuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27B90EB91FC4374500ED18C9 /* WRLDGenericSearchSuggestionView.xib */; };
+		27B90EBC1FC437F400ED18C9 /* WRLDSearchSuggestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B90EBB1FC437F400ED18C9 /* WRLDSearchSuggestionView.h */; };
+		27B90EBE1FC4382200ED18C9 /* WRLDSearchSuggestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B90EBD1FC4382200ED18C9 /* WRLDSearchSuggestionView.m */; };
 		27D84C081FC32EC7006CC720 /* icon1_pin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27D84C071FC32EC7006CC720 /* icon1_pin@3x.png */; };
 		27D84C211FC33C66006CC720 /* WRLDSearchProviderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C1F1FC33C66006CC720 /* WRLDSearchProviderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D84C221FC33C66006CC720 /* WRLDSearchModuleDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C201FC33C66006CC720 /* WRLDSearchModuleDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -201,6 +205,10 @@
 		27053FAC1FBDD81A009078BF /* libeegeo-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libeegeo-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27053FB41FC2EC1B009078BF /* WRLDGenericSearchResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDGenericSearchResultView.xib; sourceTree = "<group>"; };
 		27053FB81FC2F840009078BF /* WRLDSearchResultView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultView.h; sourceTree = "<group>"; };
+		27B90EB71FC3527700ED18C9 /* poi_tag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poi_tag@3x.png"; sourceTree = "<group>"; };
+		27B90EB91FC4374500ED18C9 /* WRLDGenericSearchSuggestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDGenericSearchSuggestionView.xib; sourceTree = "<group>"; };
+		27B90EBB1FC437F400ED18C9 /* WRLDSearchSuggestionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchSuggestionView.h; sourceTree = "<group>"; };
+		27B90EBD1FC4382200ED18C9 /* WRLDSearchSuggestionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchSuggestionView.m; sourceTree = "<group>"; };
 		27D84C071FC32EC7006CC720 /* icon1_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_pin@3x.png"; sourceTree = "<group>"; };
 		27D84C1F1FC33C66006CC720 /* WRLDSearchProviderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchProviderDelegate.h; sourceTree = "<group>"; };
 		27D84C201FC33C66006CC720 /* WRLDSearchModuleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchModuleDelegate.h; sourceTree = "<group>"; };
@@ -385,6 +393,7 @@
 		26327FB21FB5A1680006B954 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27B90EB71FC3527700ED18C9 /* poi_tag@3x.png */,
 				27D84C071FC32EC7006CC720 /* icon1_pin@3x.png */,
 				26327FB31FB5A19B0006B954 /* SimpleResultLayout.xib */,
 				26327FB51FB5A1D10006B954 /* ResultSetContainer.xib */,
@@ -392,6 +401,7 @@
 				6F48E7321FB9BB7C00DDD668 /* WRLDSearchWidgetView.xib */,
 				6F92E89F1FBDE593005109D8 /* WRLDSearchResult.xib */,
 				27053FB41FC2EC1B009078BF /* WRLDGenericSearchResultView.xib */,
+				27B90EB91FC4374500ED18C9 /* WRLDGenericSearchSuggestionView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -434,6 +444,7 @@
 				26772FE01FB33AF0007D2D52 /* WRLDSearchModule.h */,
 				6F92E8A11FBDE72D005109D8 /* WRLDSearchWidgetView.h */,
 				27053FB81FC2F840009078BF /* WRLDSearchResultView.h */,
+				27B90EBB1FC437F400ED18C9 /* WRLDSearchSuggestionView.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -564,6 +575,7 @@
 				27D84C241FC33C71006CC720 /* WRLDSearchResultSet.m */,
 				27D84C291FC33C72006CC720 /* WRLDSearchResultView.m */,
 				27D84C2C1FC33C72006CC720 /* WRLDSearchWidgetView.m */,
+				27B90EBD1FC4382200ED18C9 /* WRLDSearchSuggestionView.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -778,6 +790,7 @@
 				27D84C321FC33C72006CC720 /* WRLDSearchProvider.h in Headers */,
 				27D84C211FC33C66006CC720 /* WRLDSearchProviderDelegate.h in Headers */,
 				2CB2C5A71EC1D93F00C0B401 /* ImageHelpers.h in Headers */,
+				27B90EBC1FC437F400ED18C9 /* WRLDSearchSuggestionView.h in Headers */,
 				27053FB91FC2F840009078BF /* WRLDSearchResultView.h in Headers */,
 				2CB2C5AD1EC1D93F00C0B401 /* IndoorControlDelegate.h in Headers */,
 				27D84C3C1FC33CA4006CC720 /* POIServiceSearchProvider.h in Headers */,
@@ -948,7 +961,9 @@
 				26327FB41FB5A19B0006B954 /* SimpleResultLayout.xib in Resources */,
 				266423A71FB99863009767F0 /* Results.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
+				27B90EB81FC3527700ED18C9 /* poi_tag@3x.png in Resources */,
 				6F92E8A01FBDE593005109D8 /* WRLDSearchResult.xib in Resources */,
+				27B90EBA1FC4374500ED18C9 /* WRLDGenericSearchSuggestionView.xib in Resources */,
 				27053FBC1FC302E8009078BF /* WRLDGenericSearchResultView.xib in Resources */,
 				27D84C081FC32EC7006CC720 /* icon1_pin@3x.png in Resources */,
 				6F92E8A71FBDEB0B005109D8 /* WRLDSearchWidgetView.xib in Resources */,
@@ -1059,6 +1074,7 @@
 				2CB2C5B31EC1D93F00C0B401 /* UIColors.mm in Sources */,
 				2CB2C5B11EC1D93F00C0B401 /* UIButton+DefaultStates.mm in Sources */,
 				2CB2C5AA1EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.mm in Sources */,
+				27B90EBE1FC4382200ED18C9 /* WRLDSearchSuggestionView.m in Sources */,
 				2CB2C5B71EC1D93F00C0B401 /* UIView+TouchExclusivity.m in Sources */,
 				27D84C2F1FC33C72006CC720 /* WRLDSearchResultSet.m in Sources */,
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
