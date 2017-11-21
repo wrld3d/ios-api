@@ -60,7 +60,11 @@
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
 {
     [m_searchModule searchSuggestions:searchText];
-    printf("Search Should Update.");
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [m_searchModule search:[_searchBar text]];
 }
 
 -(void)setSearchModule:(WRLDSearchModule*) searchModule
@@ -91,11 +95,7 @@
     }
 }
 
-- (IBAction)optionClicked:(id)sender
-{
-    
-}
-
 - (IBAction)WRLDButtonClicked:(id)sender {
+    //Open The menu
 }
 @end
