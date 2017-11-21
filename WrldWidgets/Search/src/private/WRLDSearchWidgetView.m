@@ -6,10 +6,10 @@
 @property (strong, nonatomic) IBOutlet UIView *rootView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *optionButton;
+@property (weak, nonatomic) IBOutlet UIButton *WRLDMenuButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UISearchBar *searchBar;
 
-- (IBAction)optionClicked:(id)sender;
+- (IBAction)WRLDButtonClicked:(id)sender;
 
 @end
 
@@ -96,4 +96,6 @@
     
 }
 
+- (IBAction)WRLDButtonClicked:(id)sender {
+}
 @end
