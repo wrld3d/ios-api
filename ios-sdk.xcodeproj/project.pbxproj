@@ -28,12 +28,10 @@
 		27D84C2E1FC33C72006CC720 /* WRLDSearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C231FC33C71006CC720 /* WRLDSearchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D84C2F1FC33C72006CC720 /* WRLDSearchResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C241FC33C71006CC720 /* WRLDSearchResultSet.m */; };
 		27D84C301FC33C72006CC720 /* WRLDSearchResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C251FC33C71006CC720 /* WRLDSearchResultSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27D84C311FC33C72006CC720 /* OnResultsRecievedCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C261FC33C71006CC720 /* OnResultsRecievedCallback.m */; };
 		27D84C321FC33C72006CC720 /* WRLDSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C271FC33C72006CC720 /* WRLDSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D84C331FC33C72006CC720 /* WRLDSearchModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C281FC33C72006CC720 /* WRLDSearchModule.mm */; };
 		27D84C341FC33C72006CC720 /* WRLDSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C291FC33C72006CC720 /* WRLDSearchResultView.m */; };
 		27D84C351FC33C72006CC720 /* WRLDSearchResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C2A1FC33C72006CC720 /* WRLDSearchResult.mm */; };
-		27D84C361FC33C72006CC720 /* OnAutocompleteSuggestionsReceivedCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D84C2B1FC33C72006CC720 /* OnAutocompleteSuggestionsReceivedCallback.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		27D84C371FC33C72006CC720 /* WRLDSearchWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C2C1FC33C72006CC720 /* WRLDSearchWidgetView.m */; };
 		27D84C381FC33C72006CC720 /* WRLDSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C2D1FC33C72006CC720 /* WRLDSearchProvider.m */; };
 		27D84C3A1FC33C9E006CC720 /* POIServiceSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D84C391FC33C9E006CC720 /* POIServiceSearchProvider.m */; };
@@ -215,12 +213,10 @@
 		27D84C231FC33C71006CC720 /* WRLDSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResult.h; sourceTree = "<group>"; };
 		27D84C241FC33C71006CC720 /* WRLDSearchResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultSet.m; sourceTree = "<group>"; };
 		27D84C251FC33C71006CC720 /* WRLDSearchResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultSet.h; sourceTree = "<group>"; };
-		27D84C261FC33C71006CC720 /* OnResultsRecievedCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnResultsRecievedCallback.m; sourceTree = "<group>"; };
 		27D84C271FC33C72006CC720 /* WRLDSearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchProvider.h; sourceTree = "<group>"; };
 		27D84C281FC33C72006CC720 /* WRLDSearchModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDSearchModule.mm; sourceTree = "<group>"; };
 		27D84C291FC33C72006CC720 /* WRLDSearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultView.m; sourceTree = "<group>"; };
 		27D84C2A1FC33C72006CC720 /* WRLDSearchResult.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDSearchResult.mm; sourceTree = "<group>"; };
-		27D84C2B1FC33C72006CC720 /* OnAutocompleteSuggestionsReceivedCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnAutocompleteSuggestionsReceivedCallback.h; sourceTree = "<group>"; };
 		27D84C2C1FC33C72006CC720 /* WRLDSearchWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetView.m; sourceTree = "<group>"; };
 		27D84C2D1FC33C72006CC720 /* WRLDSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchProvider.m; sourceTree = "<group>"; };
 		27D84C391FC33C9E006CC720 /* POIServiceSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIServiceSearchProvider.m; sourceTree = "<group>"; };
@@ -567,8 +563,6 @@
 		6F48E70A1FB5C01800DDD668 /* private */ = {
 			isa = PBXGroup;
 			children = (
-				27D84C2B1FC33C72006CC720 /* OnAutocompleteSuggestionsReceivedCallback.h */,
-				27D84C261FC33C71006CC720 /* OnResultsRecievedCallback.m */,
 				27D84C281FC33C72006CC720 /* WRLDSearchModule.mm */,
 				27D84C2D1FC33C72006CC720 /* WRLDSearchProvider.m */,
 				27D84C2A1FC33C72006CC720 /* WRLDSearchResult.mm */,
@@ -779,7 +773,6 @@
 				2CB2C5B21EC1D93F00C0B401 /* UIColors.h in Headers */,
 				26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */,
 				26772FE11FB33AF0007D2D52 /* WRLDSearchModule.h in Headers */,
-				27D84C361FC33C72006CC720 /* OnAutocompleteSuggestionsReceivedCallback.h in Headers */,
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
 				27D84C2E1FC33C72006CC720 /* WRLDSearchResult.h in Headers */,
@@ -1065,7 +1058,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27D84C311FC33C72006CC720 /* OnResultsRecievedCallback.m in Sources */,
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
 				2CB2C5B91EC1D93F00C0B401 /* WRLDIndoorControlView.m in Sources */,
 				27D84C381FC33C72006CC720 /* WRLDSearchProvider.m in Sources */,
