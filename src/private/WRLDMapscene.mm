@@ -12,25 +12,6 @@
     WRLDMapsceneStartLocation* m_wrldMapsceneStartLocation;
 }
 
--(instancetype)initWRLDMapscene:(NSString*)name
-                     :(NSString*)shortLink
-                     :(NSString*)apiKey
-                     :(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation{
-    
-    
-    self = [super init];
-    if(self){
-        m_name = name;
-        m_shortLink = shortLink;
-        m_apiKey = apiKey;
-        m_wrldMapsceneStartLocation = wrldMapsceneStartLocation;
-    }
-    
-    return self;
-    
-}
-
-
 -(NSString*)getName{
     return m_name;
 }

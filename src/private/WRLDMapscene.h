@@ -6,11 +6,6 @@
 
 @interface WRLDMapscene: NSObject
 
--(id)initWRLDMapscene:(NSString*)name
-                     :(NSString*)shortLink
-                     :(NSString*)apiKey
-                     :(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation;
-
 -(NSString*)getName;
 -(NSString*)getShortLink;
 -(NSString*)getApiKey;

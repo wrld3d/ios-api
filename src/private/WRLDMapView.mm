@@ -1020,23 +1020,40 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
 {
+    WRLDMapsceneRequestResponse* mapsceneResponse;
     
+    WRLDMapscene* wrldMapscene = [[WRLDMapscene alloc] init];;
     
-    
-    WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] initWRLDMapsceneStartLocationMake :CLLocationCoordinate2DMake(result.GetMapscene().startLocation.startLocation.GetLatitudeInDegrees()
-                                                                                                                                    ,result.GetMapscene().startLocation.startLocation.GetLongitudeInDegrees())
-                                                                                                        :result.GetMapscene().startLocation.startLocationDistanceToInterest
-                                                                                                        :0
-                                                                                                        :result.GetMapscene().startLocation.startLocationHeading
-                                                                                                        :false];
-    
-    WRLDMapscene* mapscene = [[WRLDMapscene alloc] initWRLDMapscene:@"Name" :@"LInk" :@"APIKEY" :mapsceneStartLocation];
-    
-    WRLDMapsceneRequestResponse* mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :mapscene];
-    
-    [self _setView:[mapsceneStartLocation getCoordinate] distance:[mapsceneStartLocation getAltitude] heading:[mapsceneStartLocation getHeading] pitch:90 animated:false];
-    
-    [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
+    if(result.Success())
+    {
+        Eegeo::Mapscenes::Mapscene responseMapscene = result.GetMapscene();
+        
+        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] init];
+        
+        [mapsceneStartLocation setCoordinate:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(),responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())];
+        [mapsceneStartLocation setDistance:responseMapscene.startLocation.startLocationDistanceToInterest];
+        [mapsceneStartLocation setHeading:responseMapscene.startLocation.startLocationHeading];
+        [mapsceneStartLocation setInteriorId:@(responseMapscene.startLocation.startLocationInteriorId.Value().c_str())];
+        [mapsceneStartLocation setInteriorFloorIndex:responseMapscene.startLocation.startLocationInteriorFloorIndex];
+        [mapsceneStartLocation setTryStartAtGpsLocation:responseMapscene.startLocation.tryStartAtGpsLocation];
+        
+        [wrldMapscene setName:[NSString stringWithCString: responseMapscene.name.c_str() encoding:NSUTF8StringEncoding]];
+        [wrldMapscene setShortLink:[NSString stringWithCString: responseMapscene.shortlink.c_str() encoding:NSUTF8StringEncoding]];
+        [wrldMapscene setApiKey:[NSString stringWithCString: responseMapscene.apiKey.c_str() encoding:NSUTF8StringEncoding]];
+        [wrldMapscene setWRLDMapsceneStartLocation:mapsceneStartLocation];
+        
+        mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :wrldMapscene];
+        
+        [self _setView:[mapsceneStartLocation getCoordinate] distance:[mapsceneStartLocation getDistance] heading:[mapsceneStartLocation getHeading] pitch:90 animated:false];
+        
+        [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
+    }
+    else
+    {
+        mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :wrldMapscene];
+        
+        [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
+    }
 }
 
 @end
