@@ -31,3 +31,7 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDAutocompleteOptions.h"
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
+#import "WRLDMapsceneRequest.h"
+#import "WRLDMapsceneRequestOptions.h"
+#import "WRLDMapsceneRequestResponse.h"
+#import "WRLDMapsceneService.h"
