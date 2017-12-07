@@ -12,6 +12,10 @@
 #import "WRLDPoiService+Private.h"
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
+#import "WRLDMapsceneService+Private.h"
+#import "WRLDMapscene.h"
+#import "WRLDMapsceneRequestResponse.h"
+#import "WRLDMapsceneStartLocation.h"
 
 
 #include "EegeoApiHostPlatformConfigOptions.h"
@@ -29,6 +33,8 @@
 #include "EegeoSpacesApi.h"
 #include "EegeoRenderingApi.h"
 #include "PoiSearchResults.h"
+#include "EegeoMapsceneApi.h"
+#include "MapsceneRequestResponse.h"
 
 #include <string>
 
@@ -848,6 +854,13 @@ const double defaultStartZoomLevel = 8;
     return [[WRLDPoiService alloc] initWithApi: [self getMapApi].GetPoiApi() ];
 }
 
+#pragma mark - Mapscene service
+
+- (WRLDMapsceneService*)createMapsceneService
+{
+    return [[WRLDMapsceneService alloc] initWithApi: [self getMapApi].GetMapsceneApi() ];
+}
+
 #pragma mark - WRLDMapView (Private)
     
     
@@ -1002,6 +1015,28 @@ template<typename T> inline T* safe_cast(id instance)
     }
 
     [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+}
+
+
+- (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
+{
+    
+    
+    
+    WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] initWRLDMapsceneStartLocationMake :CLLocationCoordinate2DMake(result.GetMapscene().startLocation.startLocation.GetLatitudeInDegrees()
+                                                                                                                                    ,result.GetMapscene().startLocation.startLocation.GetLongitudeInDegrees())
+                                                                                                        :result.GetMapscene().startLocation.startLocationDistanceToInterest
+                                                                                                        :0
+                                                                                                        :result.GetMapscene().startLocation.startLocationHeading
+                                                                                                        :false];
+    
+    WRLDMapscene* mapscene = [[WRLDMapscene alloc] initWRLDMapscene:@"Name" :@"LInk" :@"APIKEY" :mapsceneStartLocation];
+    
+    WRLDMapsceneRequestResponse* mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :mapscene];
+    
+    [self _setView:[mapsceneStartLocation getCoordinate] distance:[mapsceneStartLocation getAltitude] heading:[mapsceneStartLocation getHeading] pitch:90 animated:false];
+    
+    [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
 }
 
 @end

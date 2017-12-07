@@ -10,6 +10,7 @@
 #include "EegeoCameraApi.h"
 #include "EegeoPositionerApi.h"
 #include "EegeoPoiApi.h"
+#include "MapsceneRequestResponse.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -27,6 +28,7 @@ private:
     void OnEnteredIndoorMap();
     void OnExitedIndoorMap();
     void OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults);
+    void OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneRequestResponse);
     
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
@@ -47,6 +49,8 @@ private:
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_exitedIndoorMapHandler;
     
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::PoiSearch::PoiSearchResults> m_poiSearchCompletedHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Mapscenes::MapsceneRequestResponse> m_mapsceneCompletedHandler;
 };
 
 

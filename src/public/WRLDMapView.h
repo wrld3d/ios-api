@@ -15,6 +15,7 @@
 #import "WRLDMapOptions.h"
 #import "WRLDBlueSphere.h"
 #import "WRLDPoiService.h"
+#import "WRLDMapsceneService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -347,6 +348,11 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @returns The POI service.
  */
 - (WRLDPoiService*)createPoiService;
+
+/*!
+ @returns The Mapscene service.
+ */
+- (WRLDMapsceneService*)createMapsceneService;
 
 @end
 

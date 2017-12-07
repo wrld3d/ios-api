@@ -6,6 +6,7 @@
 @class WRLDPositioner;
 @class WRLDPoiSearch;
 @class WRLDPoiSearchResponse;
+@class WRLDMapsceneRequestResponse;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -68,6 +69,11 @@ A message sent when a POI search completes.
  */
 - (void)mapView:(WRLDMapView *)mapView poiSearchDidComplete: (int) poiSearchId
 poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
+
+/*
+ TODO DOCS
+ */
+- (void)mapView:(WRLDMapView *)mapView mapsceneResponse:(WRLDMapsceneRequestResponse*)mapsceneResponse;
 
 
 @end
