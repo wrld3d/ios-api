@@ -14,7 +14,7 @@
 #import "WRLDPoiSearchResult.h"
 #import "WRLDMapsceneService+Private.h"
 #import "WRLDMapscene.h"
-#import "WRLDMapsceneRequestResponse.h"
+#import "WRLDMapsceneRequestResponse+Private.h"
 #import "WRLDMapsceneStartLocation.h"
 
 

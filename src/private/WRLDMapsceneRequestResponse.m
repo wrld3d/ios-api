@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 #include "WRLDMapsceneRequestResponse.h"
-#include "WRLDMapscene.h"
+#include "WRLDMapsceneRequestResponse+Private.h"
 
 @interface WRLDMapsceneRequestResponse(){
     

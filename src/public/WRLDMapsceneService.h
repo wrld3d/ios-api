@@ -9,9 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface WRLDMapsceneService : NSObject
 
-typedef int MapsceneRequestId;
-
--(WRLDMapsceneRequest*)LoadMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions;
+-(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions;
 
 @end
 

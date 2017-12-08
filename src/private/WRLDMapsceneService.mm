@@ -3,12 +3,9 @@
 #include "WRLDMapsceneService+Private.h"
 #include "EegeoMapsceneApi.h"
 #include "WRLDMapsceneRequest+Private.h"
-#include "WRLDMapsceneRequest.h"
 #include "WRLDMapsceneRequestOptions.h"
 
-@interface WRLDMapsceneService(){
-    
-}
+@interface WRLDMapsceneService()
 
 @end
 
@@ -25,8 +22,8 @@
     return self;
 }
 
--(WRLDMapsceneRequest*)LoadMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions {
-    
+
+-(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions {
     
     WRLDMapsceneRequest* m_mapsceneRequest = [[WRLDMapsceneRequest alloc] initMapsceneRequest :m_mapsceneApi :mapsceneRequestOptions];
     
