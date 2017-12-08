@@ -1,15 +1,13 @@
 #pragma once
 
+#include "WRLDMapscene.h"
 #include <Foundation/Foundation.h>
 
+
 @class WRLDMapsceneStartLocation;
+@class WRLDMapscene;
 
-@interface WRLDMapscene: NSObject
-
--(NSString*)getName;
--(NSString*)getShortLink;
--(NSString*)getApiKey;
--(WRLDMapsceneStartLocation*)getWRLDMapsceneStartLocation;
+@interface WRLDMapscene (Private)
 
 -(void)setName:(NSString*)name;
 -(void)setShortLink:(NSString*)shortLink;
@@ -17,3 +15,4 @@
 -(void)setWRLDMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldCoordinateWithAltitude;
 
 @end
+

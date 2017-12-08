@@ -70,6 +70,7 @@
 		6FA013AC1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */; };
 		6FA013B01FD80FC600D51364 /* WRLDMapsceneStartLocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FA013AF1FD80FC600D51364 /* WRLDMapsceneStartLocation.mm */; };
 		6FA013B41FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */; };
+		6FA013B61FDADFA200D51364 /* WRLDMapscene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */; };
 		A82B34781FB4B966009B21D3 /* WRLDPoiService.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34771FB4B966009B21D3 /* WRLDPoiService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347A1FB4BC10009B21D3 /* WRLDPoiSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347C1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -242,6 +243,7 @@
 		6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = WRLDMapsceneStartLocation.h; sourceTree = "<group>"; };
 		6FA013AF1FD80FC600D51364 /* WRLDMapsceneStartLocation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapsceneStartLocation.mm; sourceTree = "<group>"; };
 		6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneRequestResponse+Private.h"; sourceTree = "<group>"; };
+		6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapscene+Private.h"; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
 		A82B34771FB4B966009B21D3 /* WRLDPoiService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiService.h; sourceTree = "<group>"; };
 		A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiSearch.h; sourceTree = "<group>"; };
@@ -548,7 +550,7 @@
 				52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */,
 				5200BC471ECB5FBC00B6E263 /* WRLDMapView+Private.h */,
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
-				6F47C76D1FD5B6B40071ECE5 /* WRLDMapscene.h */,
+				6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */,
 				6F47C76F1FD5CC6B0071ECE5 /* WRLDMapscene.mm */,
 				6FA013A91FD6ED7300D51364 /* WRLDMapsceneRequest+Private.h */,
 				6FA013A71FD6EB8100D51364 /* WRLDMapsceneRequest.mm */,
@@ -597,6 +599,7 @@
 				E0F4E16F1EB347FB00949ACE /* WRLDMapView.h */,
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
 				5200BC481ECB5FCF00B6E263 /* WRLDMapView+IBAdditions.h */,
+				6F47C76D1FD5B6B40071ECE5 /* WRLDMapscene.h */,
 				6F9BAB9B1FCC5C2F00865338 /* WRLDMapsceneRequest.h */,
 				6FA013A31FD6DB9A00D51364 /* WRLDMapsceneRequestOptions.h */,
 				6F47C76B1FD5B50C0071ECE5 /* WRLDMapsceneRequestResponse.h */,
@@ -662,6 +665,7 @@
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				A82B347A1FB4BC10009B21D3 /* WRLDPoiSearch.h in Headers */,
 				A8E599791FB5F65C00695193 /* WRLDPoiSearchResult.h in Headers */,
+				6FA013B61FDADFA200D51364 /* WRLDMapscene+Private.h in Headers */,
 				A82B34821FB4C731009B21D3 /* WRLDTagSearchOptions.h in Headers */,
 				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,

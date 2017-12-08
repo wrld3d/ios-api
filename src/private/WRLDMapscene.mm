@@ -1,4 +1,5 @@
 #include "WRLDMapscene.h"
+#include "WRLDMapscene+Private.h"
 #include "WRLDMapsceneStartLocation.h"
 
 @interface WRLDMapscene()

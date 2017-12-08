@@ -13,7 +13,7 @@
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
 #import "WRLDMapsceneService+Private.h"
-#import "WRLDMapscene.h"
+#import "WRLDMapscene+Private.h"
 #import "WRLDMapsceneRequestResponse+Private.h"
 #import "WRLDMapsceneStartLocation.h"
 
