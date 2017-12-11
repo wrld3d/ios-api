@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  The estimated time this section will take to travel in seconds.
  */
-@property (nonatomic) double duration;
+@property (nonatomic) NSTimeInterval duration;
 
 /*!
  The estimated distance this section covers in meters.
