@@ -11,6 +11,9 @@
     NSString* m_shortLink;
     NSString* m_apiKey;
     WRLDMapsceneStartLocation* m_wrldMapsceneStartLocation;
+    
+    //:TODO: Add DataSources
+    //:TODO: Add MapsceneSearchConfig
 }
 
 -(NSString*)getName{

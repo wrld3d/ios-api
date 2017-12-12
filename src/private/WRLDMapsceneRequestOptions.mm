@@ -9,7 +9,7 @@
     bool m_applyMapsceneOnSuccess;
 }
 
--(instancetype)initMapsceneRequestOptions :(NSString*)shortLinkUrl :(bool)applyMapsceneOnSuccess{
+-(instancetype)initMapsceneRequestOptions :(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess{
     
     self = [super init];
     
