@@ -16,7 +16,9 @@
 #import "WRLDMapscene+Private.h"
 #import "WRLDMapsceneRequestResponse+Private.h"
 #import "WRLDMapsceneStartLocation.h"
-
+#import "WRLDMapsceneDataSource.h"
+#import "WRLDMapsceneSearchMenuConfig.h"
+#import "WRLDMapsceneSearchMenuItem.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -1022,15 +1024,37 @@ template<typename T> inline T* safe_cast(id instance)
 {
     WRLDMapsceneRequestResponse* mapsceneResponse;
     
-    WRLDMapscene* wrldMapscene = [[WRLDMapscene alloc] init];;
+    WRLDMapscene* wrldMapscene = [[WRLDMapscene alloc] init];
     
     if(result.Success())
     {
         Eegeo::Mapscenes::Mapscene responseMapscene = result.GetMapscene();
         
-        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] init];
         
-        [mapsceneStartLocation setCoordinate:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(),responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())];
+        Eegeo::Mapscenes::MapsceneDataSources dataSource=responseMapscene.dataSources;
+        
+        WRLDMapsceneDataSource* wrldMapsceneDataSource = [[WRLDMapsceneDataSource alloc]
+                                                          initMapsceneDataSource:[NSString stringWithCString:dataSource.coverageTreeManifestUrl.c_str() encoding:NSUTF8StringEncoding]
+                                                          themeManifestUrl:[NSString stringWithCString: dataSource.themeManifestUrl.c_str() encoding:NSUTF8StringEncoding]];
+        
+        Eegeo::Mapscenes::MapsceneSearchConfig searchConfig=responseMapscene.searchConfig;
+        NSMutableArray* wrldMapsceneSearchMenuItems;
+        for(auto& searchMenuItem : searchConfig.outdoorSearchMenuItems)
+        {
+            [wrldMapsceneSearchMenuItems addObject:[[WRLDMapsceneSearchMenuItem alloc]
+                                                    initMapsceneSearchMenuItem:[NSString stringWithCString: searchMenuItem.name.c_str() encoding:NSUTF8StringEncoding]
+                                                    tag:[NSString stringWithCString: searchMenuItem.tag.c_str() encoding:NSUTF8StringEncoding]
+                                                    iconKey:[NSString stringWithCString: searchMenuItem.iconKey.c_str() encoding:NSUTF8StringEncoding]
+                                                    skipYelpSearch:searchMenuItem.skipYelpSearch]];
+        }
+        WRLDMapsceneSearchMenuConfig* mapsceneSearchMenuConfig = [[WRLDMapsceneSearchMenuConfig alloc]
+                                                                  initMapsceneSearchMenuConfig:wrldMapsceneSearchMenuItems
+                                                                  performStartupSearch:searchConfig.performStartUpSearch
+                                                                  startupSearchTerm:[NSString stringWithCString: searchConfig.startUpSearchTerm.c_str() encoding:NSUTF8StringEncoding]
+                                                                  overrideIndoorSearchMenu:searchConfig.overrideIndoorSearchMenu];
+        
+        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] init];
+        [mapsceneStartLocation setCoordinate:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(), responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())];
         [mapsceneStartLocation setDistance:responseMapscene.startLocation.startLocationDistanceToInterest];
         [mapsceneStartLocation setHeading:responseMapscene.startLocation.startLocationHeading];
         [mapsceneStartLocation setInteriorId:@(responseMapscene.startLocation.startLocationInteriorId.Value().c_str())];
@@ -1041,7 +1065,9 @@ template<typename T> inline T* safe_cast(id instance)
         [wrldMapscene setShortLink:[NSString stringWithCString: responseMapscene.shortlink.c_str() encoding:NSUTF8StringEncoding]];
         [wrldMapscene setApiKey:[NSString stringWithCString: responseMapscene.apiKey.c_str() encoding:NSUTF8StringEncoding]];
         [wrldMapscene setWRLDMapsceneStartLocation:mapsceneStartLocation];
-        
+        [wrldMapscene setWRLDMapsceneDataSource:wrldMapsceneDataSource];
+        [wrldMapscene setWRLDMapsceneSearchMenuConfig:mapsceneSearchMenuConfig];
+
         mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :wrldMapscene];
         
         [self _setView:[mapsceneStartLocation getCoordinate] distance:[mapsceneStartLocation getDistance] heading:[mapsceneStartLocation getHeading] pitch:90 animated:false];

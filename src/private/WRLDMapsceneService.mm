@@ -9,11 +9,13 @@
 
 @end
 
-@implementation WRLDMapsceneService{
+@implementation WRLDMapsceneService
+{
     Eegeo::Api::EegeoMapsceneApi* m_mapsceneApi;
 }
 
--(instancetype)initWithApi:(Eegeo::Api::EegeoMapsceneApi&)mapsceneApi{
+-(instancetype)initWithApi:(Eegeo::Api::EegeoMapsceneApi&)mapsceneApi
+{
     if (self = [super init])
     {
         m_mapsceneApi = &mapsceneApi;
@@ -22,13 +24,12 @@
     return self;
 }
 
-
--(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions {
+-(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions
+{
     
     WRLDMapsceneRequest* m_mapsceneRequest = [[WRLDMapsceneRequest alloc] initMapsceneRequest :m_mapsceneApi :mapsceneRequestOptions];
     
     return m_mapsceneRequest;
 }
-
 
 @end

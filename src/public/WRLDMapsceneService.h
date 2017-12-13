@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * Begins a Mapscene request with the given options.
  * @param mapsceneRequestOptions The paramaters of the request.
- * @return A MapsceneRequest which can be used to cancel the request.
+ * @return An instance of a MapsceneRequest. This can be used to cancel the request before it is completed.
  */
 -(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions;
 

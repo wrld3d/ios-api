@@ -4,13 +4,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 /*!
- * A set of parameters for creating a Mapscene request.
+ * A set of parameters for creating a mapscene request.
  */
 @interface WRLDMapsceneRequestOptions : NSObject
 
 /*!
- * @param shortLinkUrl The full url or the short link of the Mapscene to load.
- * @param applyMapsceneOnSuccess Determins whether the mapscene should be applied once loaded.
+ * @param shortLinkUrl The full url or the short link of the mapscene to load.
+ * @param applyMapsceneOnSuccess determine whether the mapscene should be applied once loaded.
  * @returns A WRLDMapsceneRequestOptions instance.
  */
 -(instancetype)initMapsceneRequestOptions :(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess;

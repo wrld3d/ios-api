@@ -3,14 +3,16 @@
 #include <Foundation/Foundation.h>
 
 @class WRLDMapsceneStartLocation;
+@class WRLDMapsceneDataSource;
+@class WRLDMapsceneSearchMenuConfig;
 
 /*!
- * The data that defines a Mapscene, as created by the Map Designer or the Mapscene REST Api.
+ * The data that defines a mapscene, as created by the Map Designer or the mapscene REST Api.
  */
 @interface WRLDMapscene: NSObject
 
 /*!
- * @returns The name of the Mapcene.
+ * @returns The name of the mapcene.
  */
 -(NSString*)getName;
 
@@ -26,8 +28,12 @@
 -(NSString*)getApiKey;
 
 /*!
- * @returns The initial start location of the Mapscene.
+ * @returns The initial start location of the mapscene.
  */
 -(WRLDMapsceneStartLocation*)getWRLDMapsceneStartLocation;
+
+-(WRLDMapsceneDataSource*)getWRLDMapsceneDataSource;
+
+-(WRLDMapsceneSearchMenuConfig*)getWRLDMapsceneSearchMenuConfig;
 
 @end

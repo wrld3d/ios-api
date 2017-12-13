@@ -3,18 +3,21 @@
 #include "WRLDMapsceneRequestResponse.h"
 #include "WRLDMapsceneRequestResponse+Private.h"
 
-@interface WRLDMapsceneRequestResponse(){
+@interface WRLDMapsceneRequestResponse()
+{
     
 }
 
 @end
 
-@implementation WRLDMapsceneRequestResponse{
+@implementation WRLDMapsceneRequestResponse
+{
     WRLDMapscene* m_wrldMapscene;
     bool m_succeeded;
 }
 
--(instancetype)initMapsceneRequestResponse :(bool)succeeded :(WRLDMapscene*)mapscene{
+-(instancetype)initMapsceneRequestResponse :(bool)succeeded :(WRLDMapscene*)mapscene
+{
     
     self = [super init];
     
@@ -27,11 +30,13 @@
     
 }
 
--(WRLDMapscene*)getMapscene{
+-(WRLDMapscene*)getMapscene
+{
     return m_wrldMapscene;
     
 }
--(bool)getSucceeded{
+-(bool)getSucceeded
+{
     return m_succeeded;
     
 }

@@ -5,18 +5,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 /*!
- * A response to the Mapscene Request. This is returned when a mapscene request completes via a callback.
+ * A response to the mapscene Request. This is returned when a mapscene request completes via a callback.
  */
 @interface WRLDMapsceneRequestResponse : NSObject
 
 /*!
- * @return true if the request was successful, else false.
+ * @return True if the request was successful, else false.
  */
 -(bool)getSucceeded;
 
 /*!
- * Gets the requested Mapscene.
- * @return The requested Mapscene.
+ * Gets the requested mapscene.
+ * @return The requested mapscene.
  */
 -(WRLDMapscene*)getMapscene;
 
