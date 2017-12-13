@@ -14,26 +14,26 @@
 /*!
  * @returns The name of the mapcene.
  */
--(NSString*)getName;
+@property (readonly) NSString* name;
 
 /*!
  * @returns The shortend URL of the mapscene.
  */
--(NSString*)getShortLink;
+@property (readonly) NSString* shortLinkUrl;
 
 /*!
  * @returns The API key to use for authenticating with the WRLD SDK. This is also used to link
  * associated POI sets for use with the Searchbox Widget and POI Api.
  */
--(NSString*)getApiKey;
+@property (readonly) NSString* apiKey;
 
 /*!
  * @returns The initial start location of the mapscene.
  */
--(WRLDMapsceneStartLocation*)getWRLDMapsceneStartLocation;
+@property (readonly) WRLDMapsceneStartLocation* wrldMapsceneStartLocation;
 
--(WRLDMapsceneDataSource*)getWRLDMapsceneDataSource;
+@property (readonly) WRLDMapsceneDataSource* wrldMapsceneDataSource;
 
--(WRLDMapsceneSearchMenuConfig*)getWRLDMapsceneSearchMenuConfig;
+@property (readonly) WRLDMapsceneSearchMenuConfig* wrldMapsceneSearchMenuConfig;
 
 @end

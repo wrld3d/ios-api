@@ -1053,13 +1053,13 @@ template<typename T> inline T* safe_cast(id instance)
                                                                   startupSearchTerm:[NSString stringWithCString: searchConfig.startUpSearchTerm.c_str() encoding:NSUTF8StringEncoding]
                                                                   overrideIndoorSearchMenu:searchConfig.overrideIndoorSearchMenu];
         
-        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc] init];
-        [mapsceneStartLocation setCoordinate:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(), responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())];
-        [mapsceneStartLocation setDistance:responseMapscene.startLocation.startLocationDistanceToInterest];
-        [mapsceneStartLocation setHeading:responseMapscene.startLocation.startLocationHeading];
-        [mapsceneStartLocation setInteriorId:@(responseMapscene.startLocation.startLocationInteriorId.Value().c_str())];
-        [mapsceneStartLocation setInteriorFloorIndex:responseMapscene.startLocation.startLocationInteriorFloorIndex];
-        [mapsceneStartLocation setTryStartAtGpsLocation:responseMapscene.startLocation.tryStartAtGpsLocation];
+        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc]
+                                                            initMapsceneStartLocation:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(), responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())
+                                                            distance:responseMapscene.startLocation.startLocationDistanceToInterest
+                                                            interiorFloorIndex:responseMapscene.startLocation.startLocationInteriorFloorIndex
+                                                            interiorId:@(responseMapscene.startLocation.startLocationInteriorId.Value().c_str())
+                                                            heading:responseMapscene.startLocation.startLocationHeading
+                                                            tryStartAtGpsLocation:responseMapscene.startLocation.tryStartAtGpsLocation];
         
         [wrldMapscene setName:[NSString stringWithCString: responseMapscene.name.c_str() encoding:NSUTF8StringEncoding]];
         [wrldMapscene setShortLink:[NSString stringWithCString: responseMapscene.shortlink.c_str() encoding:NSUTF8StringEncoding]];
@@ -1070,7 +1070,7 @@ template<typename T> inline T* safe_cast(id instance)
 
         mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initMapsceneRequestResponse:result.Success() :wrldMapscene];
         
-        [self _setView:[mapsceneStartLocation getCoordinate] distance:[mapsceneStartLocation getDistance] heading:[mapsceneStartLocation getHeading] pitch:90 animated:false];
+        [self _setView:mapsceneStartLocation.coordinate distance:mapsceneStartLocation.distance heading:mapsceneStartLocation.heading pitch:90 animated:false];
         
         [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
     }

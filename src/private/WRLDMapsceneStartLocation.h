@@ -6,19 +6,16 @@
 
 @interface WRLDMapsceneStartLocation : NSObject
 
--(CLLocationCoordinate2D)getCoordinate;
--(CLLocationDistance)getDistance;
--(int)getInteriorFloorIndex;
--(NSString*)getInteriorId;
--(double)getHeading;
--(bool)getTryStartAtGpsLocation;
+@property (nonatomic,readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic,readonly) CLLocationDistance distance;
+@property (nonatomic,readonly) int interiorFloorIndex;
+@property (nonatomic,readonly) NSString* interiorId;
+@property (nonatomic,readonly) double heading;
+@property (nonatomic,readonly) bool tryStartAtGpsLocation;
 
--(void)setCoordinate:(CLLocationCoordinate2D)coordinate;
--(void)setDistance:(CLLocationDistance)distance;
--(void)setInteriorFloorIndex:(int)interiorFloorIndex;
--(void)setInteriorId:(NSString*)interiorId;
--(void)setHeading:(double)heading;
--(void)setTryStartAtGpsLocation:(bool)tryStartAtGpsLocation;
+-(instancetype)initMapsceneStartLocation:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance interiorFloorIndex:(int)interiorFloorIndex interiorId:(NSString*)interiorId heading:(double)heading tryStartAtGpsLocation:(bool)tryStartAtGpsLocation;
+
+
 
 @end
 

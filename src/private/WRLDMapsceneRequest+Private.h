@@ -11,5 +11,3 @@
 - (instancetype)initMapsceneRequest:(Eegeo::Api::EegeoMapsceneApi*)mapsceneApi :(WRLDMapsceneRequestOptions *)mapsceneRequestOptions;
 
 @end
-
-
