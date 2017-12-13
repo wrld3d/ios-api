@@ -9,16 +9,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface WRLDMapsceneRequestResponse : NSObject
 
-/*!
- * @return True if the request was successful, else false.
- */
--(bool)getSucceeded;
+/// A boolean indicating wheather the request succeeded. True if the request was successful, else false.
+@property (readonly) bool succeeded;
 
-/*!
- * Gets the requested mapscene.
- * @return The requested mapscene.
- */
--(WRLDMapscene*)getMapscene;
+/// Holds the resulting mapscene from the request to the mapscene service.
+@property (readonly) WRLDMapscene* mapscene;
 
 @end
 
