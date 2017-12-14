@@ -32,6 +32,7 @@
 #include "MapCameraUpdateBuilder.h"
 #include "MapCameraPositionBuilder.h"
 #include "MapCameraAnimationOptionsBuilder.h"
+#include "WRLDMapView+Private.h"
 
 #include <string>
 
@@ -608,6 +609,13 @@ const double defaultStartZoomLevel = 8;
     [self setCamera:camera animated:NO];
 }
 
+const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
+{
+    return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
+    ? Eegeo::Positioning::ElevationMode::HeightAboveGround
+    : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
+}
+
 + (Eegeo::Api::MapCameraUpdate)buildMapCameraUpdateFromCamera:(WRLDMapCamera*)camera
 {
     Eegeo::Api::MapCameraUpdateBuilder mapCameraUpdateBuilder;
@@ -615,6 +623,9 @@ const double defaultStartZoomLevel = 8;
     .SetBearing(camera.heading)
     .SetDistanceToInterest(camera.distance)
     .SetZenithAngle(camera.pitch)
+    .SetElevation(camera.elevation)
+    .SetElevationMode(ToPositioningElevationMode(camera.elevationMode))
+    .SetIndoorMap([camera.indoorMapId UTF8String], static_cast<int>(camera.indoorMapFloorId))
     .Build();
     
     return mapCameraUpdate;
