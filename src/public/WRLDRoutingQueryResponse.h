@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @returns A boolean indicating whether the search succeeded or not.
  */
-@property (nonatomic) BOOL succeeded;
+- (BOOL) succeeded;
 
 /*!
  Get the results of the query as a List of WRLDRoute objects.
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The query results.
  */
-@property (nonatomic) NSMutableArray* results;
+- (NSMutableArray*) results;
 
 @end
 

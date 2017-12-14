@@ -1,6 +1,7 @@
 
 #import "WRLDRoutingQueryOptions.h"
 #import "WRLDRoutingQueryWaypoint.h"
+#import "WRLDRoutingQueryWaypoint+Private.h"
 
 @interface WRLDRoutingQueryOptions ()
 
@@ -22,21 +23,17 @@
 
 - (void)addWaypoint:(CLLocationCoordinate2D)latLng
 {
-    WRLDRoutingQueryWaypoint* routingQueryWaypoint = [[WRLDRoutingQueryWaypoint alloc] init];
-    [routingQueryWaypoint setLatLng:latLng];
-    [routingQueryWaypoint setIsIndoors:false];
-    [routingQueryWaypoint setIndoorFloorId:0];
-
+    WRLDRoutingQueryWaypoint* routingQueryWaypoint = [[WRLDRoutingQueryWaypoint alloc] initWithLatLng:latLng
+                                                                                            isIndoors:false
+                                                                                        indoorFloorId:0];
     [m_waypoints addObject:routingQueryWaypoint];
 }
 
 - (void)addIndoorWaypoint:(CLLocationCoordinate2D)latLng forIndoorFloor:(int)indoorFloorId
 {
-    WRLDRoutingQueryWaypoint* routingQueryWaypoint = [[WRLDRoutingQueryWaypoint alloc] init];
-    [routingQueryWaypoint setLatLng:latLng];
-    [routingQueryWaypoint setIsIndoors:true];
-    [routingQueryWaypoint setIndoorFloorId:indoorFloorId];
-
+    WRLDRoutingQueryWaypoint* routingQueryWaypoint = [[WRLDRoutingQueryWaypoint alloc] initWithLatLng:latLng
+                                                                                            isIndoors:true
+                                                                                        indoorFloorId:indoorFloorId];
     [m_waypoints addObject:routingQueryWaypoint];
 }
 

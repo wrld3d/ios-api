@@ -11,19 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDRoutingQueryWaypoint : NSObject
 
 /*!
- The geographic location for this waypoint.
+ @returns The geographic location for this waypoint.
  */
-@property (nonatomic) CLLocationCoordinate2D latLng;
+- (CLLocationCoordinate2D) latLng;
 
 /*!
- Whether this waypoint is indoors or not.
+ @returns Whether this waypoint is indoors or not.
  */
-@property (nonatomic) BOOL isIndoors;
+- (BOOL) isIndoors;
 
 /*!
- If indoors, the ID of the floor this waypoint is on.
+ @returns If indoors, the ID of the floor this waypoint is on.
  */
-@property (nonatomic) int indoorFloorId;
+- (int) indoorFloorId;
 
 @end
 

@@ -1017,7 +1017,7 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result
 {
-    WRLDRoutingQueryResponse* routingQueryResponse = Eegeo::Routes::Webservice::Helpers::CreateWRLDRoutingQueryResponse(result);
+    WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
     [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
 }

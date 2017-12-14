@@ -10,19 +10,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDRoute : NSObject
 
 /*!
- A List of the different WRLDRouteSection objects which make up this route.
+ @returns A List of the different WRLDRouteSection objects which make up this route.
  */
-@property (nonatomic) NSMutableArray* sections;
+- (NSMutableArray*) sections;
 
 /*!
- The estimated time this route will take to travel in seconds.
+ @returns The estimated time this route will take to travel in seconds.
  */
-@property (nonatomic) NSTimeInterval duration;
+- (NSTimeInterval) duration;
 
 /*!
- The estimated distance this route covers in meters.
+ @returns The estimated distance this route covers in meters.
  */
-@property (nonatomic) double distance;
+- (double) distance;
 
 @end
 

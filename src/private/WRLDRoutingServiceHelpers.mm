@@ -1,80 +1,111 @@
 #include "WRLDRoutingServiceHelpers.h"
 
-#import "WRLDRoute.h"
-#import "WRLDRouteSection.h"
-#import "WRLDRouteDirections.h"
-#import "WRLDRouteStep.h"
+#import "WRLDRoutingQueryResponse+Private.h"
+#import "WRLDRoute+Private.h"
+#import "WRLDRouteSection+Private.h"
+#import "WRLDRouteStep+Private.h"
+#import "WRLDRouteDirections+Private.h"
 #import "WRLDRouteTransportationMode.h"
 
-#import <CoreLocation/CoreLocation.h>
+@interface WRLDRoutingServiceHelpers ()
 
-namespace Eegeo
+@end
+
+@implementation WRLDRoutingServiceHelpers
 {
-    namespace Routes
-    {
-        namespace Webservice
-        {
-            namespace Helpers
-            {
-                WRLDRoutingQueryResponse* CreateWRLDRoutingQueryResponse(const Eegeo::Routes::Webservice::RoutingQueryResponse& result)
-                {
-                    WRLDRoutingQueryResponse* routingQueryResponse = [[WRLDRoutingQueryResponse alloc] init];
-                    [routingQueryResponse setSucceeded:result.Succeeded];
-                    routingQueryResponse.results = [[NSMutableArray alloc] initWithCapacity:(result.Results.size())];
-                    for(auto& route : result.Results)
-                    {
-                        WRLDRoute* wrldRoute = [[WRLDRoute alloc] init];
-                        wrldRoute.sections = [[NSMutableArray alloc] initWithCapacity:(route.Sections.size())];
-                        for(auto& section : route.Sections)
-                        {
-                            WRLDRouteSection* routeSection = [[WRLDRouteSection alloc] init];
-                            routeSection.steps = [[NSMutableArray alloc] initWithCapacity:(section.Steps.size())];
-                            for(auto& step : section.Steps)
-                            {
-                                int pathCount = static_cast<int>(step.Path.size());
-                                CLLocationCoordinate2D* path = new CLLocationCoordinate2D[pathCount];
 
-                                for (int i=0; i<pathCount; i++)
-                                {
-                                    path[i] = CLLocationCoordinate2DMake(step.Path[i].GetLatitudeInDegrees(), step.Path[i].GetLongitudeInDegrees());
-                                }
-
-                                const Eegeo::Routes::Webservice::RouteDirections& directions = step.Directions;
-                                WRLDRouteDirections* routeDirections = [[WRLDRouteDirections alloc] init];
-                                [routeDirections setType: [NSString stringWithCString: directions.Type.c_str() encoding:NSUTF8StringEncoding]];
-                                [routeDirections setModifier: [NSString stringWithCString: directions.Modifier.c_str() encoding:NSUTF8StringEncoding]];
-                                [routeDirections setLatLng: CLLocationCoordinate2DMake(directions.Location.GetLatitudeInDegrees(), directions.Location.GetLongitudeInDegrees())];
-                                [routeDirections setHeadingBefore:directions.BearingBefore];
-                                [routeDirections setHeadingAfter:directions.BearingAfter];
-
-                                NSInteger mode = (NSInteger) static_cast<int>(step.Mode);
-
-                                WRLDRouteStep* routeStep = [[WRLDRouteStep alloc] init];
-                                [routeStep setPath:path];
-                                [routeStep setPathCount:pathCount];
-                                [routeStep setDirections:routeDirections];
-                                [routeStep setMode:(WRLDRouteTransportationMode)mode];
-                                [routeStep setIsIndoors:step.IsIndoors];
-                                [routeStep setIndoorId: [NSString stringWithCString: step.IndoorId.c_str() encoding:NSUTF8StringEncoding]];
-                                [routeStep setIndoorFloorId:step.IndoorFloorId];
-                                [routeStep setDuration:step.Duration];
-                                [routeStep setDistance:step.Distance];
-                                [routeSection.steps addObject:routeStep];
-                            }
-
-                            [routeSection setDuration:section.Duration];
-                            [routeSection setDistance:section.Distance];
-                            [wrldRoute.sections addObject:routeSection];
-                        }
-
-                        [wrldRoute setDuration:route.Duration];
-                        [wrldRoute setDistance:route.Distance];
-                        [routingQueryResponse.results addObject:wrldRoute];
-                    }
-
-                    return routingQueryResponse;
-                }
-            }
-        }
-    }
 }
+
++ (WRLDRoutingQueryResponse*)createWRLDRoutingQueryResponse:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)withResponse
+{
+
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity:(withResponse.Results.size())];
+    for(auto& route : withResponse.Results)
+    {
+        WRLDRoute* wrldRoute = [WRLDRoutingServiceHelpers createWRLDRoute:route];
+        [results addObject:wrldRoute];
+    }
+    
+    WRLDRoutingQueryResponse* routingQueryResponse = [[WRLDRoutingQueryResponse alloc] initWithStatusAndResults:withResponse.Succeeded
+                                                                                                        results:results];
+    return routingQueryResponse;
+}
+
++ (WRLDRoute*)createWRLDRoute:(const Eegeo::Routes::Webservice::RouteData&)withRoute
+{
+    NSMutableArray* sections = [[NSMutableArray alloc] initWithCapacity:(withRoute.Sections.size())];
+    for(auto& section : withRoute.Sections)
+    {
+        WRLDRouteSection* routeSection = [WRLDRoutingServiceHelpers createWRLDRouteSection:section];
+        [sections addObject:routeSection];
+    }
+    
+    WRLDRoute* wrldRoute = [[WRLDRoute alloc] initWithSections:sections
+                                                      duration:withRoute.Duration
+                                                      distance:withRoute.Distance];
+    return wrldRoute;
+}
+
++ (WRLDRouteSection*)createWRLDRouteSection:(const Eegeo::Routes::Webservice::RouteSection&)withSection
+{
+    NSMutableArray* steps = [[NSMutableArray alloc] initWithCapacity:(withSection.Steps.size())];
+    for(auto& step : withSection.Steps)
+    {
+        WRLDRouteStep* routeStep = [WRLDRoutingServiceHelpers createWRLDRouteStep:step];
+        [steps addObject:routeStep];
+    }
+
+    WRLDRouteSection* routeSection = [[WRLDRouteSection alloc] initWithSteps:steps
+                                                                    duration:withSection.Duration
+                                                                    distance:withSection.Distance];
+    return routeSection;
+}
+
++ (WRLDRouteStep*)createWRLDRouteStep:(const Eegeo::Routes::Webservice::RouteStep&)withStep
+{
+    CLLocationCoordinate2D* path = [WRLDRoutingServiceHelpers createWRLDRouteStepPath:withStep.Path];
+
+    int pathCount = static_cast<int>(withStep.Path.size());
+
+    WRLDRouteDirections* routeDirections = [WRLDRoutingServiceHelpers createWRLDRouteDirections:withStep.Directions];
+
+    NSInteger mode = (NSInteger) static_cast<int>(withStep.Mode);
+
+    WRLDRouteStep* routeStep = [[WRLDRouteStep alloc] initWithPath:path
+                                                         pathCount:pathCount
+                                                        directions:routeDirections
+                                                              mode:(WRLDRouteTransportationMode)mode
+                                                         isIndoors:withStep.IsIndoors
+                                                          indoorId:[NSString stringWithCString: withStep.IndoorId.c_str() encoding:NSUTF8StringEncoding]
+                                                     indoorFloorId:withStep.IndoorFloorId
+                                                          duration:withStep.Duration
+                                                          distance:withStep.Distance];
+    return routeStep;
+}
+
++ (WRLDRouteDirections*)createWRLDRouteDirections:(const Eegeo::Routes::Webservice::RouteDirections&)withDirections
+{
+    WRLDRouteDirections* routeDirections = [[WRLDRouteDirections alloc] initWithType:[NSString stringWithCString: withDirections.Type.c_str() encoding:NSUTF8StringEncoding]
+                                                                            modifier:[NSString stringWithCString: withDirections.Modifier.c_str() encoding:NSUTF8StringEncoding]
+                                                                              latLng:CLLocationCoordinate2DMake(withDirections.Location.GetLatitudeInDegrees(), withDirections.Location.GetLongitudeInDegrees())
+                                                                       headingBefore:withDirections.BearingBefore
+                                                                        headingAfter:withDirections.BearingAfter];
+
+    return routeDirections;
+}
+
++ (CLLocationCoordinate2D*)createWRLDRouteStepPath:(const std::vector<Eegeo::Space::LatLong>&) withPath;
+{
+    int pathCount = static_cast<int>(withPath.size());
+    CLLocationCoordinate2D* path = new CLLocationCoordinate2D[pathCount];
+
+    for (int i=0; i<pathCount; i++)
+    {
+        const Eegeo::Space::LatLong& pathLatLong = withPath[i];
+        path[i] = CLLocationCoordinate2DMake(pathLatLong.GetLatitudeInDegrees(), pathLatLong.GetLongitudeInDegrees());
+    }
+
+    return path;
+}
+
+@end

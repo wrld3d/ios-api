@@ -98,6 +98,12 @@
 		BB6B6D771FD567E00070E78F /* WRLDRoutingService.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBB719DA1FD551830046A455 /* WRLDRoutingService.mm */; };
 		BB6B6D881FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */; };
 		BB6B6D8A1FDE6A300070E78F /* WRLDRoutingServiceHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */; };
+		BB6B6D8C1FE24C500070E78F /* WRLDRoutingQueryResponse+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */; };
+		BB6B6D8F1FE250310070E78F /* WRLDRoute+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */; };
+		BB6B6D911FE253D00070E78F /* WRLDRouteSection+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */; };
+		BB6B6D931FE25AFB0070E78F /* WRLDRouteStep+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */; };
+		BB6B6D951FE25D4B0070E78F /* WRLDRouteDirections+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */; };
+		BB6B6D971FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */; };
 		D01B67731F338B7600B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
 		D01B67751F338B7D00B164FB /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */; };
 		D01B67761F338B7D00B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
@@ -262,6 +268,12 @@
 		BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryResponse.mm; sourceTree = "<group>"; };
 		BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingServiceHelpers.mm; sourceTree = "<group>"; };
 		BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingServiceHelpers.h; sourceTree = "<group>"; };
+		BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQueryResponse+Private.h"; sourceTree = "<group>"; };
+		BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoute+Private.h"; sourceTree = "<group>"; };
+		BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteSection+Private.h"; sourceTree = "<group>"; };
+		BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteStep+Private.h"; sourceTree = "<group>"; };
+		BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteDirections+Private.h"; sourceTree = "<group>"; };
+		BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQueryWaypoint+Private.h"; sourceTree = "<group>"; };
 		BB9742391FD52C5500EE2A39 /* WRLDRoutingQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQuery.h; sourceTree = "<group>"; };
 		BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQuery.mm; sourceTree = "<group>"; };
 		BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQuery+Private.h"; sourceTree = "<group>"; };
@@ -582,12 +594,18 @@
 				A8E599761FB5EDCF00695193 /* WRLDPoiSearchResponse.mm */,
 				A8E5997A1FB5F8ED00695193 /* WRLDPoiSearchResult.mm */,
 				BBCDBCDD1FCFE673007B19C7 /* WRLDRoute.mm */,
+				BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */,
 				BBCDBCD41FCFD45A007B19C7 /* WRLDRouteSection.mm */,
+				BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */,
 				BBCDBCD11FCFD1C8007B19C7 /* WRLDRouteStep.mm */,
+				BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */,
 				BBCDBCCE1FCFCC13007B19C7 /* WRLDRouteDirections.mm */,
+				BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */,
 				BBCDBCDA1FCFE069007B19C7 /* WRLDRoutingQueryOptions.mm */,
 				BBCDBCD81FCFDD4E007B19C7 /* WRLDRoutingQueryWaypoint.mm */,
+				BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */,
 				BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */,
+				BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */,
 				BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */,
 				BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */,
 				BBB719DA1FD551830046A455 /* WRLDRoutingService.mm */,
@@ -721,7 +739,13 @@
 				52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */,
 				E085D0DC1F05472700FB60F9 /* WRLDPolyline.h in Headers */,
 				A82B347C1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h in Headers */,
+				BB6B6D8F1FE250310070E78F /* WRLDRoute+Private.h in Headers */,
+				BB6B6D911FE253D00070E78F /* WRLDRouteSection+Private.h in Headers */,
+				BB6B6D931FE25AFB0070E78F /* WRLDRouteStep+Private.h in Headers */,
+				BB6B6D951FE25D4B0070E78F /* WRLDRouteDirections+Private.h in Headers */,
+				BB6B6D971FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h in Headers */,
 				BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */,
+				BB6B6D8C1FE24C500070E78F /* WRLDRoutingQueryResponse+Private.h in Headers */,
 				BB6B6D631FD566EF0070E78F /* WRLDRoutingService+Private.h in Headers */,
 				BB6B6D8A1FDE6A300070E78F /* WRLDRoutingServiceHelpers.h in Headers */,
 			);

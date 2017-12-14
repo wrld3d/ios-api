@@ -17,49 +17,53 @@ NS_ASSUME_NONNULL_BEGIN
  An array of the individual CLLocationCoordinate2D points that make up this step.
  This can be a single point if no distance was covered, for example
  a WRLDRouteStep may indicate departure or arrival with a single point.
+
+ @returns An array of the individual CLLocationCoordinate2D points that make up this step.
  */
- @property (nonatomic) CLLocationCoordinate2D* path;
+ - (CLLocationCoordinate2D*) path;
 
 /*!
- The count of CLLocationCoordinate2D points that make up this path.
+ @returns The count of CLLocationCoordinate2D points that make up this path.
  */
-@property (nonatomic) int pathCount;
+- (int) pathCount;
 
 /*!
- The directions associated with this step.
+ @returns The directions associated with this step.
  */
-@property (nonatomic) WRLDRouteDirections* directions;
+- (WRLDRouteDirections*) directions;
 
 /*!
  Specifies the mode of transport for this step:
  - `WRLDWalking`: Indicates that the route is a walking WRLDRoute.
+
+ @returns The mode of transport for this step.
  */
-@property (nonatomic) WRLDRouteTransportationMode mode;
+- (WRLDRouteTransportationMode) mode;
 
 /*!
- Whether this step is indoors or not.
+ @returns Whether this step is indoors or not.
  */
-@property (nonatomic) BOOL isIndoors;
+- (BOOL) isIndoors;
 
 /*!
- If indoors, the ID of the indoor map this step is inside.
+ @returns If indoors, the ID of the indoor map this step is inside.
  */
-@property (nonatomic, copy) NSString* indoorId;
+- (NSString*) indoorId;
 
 /*!
- If indoors, the ID of the floor this step is on.
+ @returns If indoors, the ID of the floor this step is on.
  */
-@property (nonatomic) int indoorFloorId;
+- (int) indoorFloorId;
 
 /*!
- The estimated time this step will take to travel in seconds.
+ @returns The estimated time this step will take to travel in seconds.
  */
-@property (nonatomic) NSTimeInterval duration;
+- (NSTimeInterval) duration;
 
 /*!
- The estimated distance this step covers in meters.
+ @returns The estimated distance this step covers in meters.
  */
-@property (nonatomic) double distance;
+- (double) distance;
 
 @end
 

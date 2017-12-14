@@ -11,29 +11,29 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDRouteDirections : NSObject
 
 /*!
- The type of motion to make at this step. For example, "turn".
+ @returns The type of motion to make at this step. For example, "turn".
  */
- @property (nonatomic, copy) NSString* type;
+ - (NSString*) type;
 
 /*!
- A modification to the type. For example, "sharp right".
+ @returns A modification to the type. For example, "sharp right".
  */
-@property (nonatomic, copy) NSString* modifier;
+- (NSString*) modifier;
 
 /*!
- The geographic location this direction applies at.
+ @returns The geographic location this direction applies at.
  */
-@property (nonatomic) CLLocationCoordinate2D latLng;
+- (CLLocationCoordinate2D) latLng;
 
 /*!
- The heading before taking this direction.
+ @returns The heading before taking this direction.
  */
-@property (nonatomic) CLLocationDirection headingBefore;
+- (CLLocationDirection) headingBefore;
 
 /*!
- The heading after taking this direction.
+ @returns The heading after taking this direction.
  */
-@property (nonatomic) CLLocationDirection headingAfter;
+- (CLLocationDirection) headingAfter;
 
 @end
 
