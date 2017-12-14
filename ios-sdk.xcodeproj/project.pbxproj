@@ -75,6 +75,35 @@
 		A8E599771FB5EDCF00695193 /* WRLDPoiSearchResponse.mm in Sources */ = {isa = PBXBuildFile; fileRef = A8E599761FB5EDCF00695193 /* WRLDPoiSearchResponse.mm */; };
 		A8E599791FB5F65C00695193 /* WRLDPoiSearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = A8E599781FB5F65C00695193 /* WRLDPoiSearchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A8E5997B1FB5F8ED00695193 /* WRLDPoiSearchResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = A8E5997A1FB5F8ED00695193 /* WRLDPoiSearchResult.mm */; };
+		BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */; };
+		BB6B6D631FD566EF0070E78F /* WRLDRoutingService+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BBB719DC1FD551E00046A455 /* WRLDRoutingService+Private.h */; };
+		BB6B6D641FD5670C0070E78F /* WRLDRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D651FD567100070E78F /* WRLDRouteSection.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCD31FCFD38A007B19C7 /* WRLDRouteSection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D661FD567180070E78F /* WRLDRouteStep.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCD01FCFCD84007B19C7 /* WRLDRouteStep.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D671FD5671B0070E78F /* WRLDRouteDirections.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCCD1FCFCA10007B19C7 /* WRLDRouteDirections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D681FD567260070E78F /* WRLDRouteTransportationMode.h in Headers */ = {isa = PBXBuildFile; fileRef = BB5B77651FCEE78F00299970 /* WRLDRouteTransportationMode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6A1FD567420070E78F /* WRLDRoutingQueryOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCD61FCFDBF7007B19C7 /* WRLDRoutingQueryOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6B1FD567450070E78F /* WRLDRoutingQueryWaypoint.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCD71FCFDC72007B19C7 /* WRLDRoutingQueryWaypoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6C1FD567460070E78F /* WRLDRoutingQueryResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = BB5B77661FCEEDCD00299970 /* WRLDRoutingQueryResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6D1FD567480070E78F /* WRLDRoutingQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = BB9742391FD52C5500EE2A39 /* WRLDRoutingQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6E1FD5674A0070E78F /* WRLDRoutingService.h in Headers */ = {isa = PBXBuildFile; fileRef = BB276ABC1FD54B3800DB609E /* WRLDRoutingService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6B6D6F1FD567B00070E78F /* WRLDRoute.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCDD1FCFE673007B19C7 /* WRLDRoute.mm */; };
+		BB6B6D701FD567B30070E78F /* WRLDRouteSection.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCD41FCFD45A007B19C7 /* WRLDRouteSection.mm */; };
+		BB6B6D711FD567B60070E78F /* WRLDRouteStep.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCD11FCFD1C8007B19C7 /* WRLDRouteStep.mm */; };
+		BB6B6D721FD567BA0070E78F /* WRLDRouteDirections.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCCE1FCFCC13007B19C7 /* WRLDRouteDirections.mm */; };
+		BB6B6D731FD567BE0070E78F /* WRLDRoutingQueryOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCDA1FCFE069007B19C7 /* WRLDRoutingQueryOptions.mm */; };
+		BB6B6D741FD567C30070E78F /* WRLDRoutingQueryWaypoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBCDBCD81FCFDD4E007B19C7 /* WRLDRoutingQueryWaypoint.mm */; };
+		BB6B6D751FD567C60070E78F /* WRLDRoutingQueryResponse.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */; };
+		BB6B6D761FD567D00070E78F /* WRLDRoutingQuery.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */; };
+		BB6B6D771FD567E00070E78F /* WRLDRoutingService.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBB719DA1FD551830046A455 /* WRLDRoutingService.mm */; };
+		BB6B6D881FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */; };
+		BB6B6D8A1FDE6A300070E78F /* WRLDRoutingServiceHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */; };
+		BB6B6D8C1FE24C500070E78F /* WRLDRoutingQueryResponse+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */; };
+		BB6B6D8F1FE250310070E78F /* WRLDRoute+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */; };
+		BB6B6D911FE253D00070E78F /* WRLDRouteSection+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */; };
+		BB6B6D931FE25AFB0070E78F /* WRLDRouteStep+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */; };
+		BB6B6D951FE25D4B0070E78F /* WRLDRouteDirections+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */; };
+		BB6B6D971FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */; };
 		D01B67731F338B7600B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
 		D01B67751F338B7D00B164FB /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */; };
 		D01B67761F338B7D00B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
@@ -233,6 +262,35 @@
 		A8E599761FB5EDCF00695193 /* WRLDPoiSearchResponse.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPoiSearchResponse.mm; sourceTree = "<group>"; };
 		A8E599781FB5F65C00695193 /* WRLDPoiSearchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiSearchResult.h; sourceTree = "<group>"; };
 		A8E5997A1FB5F8ED00695193 /* WRLDPoiSearchResult.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPoiSearchResult.mm; sourceTree = "<group>"; };
+		BB276ABC1FD54B3800DB609E /* WRLDRoutingService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingService.h; sourceTree = "<group>"; };
+		BB5B77651FCEE78F00299970 /* WRLDRouteTransportationMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteTransportationMode.h; sourceTree = "<group>"; };
+		BB5B77661FCEEDCD00299970 /* WRLDRoutingQueryResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQueryResponse.h; sourceTree = "<group>"; };
+		BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryResponse.mm; sourceTree = "<group>"; };
+		BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingServiceHelpers.mm; sourceTree = "<group>"; };
+		BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingServiceHelpers.h; sourceTree = "<group>"; };
+		BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQueryResponse+Private.h"; sourceTree = "<group>"; };
+		BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoute+Private.h"; sourceTree = "<group>"; };
+		BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteSection+Private.h"; sourceTree = "<group>"; };
+		BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteStep+Private.h"; sourceTree = "<group>"; };
+		BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRouteDirections+Private.h"; sourceTree = "<group>"; };
+		BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQueryWaypoint+Private.h"; sourceTree = "<group>"; };
+		BB9742391FD52C5500EE2A39 /* WRLDRoutingQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQuery.h; sourceTree = "<group>"; };
+		BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQuery.mm; sourceTree = "<group>"; };
+		BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQuery+Private.h"; sourceTree = "<group>"; };
+		BBB719DA1FD551830046A455 /* WRLDRoutingService.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingService.mm; sourceTree = "<group>"; };
+		BBB719DC1FD551E00046A455 /* WRLDRoutingService+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingService+Private.h"; sourceTree = "<group>"; };
+		BBCDBCCD1FCFCA10007B19C7 /* WRLDRouteDirections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteDirections.h; sourceTree = "<group>"; };
+		BBCDBCCE1FCFCC13007B19C7 /* WRLDRouteDirections.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteDirections.mm; sourceTree = "<group>"; };
+		BBCDBCD01FCFCD84007B19C7 /* WRLDRouteStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteStep.h; sourceTree = "<group>"; };
+		BBCDBCD11FCFD1C8007B19C7 /* WRLDRouteStep.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteStep.mm; sourceTree = "<group>"; };
+		BBCDBCD31FCFD38A007B19C7 /* WRLDRouteSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteSection.h; sourceTree = "<group>"; };
+		BBCDBCD41FCFD45A007B19C7 /* WRLDRouteSection.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteSection.mm; sourceTree = "<group>"; };
+		BBCDBCD61FCFDBF7007B19C7 /* WRLDRoutingQueryOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQueryOptions.h; sourceTree = "<group>"; };
+		BBCDBCD71FCFDC72007B19C7 /* WRLDRoutingQueryWaypoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQueryWaypoint.h; sourceTree = "<group>"; };
+		BBCDBCD81FCFDD4E007B19C7 /* WRLDRoutingQueryWaypoint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryWaypoint.mm; sourceTree = "<group>"; };
+		BBCDBCDA1FCFE069007B19C7 /* WRLDRoutingQueryOptions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryOptions.mm; sourceTree = "<group>"; };
+		BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoute.h; sourceTree = "<group>"; };
+		BBCDBCDD1FCFE673007B19C7 /* WRLDRoute.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoute.mm; sourceTree = "<group>"; };
 		D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_8bit.pvr; sourceTree = "<group>"; };
 		D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_Night_8bit.pvr; sourceTree = "<group>"; };
 		D01B67641F31DE5800B164FB /* Sphere.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere.POD; sourceTree = "<group>"; };
@@ -535,6 +593,25 @@
 				A8E599741FB5E67700695193 /* WRLDPoiSearch+Private.h */,
 				A8E599761FB5EDCF00695193 /* WRLDPoiSearchResponse.mm */,
 				A8E5997A1FB5F8ED00695193 /* WRLDPoiSearchResult.mm */,
+				BBCDBCDD1FCFE673007B19C7 /* WRLDRoute.mm */,
+				BB6B6D8E1FE250310070E78F /* WRLDRoute+Private.h */,
+				BBCDBCD41FCFD45A007B19C7 /* WRLDRouteSection.mm */,
+				BB6B6D901FE253D00070E78F /* WRLDRouteSection+Private.h */,
+				BBCDBCD11FCFD1C8007B19C7 /* WRLDRouteStep.mm */,
+				BB6B6D921FE257D60070E78F /* WRLDRouteStep+Private.h */,
+				BBCDBCCE1FCFCC13007B19C7 /* WRLDRouteDirections.mm */,
+				BB6B6D941FE25D4B0070E78F /* WRLDRouteDirections+Private.h */,
+				BBCDBCDA1FCFE069007B19C7 /* WRLDRoutingQueryOptions.mm */,
+				BBCDBCD81FCFDD4E007B19C7 /* WRLDRoutingQueryWaypoint.mm */,
+				BB6B6D961FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h */,
+				BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */,
+				BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */,
+				BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */,
+				BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */,
+				BBB719DA1FD551830046A455 /* WRLDRoutingService.mm */,
+				BBB719DC1FD551E00046A455 /* WRLDRoutingService+Private.h */,
+				BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */,
+				BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -568,6 +645,16 @@
 				A89A8FD31FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h */,
 				A82B34851FB4C785009B21D3 /* WRLDAutocompleteOptions.h */,
 				A8E599781FB5F65C00695193 /* WRLDPoiSearchResult.h */,
+				BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */,
+				BBCDBCD31FCFD38A007B19C7 /* WRLDRouteSection.h */,
+				BBCDBCD01FCFCD84007B19C7 /* WRLDRouteStep.h */,
+				BBCDBCCD1FCFCA10007B19C7 /* WRLDRouteDirections.h */,
+				BB5B77651FCEE78F00299970 /* WRLDRouteTransportationMode.h */,
+				BBCDBCD61FCFDBF7007B19C7 /* WRLDRoutingQueryOptions.h */,
+				BBCDBCD71FCFDC72007B19C7 /* WRLDRoutingQueryWaypoint.h */,
+				BB5B77661FCEEDCD00299970 /* WRLDRoutingQueryResponse.h */,
+				BB9742391FD52C5500EE2A39 /* WRLDRoutingQuery.h */,
+				BB276ABC1FD54B3800DB609E /* WRLDRoutingService.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -624,15 +711,25 @@
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
 				A82B34861FB4C785009B21D3 /* WRLDAutocompleteOptions.h in Headers */,
 				E0E9B9111ED345D600F94099 /* WRLDCoordinateWithAltitude.h in Headers */,
+				BB6B6D671FD5671B0070E78F /* WRLDRouteDirections.h in Headers */,
 				D22AA32C1F2F89A8002A902D /* WRLDIndoorGeoreferencer.h in Headers */,
 				024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */,
 				E0F4E1781EB347FB00949ACE /* WRLDMapView.h in Headers */,
+				BB6B6D661FD567180070E78F /* WRLDRouteStep.h in Headers */,
 				E0F4E1741EB347FB00949ACE /* WRLDGestureDelegate.h in Headers */,
 				D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi+Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				A89A8FD41FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
+				BB6B6D6A1FD567420070E78F /* WRLDRoutingQueryOptions.h in Headers */,
+				BB6B6D6B1FD567450070E78F /* WRLDRoutingQueryWaypoint.h in Headers */,
+				BB6B6D651FD567100070E78F /* WRLDRouteSection.h in Headers */,
+				BB6B6D6C1FD567460070E78F /* WRLDRoutingQueryResponse.h in Headers */,
+				BB6B6D6D1FD567480070E78F /* WRLDRoutingQuery.h in Headers */,
+				BB6B6D6E1FD5674A0070E78F /* WRLDRoutingService.h in Headers */,
+				BB6B6D681FD567260070E78F /* WRLDRouteTransportationMode.h in Headers */,
+				BB6B6D641FD5670C0070E78F /* WRLDRoute.h in Headers */,
 				A8E599711FB5D0D100695193 /* WRLDPoiService+Private.h in Headers */,
 				A83FFABB1FA21E6E0096DE13 /* WRLDPositioner.h in Headers */,
 				E04885911F38B2070031D631 /* WRLDOverlayImpl.h in Headers */,
@@ -642,6 +739,15 @@
 				52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */,
 				E085D0DC1F05472700FB60F9 /* WRLDPolyline.h in Headers */,
 				A82B347C1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h in Headers */,
+				BB6B6D8F1FE250310070E78F /* WRLDRoute+Private.h in Headers */,
+				BB6B6D911FE253D00070E78F /* WRLDRouteSection+Private.h in Headers */,
+				BB6B6D931FE25AFB0070E78F /* WRLDRouteStep+Private.h in Headers */,
+				BB6B6D951FE25D4B0070E78F /* WRLDRouteDirections+Private.h in Headers */,
+				BB6B6D971FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h in Headers */,
+				BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */,
+				BB6B6D8C1FE24C500070E78F /* WRLDRoutingQueryResponse+Private.h in Headers */,
+				BB6B6D631FD566EF0070E78F /* WRLDRoutingService+Private.h in Headers */,
+				BB6B6D8A1FDE6A300070E78F /* WRLDRoutingServiceHelpers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,6 +991,16 @@
 				E0F4E1721EB347FB00949ACE /* WRLDApi.m in Sources */,
 				E085D0E01F05488200FB60F9 /* WRLDPolyline.mm in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
+				BB6B6D6F1FD567B00070E78F /* WRLDRoute.mm in Sources */,
+				BB6B6D701FD567B30070E78F /* WRLDRouteSection.mm in Sources */,
+				BB6B6D711FD567B60070E78F /* WRLDRouteStep.mm in Sources */,
+				BB6B6D721FD567BA0070E78F /* WRLDRouteDirections.mm in Sources */,
+				BB6B6D731FD567BE0070E78F /* WRLDRoutingQueryOptions.mm in Sources */,
+				BB6B6D741FD567C30070E78F /* WRLDRoutingQueryWaypoint.mm in Sources */,
+				BB6B6D761FD567D00070E78F /* WRLDRoutingQuery.mm in Sources */,
+				BB6B6D751FD567C60070E78F /* WRLDRoutingQueryResponse.mm in Sources */,
+				BB6B6D771FD567E00070E78F /* WRLDRoutingService.mm in Sources */,
+				BB6B6D881FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm in Sources */,
 				A89A8FDC1FB5C8230041ABD3 /* WRLDPoiService.mm in Sources */,
 				A88D8E881FB0C4F8009039A1 /* WRLDViewAnchor.m in Sources */,
 				2CFE0A5F1EC0A3F4006D51E6 /* WRLDIndoorMap.m in Sources */,

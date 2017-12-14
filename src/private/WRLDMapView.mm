@@ -12,7 +12,11 @@
 #import "WRLDPoiService+Private.h"
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
-
+#import "WRLDRoutingService.h"
+#import "WRLDRoutingService+Private.h"
+#import "WRLDRoutingQueryResponse.h"
+#import "RoutingQueryResponse.h"
+#import "WRLDRoutingServiceHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -848,6 +852,13 @@ const double defaultStartZoomLevel = 8;
     return [[WRLDPoiService alloc] initWithApi: [self getMapApi].GetPoiApi() ];
 }
 
+#pragma mark - Routing service
+
+- (WRLDRoutingService*)createRoutingService
+{
+    return [[WRLDRoutingService alloc] initWithApi: [self getMapApi].GetRoutingApi() ];
+}
+
 #pragma mark - WRLDMapView (Private)
     
     
@@ -1002,6 +1013,13 @@ template<typename T> inline T* safe_cast(id instance)
     }
 
     [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+}
+
+- (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result
+{
+    WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
+
+    [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
 }
 
 @end
