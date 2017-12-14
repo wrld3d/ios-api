@@ -10,6 +10,7 @@
 #include "EegeoCameraApi.h"
 #include "EegeoPositionerApi.h"
 #include "EegeoPoiApi.h"
+#include "EegeoRoutingApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
