@@ -35,3 +35,7 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDMapsceneRequestOptions.h"
 #import "WRLDMapsceneRequestResponse.h"
 #import "WRLDMapsceneService.h"
+#import "WRLDMapsceneDataSource.h"
+#import "WRLDMapsceneSearchMenuConfig.h"
+#import "WRLDMapsceneSearchMenuItem.h"
+#import "WRLDMapsceneStartLocation.h"

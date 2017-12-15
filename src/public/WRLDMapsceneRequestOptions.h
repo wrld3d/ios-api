@@ -13,17 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
  * @param applyMapsceneOnSuccess determine whether the mapscene should be applied once loaded.
  * @returns A WRLDMapsceneRequestOptions instance.
  */
--(instancetype)initMapsceneRequestOptions :(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess;
+-(instancetype)initWithShortLink:(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess;
 
-/*!
- * @returns shortLinkUrl
- */
--(NSString*)getShortLinkUrl;
+/// gets the short link.
+@property (readonly) NSString* shortLinkUrl;
 
-/*!
- * @returns applyMapsceneOnSuccess
- */
--(bool)getApplyMapsceneOnSuccess;
+/// applyMapscene
+@property (readonly) bool applyMapsceneOnSuccess;
 
 @end
 

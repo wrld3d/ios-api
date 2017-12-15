@@ -8,6 +8,7 @@
 
 @property (nonatomic, readonly) NSString* themeManifestUrl;
 
--initMapsceneDataSource:(NSString*)covarageTreeManifestUrl themeManifestUrl:(NSString*)themeManifestUrl;
 
 @end
+
+

@@ -12,6 +12,6 @@
 
 @property (nonatomic, readonly) bool skipYelpSearch;
 
--(instancetype)initMapsceneSearchMenuItem:(NSString*)name tag:(NSString*)tag iconKey:(NSString*)iconKey skipYelpSearch:(bool)skipYelpSearch;
-
 @end
+
+

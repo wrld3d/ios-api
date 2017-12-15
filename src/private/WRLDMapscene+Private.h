@@ -11,12 +11,12 @@
 
 @interface WRLDMapscene (Private)
 
--(void)setName:(NSString*)name;
--(void)setShortLink:(NSString*)shortLink;
--(void)setApiKey:(NSString*)apiKey;
--(void)setWRLDMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldCoordinateWithAltitude;
--(void)setWRLDMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource;
--(void)setWRLDMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig;
+-(instancetype)initWithName:(NSString*)name
+                  shortLink:(NSString*)shortLink
+                     apiKey:(NSString*)apiKey
+  wrldMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation
+     wrldMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource
+wrldMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig;
 
 @end
 

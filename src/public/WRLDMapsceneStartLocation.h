@@ -13,9 +13,6 @@
 @property (nonatomic,readonly) double heading;
 @property (nonatomic,readonly) bool tryStartAtGpsLocation;
 
--(instancetype)initMapsceneStartLocation:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance interiorFloorIndex:(int)interiorFloorIndex interiorId:(NSString*)interiorId heading:(double)heading tryStartAtGpsLocation:(bool)tryStartAtGpsLocation;
-
-
 
 @end
 

@@ -55,15 +55,19 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		6F0FA8C01FE41BA700C9D71D /* WRLDMapsceneStartLocation+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0FA8BF1FE41BA700C9D71D /* WRLDMapsceneStartLocation+Private.h */; };
+		6F0FA8C21FE41CCF00C9D71D /* WRLDMapsceneDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0FA8C11FE41CCF00C9D71D /* WRLDMapsceneDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6F0FA8C41FE41E1F00C9D71D /* WRLDMapsceneSearchMenuConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0FA8C31FE41E1F00C9D71D /* WRLDMapsceneSearchMenuConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6F0FA8C61FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F0FA8C51FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F47C76A1FD5B0CA0071ECE5 /* WRLDMapsceneRequestResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F47C7691FD5B0CA0071ECE5 /* WRLDMapsceneRequestResponse.m */; };
 		6F47C76C1FD5B50C0071ECE5 /* WRLDMapsceneRequestResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F47C76B1FD5B50C0071ECE5 /* WRLDMapsceneRequestResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F47C76E1FD5B6B40071ECE5 /* WRLDMapscene.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F47C76D1FD5B6B40071ECE5 /* WRLDMapscene.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F47C7701FD5CC6B0071ECE5 /* WRLDMapscene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6F47C76F1FD5CC6B0071ECE5 /* WRLDMapscene.mm */; };
-		6F96F3391FDFF37100A560FF /* WRLDMapsceneDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource.h */; };
+		6F96F3391FDFF37100A560FF /* WRLDMapsceneDataSource+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource+Private.h */; };
 		6F96F33B1FE0181700A560FF /* WRLDMapsceneDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F96F33A1FE0181700A560FF /* WRLDMapsceneDataSource.m */; };
-		6F96F33D1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem.h */; };
+		6F96F33D1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h */; };
 		6F96F33F1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F96F33E1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m */; };
-		6F96F3411FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig.h */; };
+		6F96F3411FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig+Private.h */; };
 		6F96F3431FE02D1400A560FF /* WRLDMapsceneSearchMenuConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F96F3421FE02D1400A560FF /* WRLDMapsceneSearchMenuConfig.m */; };
 		6F9BAB8E1FC8366600865338 /* WRLDMapsceneService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9BAB8D1FC8366600865338 /* WRLDMapsceneService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F9BAB931FC8723700865338 /* WRLDMapsceneService+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F9BAB921FC8723700865338 /* WRLDMapsceneService+Private.h */; };
@@ -73,7 +77,7 @@
 		6FA013A61FD6DF7B00D51364 /* WRLDMapsceneRequestOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FA013A51FD6DF7B00D51364 /* WRLDMapsceneRequestOptions.mm */; };
 		6FA013A81FD6EB8100D51364 /* WRLDMapsceneRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FA013A71FD6EB8100D51364 /* WRLDMapsceneRequest.mm */; };
 		6FA013AA1FD6ED7300D51364 /* WRLDMapsceneRequest+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013A91FD6ED7300D51364 /* WRLDMapsceneRequest+Private.h */; };
-		6FA013AC1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */; };
+		6FA013AC1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6FA013B01FD80FC600D51364 /* WRLDMapsceneStartLocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FA013AF1FD80FC600D51364 /* WRLDMapsceneStartLocation.mm */; };
 		6FA013B41FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */; };
 		6FA013B61FDADFA200D51364 /* WRLDMapscene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */; };
@@ -234,15 +238,19 @@
 		528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDElevationMode.h; sourceTree = "<group>"; };
 		52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapOptions.h; sourceTree = "<group>"; };
 		52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMapOptions.m; sourceTree = "<group>"; };
+		6F0FA8BF1FE41BA700C9D71D /* WRLDMapsceneStartLocation+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneStartLocation+Private.h"; sourceTree = "<group>"; };
+		6F0FA8C11FE41CCF00C9D71D /* WRLDMapsceneDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneDataSource.h; sourceTree = "<group>"; };
+		6F0FA8C31FE41E1F00C9D71D /* WRLDMapsceneSearchMenuConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneSearchMenuConfig.h; sourceTree = "<group>"; };
+		6F0FA8C51FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneSearchMenuItem.h; sourceTree = "<group>"; };
 		6F47C7691FD5B0CA0071ECE5 /* WRLDMapsceneRequestResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMapsceneRequestResponse.m; sourceTree = "<group>"; };
 		6F47C76B1FD5B50C0071ECE5 /* WRLDMapsceneRequestResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneRequestResponse.h; sourceTree = "<group>"; };
 		6F47C76D1FD5B6B40071ECE5 /* WRLDMapscene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapscene.h; sourceTree = "<group>"; };
 		6F47C76F1FD5CC6B0071ECE5 /* WRLDMapscene.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMapscene.mm; sourceTree = "<group>"; };
-		6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneDataSource.h; sourceTree = "<group>"; };
+		6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneDataSource+Private.h"; sourceTree = "<group>"; };
 		6F96F33A1FE0181700A560FF /* WRLDMapsceneDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMapsceneDataSource.m; sourceTree = "<group>"; };
-		6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneSearchMenuItem.h; sourceTree = "<group>"; };
+		6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneSearchMenuItem+Private.h"; sourceTree = "<group>"; };
 		6F96F33E1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMapsceneSearchMenuItem.m; sourceTree = "<group>"; };
-		6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneSearchMenuConfig.h; sourceTree = "<group>"; };
+		6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneSearchMenuConfig+Private.h"; sourceTree = "<group>"; };
 		6F96F3421FE02D1400A560FF /* WRLDMapsceneSearchMenuConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMapsceneSearchMenuConfig.m; sourceTree = "<group>"; };
 		6F9BAB8D1FC8366600865338 /* WRLDMapsceneService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapsceneService.h; sourceTree = "<group>"; };
 		6F9BAB921FC8723700865338 /* WRLDMapsceneService+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneService+Private.h"; sourceTree = "<group>"; };
@@ -564,20 +572,20 @@
 				E0F4E16C1EB347FB00949ACE /* WRLDMapView.mm */,
 				6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */,
 				6F47C76F1FD5CC6B0071ECE5 /* WRLDMapscene.mm */,
-				6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource.h */,
+				6F96F3381FDFF37100A560FF /* WRLDMapsceneDataSource+Private.h */,
 				6F96F33A1FE0181700A560FF /* WRLDMapsceneDataSource.m */,
 				6FA013A91FD6ED7300D51364 /* WRLDMapsceneRequest+Private.h */,
 				6FA013A71FD6EB8100D51364 /* WRLDMapsceneRequest.mm */,
 				6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */,
 				6F47C7691FD5B0CA0071ECE5 /* WRLDMapsceneRequestResponse.m */,
 				6FA013A51FD6DF7B00D51364 /* WRLDMapsceneRequestOptions.mm */,
-				6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig.h */,
+				6F96F3401FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig+Private.h */,
 				6F96F3421FE02D1400A560FF /* WRLDMapsceneSearchMenuConfig.m */,
-				6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem.h */,
+				6F96F33C1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h */,
 				6F96F33E1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m */,
 				6F9BAB921FC8723700865338 /* WRLDMapsceneService+Private.h */,
 				6F9BAB951FC8856900865338 /* WRLDMapsceneService.mm */,
-				6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */,
+				6F0FA8BF1FE41BA700C9D71D /* WRLDMapsceneStartLocation+Private.h */,
 				6FA013AF1FD80FC600D51364 /* WRLDMapsceneStartLocation.mm */,
 				E0A48BFD1EBB328000DD387F /* WRLDNativeMapView.h */,
 				E0A48BFF1EBB32B900DD387F /* WRLDNativeMapView.mm */,
@@ -618,10 +626,14 @@
 				E0F4E1701EB347FB00949ACE /* WRLDMapViewDelegate.h */,
 				5200BC481ECB5FCF00B6E263 /* WRLDMapView+IBAdditions.h */,
 				6F47C76D1FD5B6B40071ECE5 /* WRLDMapscene.h */,
+				6F0FA8C11FE41CCF00C9D71D /* WRLDMapsceneDataSource.h */,
 				6F9BAB9B1FCC5C2F00865338 /* WRLDMapsceneRequest.h */,
 				6FA013A31FD6DB9A00D51364 /* WRLDMapsceneRequestOptions.h */,
 				6F47C76B1FD5B50C0071ECE5 /* WRLDMapsceneRequestResponse.h */,
+				6F0FA8C31FE41E1F00C9D71D /* WRLDMapsceneSearchMenuConfig.h */,
+				6F0FA8C51FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h */,
 				6F9BAB8D1FC8366600865338 /* WRLDMapsceneService.h */,
+				6FA013AB1FD70A8B00D51364 /* WRLDMapsceneStartLocation.h */,
 				D0AAB6581EBB8C6600384605 /* WRLDMarker.h */,
 				528A5C7C1EDD9B8600C5454F /* WRLDPolygon.h */,
 				E085D0DB1F05472700FB60F9 /* WRLDPolyline.h */,
@@ -673,14 +685,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A82B34861FB4C785009B21D3 /* WRLDAutocompleteOptions.h in Headers */,
-				6F96F33D1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem.h in Headers */,
+				6F96F33D1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h in Headers */,
 				528A5C7D1EDD9BDA00C5454F /* WRLDPolygon.h in Headers */,
 				6F47C76E1FD5B6B40071ECE5 /* WRLDMapscene.h in Headers */,
 				5200BC491ECB607600B6E263 /* WRLDMapView+IBAdditions.h in Headers */,
 				521807B31EB9E34B0070ACDD /* WRLDCoordinateBounds.h in Headers */,
 				6FA013B41FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h in Headers */,
-				6F96F3391FDFF37100A560FF /* WRLDMapsceneDataSource.h in Headers */,
+				6F96F3391FDFF37100A560FF /* WRLDMapsceneDataSource+Private.h in Headers */,
 				E0F4E1791EB347FB00949ACE /* WRLDMapViewDelegate.h in Headers */,
+				6F0FA8C01FE41BA700C9D71D /* WRLDMapsceneStartLocation+Private.h in Headers */,
 				A82B34781FB4B966009B21D3 /* WRLDPoiService.h in Headers */,
 				E0A48BFE1EBB328000DD387F /* WRLDNativeMapView.h in Headers */,
 				A82B347A1FB4BC10009B21D3 /* WRLDPoiSearch.h in Headers */,
@@ -689,10 +702,12 @@
 				A82B34821FB4C731009B21D3 /* WRLDTagSearchOptions.h in Headers */,
 				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
+				6F0FA8C41FE41E1F00C9D71D /* WRLDMapsceneSearchMenuConfig.h in Headers */,
 				D01C9D8D1F20FE6600714D7F /* WRLDBlueSphere+Private.h in Headers */,
 				2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */,
 				E0F4E1771EB347FB00949ACE /* WRLDApi.h in Headers */,
 				D0AAB65C1EBB8E8A00384605 /* WRLDMarker.h in Headers */,
+				6F0FA8C21FE41CCF00C9D71D /* WRLDMapsceneDataSource.h in Headers */,
 				E0E9B9111ED345D600F94099 /* WRLDCoordinateWithAltitude.h in Headers */,
 				D22AA32C1F2F89A8002A902D /* WRLDIndoorGeoreferencer.h in Headers */,
 				024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */,
@@ -704,9 +719,10 @@
 				6F9BAB9C1FCC5C2F00865338 /* WRLDMapsceneRequest.h in Headers */,
 				D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi+Private.h in Headers */,
-				6F96F3411FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig.h in Headers */,
+				6F96F3411FE02B4000A560FF /* WRLDMapsceneSearchMenuConfig+Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				A89A8FD41FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h in Headers */,
+				6F0FA8C61FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
 				A8E599711FB5D0D100695193 /* WRLDPoiService+Private.h in Headers */,
 				A83FFABB1FA21E6E0096DE13 /* WRLDPositioner.h in Headers */,

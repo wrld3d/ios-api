@@ -9,7 +9,7 @@
     
 }
 
--initMapsceneDataSource:(NSString*)covarageTreeManifestUrl themeManifestUrl:(NSString*)themeManifestUrl
+-initWithCovarageTreeManifestUrl:(NSString*)covarageTreeManifestUrl themeManifestUrl:(NSString*)themeManifestUrl
 {
     self = [super init];
     

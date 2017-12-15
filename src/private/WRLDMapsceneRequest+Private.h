@@ -8,6 +8,6 @@
 
 @interface WRLDMapsceneRequest (Private)
 
-- (instancetype)initMapsceneRequest:(Eegeo::Api::EegeoMapsceneApi*)mapsceneApi :(WRLDMapsceneRequestOptions *)mapsceneRequestOptions;
+- (instancetype)initWithMapsceneApi:(Eegeo::Api::EegeoMapsceneApi*)mapsceneApi :(WRLDMapsceneRequestOptions *)mapsceneRequestOptions;
 
 @end

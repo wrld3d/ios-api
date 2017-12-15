@@ -10,7 +10,7 @@
 
 }
 
--(instancetype)initMapsceneStartLocation:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance interiorFloorIndex:(int)interiorFloorIndex interiorId:(NSString*)interiorId heading:(double)heading tryStartAtGpsLocation:(bool)tryStartAtGpsLocation
+-(instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance interiorFloorIndex:(int)interiorFloorIndex interiorId:(NSString*)interiorId heading:(double)heading tryStartAtGpsLocation:(bool)tryStartAtGpsLocation
 {
     self = [super init];
     

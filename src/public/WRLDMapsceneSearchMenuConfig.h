@@ -1,5 +1,4 @@
 #pragma once
-
 #import <Foundation/Foundation.h>
 
 @interface WRLDMapsceneSearchMenuConfig:NSObject
@@ -12,6 +11,5 @@
 
 @property (nonatomic, readonly) bool overrideIndoorSearchMenu;
 
--(instancetype)initMapsceneSearchMenuConfig:(NSArray*)outdoorSeachMenuItems performStartupSearch:(bool)performStartupSearch startupSearchTerm:(NSString*)startupSearchTerm overrideIndoorSearchMenu:(bool)overrideIndoorSearchMenu;
-
 @end
+

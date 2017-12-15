@@ -6,6 +6,6 @@
 
 @interface WRLDMapsceneRequestResponse (Private)
 
--(instancetype)initMapsceneRequestResponse :(bool)succeeded :(WRLDMapscene*)mapscene;
+-(instancetype)initWithSucceeded:(bool)succeeded mapscene:(WRLDMapscene*)mapscene;
 
 @end

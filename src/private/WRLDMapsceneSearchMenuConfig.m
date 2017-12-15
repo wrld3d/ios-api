@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "WRLDMapsceneSearchMenuConfig.h"
+#import "WRLDMapsceneSearchMenuConfig+Private.h"
 
 @interface WRLDMapsceneSearchMenuConfig()
 
@@ -16,7 +17,7 @@
 
 @implementation WRLDMapsceneSearchMenuConfig
 
--(instancetype)initMapsceneSearchMenuConfig:(NSArray*)outdoorSeachMenuItems performStartupSearch:(bool)performStartupSearch startupSearchTerm:(NSString*)startupSearchTerm overrideIndoorSearchMenu:(bool)overrideIndoorSearchMenu
+-(instancetype)initWithOutdoorSeachMenuItems:(NSArray*)outdoorSeachMenuItems performStartupSearch:(bool)performStartupSearch startupSearchTerm:(NSString*)startupSearchTerm overrideIndoorSearchMenu:(bool)overrideIndoorSearchMenu
 {
     self = [super init];
     

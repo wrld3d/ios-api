@@ -9,31 +9,29 @@
 
 @implementation WRLDMapscene
 
--(void)setName:(NSString*)name
+-(instancetype)initWithName:(NSString*)name
+                  shortLink:(NSString*)shortLink
+                     apiKey:(NSString*)apiKey
+  wrldMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation
+     wrldMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource
+wrldMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig
 {
-    _name = name;
-}
--(void)setShortLink:(NSString*)shortLink
-{
-    _shortLinkUrl=shortLink;
-}
--(void)setApiKey:(NSString*)apiKey
-{
-    _apiKey=apiKey;
-}
--(void)setWRLDMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation
-{
-    _wrldMapsceneStartLocation = wrldMapsceneStartLocation;
+    
+    self = [super init];
+    
+    if(self)
+    {
+        _name = name;
+        _shortLinkUrl=shortLink;
+        _apiKey=apiKey;
+        _wrldMapsceneStartLocation = wrldMapsceneStartLocation;
+        _wrldMapsceneDataSource = wrldMapsceneDataSource;
+        _wrldMapsceneSearchMenuConfig = wrldMapsceneSearchMenuConfig;
+    }
+    
+    return self;
+    
 }
 
--(void)setWRLDMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource
-{
-    _wrldMapsceneDataSource = wrldMapsceneDataSource;
-}
-
--(void)setWRLDMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig
-{
-    _wrldMapsceneSearchMenuConfig = wrldMapsceneSearchMenuConfig;
-}
 
 @end

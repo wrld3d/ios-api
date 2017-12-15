@@ -5,33 +5,20 @@
 @end
 
 @implementation WRLDMapsceneRequestOptions
-{
-    NSString* m_shortLinkUrl;
-    bool m_applyMapsceneOnSuccess;
-}
 
--(instancetype)initMapsceneRequestOptions :(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess
+-(instancetype)initWithShortLink:(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess
 {
     
     self = [super init];
     
     if(self)
     {
-        m_shortLinkUrl = shortLinkUrl;
-        m_applyMapsceneOnSuccess = applyMapsceneOnSuccess;
+        _shortLinkUrl = shortLinkUrl;
+        _applyMapsceneOnSuccess = applyMapsceneOnSuccess;
     }
     
     return self;
 }
 
--(NSString*)getShortLinkUrl
-{
-    return m_shortLinkUrl;
-}
-
--(bool)getApplyMapsceneOnSuccess
-{
-    return m_applyMapsceneOnSuccess;
-}
 
 @end

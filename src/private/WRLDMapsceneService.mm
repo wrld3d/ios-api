@@ -27,7 +27,7 @@
 -(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions
 {
     
-    WRLDMapsceneRequest* m_mapsceneRequest = [[WRLDMapsceneRequest alloc] initMapsceneRequest :m_mapsceneApi :mapsceneRequestOptions];
+    WRLDMapsceneRequest* m_mapsceneRequest = [[WRLDMapsceneRequest alloc] initWithMapsceneApi:m_mapsceneApi :mapsceneRequestOptions];
     
     return m_mapsceneRequest;
 }

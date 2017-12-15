@@ -12,7 +12,7 @@
 
 @implementation WRLDMapsceneRequestResponse
 
--(instancetype)initMapsceneRequestResponse :(bool)succeeded :(WRLDMapscene*)mapscene
+-(instancetype)initWithSucceeded :(bool)succeeded :(WRLDMapscene*)mapscene
 {
     
     self = [super init];

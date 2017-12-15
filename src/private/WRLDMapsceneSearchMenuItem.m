@@ -8,7 +8,7 @@
     
 }
 
--(instancetype)initMapsceneSearchMenuItem:(NSString*)name tag:(NSString*)tag iconKey:(NSString*)iconKey skipYelpSearch:(bool)skipYelpSearch
+-(instancetype)initWithName:(NSString*)name tag:(NSString*)tag iconKey:(NSString*)iconKey skipYelpSearch:(bool)skipYelpSearch
 {
     self = [super init];
     
