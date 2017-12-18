@@ -7,6 +7,8 @@
 @class WRLDPoiSearch;
 @class WRLDPoiSearchResponse;
 @class WRLDMapsceneRequestResponse;
+@class WRLDRoutingQuery;
+@class WRLDRoutingQueryResponse;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -71,9 +73,17 @@ A message sent when a POI search completes.
 poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
 
 /*
- TODO DOCS
+ TODO DOCS (and rename method)
  */
 - (void)mapView:(WRLDMapView *)mapView mapsceneResponse:(WRLDMapsceneRequestResponse*)mapsceneResponse;
 
+/*!
+ A message sent when a routing query completes.
+ @param mapView The WRLDMapView that is being observed.
+ @param routingQueryId The ID of the WRLDRoutingQuery.
+ @param routingQueryResponse The WRLDRoutingQueryResponse for this query. If successful, this will contain routing results.
+ */
+- (void)mapView:(WRLDMapView *)mapView routingQueryDidComplete: (int) routingQueryId
+routingQueryResponse: (WRLDRoutingQueryResponse*) routingQueryResponse;
 
 @end

@@ -2,6 +2,7 @@
 
 #include "EegeoMapApi.h"
 #include "PoiSearchResults.h"
+#include "RoutingQueryResponse.h"
 #include "PositioningTypes.h"
 #include "MapsceneRequestResponse.h"
 
@@ -28,7 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyExitedIndoorMap;
 
 - (void)notifyPoiSearchCompleted:(const Eegeo::PoiSearch::PoiSearchResults&)result;
+
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result;
+
+- (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result;
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 

@@ -19,11 +19,16 @@
 #import "WRLDMapsceneDataSource.h"
 #import "WRLDMapsceneSearchMenuConfig.h"
 #import "WRLDMapsceneSearchMenuItem.h"
-
 #import "WRLDMapsceneStartLocation+Private.h"
 #import "WRLDMapsceneDataSource+Private.h"
 #import "WRLDMapsceneSearchMenuConfig+Private.h"
 #import "WRLDMapsceneSearchMenuItem+Private.h"
+
+#import "WRLDRoutingService.h"
+#import "WRLDRoutingService+Private.h"
+#import "WRLDRoutingQueryResponse.h"
+#import "RoutingQueryResponse.h"
+#import "WRLDRoutingServiceHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -868,6 +873,14 @@ const double defaultStartZoomLevel = 8;
     return [[WRLDMapsceneService alloc] initWithApi: [self getMapApi].GetMapsceneApi() ];
 }
 
+#pragma mark - Routing service
+
+- (WRLDRoutingService*)createRoutingService
+{
+    return [[WRLDRoutingService alloc] initWithApi: [self getMapApi].GetRoutingApi() ];
+    
+}
+
 #pragma mark - WRLDMapView (Private)
     
     
@@ -1024,7 +1037,6 @@ template<typename T> inline T* safe_cast(id instance)
     [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
 }
 
-
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
 {
     
@@ -1085,6 +1097,13 @@ template<typename T> inline T* safe_cast(id instance)
         
         [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
     }
+}
+
+- (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result
+{
+    WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
+
+    [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
 }
 
 @end

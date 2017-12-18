@@ -3,7 +3,6 @@
 #import <Foundation/Foundation.h>
 #import "WRLDMapscene.h"
 
-NS_ASSUME_NONNULL_BEGIN
 /*!
  * A response to the mapscene Request. This is returned when a mapscene request completes via a callback.
  */
@@ -13,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) bool succeeded;
 
 /// Holds the resulting mapscene from the request to the mapscene service.
-@property (readonly) WRLDMapscene* mapscene;
+@property (readonly, nullable) WRLDMapscene* mapscene;
 
 @end
 
-NS_ASSUME_NONNULL_END

@@ -1,8 +1,9 @@
 #pragma once
 
+#import "WRLDMapsceneRequest.h"
+#import "WRLDMapsceneRequestOptions.h"
+
 #include "EegeoMapsceneApi.h"
-#include "WRLDMapsceneRequest.h"
-#include "WRLDMapsceneRequestOptions.h"
 
 @class WRLDMapsceneRequest;
 

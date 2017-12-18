@@ -1,9 +1,10 @@
 #import <Foundation/Foundation.h>
 
-#include "WRLDMapsceneService+Private.h"
 #include "EegeoMapsceneApi.h"
-#include "WRLDMapsceneRequest+Private.h"
-#include "WRLDMapsceneRequestOptions.h"
+
+#import "WRLDMapsceneService+Private.h"
+#import "WRLDMapsceneRequest+Private.h"
+#import "WRLDMapsceneRequestOptions.h"
 
 @interface WRLDMapsceneService()
 

@@ -1,11 +1,12 @@
 #pragma once
 
-#include "WRLDMapsceneRequestResponse.h"
-
 @class WRLDMapsceneRequestResponse;
+@class WRLDMapscene;
+
+#import "WRLDMapsceneRequestResponse.h"
 
 @interface WRLDMapsceneRequestResponse (Private)
 
--(instancetype)initWithSucceeded:(bool)succeeded mapscene:(WRLDMapscene*)mapscene;
+-(nullable instancetype)initWithSucceeded:(bool)succeeded mapscene:(nullable WRLDMapscene*)mapscene;
 
 @end

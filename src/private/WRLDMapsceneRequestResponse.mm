@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
-#include "WRLDMapsceneRequestResponse.h"
-#include "WRLDMapsceneRequestResponse+Private.h"
+#import "WRLDMapsceneRequestResponse.h"
+#import "WRLDMapsceneRequestResponse+Private.h"
 
 @interface WRLDMapsceneRequestResponse()
 {
@@ -11,8 +11,11 @@
 @end
 
 @implementation WRLDMapsceneRequestResponse
+{
+    
+}
 
--(instancetype)initWithSucceeded :(bool)succeeded :(WRLDMapscene*)mapscene
+-(nullable instancetype)initWithSucceeded :(bool)succeeded mapscene:(nullable WRLDMapscene*)mapscene
 {
     
     self = [super init];

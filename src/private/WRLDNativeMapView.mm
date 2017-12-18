@@ -7,6 +7,7 @@
 #include "EegeoApiHostModule.h"
 #include "EegeoPoiApi.h"
 #include "EegeoMapsceneApi.h"
+#include "EegeoRoutingApi.h"
 #include "iOSApiRunner.h"
 
 
@@ -22,6 +23,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_exitedIndoorMapHandler(this, &WRLDNativeMapView::OnExitedIndoorMap)
 , m_poiSearchCompletedHandler(this, &WRLDNativeMapView::OnPoiSearchCompleted)
 , m_mapsceneCompletedHandler(this, &WRLDNativeMapView::OnMapsceneLoadCompleted)
+, m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -33,12 +35,14 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetIndoorsApi().RegisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetPoiApi().RegisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetMapsceneApi().RegisterMapsceneRequestCompletedCallback(m_mapsceneCompletedHandler);
+    mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
+    mapApi.GetRoutingApi().UnregisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetPoiApi().UnregisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
@@ -108,6 +112,11 @@ void WRLDNativeMapView::OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchRe
 void WRLDNativeMapView::OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneResponse)
 {
     [m_mapView notifyMapsceneCompleted:mapsceneResponse];
+}
+
+void WRLDNativeMapView::OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse)
+{
+    [m_mapView notifyRoutingQueryCompleted:routingQueryResponse];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()

@@ -1,6 +1,7 @@
-#include "WRLDMapsceneRequest+Private.h"
-#include "WRLDMapsceneRequest.h"
-#include "WRLDMapsceneRequestOptions.h"
+#import "WRLDMapsceneRequest+Private.h"
+#import "WRLDMapsceneRequest.h"
+#import "WRLDMapsceneRequestOptions.h"
+
 #include "EegeoMapsceneApi.h"
 #include "Mapscene.h"
 
