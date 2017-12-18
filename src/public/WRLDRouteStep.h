@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @returns The estimated distance this step covers in meters.
  */
-- (double) distance;
+- (CLLocationDistance) distance;
 
 @end
 

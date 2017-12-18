@@ -15,7 +15,7 @@
     NSString* m_indoorId;
     int m_indoorFloorId;
     NSTimeInterval m_duration;
-    double m_distance;
+    CLLocationDistance m_distance;
 }
 
 - (instancetype)initWithPath:(CLLocationCoordinate2D*)path
@@ -26,7 +26,7 @@
                     indoorId:(NSString*)indoorId
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
-                    distance:(double)distance
+                    distance:(CLLocationDistance)distance
 {
     if (self = [super init])
     {
@@ -84,7 +84,7 @@
     return m_duration;
 }
 
-- (double) distance
+- (CLLocationDistance) distance
 {
     return m_distance;
 }
