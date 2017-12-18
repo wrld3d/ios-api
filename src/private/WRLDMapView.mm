@@ -209,13 +209,16 @@ const double defaultStartZoomLevel = 8;
     
     const double latitude = hasStartLocation ? [self startLatitude] : 0.0;
     const double longitude = hasStartLocation ? [self startLongitude] : 0.0;
-    const double distanceToInterest = cameraApi.GetDistanceFromZoomLevel(static_cast<float>([self startZoomLevel]));
+    const double startZoomLevel = [self startZoomLevel];
     const double heading = [self startDirection];
-    const double interestAltitude = 0.0;
-    const double pitch = 0.0;
-    const bool setPitch = false;
     
-    cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
+    const auto& cameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(latitude, longitude)
+        .SetZoomLevel(startZoomLevel)
+        .SetBearing(heading)
+        .Build();
+    
+    cameraApi.MoveCamera(cameraUpdate);
 }
 
 - (void)_initialiseBlueSphere
@@ -475,8 +478,8 @@ const double defaultStartZoomLevel = 8;
 
 - (CLLocationCoordinate2D)centerCoordinate
 {
-    Eegeo::Space::LatLong latLong = [self getMapApi].GetCameraApi().GetInterestLatLong();
-    return CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
+    const auto& mapCameraPosition = [self getMapApi].GetCameraApi().GetMapCameraPosition();
+    return CLLocationCoordinate2DMake(mapCameraPosition.GetLatitudeDegrees(), mapCameraPosition.GetLongitudeDegrees());
 }
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
@@ -546,7 +549,8 @@ const double defaultStartZoomLevel = 8;
 
 - (CLLocationDirection)direction
 {
-    return [self getMapApi].GetCameraApi().GetHeadingDegrees();
+    const auto& mapCameraPosition = [self getMapApi].GetCameraApi().GetMapCameraPosition();
+    return mapCameraPosition.GetBearingDegrees();
 }
 
 - (void)setDirection:(CLLocationDirection)direction
@@ -605,7 +609,13 @@ const double defaultStartZoomLevel = 8;
 - (WRLDMapCamera *)camera
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    return [WRLDMapCamera cameraLookingAtCenterCoordinate:self.centerCoordinate fromDistance:cameraApi.GetDistanceToInterest() pitch:cameraApi.GetPitchDegrees() heading:self.direction];
+    const auto& mapCameraPosition = cameraApi.GetMapCameraPosition();
+    
+    return [WRLDMapCamera cameraLookingAtCenterCoordinate:self.centerCoordinate
+                                             fromDistance:mapCameraPosition.GetDistanceToInterest()
+                                                    pitch:static_cast<float>(mapCameraPosition.GetZenithAngleDegrees())
+            // todo_camera_api - is this correctly representing platform mapCamera state?
+                                                  heading:self.direction];
 }
 
 - (void)setCamera:(WRLDMapCamera *)camera
