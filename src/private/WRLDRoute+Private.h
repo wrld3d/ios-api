@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSections:(NSMutableArray*)sections
                         duration:(NSTimeInterval)duration
-                        distance:(double)distance;
+                        distance:(CLLocationDistance)distance;
 
 @end
 

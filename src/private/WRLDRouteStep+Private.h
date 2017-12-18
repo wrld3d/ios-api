@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
                     indoorId:(NSString*)indoorId
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
-                    distance:(double)distance;
+                    distance:(CLLocationDistance)distance;
 
 @end
 
