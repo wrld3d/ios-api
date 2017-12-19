@@ -9,12 +9,12 @@
 {
     NSMutableArray* m_sections;
     NSTimeInterval m_duration;
-    double m_distance;
+    CLLocationDistance m_distance;
 }
 
 - (instancetype)initWithSections:(NSMutableArray*)sections
                         duration:(NSTimeInterval)duration
-                        distance:(double)distance
+                        distance:(CLLocationDistance)distance
 {
     if (self = [super init])
     {
@@ -36,7 +36,7 @@
     return m_duration;
 }
 
-- (double) distance
+- (CLLocationDistance) distance
 {
     return m_distance;
 }

@@ -12,6 +12,10 @@
 #import "WRLDPoiService+Private.h"
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
+#import "WRLDMapsceneService+Private.h"
+#import "WRLDMapsceneRequestResponse+Private.h"
+#import "WRLDMapsceneServiceHelpers.h"
+#import "WRLDMapsceneStartLocation.h"
 #import "WRLDRoutingService.h"
 #import "WRLDRoutingService+Private.h"
 #import "WRLDRoutingQueryResponse.h"
@@ -37,6 +41,8 @@
 #include "MapCameraPositionBuilder.h"
 #include "MapCameraAnimationOptionsBuilder.h"
 #include "WRLDMapView+Private.h"
+#include "EegeoMapsceneApi.h"
+#include "MapsceneRequestResponse.h"
 
 #include <string>
 
@@ -898,11 +904,19 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     return [[WRLDPoiService alloc] initWithApi: [self getMapApi].GetPoiApi() ];
 }
 
+#pragma mark - Mapscene service
+
+- (WRLDMapsceneService*)createMapsceneService
+{
+    return [[WRLDMapsceneService alloc] initWithApi: [self getMapApi].GetMapsceneApi() ];
+}
+
 #pragma mark - Routing service
 
 - (WRLDRoutingService*)createRoutingService
 {
     return [[WRLDRoutingService alloc] initWithApi: [self getMapApi].GetRoutingApi() ];
+    
 }
 
 #pragma mark - WRLDMapView (Private)
@@ -1059,6 +1073,22 @@ template<typename T> inline T* safe_cast(id instance)
     }
 
     [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+}
+
+- (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
+{
+    WRLDMapsceneRequestResponse* response = [WRLDMapsceneServiceHelpers createWRLDMapsceneRequestResponse:result];
+    
+    // Application of starting position
+    // TODO: Move to platform once camera API update is concluded.
+    if(result.Success())
+    {
+        WRLDMapsceneStartLocation* startLocation = response.mapscene.startLocation;
+
+        [self _setView:startLocation.coordinate distance:startLocation.distance heading:startLocation.heading pitch:90 animated:false];
+    }
+    
+    [self.delegate mapView:self mapsceneRequestDidComplete:result.GetRequestId() mapsceneResponse:response];
 }
 
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result

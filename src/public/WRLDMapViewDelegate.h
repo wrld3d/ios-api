@@ -6,6 +6,7 @@
 @class WRLDPositioner;
 @class WRLDPoiSearch;
 @class WRLDPoiSearchResponse;
+@class WRLDMapsceneRequestResponse;
 @class WRLDRoutingQuery;
 @class WRLDRoutingQueryResponse;
 
@@ -70,6 +71,14 @@ A message sent when a POI search completes.
  */
 - (void)mapView:(WRLDMapView *)mapView poiSearchDidComplete: (int) poiSearchId
 poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
+
+/*
+ A message sent when a mapscene request completes.
+ @param mapView the WRLDMapView that is being observed
+ @param requestId the ID of the WRLDMapsceneRequest
+ @param mapsceneResponse the WRLDMapsceneRequestResponse for this query. If successful, this will contain a valid WRLDMapscene, otherwise nil.
+ */
+- (void)mapView:(WRLDMapView *)mapView mapsceneRequestDidComplete: (int)requestId mapsceneResponse:(WRLDMapsceneRequestResponse*)mapsceneResponse;
 
 /*!
  A message sent when a routing query completes.

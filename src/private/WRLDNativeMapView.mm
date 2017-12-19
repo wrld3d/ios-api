@@ -6,6 +6,7 @@
 #include "EegeoIndoorsApi.h"
 #include "EegeoApiHostModule.h"
 #include "EegeoPoiApi.h"
+#include "EegeoMapsceneApi.h"
 #include "EegeoRoutingApi.h"
 #include "iOSApiRunner.h"
 
@@ -21,6 +22,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_enteredIndoorMapHandler(this, &WRLDNativeMapView::OnEnteredIndoorMap)
 , m_exitedIndoorMapHandler(this, &WRLDNativeMapView::OnExitedIndoorMap)
 , m_poiSearchCompletedHandler(this, &WRLDNativeMapView::OnPoiSearchCompleted)
+, m_mapsceneCompletedHandler(this, &WRLDNativeMapView::OnMapsceneLoadCompleted)
 , m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
@@ -32,6 +34,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetIndoorsApi().RegisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetPoiApi().RegisterSearchCompletedCallback(m_poiSearchCompletedHandler);
+    mapApi.GetMapsceneApi().RegisterMapsceneRequestCompletedCallback(m_mapsceneCompletedHandler);
     mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
 }
 
@@ -104,6 +107,11 @@ void WRLDNativeMapView::OnExitedIndoorMap()
 void WRLDNativeMapView::OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults)
 {
     [m_mapView notifyPoiSearchCompleted:poiSearchResults];
+}
+
+void WRLDNativeMapView::OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneResponse)
+{
+    [m_mapView notifyMapsceneCompleted:mapsceneResponse];
 }
 
 void WRLDNativeMapView::OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse)

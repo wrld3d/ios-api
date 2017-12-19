@@ -11,6 +11,8 @@
 #include "EegeoPositionerApi.h"
 #include "EegeoPoiApi.h"
 #include "EegeoRoutingApi.h"
+#include "MapsceneRequestResponse.h"
+#include "RoutingQueryResponse.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -28,6 +30,7 @@ private:
     void OnEnteredIndoorMap();
     void OnExitedIndoorMap();
     void OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults);
+    void OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneRequestResponse);
     void OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse);
     
     Eegeo::Api::EegeoMapApi& GetMapApi();
@@ -49,6 +52,8 @@ private:
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_exitedIndoorMapHandler;
     
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::PoiSearch::PoiSearchResults> m_poiSearchCompletedHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Mapscenes::MapsceneRequestResponse> m_mapsceneCompletedHandler;
 
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Routes::Webservice::RoutingQueryResponse> m_routingQueryCompletedHandler;
 };
