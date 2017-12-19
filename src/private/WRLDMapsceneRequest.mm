@@ -33,4 +33,9 @@
     m_mapsceneApi->CancelRequest(m_requestId);
 }
 
+-(int)requestId
+{
+    return m_requestId;
+}
+
 @end

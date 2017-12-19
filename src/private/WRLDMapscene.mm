@@ -1,7 +1,7 @@
 #include "WRLDMapscene.h"
 #include "WRLDMapscene+Private.h"
 #include "WRLDMapsceneStartLocation.h"
-#include "WRLDMapsceneDataSource.h"
+#include "WRLDMapsceneDataSources.h"
 
 @interface WRLDMapscene()
 
@@ -12,9 +12,9 @@
 -(instancetype)initWithName:(NSString*)name
                   shortLink:(NSString*)shortLink
                      apiKey:(NSString*)apiKey
-  wrldMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation
-     wrldMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource
-wrldMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig
+              startLocation:(WRLDMapsceneStartLocation*)startLocation
+                dataSources:(WRLDMapsceneDataSources *)dataSources
+               searchConfig:(WRLDMapsceneSearchConfig *)searchConfig
 {
     
     self = [super init];
@@ -24,9 +24,9 @@ wrldMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchM
         _name = name;
         _shortLinkUrl=shortLink;
         _apiKey=apiKey;
-        _wrldMapsceneStartLocation = wrldMapsceneStartLocation;
-        _wrldMapsceneDataSource = wrldMapsceneDataSource;
-        _wrldMapsceneSearchMenuConfig = wrldMapsceneSearchMenuConfig;
+        _startLocation = startLocation;
+        _dataSources = dataSources;
+        _searchConfig = searchConfig;
     }
     
     return self;

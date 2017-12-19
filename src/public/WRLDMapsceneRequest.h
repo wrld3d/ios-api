@@ -13,6 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)cancel;
 
+/*!
+ @returns The ID of this request.
+ */
+- (int)requestId;
+
 @end
 
 NS_ASSUME_NONNULL_END

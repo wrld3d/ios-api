@@ -73,9 +73,12 @@ A message sent when a POI search completes.
 poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
 
 /*
- TODO DOCS (and rename method)
+ A message sent when a mapscene request completes.
+ @param mapView the WRLDMapView that is being observed
+ @param requestId the ID of the WRLDMapsceneRequest
+ @param mapsceneResponse the WRLDMapsceneRequestResponse for this query. If successful, this will contain a valid WRLDMapscene, otherwise nil.
  */
-- (void)mapView:(WRLDMapView *)mapView mapsceneResponse:(WRLDMapsceneRequestResponse*)mapsceneResponse;
+- (void)mapView:(WRLDMapView *)mapView mapsceneRequestDidComplete: (int)requestId mapsceneResponse:(WRLDMapsceneRequestResponse*)mapsceneResponse;
 
 /*!
  A message sent when a routing query completes.

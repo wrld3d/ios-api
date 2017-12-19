@@ -5,8 +5,8 @@
 
 
 @class WRLDMapsceneStartLocation;
-@class WRLDMapsceneDataSource;
-@class WRLDMapsceneSearchMenuConfig;
+@class WRLDMapsceneDataSources;
+@class WRLDMapsceneSearchConfig;
 @class WRLDMapscene;
 
 @interface WRLDMapscene (Private)
@@ -14,9 +14,9 @@
 -(instancetype)initWithName:(NSString*)name
                   shortLink:(NSString*)shortLink
                      apiKey:(NSString*)apiKey
-  wrldMapsceneStartLocation:(WRLDMapsceneStartLocation*)wrldMapsceneStartLocation
-     wrldMapsceneDataSource:(WRLDMapsceneDataSource *)wrldMapsceneDataSource
-wrldMapsceneSearchMenuConfig:(WRLDMapsceneSearchMenuConfig *)wrldMapsceneSearchMenuConfig;
+              startLocation:(WRLDMapsceneStartLocation*)startLocation
+                dataSources:(WRLDMapsceneDataSources *)dataSources
+               searchConfig:(WRLDMapsceneSearchConfig *)searchConfig;
 
 @end
 

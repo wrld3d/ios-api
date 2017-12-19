@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(instancetype)initWithShortLink:(NSString*)shortLinkUrl applyMapsceneOnSuccess:(bool)applyMapsceneOnSuccess;
 
-/// gets the short link.
+/// get the shortlink or url used to load the mapscene
 @property (readonly) NSString* shortLinkUrl;
 
-/// applyMapscene
+/// whether to apply the mapscene to the map when successfully loaded
 @property (readonly) bool applyMapsceneOnSuccess;
 
 @end

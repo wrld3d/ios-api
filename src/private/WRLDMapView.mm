@@ -13,17 +13,9 @@
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiSearchResult.h"
 #import "WRLDMapsceneService+Private.h"
-#import "WRLDMapscene+Private.h"
 #import "WRLDMapsceneRequestResponse+Private.h"
+#import "WRLDMapsceneServiceHelpers.h"
 #import "WRLDMapsceneStartLocation.h"
-#import "WRLDMapsceneDataSource.h"
-#import "WRLDMapsceneSearchMenuConfig.h"
-#import "WRLDMapsceneSearchMenuItem.h"
-#import "WRLDMapsceneStartLocation+Private.h"
-#import "WRLDMapsceneDataSource+Private.h"
-#import "WRLDMapsceneSearchMenuConfig+Private.h"
-#import "WRLDMapsceneSearchMenuItem+Private.h"
-
 #import "WRLDRoutingService.h"
 #import "WRLDRoutingService+Private.h"
 #import "WRLDRoutingQueryResponse.h"
@@ -1039,64 +1031,18 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
 {
+    WRLDMapsceneRequestResponse* response = [WRLDMapsceneServiceHelpers createWRLDMapsceneRequestResponse:result];
     
-    
+    // Application of starting position
+    // TODO: Move to platform once camera API update is concluded.
     if(result.Success())
     {
-        Eegeo::Mapscenes::Mapscene responseMapscene = result.GetMapscene();
-        
-        
-        Eegeo::Mapscenes::MapsceneDataSources dataSource=responseMapscene.dataSources;
-        
-        WRLDMapsceneDataSource* wrldMapsceneDataSource = [[WRLDMapsceneDataSource alloc]
-                                                          initWithCovarageTreeManifestUrl:[NSString stringWithCString:dataSource.coverageTreeManifestUrl.c_str() encoding:NSUTF8StringEncoding]
-                                                          themeManifestUrl:[NSString stringWithCString: dataSource.themeManifestUrl.c_str() encoding:NSUTF8StringEncoding]];
-        
-        Eegeo::Mapscenes::MapsceneSearchConfig searchConfig=responseMapscene.searchConfig;
-        NSMutableArray* wrldMapsceneSearchMenuItems;
-        for(auto& searchMenuItem : searchConfig.outdoorSearchMenuItems)
-        {
-            [wrldMapsceneSearchMenuItems addObject:[[WRLDMapsceneSearchMenuItem alloc]
-                                                    initWithName:[NSString stringWithCString: searchMenuItem.name.c_str() encoding:NSUTF8StringEncoding]
-                                                    tag:[NSString stringWithCString: searchMenuItem.tag.c_str() encoding:NSUTF8StringEncoding]
-                                                    iconKey:[NSString stringWithCString: searchMenuItem.iconKey.c_str() encoding:NSUTF8StringEncoding]
-                                                    skipYelpSearch:searchMenuItem.skipYelpSearch]];
-        }
-        WRLDMapsceneSearchMenuConfig* mapsceneSearchMenuConfig = [[WRLDMapsceneSearchMenuConfig alloc]
-                                                                  initWithOutdoorSeachMenuItems:wrldMapsceneSearchMenuItems
-                                                                  performStartupSearch:searchConfig.performStartUpSearch
-                                                                  startupSearchTerm:[NSString stringWithCString: searchConfig.startUpSearchTerm.c_str() encoding:NSUTF8StringEncoding]
-                                                                  overrideIndoorSearchMenu:searchConfig.overrideIndoorSearchMenu];
-        
-        WRLDMapsceneStartLocation* mapsceneStartLocation = [[WRLDMapsceneStartLocation alloc]
-                                                            initWithCoordinate:CLLocationCoordinate2DMake(responseMapscene.startLocation.startLocation.GetLatitudeInDegrees(), responseMapscene.startLocation.startLocation.GetLongitudeInDegrees())
-                                                            distance:responseMapscene.startLocation.startLocationDistanceToInterest
-                                                            interiorFloorIndex:responseMapscene.startLocation.startLocationInteriorFloorIndex
-                                                            interiorId:@(responseMapscene.startLocation.startLocationInteriorId.Value().c_str())
-                                                            heading:responseMapscene.startLocation.startLocationHeading
-                                                            tryStartAtGpsLocation:responseMapscene.startLocation.tryStartAtGpsLocation];
-        
-        
-        WRLDMapscene* wrldMapscene = [[WRLDMapscene alloc]
-                                         initWithName:[NSString stringWithCString: responseMapscene.name.c_str() encoding:NSUTF8StringEncoding]
-                                         shortLink:[NSString stringWithCString: responseMapscene.shortlink.c_str() encoding:NSUTF8StringEncoding]
-                                         apiKey:[NSString stringWithCString: responseMapscene.apiKey.c_str() encoding:NSUTF8StringEncoding]
-                                         wrldMapsceneStartLocation:mapsceneStartLocation
-                                         wrldMapsceneDataSource:wrldMapsceneDataSource
-                                         wrldMapsceneSearchMenuConfig:mapsceneSearchMenuConfig];
-        
-        WRLDMapsceneRequestResponse* mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initWithSucceeded:result.Success() mapscene:wrldMapscene];
-        
-        [self _setView:mapsceneStartLocation.coordinate distance:mapsceneStartLocation.distance heading:mapsceneStartLocation.heading pitch:90 animated:false];
-        
-        [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
+        WRLDMapsceneStartLocation* startLocation = response.mapscene.startLocation;
+
+        [self _setView:startLocation.coordinate distance:startLocation.distance heading:startLocation.heading pitch:90 animated:false];
     }
-    else
-    {
-        WRLDMapsceneRequestResponse* mapsceneResponse = [[WRLDMapsceneRequestResponse alloc] initWithSucceeded:result.Success() mapscene:nil];
-        
-        [self.delegate mapView:self mapsceneResponse:mapsceneResponse];
-    }
+    
+    [self.delegate mapView:self mapsceneRequestDidComplete:result.GetRequestId() mapsceneResponse:response];
 }
 
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result

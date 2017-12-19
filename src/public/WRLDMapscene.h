@@ -3,8 +3,8 @@
 #include <Foundation/Foundation.h>
 
 @class WRLDMapsceneStartLocation;
-@class WRLDMapsceneDataSource;
-@class WRLDMapsceneSearchMenuConfig;
+@class WRLDMapsceneDataSources;
+@class WRLDMapsceneSearchConfig;
 
 /*!
  * The data that defines a mapscene, as created by the Map Designer or the mapscene REST Api.
@@ -21,12 +21,12 @@
 @property (readonly) NSString* apiKey;
 
 /// The initial start location of the mapscene.
-@property (readonly) WRLDMapsceneStartLocation* wrldMapsceneStartLocation;
+@property (readonly) WRLDMapsceneStartLocation* startLocation;
 
 /// The configuration of the data and themes to load for this mapscene.
-@property (readonly) WRLDMapsceneDataSource* wrldMapsceneDataSource;
+@property (readonly) WRLDMapsceneDataSources* dataSources;
 
 /// Optional configuration of the Searchbox Widget for this mapscene.
-@property (readonly) WRLDMapsceneSearchMenuConfig* wrldMapsceneSearchMenuConfig;
+@property (readonly) WRLDMapsceneSearchConfig* searchConfig;
 
 @end

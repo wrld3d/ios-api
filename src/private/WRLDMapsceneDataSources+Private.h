@@ -2,11 +2,11 @@
 
 #import <Foundation/Foundation.h>
 
-#include "WRLDMapsceneDataSource.h"
+#include "WRLDMapsceneDataSources.h"
 
-@class WRLDMapsceneDataSource;
+@class WRLDMapsceneDataSources;
 
-@interface WRLDMapsceneDataSource (Private)
+@interface WRLDMapsceneDataSources (Private)
 
 -initWithCovarageTreeManifestUrl:(NSString*)covarageTreeManifestUrl themeManifestUrl:(NSString*)themeManifestUrl;
 

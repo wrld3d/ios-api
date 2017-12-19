@@ -1,10 +1,10 @@
-#include "WRLDMapsceneDataSource.h"
+#include "WRLDMapsceneDataSources.h"
 
-@interface WRLDMapsceneDataSource ()
+@interface WRLDMapsceneDataSources ()
 
 @end
 
-@implementation WRLDMapsceneDataSource
+@implementation WRLDMapsceneDataSources
 {
     
 }

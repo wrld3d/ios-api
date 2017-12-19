@@ -25,7 +25,7 @@
     return self;
 }
 
--(WRLDMapsceneRequest*)RequestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions
+-(WRLDMapsceneRequest*)requestMapscene :(WRLDMapsceneRequestOptions*)mapsceneRequestOptions
 {
     
     WRLDMapsceneRequest* m_mapsceneRequest = [[WRLDMapsceneRequest alloc] initWithMapsceneApi:m_mapsceneApi :mapsceneRequestOptions];

@@ -1,14 +1,14 @@
 #pragma once
 
 #import <Foundation/Foundation.h>
-#import  "WRLDMapsceneSearchMenuConfig.h"
+#import "WRLDMapsceneSearchConfig.h"
 
-@class WRLDMapsceneSearchMenuConfig;
+@class WRLDMapsceneSearchConfig;
 
-@interface WRLDMapsceneSearchMenuConfig(Private)
+@interface WRLDMapsceneSearchConfig(Private)
 
 
--(instancetype)initWithOutdoorSeachMenuItems:(NSArray*)outdoorSeachMenuItems
+-(instancetype)initWithOutdoorSeachMenuItems:(NSArray <WRLDMapsceneSearchMenuItem *>*)outdoorSeachMenuItems
                        performStartupSearch:(bool)performStartupSearch
                           startupSearchTerm:(NSString*)startupSearchTerm
                    overrideIndoorSearchMenu:(bool)overrideIndoorSearchMenu;
