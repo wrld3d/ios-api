@@ -1078,14 +1078,22 @@ template<typename T> inline T* safe_cast(id instance)
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
 {
     WRLDMapsceneRequestResponse* response = [WRLDMapsceneServiceHelpers createWRLDMapsceneRequestResponse:result];
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     
     // Application of starting position
     // TODO: Move to platform once camera API update is concluded.
     if(result.Success())
     {
         WRLDMapsceneStartLocation* startLocation = response.mapscene.startLocation;
-
-        [self _setView:startLocation.coordinate distance:startLocation.distance heading:startLocation.heading pitch:90 animated:false];
+        
+        Eegeo::Api::MapCameraUpdateBuilder mapCameraUpdateBuilder;
+        const auto& mapCameraUpdate = mapCameraUpdateBuilder.SetCoordinate(startLocation.coordinate.latitude, startLocation.coordinate.longitude)
+        .SetBearing(startLocation.heading)
+        .SetDistanceToInterest(startLocation.distance)
+        .SetZenithAngle(90)
+        .Build();
+        
+        cameraApi.MoveCamera(mapCameraUpdate);
     }
     
     [self.delegate mapView:self mapsceneRequestDidComplete:result.GetRequestId() mapsceneResponse:response];

@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
                                         heading:(CLLocationDirection)heading;
 
 /*!
- Instantiate a camera with a center, distance, pitch, and heading.
+ Instantiate a camera with a center, distance, pitch, heading, elevation, elevationMode, indoorMapId and indoorMapFloorId.
  @param centerCoordinate Coordinate to center the view on.
  @param distance The distance of the camera from the centerCoordinate.
  @param pitch The pitch angle in degrees relative to a top-down view.
