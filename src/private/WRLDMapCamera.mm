@@ -121,7 +121,9 @@
     [encoder encodeDouble:_distance forKey:@"distance"];
     [encoder encodeDouble:_pitch forKey:@"pitch"];
     [encoder encodeDouble:_heading forKey:@"heading"];
-    //todo_camera_api add elevationmode, indoormapid, indoormapfloorid
+    [encoder encodeInteger:_elevationMode forKey:@"elevationMode"];
+    [encoder encodeObject:_indoorMapId forKey:@"indoorMapId"];
+    [encoder encodeInteger:_indoorMapFloorId forKey:@"indoorMapFloorId"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)decoder
@@ -133,6 +135,10 @@
         _distance = [decoder decodeDoubleForKey:@"distance"];
         _pitch = [decoder decodeFloatForKey:@"pitch"];
         _heading = [decoder decodeDoubleForKey:@"heading"];
+        _elevationMode = WRLDElevationMode([decoder decodeIntegerForKey:@"elevationMode"]);
+        _indoorMapId = [decoder decodeObjectForKey:@"indoorMapId"];
+        _indoorMapFloorId = [decoder decodeIntegerForKey:@"indoorMapFloorId"];
+        
     }
     return self;
 }
