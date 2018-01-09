@@ -591,23 +591,23 @@ const double defaultStartZoomLevel = 8;
                    direction:(CLLocationDirection)direction
                     animated:(BOOL)animated
 {
-    Eegeo::Api::MapCameraUpdateBuilder mapCameraUpdateBuilder;
-    const auto& mapCameraUpdate = mapCameraUpdateBuilder.SetCoordinate(coordinate.latitude, coordinate.longitude)
-                                                        .SetBearing(direction)
-                                                        .SetZoomLevel(zoomLevel)
-                                                        .Build();
+    const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(coordinate.latitude, coordinate.longitude)
+        .SetBearing(direction)
+        .SetZoomLevel(zoomLevel)
+        .Build();
     
     [self _moveOrAnimateCamera:animated mapCameraUpdate:mapCameraUpdate];
 }
 
 - (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated
 {
-    Eegeo::Space::LatLongAltitude northEast = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0);
-    Eegeo::Space::LatLongAltitude southWest = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0);
+    const auto& northEast = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0);
+    const auto& southWest = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0);
     
     const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
-                                            .MakeForLatLongBounds(northEast.GetLatLong(), southWest.GetLatLong())
-                                            .Build();
+        .MakeForLatLongBounds(northEast.GetLatLong(), southWest.GetLatLong())
+        .Build();
     
     [self _moveOrAnimateCamera:animated mapCameraUpdate:mapCameraUpdate];
 }
@@ -616,12 +616,17 @@ const double defaultStartZoomLevel = 8;
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     const auto& mapCameraPosition = cameraApi.GetMapCameraPosition();
-    
-    return [WRLDMapCamera cameraLookingAtCenterCoordinate:self.centerCoordinate
-                                             fromDistance:mapCameraPosition.GetDistanceToInterest()
-                                                    pitch:static_cast<float>(mapCameraPosition.GetZenithAngleDegrees())
-            // todo_camera_api - is this correctly representing platform mapCamera state?
-                                                  heading:self.direction];
+    const auto& centerCoord = CLLocationCoordinate2DMake(mapCameraPosition.GetLatitudeDegrees(), mapCameraPosition.GetLongitudeDegrees());
+
+    return [WRLDMapCamera cameraLookingAtCenterCoordinateIndoors:centerCoord
+                                                    fromDistance:mapCameraPosition.GetDistanceToInterest()
+                                                           pitch:static_cast<CGFloat>(mapCameraPosition.GetZenithAngleDegrees())
+                                                         heading:mapCameraPosition.GetBearingDegrees()
+                                                       elevation:mapCameraPosition.GetElevation()
+                                                   elevationMode:static_cast<WRLDElevationMode>(mapCameraPosition.GetElevationMode())
+                                                     indoorMapId:[NSString stringWithUTF8String:mapCameraPosition.GetIndoorMapId().c_str()]
+                                                indoorMapFloorId:mapCameraPosition.GetIndoorMapFloorId()
+            ];
 }
 
 - (void)setCamera:(WRLDMapCamera *)camera
@@ -632,21 +637,21 @@ const double defaultStartZoomLevel = 8;
 const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
 {
     return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
-    ? Eegeo::Positioning::ElevationMode::HeightAboveGround
-    : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
+        ? Eegeo::Positioning::ElevationMode::HeightAboveGround
+        : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
 }
 
 + (Eegeo::Api::MapCameraUpdate)buildMapCameraUpdateFromCamera:(WRLDMapCamera*)camera
 {
-    Eegeo::Api::MapCameraUpdateBuilder mapCameraUpdateBuilder;
-    const auto& mapCameraUpdate = mapCameraUpdateBuilder.SetCoordinate(camera.centerCoordinate.latitude, camera.centerCoordinate.longitude)
-    .SetBearing(camera.heading)
-    .SetDistanceToInterest(camera.distance)
-    .SetZenithAngle(camera.pitch)
-    .SetElevation(camera.elevation)
-    .SetElevationMode(ToPositioningElevationMode(camera.elevationMode))
-    .SetIndoorMap([camera.indoorMapId UTF8String], static_cast<int>(camera.indoorMapFloorId))
-    .Build();
+    const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(camera.centerCoordinate.latitude, camera.centerCoordinate.longitude)
+        .SetBearing(camera.heading)
+        .SetDistanceToInterest(camera.distance)
+        .SetZenithAngle(camera.pitch)
+        .SetElevation(camera.elevation)
+        .SetElevationMode(ToPositioningElevationMode(camera.elevationMode))
+        .SetIndoorMap([camera.indoorMapId UTF8String], static_cast<int>(camera.indoorMapFloorId))
+        .Build();
     
     return mapCameraUpdate;
 }
