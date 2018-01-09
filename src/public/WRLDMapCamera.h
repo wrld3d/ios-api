@@ -7,7 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// An object representing a view of the map.
-@interface WRLDMapCamera : NSObject <NSSecureCoding, NSCopying>
+@interface WRLDMapCamera : NSObject <NSCopying>
 
 /*!
  Initialize a camera instance.

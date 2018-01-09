@@ -4,11 +4,6 @@
 
 @implementation WRLDMapCamera
 
-+ (BOOL)supportsSecureCoding
-{
-    return YES;
-}
-
 + (instancetype)camera
 {
     return [[self alloc] init];
@@ -112,35 +107,6 @@
 - (CLLocationDistance)altitude
 {
     return cos(_pitch * M_PI / 180) * _distance;
-}
-
-- (void)encodeWithCoder:(NSCoder *)encoder
-{
-    [encoder encodeDouble:_centerCoordinate.latitude forKey:@"centerCoordinateLatitude"];
-    [encoder encodeDouble:_centerCoordinate.longitude forKey:@"centerCoordinateLongitude"];
-    [encoder encodeDouble:_distance forKey:@"distance"];
-    [encoder encodeDouble:_pitch forKey:@"pitch"];
-    [encoder encodeDouble:_heading forKey:@"heading"];
-    [encoder encodeInteger:_elevationMode forKey:@"elevationMode"];
-    [encoder encodeObject:_indoorMapId forKey:@"indoorMapId"];
-    [encoder encodeInteger:_indoorMapFloorId forKey:@"indoorMapFloorId"];
-}
-
-- (nullable instancetype)initWithCoder:(NSCoder *)decoder
-{
-    if (self = [super init])
-    {
-        _centerCoordinate = CLLocationCoordinate2DMake([decoder decodeDoubleForKey:@"centerCoordinateLatitude"],
-                                                       [decoder decodeDoubleForKey:@"centerCoordinateLongitude"]);
-        _distance = [decoder decodeDoubleForKey:@"distance"];
-        _pitch = [decoder decodeFloatForKey:@"pitch"];
-        _heading = [decoder decodeDoubleForKey:@"heading"];
-        _elevationMode = WRLDElevationMode([decoder decodeIntegerForKey:@"elevationMode"]);
-        _indoorMapId = [decoder decodeObjectForKey:@"indoorMapId"];
-        _indoorMapFloorId = [decoder decodeIntegerForKey:@"indoorMapFloorId"];
-        
-    }
-    return self;
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
