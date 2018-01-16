@@ -10,7 +10,6 @@
 #include "EegeoCameraApi.h"
 #include "EegeoPositionerApi.h"
 #include "EegeoPoiApi.h"
-#include "EegeoRoutingApi.h"
 #include "MapsceneRequestResponse.h"
 #include "RoutingQueryResponse.h"
 
