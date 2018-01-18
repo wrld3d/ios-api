@@ -1091,12 +1091,12 @@ template<typename T> inline T* safe_cast(id instance)
     {
         WRLDMapsceneStartLocation* startLocation = response.mapscene.startLocation;
         
-        Eegeo::Api::MapCameraUpdateBuilder mapCameraUpdateBuilder;
-        const auto& mapCameraUpdate = mapCameraUpdateBuilder.SetCoordinate(startLocation.coordinate.latitude, startLocation.coordinate.longitude)
-        .SetBearing(startLocation.heading)
-        .SetDistanceToInterest(startLocation.distance)
-        .SetZenithAngle(90)
-        .Build();
+        const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+            .SetCoordinate(startLocation.coordinate.latitude, startLocation.coordinate.longitude)
+            .SetBearing(startLocation.heading)
+            .SetDistanceToInterest(startLocation.distance)
+            .SetIndoorMap([startLocation.interiorId UTF8String], startLocation.interiorFloorIndex)
+            .Build();
         
         cameraApi.MoveCamera(mapCameraUpdate);
     }
