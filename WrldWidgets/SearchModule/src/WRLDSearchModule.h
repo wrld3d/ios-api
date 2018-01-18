@@ -2,7 +2,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WRLDSearchModule : UIViewController <UITableViewDataSource, UITableViewDelegate>
-
+@interface WRLDSearchModule : UIViewController
+- (id<UITableViewDataSource>) getResultsTableViewDataSource;
+- (id<UITableViewDelegate>) getResultsTableViewDelegate;
 @end
 

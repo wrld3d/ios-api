@@ -1,44 +1,30 @@
 #import <Foundation/Foundation.h>
 
 #import "WRLDSearchModule.h"
+#import "WRLDSearchResultsTableViewController.h"
 
 @implementation WRLDSearchModule
 {
-
+    WRLDSearchResultsTableViewController * m_searchResultsTableViewController;
 }
 
 -(instancetype) init
 {
     self = [super init];
     
+    m_searchResultsTableViewController = [[WRLDSearchResultsTableViewController alloc] init];
+    
     return self;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(id<UITableViewDelegate>) getResultsTableViewDelegate
 {
-    return 1;
+    return m_searchResultsTableViewController;
 }
 
--(NSInteger)tableView:(UITableView *)tableView
-numberOfRowsInSection:(NSInteger) section
+-(id<UITableViewDataSource>) getResultsTableViewDataSource
 {
-    return 0;
-}
-
--(UITableViewCell*) tableView:(UITableView *)tableView
-        cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-- (void)dataDidChange
-{
-    
+    return m_searchResultsTableViewController;
 }
 
 @end

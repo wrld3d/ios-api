@@ -54,6 +54,9 @@
     _searchBar.delegate=self;
     m_searchModule = nil;
     m_mapView = nil;
+    
+    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
+    [_searchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
 }
 
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
@@ -68,10 +71,10 @@
 
 -(void)setSearchModule:(WRLDSearchModule*) searchModule
 {
-    /*[_tableView setDataSource:searchModule];
-    [_tableView setDelegate: searchModule];
+    [_tableView setDataSource: [searchModule getResultsTableViewDataSource]];
+    [_tableView setDelegate: [searchModule getResultsTableViewDelegate]];
     [self dataDidChange];
-    //[searchModule addSearchModuleDelegate: self];*/
+    //[searchModule addSearchModuleDelegate: self];
     m_searchModule = searchModule;
 }
 
@@ -82,7 +85,7 @@
 
 -(void) dataDidChange
 {
-    //[_tableView reloadData];
+    [_tableView reloadData];
 }
 
 @end

@@ -9,8 +9,7 @@
 
 - (void) setSearchModule:(WRLDSearchModule*) searchModule;
 
-/*!
- Provide the map view to enable jumping to locations on the map.
+/*! Provide the map view to enable jumping to locations on the map.
  */
 - (void) setMapView: (WRLDMapView*) mapView;
 
