@@ -5,13 +5,7 @@
 
 @class WRLDSearchModule;
 
-@interface WRLDSearchWidgetView : UIView <UISearchBarDelegate>
-
-- (void) setSearchModule:(WRLDSearchModule*) searchModule;
-
-/*! Provide the map view to enable jumping to locations on the map.
- */
-- (void) setMapView: (WRLDMapView*) mapView;
+@interface WRLDSearchWidgetView : UIView
 
 @end
 

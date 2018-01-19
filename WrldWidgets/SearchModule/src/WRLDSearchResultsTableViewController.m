@@ -4,7 +4,7 @@
 
 @implementation WRLDSearchResultsTableViewController
 {
-    
+    UITableView *tableView;
 }
 
 -(instancetype) init
@@ -40,23 +40,23 @@ numberOfRowsInSection:(NSInteger) section
 {
     [super viewDidAppear:animated];
     
-    [self adjustHeightOfTableview];
+//    [self adjustHeightOfTableview];
 }
 
-- (void)adjustHeightOfTableview
-{
-    CGFloat height = self.tableView.contentSize.height;
-    CGFloat maxHeight = self.tableView.superview.frame.size.height - self.tableView.frame.origin.y;
-    
-    if (height > maxHeight)
-        height = maxHeight;
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        CGRect frame = self.tableView.frame;
-        frame.size.height = height;
-        self.tableView.frame = frame;
-    }];
-}
+//- (void)adjustHeightOfTableview
+//{
+//    CGFloat height = self.tableView.contentSize.height;
+//    CGFloat maxHeight = self.tableView.superview.frame.size.height - self.tableView.frame.origin.y;
+//
+//    if (height > maxHeight)
+//        height = maxHeight;
+//
+//    [UIView animateWithDuration:0.25 animations:^{
+//        CGRect frame = self.tableView.frame;
+//        frame.size.height = height;
+//        self.tableView.frame = frame;
+//    }];
+//}
 
 - (void)dataDidChange
 {

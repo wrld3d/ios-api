@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 024286931F0BFFC400D63CCA /* WRLDOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26062EED2010A88B004DA5B3 /* WRLDSearchModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 26062EEC2010A88B004DA5B3 /* WRLDSearchModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26062EEF2010A89A004DA5B3 /* WRLDSearchModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 26062EEE2010A89A004DA5B3 /* WRLDSearchModule.m */; };
+		26062EED2010A88B004DA5B3 /* WRLDSearchWidgetViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 26062EEC2010A88B004DA5B3 /* WRLDSearchWidgetViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26062EEF2010A89A004DA5B3 /* WRLDSearchWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26062EEE2010A89A004DA5B3 /* WRLDSearchWidgetViewController.m */; };
 		26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */ = {isa = PBXBuildFile; fileRef = 26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		268C2DC8201201D9009EB66B /* WRLDSearchWidgetSearchBarDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DC7201201D9009EB66B /* WRLDSearchWidgetSearchBarDelegate.h */; };
+		268C2DCA2012021B009EB66B /* WRLDSearchWIdgetSearchBarDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DC92012021B009EB66B /* WRLDSearchWIdgetSearchBarDelegate.m */; };
 		269940EE2010C4A20099E34A /* WRLDSearchWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */; };
 		269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269941062010D5890099E34A /* WRLDSearchWidgetView.xib */; };
-		2699411A2010EB5A0099E34A /* WRLDSearchResultsTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 269941192010EB5A0099E34A /* WRLDSearchResultsTableViewController.h */; };
-		2699411C2010EBBB0099E34A /* WRLDSearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699411B2010EBBB0099E34A /* WRLDSearchResultsTableViewController.m */; };
 		2699411E2010FCF30099E34A /* icon1_pin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699411D2010FCF30099E34A /* icon1_pin@3x.png */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -225,13 +225,13 @@
 
 /* Begin PBXFileReference section */
 		024286931F0BFFC400D63CCA /* WRLDOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDOverlay.h; sourceTree = "<group>"; };
-		26062EEC2010A88B004DA5B3 /* WRLDSearchModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchModule.h; sourceTree = "<group>"; };
-		26062EEE2010A89A004DA5B3 /* WRLDSearchModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchModule.m; sourceTree = "<group>"; };
+		26062EEC2010A88B004DA5B3 /* WRLDSearchWidgetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewController.h; sourceTree = "<group>"; };
+		26062EEE2010A89A004DA5B3 /* WRLDSearchWidgetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewController.m; sourceTree = "<group>"; };
 		26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetView.h; sourceTree = "<group>"; };
 		26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetView.m; sourceTree = "<group>"; };
+		268C2DC7201201D9009EB66B /* WRLDSearchWidgetSearchBarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSearchBarDelegate.h; sourceTree = "<group>"; };
+		268C2DC92012021B009EB66B /* WRLDSearchWIdgetSearchBarDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWIdgetSearchBarDelegate.m; sourceTree = "<group>"; };
 		269941062010D5890099E34A /* WRLDSearchWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchWidgetView.xib; sourceTree = "<group>"; };
-		269941192010EB5A0099E34A /* WRLDSearchResultsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultsTableViewController.h; sourceTree = "<group>"; };
-		2699411B2010EBBB0099E34A /* WRLDSearchResultsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultsTableViewController.m; sourceTree = "<group>"; };
 		2699411D2010FCF30099E34A /* icon1_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_pin@3x.png"; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
@@ -470,7 +470,7 @@
 		26062EEA2010A85F004DA5B3 /* public */ = {
 			isa = PBXGroup;
 			children = (
-				26062EEC2010A88B004DA5B3 /* WRLDSearchModule.h */,
+				26062EEC2010A88B004DA5B3 /* WRLDSearchWidgetViewController.h */,
 				26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */,
 			);
 			name = public;
@@ -479,10 +479,10 @@
 		26062EEB2010A866004DA5B3 /* private */ = {
 			isa = PBXGroup;
 			children = (
-				26062EEE2010A89A004DA5B3 /* WRLDSearchModule.m */,
+				26062EEE2010A89A004DA5B3 /* WRLDSearchWidgetViewController.m */,
 				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
-				269941192010EB5A0099E34A /* WRLDSearchResultsTableViewController.h */,
-				2699411B2010EBBB0099E34A /* WRLDSearchResultsTableViewController.m */,
+				268C2DC7201201D9009EB66B /* WRLDSearchWidgetSearchBarDelegate.h */,
+				268C2DC92012021B009EB66B /* WRLDSearchWIdgetSearchBarDelegate.m */,
 			);
 			name = private;
 			sourceTree = "<group>";
@@ -823,15 +823,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2699411A2010EB5A0099E34A /* WRLDSearchResultsTableViewController.h in Headers */,
 				2CB2C5B21EC1D93F00C0B401 /* UIColors.h in Headers */,
-				26062EED2010A88B004DA5B3 /* WRLDSearchModule.h in Headers */,
+				26062EED2010A88B004DA5B3 /* WRLDSearchWidgetViewController.h in Headers */,
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
 				26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
 				2CB2C5A91EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.h in Headers */,
 				2CB2C5B41EC1D93F00C0B401 /* UIHelpers.h in Headers */,
+				268C2DC8201201D9009EB66B /* WRLDSearchWidgetSearchBarDelegate.h in Headers */,
 				2CB2C5AB1EC1D93F00C0B401 /* IndoorControl.h in Headers */,
 				2CB2C5A71EC1D93F00C0B401 /* ImageHelpers.h in Headers */,
 				2CB2C5AD1EC1D93F00C0B401 /* IndoorControlDelegate.h in Headers */,
@@ -1135,17 +1135,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
-				2699411C2010EBBB0099E34A /* WRLDSearchResultsTableViewController.m in Sources */,
 				2CB2C5B91EC1D93F00C0B401 /* WRLDIndoorControlView.m in Sources */,
 				2CB2C5B31EC1D93F00C0B401 /* UIColors.mm in Sources */,
 				2CB2C5B11EC1D93F00C0B401 /* UIButton+DefaultStates.mm in Sources */,
 				2CB2C5AA1EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.mm in Sources */,
 				269940EE2010C4A20099E34A /* WRLDSearchWidgetView.m in Sources */,
 				2CB2C5B71EC1D93F00C0B401 /* UIView+TouchExclusivity.m in Sources */,
-				26062EEF2010A89A004DA5B3 /* WRLDSearchModule.m in Sources */,
+				26062EEF2010A89A004DA5B3 /* WRLDSearchWidgetViewController.m in Sources */,
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,
 				2CB2C5B51EC1D93F00C0B401 /* UIHelpers.mm in Sources */,
+				268C2DCA2012021B009EB66B /* WRLDSearchWIdgetSearchBarDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
