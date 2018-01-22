@@ -7,5 +7,6 @@ FOUNDATION_EXPORT double WrldWidgetsVersionNumber;
 FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 
 #import "WRLDIndoorControlView.h"
-#import "WRLDSearchWidgetViewController.h"
 #import "WRLDSearchWidgetView.h"
+#import "WRLDSearchProvider.h"
+#import "POIServiceSearchProvider.h"

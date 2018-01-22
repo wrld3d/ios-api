@@ -1,7 +1,7 @@
 #import "WRLDSearchWidgetView.h"
-#import "WRLDSearchWidgetViewController.h"
-#import "WRLDSearchWidgetSearchBarDelegate.h"
 #import "WRLDMapView.h"
+#import "WRLDSearchProvider.h"
+#import "SearchProviders.h"
 
 @interface WRLDSearchWidgetView()
 
@@ -13,14 +13,9 @@
 
 @implementation WRLDSearchWidgetView
 {
-    WRLDSearchWidgetSearchBarDelegate *m_concreteDelegate;
+    id<WRLDSearchDelegate> m_wrldSearchDelegate;
+    SearchProviders* m_searchProviders;
 }
-
--(id<UISearchBarDelegate>) getSearchBarDelegate
-{
-    return m_concreteDelegate;
-}
-
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -47,7 +42,8 @@
 
 -(void)customInit
 {
-    m_concreteDelegate = [WRLDSearchWidgetSearchBarDelegate alloc];
+    m_searchProviders = [SearchProviders alloc];
+    [self assignSearchDelegate: m_searchProviders];
     
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
     
@@ -60,13 +56,27 @@
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
-    
-    self.wrldSearchWidgetSearchBar.delegate = m_concreteDelegate;
 }
 
--(void) assignWRLDSearchWidgetViewController: (WRLDSearchWidgetViewController *) searchWidgetViewController
+-(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
 {
-    [searchWidgetViewController assignSearchBarDelegate: self.wrldSearchWidgetSearchBar];
+    [m_searchProviders addSearchProvider: searchProvider];
+}
+
+-(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
+{
+    NSLog(@"Get Suggestions for %@", searchText);
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSLog(@"Get Search for %@", [searchBar text]);
+    [m_wrldSearchDelegate doSearch: [searchBar text]];
+}
+
+-(void)assignSearchDelegate: (id<WRLDSearchDelegate>) wrldSearchDelegate
+{
+    m_wrldSearchDelegate = wrldSearchDelegate;
 }
 
 - (void)adjustHeightOfTableview
