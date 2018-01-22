@@ -1,5 +1,6 @@
 #import "WRLDSearchWidgetView.h"
 #import "WRLDSearchWidgetViewController.h"
+#import "WRLDSearchWidgetSearchBarDelegate.h"
 #import "WRLDMapView.h"
 
 @interface WRLDSearchWidgetView()
@@ -8,12 +9,18 @@
 @property (weak, nonatomic) IBOutlet UIButton *wrldSearchWidgetMenuButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UISearchBar *wrldSearchWidgetSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetTableView;
-
 @end
 
 @implementation WRLDSearchWidgetView
 {
+    WRLDSearchWidgetSearchBarDelegate *m_concreteDelegate;
 }
+
+-(id<UISearchBarDelegate>) getSearchBarDelegate
+{
+    return m_concreteDelegate;
+}
+
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -40,6 +47,8 @@
 
 -(void)customInit
 {
+    m_concreteDelegate = [WRLDSearchWidgetSearchBarDelegate alloc];
+    
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
     
     [widgetsBundle.self loadNibNamed:@"WRLDSearchWidgetView" owner:self options:nil];
@@ -51,6 +60,8 @@
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+    
+    self.wrldSearchWidgetSearchBar.delegate = m_concreteDelegate;
 }
 
 -(void) assignWRLDSearchWidgetViewController: (WRLDSearchWidgetViewController *) searchWidgetViewController
