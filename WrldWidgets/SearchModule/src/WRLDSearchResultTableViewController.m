@@ -50,26 +50,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //TODO Handle casting propertly
     WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
     
-    NSInteger set = [indexPath section];
-    WRLDSearchResult *result = [m_resultSets[set] getResult: [indexPath row]];
+    //NSInteger set = [indexPath section];
+    WRLDSearchResult *result = [m_resultSets[0] getResult: [indexPath row]];
     [castCell.titleLabel setText:[result title]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"numberOfRowsInSection %d: %d", section, [m_resultSets[section] getResultCount]);
-    return [m_resultSets[section] getResultCount];
+    //NSLog(@"numberOfRowsInSection %d: %d", section, [m_resultSets[section] getResultCount]);
+    return [m_resultSets[0] getResultCount];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"numberOfSectionsInTableView %d", [m_resultSets count]);
-    return [m_resultSets count];
+    //NSLog(@"numberOfSectionsInTableView %d", [m_resultSets count]);
+    return [m_resultSets count] * 2;
 }
 
 -(void) updateResults
 {
-    NSLog(@"updateResults");
+    //NSLog(@"updateResults");
     [m_tableView reloadData];
     //CGRect bounds = m_tableView.bounds;
     CGFloat height = 0;
@@ -79,7 +79,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         }
     }
     
-    height = MIN(400, height);
+    height = MIN(400, height * 2);
     
     //bounds.size.height = height;
 
@@ -99,6 +99,27 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 -(void) setHeightConstraint:(NSLayoutConstraint *)heightConstraint
 {
     m_heightConstraint = heightConstraint;
+}
+
+- (UIView *)tableView:(UITableView *)tableView
+viewForFooterInSection:(NSInteger)section
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultsTableFooter"];
+    
+    if(cell == nil)
+    {
+        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
+        
+        [tableView registerNib:[UINib nibWithNibName:@"WRLDSearchResultsSectionFooter" bundle:widgetsBundle] forCellReuseIdentifier:@"searchResultsTableFooter"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultsTableFooter"];
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return [m_resultSets[0] getResultCount] > 1 ? 32.0f : 0.0f;
 }
 
 @end

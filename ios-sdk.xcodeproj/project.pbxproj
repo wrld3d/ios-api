@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 024286931F0BFFC400D63CCA /* WRLDOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */ = {isa = PBXBuildFile; fileRef = 26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		267507DF2017790800922BD3 /* WRLDSearchResultsSectionFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267507DE2017790800922BD3 /* WRLDSearchResultsSectionFooter.xib */; };
+		267507E720177A5400922BD3 /* Back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E020177A5400922BD3 /* Back_btn.png */; };
+		267507E820177A5400922BD3 /* GradientShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E120177A5400922BD3 /* GradientShadow.png */; };
+		267507E920177A5400922BD3 /* Expander.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E220177A5400922BD3 /* Expander.png */; };
+		267507EA20177A5400922BD3 /* Search_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E320177A5400922BD3 /* Search_btn.png */; };
+		267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E420177A5400922BD3 /* MoreResults_butn.png */; };
+		267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E520177A5400922BD3 /* DeleteSearch_btn.png */; };
+		267507ED20177A5400922BD3 /* Menu_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E620177A5400922BD3 /* Menu_btn.png */; };
 		268C2DEF201634D6009EB66B /* POIServiceSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */; };
 		268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		268C2DF320163587009EB66B /* WRLDSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DF120163587009EB66B /* WRLDSearchProvider.m */; };
@@ -241,6 +249,14 @@
 		024286931F0BFFC400D63CCA /* WRLDOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDOverlay.h; sourceTree = "<group>"; };
 		26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetView.h; sourceTree = "<group>"; };
 		26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetView.m; sourceTree = "<group>"; };
+		267507DE2017790800922BD3 /* WRLDSearchResultsSectionFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDSearchResultsSectionFooter.xib; sourceTree = "<group>"; };
+		267507E020177A5400922BD3 /* Back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_btn.png; sourceTree = "<group>"; };
+		267507E120177A5400922BD3 /* GradientShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GradientShadow.png; sourceTree = "<group>"; };
+		267507E220177A5400922BD3 /* Expander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Expander.png; sourceTree = "<group>"; };
+		267507E320177A5400922BD3 /* Search_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search_btn.png; sourceTree = "<group>"; };
+		267507E420177A5400922BD3 /* MoreResults_butn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreResults_butn.png; sourceTree = "<group>"; };
+		267507E520177A5400922BD3 /* DeleteSearch_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteSearch_btn.png; sourceTree = "<group>"; };
+		267507E620177A5400922BD3 /* Menu_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu_btn.png; sourceTree = "<group>"; };
 		268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIServiceSearchProvider.m; path = src/private/POIServiceSearchProvider.m; sourceTree = "<group>"; };
 		268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIServiceSearchProvider.h; path = src/public/POIServiceSearchProvider.h; sourceTree = "<group>"; };
 		268C2DF120163587009EB66B /* WRLDSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchProvider.m; sourceTree = "<group>"; };
@@ -538,9 +554,17 @@
 		269940FD2010D55D0099E34A /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				268C2E0F20174AE6009EB66B /* GenericSearchResult.xib */,
+				267507E020177A5400922BD3 /* Back_btn.png */,
+				267507E520177A5400922BD3 /* DeleteSearch_btn.png */,
+				267507E220177A5400922BD3 /* Expander.png */,
+				267507E120177A5400922BD3 /* GradientShadow.png */,
+				267507E620177A5400922BD3 /* Menu_btn.png */,
+				267507E420177A5400922BD3 /* MoreResults_butn.png */,
+				267507E320177A5400922BD3 /* Search_btn.png */,
 				2699411D2010FCF30099E34A /* icon1_pin@3x.png */,
+				268C2E0F20174AE6009EB66B /* GenericSearchResult.xib */,
 				269941062010D5890099E34A /* WRLDSearchWidgetView.xib */,
+				267507DE2017790800922BD3 /* WRLDSearchResultsSectionFooter.xib */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -1091,9 +1115,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				267507EA20177A5400922BD3 /* Search_btn.png in Resources */,
 				2699411E2010FCF30099E34A /* icon1_pin@3x.png in Resources */,
+				267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */,
+				267507DF2017790800922BD3 /* WRLDSearchResultsSectionFooter.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
+				267507E720177A5400922BD3 /* Back_btn.png in Resources */,
 				268C2E1020174AE6009EB66B /* GenericSearchResult.xib in Resources */,
+				267507ED20177A5400922BD3 /* Menu_btn.png in Resources */,
+				267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */,
+				267507E820177A5400922BD3 /* GradientShadow.png in Resources */,
+				267507E920177A5400922BD3 /* Expander.png in Resources */,
 				269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
