@@ -8,6 +8,7 @@
 {
     NSMutableArray<WRLDSearchResultSet *> *m_resultSets;
     UITableView * m_tableView;
+    NSLayoutConstraint * m_heightConstraint;
 }
 
 -(WRLDSearchResultTableViewController *) init : (UITableView *) tableView
@@ -70,12 +71,34 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"updateResults");
     [m_tableView reloadData];
+    //CGRect bounds = m_tableView.bounds;
+    CGFloat height = 0;
+    for(int i = 0; i < [m_resultSets count]; ++i){
+        for(int j = 0; j < [m_resultSets[i] getResultCount]; ++j){
+            height += [self tableView:m_tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:j inSection:i]];
+        }
+    }
+    
+    height = MIN(400, height);
+    
+    //bounds.size.height = height;
+
+    //m_tableView.bounds = bounds;
+    [UIView animateWithDuration: 0.25 animations:^{
+        m_heightConstraint.constant = height;
+        [m_tableView layoutIfNeeded];
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 73;
+}
+
+-(void) setHeightConstraint:(NSLayoutConstraint *)heightConstraint
+{
+    m_heightConstraint = heightConstraint;
 }
 
 @end

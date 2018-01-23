@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetView">
             <connections>
+                <outlet property="heightConstraint" destination="bk7-zS-sQ0" id="3fg-23-bID"/>
                 <outlet property="wrldSearchWidgetMenuButton" destination="Gsy-aj-hKu" id="cPM-Pb-eZt"/>
                 <outlet property="wrldSearchWidgetRootView" destination="iN0-l3-epB" id="VRG-b4-Y61"/>
                 <outlet property="wrldSearchWidgetSearchBar" destination="nwq-hq-zts" id="uce-c9-h7F"/>
@@ -23,17 +24,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo">
-                    <rect key="frame" x="10" y="10" width="355" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
-                            <rect key="frame" x="0.0" y="0.0" width="32" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
+                            <rect key="frame" x="0.0" y="0.0" width="32" height="56"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="MJU-fm-ezz"/>
+                            </constraints>
                             <state key="normal" title="Menu"/>
                         </button>
-                        <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
-                            <rect key="frame" x="32" y="0.0" width="323" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
+                            <rect key="frame" x="31" y="0.0" width="343" height="56"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Axe-xC-ueg"/>
@@ -43,22 +45,33 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="CfJ-AU-Q0b"/>
+                        <constraint firstAttribute="trailing" secondItem="nwq-hq-zts" secondAttribute="trailing" constant="1" id="Iqi-7X-vSd"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="JEs-0k-OWe"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" constant="31" id="OPT-rV-RZs"/>
+                        <constraint firstAttribute="bottom" secondItem="Gsy-aj-hKu" secondAttribute="bottom" id="T5l-jv-Fz2"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="nwq-hq-zts" secondAttribute="bottom" id="eYz-68-h6X"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="oUB-dj-0dd"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="nwq-hq-zts" secondAttribute="top" id="ooE-Zq-4Xs"/>
                     </constraints>
                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
-                    <rect key="frame" x="10" y="62" width="355" height="537"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
+                    <rect key="frame" x="0.0" y="64" width="375" height="555"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="555" id="bk7-zS-sQ0"/>
+                    </constraints>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="1Eh-4U-yGc"/>
-                <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="V7G-aj-BpP"/>
-                <constraint firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="10" id="heY-2G-qkl"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="trailing" secondItem="URT-uZ-0JQ" secondAttribute="trailing" id="0tW-S4-Ql2"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="URT-uZ-0JQ" secondAttribute="leading" id="5mj-RJ-bc5"/>
+                <constraint firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="ArS-fC-PEs"/>
+                <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="8" symbolic="YES" id="K7C-hb-Kva"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Psk-go-21m"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vp8-NJ-WJG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-310.5" y="23.5"/>

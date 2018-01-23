@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *wrldSearchWidgetMenuButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UISearchBar *wrldSearchWidgetSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @end
 
 @implementation WRLDSearchWidgetView
@@ -60,6 +61,7 @@
     
     self.wrldSearchWidgetTableView.dataSource = m_searchResultsTableViewController;
     self.wrldSearchWidgetTableView.delegate = m_searchResultsTableViewController;
+    [m_searchResultsTableViewController setHeightConstraint: self.heightConstraint];
     
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
