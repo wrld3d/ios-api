@@ -3,8 +3,10 @@
 #import <UIKit/UIKit.h>
 #import "WRLDSearchDelegate.h"
 
+@class WRLDSearchResultSet;
+
 @protocol WRLDSearchProvider;
 
 @interface SearchProviders : NSObject<WRLDSearchDelegate>
--(void) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
+-(WRLDSearchResultSet *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
 @end

@@ -2,6 +2,8 @@
 #import "WRLDMapView.h"
 #import "WRLDSearchProvider.h"
 #import "SearchProviders.h"
+#import "WRLDSearchResultTableViewController.h"
+#import "WRLDSearchResultSet.h"
 
 @interface WRLDSearchWidgetView()
 
@@ -15,6 +17,7 @@
 {
     id<WRLDSearchDelegate> m_wrldSearchDelegate;
     SearchProviders* m_searchProviders;
+    WRLDSearchResultTableViewController* m_searchResultsTableViewController;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -49,9 +52,14 @@
     
     [widgetsBundle.self loadNibNamed:@"WRLDSearchWidgetView" owner:self options:nil];
     
+    m_searchResultsTableViewController = [[WRLDSearchResultTableViewController alloc] init: self.wrldSearchWidgetTableView];
+    
     [self addSubview:self.wrldSearchWidgetRootView];
     
     self.wrldSearchWidgetRootView.frame = self.bounds;
+    
+    self.wrldSearchWidgetTableView.dataSource = m_searchResultsTableViewController;
+    self.wrldSearchWidgetTableView.delegate = m_searchResultsTableViewController;
     
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
@@ -60,7 +68,8 @@
 
 -(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
 {
-    [m_searchProviders addSearchProvider: searchProvider];
+    WRLDSearchResultSet * resultSet = [m_searchProviders addSearchProvider: searchProvider];
+    [m_searchResultsTableViewController addResultSet: resultSet];
 }
 
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
