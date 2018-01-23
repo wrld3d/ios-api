@@ -17,6 +17,8 @@
 		267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E420177A5400922BD3 /* MoreResults_butn.png */; };
 		267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E520177A5400922BD3 /* DeleteSearch_btn.png */; };
 		267507ED20177A5400922BD3 /* Menu_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E620177A5400922BD3 /* Menu_btn.png */; };
+		267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 267507EE2017874D00922BD3 /* MockSearchProvider.h */; };
+		267507F12017878900922BD3 /* MockSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 267507F02017878900922BD3 /* MockSearchProvider.m */; };
 		268C2DEF201634D6009EB66B /* POIServiceSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */; };
 		268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		268C2DF320163587009EB66B /* WRLDSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DF120163587009EB66B /* WRLDSearchProvider.m */; };
@@ -257,6 +259,8 @@
 		267507E420177A5400922BD3 /* MoreResults_butn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreResults_butn.png; sourceTree = "<group>"; };
 		267507E520177A5400922BD3 /* DeleteSearch_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteSearch_btn.png; sourceTree = "<group>"; };
 		267507E620177A5400922BD3 /* Menu_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu_btn.png; sourceTree = "<group>"; };
+		267507EE2017874D00922BD3 /* MockSearchProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockSearchProvider.h; sourceTree = "<group>"; };
+		267507F02017878900922BD3 /* MockSearchProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockSearchProvider.m; sourceTree = "<group>"; };
 		268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIServiceSearchProvider.m; path = src/private/POIServiceSearchProvider.m; sourceTree = "<group>"; };
 		268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIServiceSearchProvider.h; path = src/public/POIServiceSearchProvider.h; sourceTree = "<group>"; };
 		268C2DF120163587009EB66B /* WRLDSearchProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchProvider.m; sourceTree = "<group>"; };
@@ -547,6 +551,8 @@
 			children = (
 				268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */,
 				268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */,
+				267507EE2017874D00922BD3 /* MockSearchProvider.h */,
+				267507F02017878900922BD3 /* MockSearchProvider.m */,
 			);
 			path = SearchProviders;
 			sourceTree = "<group>";
@@ -909,6 +915,7 @@
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
 				268C2DF8201635D6009EB66B /* WRLDSearchResult.h in Headers */,
 				268C2E0E20174734009EB66B /* WRLDSearchResultsArrivedDelegate.h in Headers */,
+				267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */,
 				268C2DFC20163DD8009EB66B /* WRLDSearchDelegate.h in Headers */,
 				2CB2C5A91EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.h in Headers */,
 				2CB2C5B41EC1D93F00C0B401 /* UIHelpers.h in Headers */,
@@ -1239,6 +1246,7 @@
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
 				268C2E00201645A1009EB66B /* SearchProviders.m in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,
+				267507F12017878900922BD3 /* MockSearchProvider.m in Sources */,
 				268C2DF320163587009EB66B /* WRLDSearchProvider.m in Sources */,
 				2CB2C5B51EC1D93F00C0B401 /* UIHelpers.mm in Sources */,
 				268C2E0C20173E4C009EB66B /* WRLDSearchResultTableViewCell.m in Sources */,

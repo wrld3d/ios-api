@@ -4,6 +4,8 @@
 #import "SearchProviders.h"
 #import "WRLDSearchResultTableViewController.h"
 #import "WRLDSearchResultSet.h"
+#import "MockSearchProvider.h"
+
 
 @interface WRLDSearchWidgetView()
 
@@ -19,6 +21,8 @@
     id<WRLDSearchDelegate> m_wrldSearchDelegate;
     SearchProviders* m_searchProviders;
     WRLDSearchResultTableViewController* m_searchResultsTableViewController;
+    
+    MockSearchProvider * m_mockProvider;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -46,7 +50,9 @@
 
 -(void)customInit
 {
-    m_searchProviders = [SearchProviders alloc];
+    m_mockProvider = [[MockSearchProvider alloc] init];
+    
+    m_searchProviders = [[SearchProviders alloc] init];
     [self assignSearchDelegate: m_searchProviders];
     
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
@@ -62,6 +68,8 @@
     self.wrldSearchWidgetTableView.dataSource = m_searchResultsTableViewController;
     self.wrldSearchWidgetTableView.delegate = m_searchResultsTableViewController;
     [m_searchResultsTableViewController setHeightConstraint: self.heightConstraint];
+    
+    [self addSearchProvider:m_mockProvider];
     
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];

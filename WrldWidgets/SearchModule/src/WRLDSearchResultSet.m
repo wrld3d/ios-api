@@ -3,9 +3,13 @@
 #import "WRLDSearchResultsArrivedDelegate.h"
 
 @implementation WRLDSearchResultSet
-{
+{    
     NSMutableArray<WRLDSearchResult*>* m_results;
     id<WRLDSearchResultsArrivedDelegate> m_updateDelegate;
+    
+    NSInteger m_maxVisibleResultsInCollapsedState;
+    
+    ExpandedStateType m_expandedState;
 }
 
 - (instancetype) init
@@ -13,7 +17,10 @@
     [super self];
     if(self){
         m_results = [[NSMutableArray alloc] init];
+        m_expandedState = Collapsed;
+        m_maxVisibleResultsInCollapsedState = 3;
     }
+    
     return self;
 }
 
@@ -34,6 +41,13 @@
 
 - (NSInteger) getResultCount
 {
+    if( m_expandedState == Collapsed){
+        return MIN(m_results.count, m_maxVisibleResultsInCollapsedState);
+    }
+    if(m_expandedState == Hidden){
+        return 0;
+    }
+    
     return m_results.count;
 }
 
@@ -49,6 +63,10 @@
 - (void) updateDelegate :(id<WRLDSearchResultsArrivedDelegate>) delegate
 {
     m_updateDelegate = delegate;
+}
+
+-(void) setExpandedState:(NSInteger)state {
+    m_expandedState = state;
 }
 
 @end

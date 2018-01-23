@@ -50,21 +50,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //TODO Handle casting propertly
     WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
     
-    //NSInteger set = [indexPath section];
-    WRLDSearchResult *result = [m_resultSets[0] getResult: [indexPath row]];
+    WRLDSearchResult *result = [m_resultSets[[indexPath section]] getResult: [indexPath row]];
     [castCell.titleLabel setText:[result title]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section{
     //NSLog(@"numberOfRowsInSection %d: %d", section, [m_resultSets[section] getResultCount]);
-    return [m_resultSets[0] getResultCount];
+    return [m_resultSets[section] getResultCount];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //NSLog(@"numberOfSectionsInTableView %d", [m_resultSets count]);
-    return [m_resultSets count] * 2;
+    return [m_resultSets count];
 }
 
 -(void) updateResults
@@ -79,7 +78,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         }
     }
     
-    height = MIN(400, height * 2);
+    height = MIN(400, height);
     
     //bounds.size.height = height;
 
@@ -119,7 +118,7 @@ viewForFooterInSection:(NSInteger)section
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return [m_resultSets[0] getResultCount] > 1 ? 32.0f : 0.0f;
+    return [m_resultSets[section] getResultCount] > 1 ? 32.0f : 0.0f;
 }
 
 @end

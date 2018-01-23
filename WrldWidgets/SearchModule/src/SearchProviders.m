@@ -4,20 +4,30 @@
 
 @implementation SearchProviders
 {
-    id<WRLDSearchProvider> m_searchProvider;
-    WRLDSearchResultSet* m_searchResult;
+    NSMutableArray<id<WRLDSearchProvider> >*m_searchProviders;
+}
+
+-(instancetype) init
+{
+    self = [super init];
+    if(self){
+        m_searchProviders = [ [NSMutableArray<id<WRLDSearchProvider> > alloc ]init];
+    }
+    return self;
 }
 
 -(WRLDSearchResultSet *) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
 {
-    m_searchProvider = searchProvider;
-    m_searchResult = [[WRLDSearchResultSet alloc] init];
-    [searchProvider setSearchProviderDelegate: m_searchResult];
-    return m_searchResult;
+    [m_searchProviders addObject: searchProvider];
+    WRLDSearchResultSet *resultsSet = [[WRLDSearchResultSet alloc] init];
+    [searchProvider setSearchProviderDelegate: resultsSet];
+    return resultsSet;
 }
 
 -(void) doSearch: (NSString*) query {
-    [m_searchProvider search: query];
+    for(id<WRLDSearchProvider> provider in m_searchProviders){
+        [provider search: query];
+    }
 }
 
 @end

@@ -15,4 +15,12 @@
 
 - (void) updateDelegate :(id<WRLDSearchResultsArrivedDelegate>) delegate;
 
+-(void) setExpandedState :(NSInteger) state;
+
+typedef NS_ENUM(NSInteger, ExpandedStateType) {
+    Hidden,
+    Collapsed,
+    Expanded
+};
+
 @end
