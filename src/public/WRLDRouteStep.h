@@ -56,6 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (int) indoorFloorId;
 
 /*!
+ @returns If indoors, this step represents moving between the floors of the previous and next steps.
+ */
+- (BOOL) isMultiFloor;
+
+/*!
  @returns The estimated time this step will take to travel in seconds.
  */
 - (NSTimeInterval) duration;

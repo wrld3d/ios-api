@@ -38,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
                            onIndoorMap:(NSString *)indoorMapId
                                onFloor:(NSInteger)floorId;
 
+- (void)setPerPointElevations:(CGFloat*)perPointElevations count:(NSUInteger)count;
+
 
 /// The color of the polyline. The default value is opaque black.
 @property (nonatomic, copy) UIColor* color;

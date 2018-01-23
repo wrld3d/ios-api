@@ -77,6 +77,7 @@
                                                               mode:(WRLDRouteTransportationMode)mode
                                                          isIndoors:withStep.IsIndoors
                                                           indoorId:[NSString stringWithCString: withStep.IndoorId.c_str() encoding:NSUTF8StringEncoding]
+                                                      isMultiFloor:withStep.IsMultiFloor
                                                      indoorFloorId:withStep.IndoorFloorId
                                                           duration:withStep.Duration
                                                           distance:withStep.Distance];
