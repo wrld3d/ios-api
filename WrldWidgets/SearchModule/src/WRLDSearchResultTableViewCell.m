@@ -4,5 +4,3 @@
 @implementation WRLDSearchResultTableViewCell
 
 @end
-
-

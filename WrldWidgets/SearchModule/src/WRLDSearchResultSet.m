@@ -31,6 +31,7 @@
 
 - (void)addResults:(NSMutableArray<WRLDSearchResult*>*)searchResults{
     [m_results addObjectsFromArray: searchResults];
+    m_expandedState = Collapsed;
     [m_updateDelegate updateResults];
 }
 
@@ -40,6 +41,11 @@
 }
 
 - (NSInteger) getResultCount
+{    
+    return m_results.count;
+}
+
+- (NSInteger) getVisibleResultCount
 {
     if( m_expandedState == Collapsed){
         return MIN(m_results.count, m_maxVisibleResultsInCollapsedState);
@@ -67,6 +73,21 @@
 
 -(void) setExpandedState:(NSInteger)state {
     m_expandedState = state;
+}
+
+-(bool) hasMoreToShow
+{
+    bool showingAllResultsInCollapsed = m_expandedState == Collapsed && ([self getVisibleResultCount] == [self getResultCount]);
+    if(m_expandedState == Hidden || showingAllResultsInCollapsed)
+    {
+        return false;
+    }
+    return true;
+}
+
+-(ExpandedStateType) getExpandedState
+{
+    return m_expandedState;
 }
 
 @end

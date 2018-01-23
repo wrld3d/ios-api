@@ -30,17 +30,34 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"genericSearchResultCell"];
+    NSString* cellIdentifier = [self getIdentifierForCellAtPosition: indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(cell == nil)
     {
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
-        
-        [tableView registerNib:[UINib nibWithNibName:@"GenericSearchResult" bundle:widgetsBundle] forCellReuseIdentifier:@"genericSearchResultCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"genericSearchResultCell" forIndexPath:indexPath];
+        [tableView registerNib:[UINib nibWithNibName:cellIdentifier bundle:widgetsBundle] forCellReuseIdentifier: cellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier: cellIdentifier forIndexPath:indexPath];
     }
     
     return cell;
+}
+
+-(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index {
+    if([self isFooter:index]){
+        return @"DisplayMoreResultsCell";
+    }
+    
+    return @"GenericSearchResult";
+}
+
+-(bool) isFooter: (NSIndexPath * ) index
+{
+    WRLDSearchResultSet * set = m_resultSets[[index section]];
+    if([set hasMoreToShow] || [set getExpandedState] == Expanded){
+        return [index row] == [set getVisibleResultCount];
+    }
+    return false;
 }
 
 - (void)tableView:(UITableView *)tableView
@@ -48,22 +65,29 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO Handle casting propertly
-    WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
+    if(![self isFooter:indexPath]){
+        WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
     
-    WRLDSearchResult *result = [m_resultSets[[indexPath section]] getResult: [indexPath row]];
-    [castCell.titleLabel setText:[result title]];
+        WRLDSearchResult *result = [m_resultSets[[indexPath section]] getResult: [indexPath row]];
+        [castCell.titleLabel setText:[result title]];
+    }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section{
-    //NSLog(@"numberOfRowsInSection %d: %d", section, [m_resultSets[section] getResultCount]);
-    return [m_resultSets[section] getResultCount];
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //NSLog(@"numberOfSectionsInTableView %d", [m_resultSets count]);
     return [m_resultSets count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section{
+    NSInteger visibleCells = [m_resultSets[section] getVisibleResultCount];
+    if([m_resultSets[section] hasMoreToShow] || [m_resultSets[section] getExpandedState] == Expanded){
+        visibleCells++;
+    }
+        
+    return visibleCells;
 }
 
 -(void) updateResults
@@ -92,6 +116,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if([self isFooter:indexPath]){
+        return 32;
+    }
     return 73;
 }
 
@@ -100,25 +127,27 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     m_heightConstraint = heightConstraint;
 }
 
-- (UIView *)tableView:(UITableView *)tableView
-viewForFooterInSection:(NSInteger)section
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultsTableFooter"];
-    
-    if(cell == nil)
+    if([self isFooter: indexPath])
     {
-        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
-        
-        [tableView registerNib:[UINib nibWithNibName:@"WRLDSearchResultsSectionFooter" bundle:widgetsBundle] forCellReuseIdentifier:@"searchResultsTableFooter"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultsTableFooter"];
+        NSInteger section = [indexPath section];
+        if([m_resultSets[section] getExpandedState] == Expanded)
+        {
+            for(int i = 0; i < [m_resultSets count]; ++i)
+            {
+                [m_resultSets[i] setExpandedState:Collapsed];
+            }
+        }
+        else{
+            for(int i = 0; i < [m_resultSets count]; ++i)
+            {
+                [m_resultSets[i] setExpandedState:(section == i) ? Expanded : Hidden];
+            }
+        }
+        [self updateResults];
     }
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return [m_resultSets[section] getResultCount] > 1 ? 32.0f : 0.0f;
 }
 
 @end
