@@ -81,7 +81,7 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
                             height:(CGFloat)height
 {
    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:step.path count:step.pathCount onIndoorMap:step.indoorId onFloor:floor];
-    double elevations[2];
+    CGFloat elevations[2];
     elevations[0] = (CGFloat)0;
     elevations[1] = (CGFloat)height;
     [polyline setPerPointElevations:elevations count:2];
