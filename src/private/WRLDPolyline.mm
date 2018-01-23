@@ -80,7 +80,7 @@
     long int min = MIN(m_coords.size(), count);
     for (int i = 0; i < min; ++i)
     {
-        m_perPointElevations[i] = perPointElevations[i];
+        m_perPointElevations[i] = (double)perPointElevations[i];
     }
 }
 

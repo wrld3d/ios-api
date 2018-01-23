@@ -38,7 +38,14 @@ NS_ASSUME_NONNULL_BEGIN
                            onIndoorMap:(NSString *)indoorMapId
                                onFloor:(NSInteger)floorId;
 
-- (void)setPerPointElevations:(CGFloat*)perPointElevations count:(NSUInteger)count;
+/*!
+ Sets the perPointElevations on a polyline
+ @param perPointElevations The array of CGFloats that define a polyline's perPointElevations.
+ These are used to create vertical polylines.
+ @param count The number of perPointElevations for the polyline.
+ */
+- (void)setPerPointElevations:(CGFloat *)perPointElevations
+                        count:(NSUInteger)count;
 
 
 /// The color of the polyline. The default value is opaque black.
