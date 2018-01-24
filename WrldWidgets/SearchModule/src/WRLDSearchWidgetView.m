@@ -74,21 +74,24 @@
 
 -(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
 {
-    WRLDSearchResultSet * resultSet = [m_searchProviders addSearchProvider: searchProvider];
-    [m_searchResultsTableViewController addResultSet: resultSet];
+    [m_searchProviders addSearchProvider: searchProvider];
 }
 
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
 {
     NSLog(@"Get Suggestions for %@", searchText);
-    self.wrldSearchWidgetTableView.hidden = ([searchText length] == 0) ? YES : NO;
+    if([searchText length] == 0)
+    {
+        self.wrldSearchWidgetTableView.hidden =  YES;
+    }
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"Get Search for %@", [searchBar text]);
-    WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: [searchBar text] : [m_searchProviders count]];
+    WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: [searchBar text] : m_searchProviders];
     
+    [m_searchResultsTableViewController setCurrentQuery:newQuery];
     [m_wrldSearchDelegate doSearch: newQuery];
 }
 

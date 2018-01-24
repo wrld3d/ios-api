@@ -8,10 +8,11 @@
 @protocol WRLDSearchProvider;
 
 @interface SearchProviders : NSObject<WRLDSearchDelegate>
--(WRLDSearchResultSet *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
+-(void) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
 -(NSString *) getCellIdentifierForSetAtIndex:(NSInteger) index;
 -(CGFloat) getCellExpectedHeightForSetAtIndex:(NSInteger) index;
 
 -(NSInteger) count;
+-(NSInteger) getIndexOfProvider: (id<WRLDSearchProvider>) provider;
 
 @end

@@ -15,6 +15,8 @@
     
     int m_poiSearchId;
     WRLDSearchResultType m_searchType;
+    
+    WRLDSearchQuery *m_currentQuery;
 }
 
 - (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService
@@ -60,8 +62,7 @@
         }
     }
     
-    [self clearResults];
-    [self addResults:searchResultSet];
+    [m_currentQuery addResults: self :searchResultSet];
 
 }
 
@@ -78,7 +79,7 @@
 
 - (void) search: (WRLDSearchQuery*) query
 {
-    [self clearResults];
+    m_currentQuery = query;
     
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
     [textSearchOptions setQuery: query.queryString];
@@ -89,8 +90,6 @@
 
 - (void) searchSuggestions: (NSString*) query
 {
-    [self clearResults];
-    
     WRLDAutocompleteOptions* autocompleteOptions = [[WRLDAutocompleteOptions alloc] init];
     [autocompleteOptions setQuery: query];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];

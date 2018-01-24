@@ -39,8 +39,6 @@
 
 - (void) search: (WRLDSearchQuery*) query
 {
-    [self clearResults];
-    
     NSMutableArray<WRLDSearchResult *> * searchResults = [[NSMutableArray<WRLDSearchResult *> alloc] init];
     
     NSString * tags = @"";
@@ -53,12 +51,11 @@
                                                       tags: tags]];
     }
     
-    [self addResults:searchResults];
+    [query addResults: self :searchResults];
 }
 
 - (void) searchSuggestions: (NSString*) query
 {
-    [self clearResults];
 }
 
 @synthesize title;

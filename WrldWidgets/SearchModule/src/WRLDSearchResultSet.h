@@ -7,19 +7,16 @@
 
 @interface WRLDSearchResultSet : NSObject <WRLDSearchProviderDelegate>
 
-- (NSMutableArray<WRLDSearchResult*>*)getAllResults;
-
 - (WRLDSearchResult*)getResult: (NSInteger) index;
 
 - (NSInteger)getVisibleResultCount;
 
 - (NSInteger)getResultCount;
 
-- (void) updateDelegate :(id<WRLDSearchResultsArrivedDelegate>) delegate;
-
 -(void) setExpandedState :(NSInteger) state;
 
 -(bool) hasMoreToShow;
+-(bool) hasReceivedResults;
 
 typedef NS_ENUM(NSInteger, ExpandedStateType) {
     Hidden,

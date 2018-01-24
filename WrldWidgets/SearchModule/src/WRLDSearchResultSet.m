@@ -1,15 +1,15 @@
 #import <Foundation/Foundation.h>
 #import "WRLDSearchResultSet.h"
-#import "WRLDSearchResultsArrivedDelegate.h"
 
 @implementation WRLDSearchResultSet
 {    
     NSMutableArray<WRLDSearchResult*>* m_results;
-    id<WRLDSearchResultsArrivedDelegate> m_updateDelegate;
     
     NSInteger m_maxVisibleResultsInCollapsedState;
     
     ExpandedStateType m_expandedState;
+    
+    bool m_hasReceivedResults;
 }
 
 - (instancetype) init
@@ -19,6 +19,7 @@
         m_results = [[NSMutableArray alloc] init];
         m_expandedState = Collapsed;
         m_maxVisibleResultsInCollapsedState = 3;
+        m_hasReceivedResults = false;
     }
     
     return self;
@@ -32,7 +33,12 @@
 - (void)addResults:(NSMutableArray<WRLDSearchResult*>*)searchResults{
     [m_results addObjectsFromArray: searchResults];
     m_expandedState = Collapsed;
-    [m_updateDelegate updateResults];
+    m_hasReceivedResults = true;
+}
+
+-(bool) hasReceivedResults
+{
+    return m_hasReceivedResults;
 }
 
 -(void) clearResults
@@ -64,11 +70,6 @@
         return m_results[index];
     }
     return nil;
-}
-
-- (void) updateDelegate :(id<WRLDSearchResultsArrivedDelegate>) delegate
-{
-    m_updateDelegate = delegate;
 }
 
 -(void) setExpandedState:(NSInteger)state {

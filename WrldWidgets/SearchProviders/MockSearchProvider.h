@@ -3,7 +3,7 @@
 
 #import "WRLDSearchProvider.h"
 
-@interface MockSearchProvider : WRLDSearchProviderBase <WRLDSearchProvider>
+@interface MockSearchProvider : NSObject <WRLDSearchProvider>
 - (WRLDSearchResult*) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng subTitle: (NSString*)subTitle tags: (NSString*)tags;
 
 @end

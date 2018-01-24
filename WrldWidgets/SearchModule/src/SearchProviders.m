@@ -17,12 +17,9 @@
     return self;
 }
 
--(WRLDSearchResultSet *) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
+-(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
 {
     [m_searchProviders addObject: searchProvider];
-    WRLDSearchResultSet *resultsSet = [[WRLDSearchResultSet alloc] init];
-    [searchProvider setSearchProviderDelegate: resultsSet];
-    return resultsSet;
 }
 
 -(void) doSearch: (WRLDSearchQuery *) query {
@@ -42,6 +39,10 @@
 -(NSInteger) count
 {
     return [m_searchProviders count];
+}
+
+-(NSInteger) getIndexOfProvider:(id<WRLDSearchProvider>)provider {
+    return [m_searchProviders indexOfObject:provider];
 }
 
 @end

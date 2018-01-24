@@ -1,12 +1,12 @@
 #pragma once
 #import <UIKit/UIKit.h>
-#import "WRLDSearchResultsArrivedDelegate.h"
+#import "WRLDSearchQuery.h"
 
 @class WRLDSearchResultSet;
 @class SearchProviders;
 
-@interface WRLDSearchResultTableViewController : NSObject <UITableViewDataSource, UITableViewDelegate, WRLDSearchResultsArrivedDelegate>
+@interface WRLDSearchResultTableViewController : NSObject <UITableViewDataSource, UITableViewDelegate, WRLDSearchQueryCompleteDelegate>
 -(WRLDSearchResultTableViewController *) init : (UITableView *) tableView :(SearchProviders *) searchProviders;
--(void) addResultSet: (WRLDSearchResultSet *) resultSet;
+-(void) setCurrentQuery: (WRLDSearchQuery *) currentQuery;
 -(void) setHeightConstraint: (NSLayoutConstraint *) heightConstraint;
 @end

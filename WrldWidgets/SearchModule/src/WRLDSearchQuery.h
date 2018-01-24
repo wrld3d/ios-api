@@ -2,6 +2,8 @@
 #import <Foundation/Foundation.h>
 
 @class WRLDSearchResult;
+@class WRLDSearchResultSet;
+@class SearchProviders;
 @protocol WRLDSearchProvider;
 @protocol WRLDSearchQueryCompleteDelegate;
 
@@ -17,15 +19,17 @@ typedef NS_ENUM(NSInteger, ProgressStatus) {
 @property (copy, readonly) NSString* queryString;
 @property (readonly) ProgressStatus* progress;
 
--(instancetype) initWithQueryString: (NSString *) queryString :(NSInteger) providersQueriedCount;
+-(instancetype) initWithQueryString: (NSString *) queryString :(SearchProviders *) providers;
 
 -(void) setCompletionDelegate: (id<WRLDSearchQueryCompleteDelegate>) delegate;
--(void) updateResults: (id<WRLDSearchProvider>) provider : (WRLDSearchResult *) results;
+-(void) addResults: (id<WRLDSearchProvider>) provider : (NSMutableArray<WRLDSearchResult*>*) results;
+
+-(WRLDSearchResultSet *) getResultSetForProviderAtIndex : (NSInteger) providerId;
 
 @end
 
-@protocol WRLDSearchQueryCompleteDelegate
--(void) completed : (WRLDSearchQuery *) query;
+@protocol WRLDSearchQueryCompleteDelegate <NSObject>
+-(void) updateResults;
 @end
 
 

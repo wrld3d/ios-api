@@ -4,7 +4,7 @@
 #import "WRLDSearchProvider.h"
 
 
-@interface POIServiceSearchProvider : WRLDSearchProviderBase <WRLDSearchProvider, WRLDMapViewDelegate>
+@interface POIServiceSearchProvider : NSObject <WRLDSearchProvider, WRLDMapViewDelegate>
 
 - (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService;
 
