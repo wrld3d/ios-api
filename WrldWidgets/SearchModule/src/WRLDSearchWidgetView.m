@@ -64,6 +64,8 @@
     self.wrldSearchWidgetTableView.delegate = m_searchResultsTableViewController;
     [m_searchResultsTableViewController setHeightConstraint: self.heightConstraint];
     
+    self.wrldSearchWidgetTableView.sectionFooterHeight = 0;
+    
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];

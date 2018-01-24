@@ -19,7 +19,8 @@
 {
     self = [super init];
     m_resultSets = [[NSMutableArray<WRLDSearchResultSet *> alloc] init];
-    if(self){
+    if(self)
+    {
         m_tableView = tableView;
         m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
         m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
@@ -47,8 +48,10 @@
     return cell;
 }
 
--(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index {
-    if([self isFooter:index]){
+-(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
+{
+    if([self isFooter:index])
+    {
         return m_footerCellStyleIentifier;
     }
     
@@ -58,7 +61,8 @@
 -(bool) isFooter: (NSIndexPath * ) index
 {
     WRLDSearchResultSet * set = m_resultSets[[index section]];
-    if([set hasMoreToShow] || [set getExpandedState] == Expanded){
+    if([set hasMoreToShow] || [set getExpandedState] == Expanded)
+    {
         return [index row] == [set getVisibleResultCount];
     }
     return false;
@@ -69,7 +73,8 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO Handle casting propertly
-    if(![self isFooter:indexPath]){
+    if(![self isFooter:indexPath])
+    {
         WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
     
         WRLDSearchResult *result = [m_resultSets[[indexPath section]] getResult: [indexPath row]];
@@ -87,7 +92,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section{
     NSInteger visibleCells = [m_resultSets[section] getVisibleResultCount];
-    if([m_resultSets[section] hasMoreToShow] || [m_resultSets[section] getExpandedState] == Expanded){
+    if([m_resultSets[section] hasMoreToShow] || [m_resultSets[section] getExpandedState] == Expanded)
+    {
         visibleCells++;
     }
         
@@ -100,8 +106,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     [m_tableView reloadData];
     //CGRect bounds = m_tableView.bounds;
     CGFloat height = 0;
-    for(int i = 0; i < [m_resultSets count]; ++i){
-        for(int j = 0; j < [m_resultSets[i] getResultCount]; ++j){
+    for(int i = 0; i < [m_resultSets count]; ++i)
+    {
+        for(int j = 0; j < [m_resultSets[i] getResultCount]; ++j)
+        {
             height += [self tableView:m_tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:j inSection:i]];
         }
     }
@@ -120,7 +128,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([self isFooter:indexPath]){
+    if([self isFooter:indexPath])
+    {
         return 32;
     }
     return [m_searchProviders getCellExpectedHeightForSetAtIndex: [indexPath section]];
@@ -152,6 +161,31 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
         }
         [self updateResults];
     }
+}
+
+- (UIView *)tableView:(UITableView *)tableView
+viewForHeaderInSection:(NSInteger)section
+{
+    UIView* view = [tableView headerViewForSection:section];
+    if(view)
+    {
+        return view;
+    } else
+    {
+        return [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, 8)];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section
+{
+    return 8;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForFooterInSection:(NSInteger)section
+{
+    return CGFLOAT_MIN;
 }
 
 @end
