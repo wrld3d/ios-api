@@ -21,6 +21,7 @@
 #import "WRLDRoutingQueryResponse.h"
 #import "RoutingQueryResponse.h"
 #import "WRLDRoutingServiceHelpers.h"
+#import "WRLDBuildingHighlight+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -39,6 +40,7 @@
 #include "PoiSearchResults.h"
 #include "EegeoMapsceneApi.h"
 #include "MapsceneRequestResponse.h"
+#include "EegeoBuildingsApi.h"
 
 #include <string>
 
@@ -76,6 +78,7 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
     NSNumber* m_startDirection;
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
+    std::unordered_map<int, WRLDBuildingHighlight*> m_buildingHighlights;
 }
 
 
@@ -143,6 +146,8 @@ const double defaultStartZoomLevel = 8;
     m_startDirection = nil;
 
     m_overlays = {};
+
+    m_buildingHighlights = {};
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -697,6 +702,22 @@ const double defaultStartZoomLevel = 8;
     }
 }
 
+#pragma mark - building highlights -
+
+- (WRLDBuildingHighlight*) addBuildingHighlight:(WRLDBuildingHighlightOptions*) buildingHighlightOptions
+{
+    WRLDBuildingHighlight* buildingHighlight = [[WRLDBuildingHighlight alloc] initWithApi:[self getMapApi].GetBuildingsApi()
+                                                                 buildingHighlightOptions:buildingHighlightOptions];
+    m_buildingHighlights[[buildingHighlight buildingHighlightId]] = buildingHighlight;
+    return buildingHighlight;
+}
+
+- (void) removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
+{
+    m_buildingHighlights.erase([buildingHighlight buildingHighlightId]);
+    [buildingHighlight destroy];
+}
+
 #pragma mark - overlays -
 
 - (void) addOverlay:(NSObject<WRLDOverlay>*) overlay
@@ -1050,6 +1071,28 @@ template<typename T> inline T* safe_cast(id instance)
     WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
     [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
+}
+
+- (void)notifyBuildingInformationReceived:(int)buildingHighlightId
+{
+    if (m_buildingHighlights.find(buildingHighlightId) == m_buildingHighlights.end())
+    {
+        return;
+    }
+
+    WRLDBuildingHighlight* buildingHighlight = m_buildingHighlights.at(buildingHighlightId);
+
+    if (buildingHighlight == nil)
+    {
+        return;
+    }
+
+    [buildingHighlight loadBuildingInformationFromNative];
+
+    if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
+    {
+        [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+    }
 }
 
 @end

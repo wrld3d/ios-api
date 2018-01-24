@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result;
 
+- (void)notifyBuildingInformationReceived:(int)buildingHighlightId;
+
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
 const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode);

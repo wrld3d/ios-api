@@ -51,3 +51,8 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDRoutingQueryResponse.h"
 #import "WRLDRoutingQuery.h"
 #import "WRLDRoutingService.h"
+#import "WRLDBuildingContour.h"
+#import "WRLDBuildingDimensions.h"
+#import "WRLDBuildingHighlight.h"
+#import "WRLDBuildingInformation.h"
+#import "WRLDBuildingHighlightOptions.h"

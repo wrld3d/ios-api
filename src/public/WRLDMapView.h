@@ -17,6 +17,8 @@
 #import "WRLDPoiService.h"
 #import "WRLDMapsceneService.h"
 #import "WRLDRoutingService.h"
+#import "WRLDBuildingHighlight.h"
+#import "WRLDBuildingHighlightOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -235,6 +237,24 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons;
 
+
+#pragma mark - building highlights -
+
+/*! @name Building highlights */
+
+/*!
+ Create a building highlight and add it to the map.
+ @param buildingHighlightOptions Creation parameters for the building highlight.
+
+ @return The WRLDBuildingHighlight that was added.
+ */
+- (WRLDBuildingHighlight*) addBuildingHighlight:(WRLDBuildingHighlightOptions*) buildingHighlightOptions;
+
+/*!
+ Remove a WRLDBuildingHighlight from the map and destroy it.
+ @param buildingHighlight The WRLDBuildingHighlight to remove.
+ */
+- (void) removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
 
 
 #pragma mark - overlays -

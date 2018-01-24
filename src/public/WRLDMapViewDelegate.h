@@ -9,6 +9,7 @@
 @class WRLDMapsceneRequestResponse;
 @class WRLDRoutingQuery;
 @class WRLDRoutingQueryResponse;
+@class WRLDBuildingHighlight;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -88,5 +89,13 @@ poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse;
  */
 - (void)mapView:(WRLDMapView *)mapView routingQueryDidComplete: (int) routingQueryId
 routingQueryResponse: (WRLDRoutingQueryResponse*) routingQueryResponse;
+
+/*!
+ A message sent when a building information is received.
+ Access this with [buildingHighlight buildingInformation].
+ @param mapView The WRLDMapView that is being observed.
+ @param buildingHighlight The WRLDBuildingHighlight object for which WRLDBuildingInformation has been received.
+ */
+- (void)mapView:(WRLDMapView *)mapView didReceiveBuildingInformationForHighlight: (WRLDBuildingHighlight*) buildingHighlight;
 
 @end
