@@ -61,7 +61,7 @@
 -(bool) isFooter: (NSIndexPath * ) index
 {
     WRLDSearchResultSet * set = m_resultSets[[index section]];
-    if([set hasMoreToShow] || [set getExpandedState] == Expanded)
+    if([self hasFooter : set])
     {
         return [index row] == [set getVisibleResultCount];
     }
@@ -92,12 +92,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section{
     NSInteger visibleCells = [m_resultSets[section] getVisibleResultCount];
-    if([m_resultSets[section] hasMoreToShow] || [m_resultSets[section] getExpandedState] == Expanded)
+    if([self hasFooter : m_resultSets[section]])
     {
         visibleCells++;
     }
         
     return visibleCells;
+}
+
+- (bool) hasFooter : (WRLDSearchResultSet *) set
+{
+    return [set hasMoreToShow] || [set getExpandedState] == Expanded;
 }
 
 -(void) updateResults
@@ -108,10 +113,18 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     CGFloat height = 0;
     for(int i = 0; i < [m_resultSets count]; ++i)
     {
-        for(int j = 0; j < [m_resultSets[i] getResultCount]; ++j)
+        int cellsInSection = [m_resultSets[i] getVisibleResultCount];
+        
+        if([self hasFooter : m_resultSets[i]]){
+            ++cellsInSection;
+        }
+        
+        for(int j = 0; j < cellsInSection; ++j)
         {
             height += [self tableView:m_tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:j inSection:i]];
         }
+        
+        height += 8;
     }
     
     height = MIN(400, height);
