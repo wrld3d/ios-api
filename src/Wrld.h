@@ -43,6 +43,8 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDRouteSection.h"
 #import "WRLDRouteStep.h"
 #import "WRLDRouteDirections.h"
+#import "WRLDRouteView.h"
+#import "WRLDRouteViewOptions.h"
 #import "WRLDRouteTransportationMode.h"
 #import "WRLDRoutingQueryOptions.h"
 #import "WRLDRoutingQueryWaypoint.h"

@@ -18,6 +18,7 @@
     int m_polylineId;
 
     std::vector<Eegeo::Space::LatLong> m_coords;
+    std::vector<double> m_perPointElevations;
 }
 
 + (instancetype)polylineWithCoordinates:(CLLocationCoordinate2D *)coords
@@ -65,9 +66,22 @@
         _indoorMapId = indoorMapId;
         _indoorFloorId = floorId;
         
+        for( int i = 0; i < count; ++i)
+        {
+            m_perPointElevations.push_back(0);
+        }
         m_pPolylineApi = nil;
     }
     return self;
+}
+
+- (void)setPerPointElevations:(CGFloat*)perPointElevations count:(NSUInteger)count
+{
+    long int min = MIN(m_coords.size(), count);
+    for (int i = 0; i < min; ++i)
+    {
+        m_perPointElevations[i] = (double)perPointElevations[i];
+    }
 }
 
 - (void)setColor:(UIColor *)color
@@ -204,6 +218,7 @@
         .SetElevationMode(elevationMode)
         .SetElevation(_elevation)
         .SetIndoorMap(indoorMapId, static_cast<int>(_indoorFloorId))
+        .SetPerPointElevations(m_perPointElevations)
         .Build();
     
     m_pPolylineApi = &mapApi.GetPolylineApi();

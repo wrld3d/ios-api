@@ -60,7 +60,7 @@
         _title = @"";
         _styleName = @"marker_default";
         _userData = @"";
-        _iconKey = @"misc";
+        _iconKey = @"pin";
         _indoorMapId = indoorMapId;
         _indoorFloorId = floorId;
 
