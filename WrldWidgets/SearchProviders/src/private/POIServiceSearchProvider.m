@@ -5,6 +5,7 @@
 #import "POIServiceSearchProvider.h"
 
 #import "WRLDSearchProviderDelegate.h"
+#import "WRLDSearchQuery.h"
 #import "WRLDSearchResult.h"
 
 @implementation POIServiceSearchProvider
@@ -75,12 +76,12 @@
     return searchResult;
 }
 
-- (void) search: (NSString*) query
+- (void) search: (WRLDSearchQuery*) query
 {
     [self clearResults];
     
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
-    [textSearchOptions setQuery: query];
+    [textSearchOptions setQuery: query.queryString];
     [textSearchOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchText: textSearchOptions] poiSearchId];
     m_searchType = WRLDResult;

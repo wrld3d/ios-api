@@ -2,8 +2,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class WRLDSearchQuery;
+
 @protocol WRLDSearchDelegate
--(void) doSearch :(NSString*) queryString;
+-(void) doSearch :(WRLDSearchQuery*) query;
 @end
 
 

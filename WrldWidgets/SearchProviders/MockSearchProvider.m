@@ -2,6 +2,7 @@
 
 #import "MockSearchProvider.h"
 #import "WRLDSearchProviderDelegate.h"
+#import "WRLDSearchQuery.h"
 #import "WRLDSearchResult.h"
 
 @implementation MockSearchProvider
@@ -36,7 +37,7 @@
     return searchResult;
 }
 
-- (void) search: (NSString*) query
+- (void) search: (WRLDSearchQuery*) query
 {
     [self clearResults];
     

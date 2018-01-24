@@ -12,4 +12,6 @@
 -(NSString *) getCellIdentifierForSetAtIndex:(NSInteger) index;
 -(CGFloat) getCellExpectedHeightForSetAtIndex:(NSInteger) index;
 
+-(NSInteger) count;
+
 @end

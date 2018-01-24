@@ -30,6 +30,7 @@
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
         [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIentifier];
     }
+    
     return self;
 }
 

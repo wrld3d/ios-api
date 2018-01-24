@@ -1,6 +1,7 @@
 #import "WRLDSearchWidgetView.h"
 #import "WRLDMapView.h"
 #import "WRLDSearchProvider.h"
+#import "WRLDSearchQuery.h"
 #import "SearchProviders.h"
 #import "WRLDSearchResultTableViewController.h"
 #import "WRLDSearchResultSet.h"
@@ -80,12 +81,15 @@
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
 {
     NSLog(@"Get Suggestions for %@", searchText);
+    self.wrldSearchWidgetTableView.hidden = ([searchText length] == 0) ? YES : NO;
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"Get Search for %@", [searchBar text]);
-    [m_wrldSearchDelegate doSearch: [searchBar text]];
+    WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: [searchBar text] : [m_searchProviders count]];
+    
+    [m_wrldSearchDelegate doSearch: newQuery];
 }
 
 -(void)assignSearchDelegate: (id<WRLDSearchDelegate>) wrldSearchDelegate

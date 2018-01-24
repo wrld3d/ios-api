@@ -3,6 +3,8 @@
 #import <UIKit/UIKit.h>
 #import "WRLDSearchProviderDelegate.h"
 
+@class WRLDSearchQuery;
+
 /// The protocol that can be implemented to provide custom search functionality
 @protocol WRLDSearchProvider <NSObject>
 
@@ -18,7 +20,7 @@
  
  @param query The text to search for.
  */
-- (void) search: (NSString*) query;
+- (void) search: (WRLDSearchQuery *) query;
 
 /*!
  Calling this should clear current search results and start a new suggestion search.

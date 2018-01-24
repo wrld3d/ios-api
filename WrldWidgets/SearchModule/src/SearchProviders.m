@@ -1,5 +1,6 @@
 #import "SearchProviders.h"
 #import "WRLDSearchProvider.h"
+#import "WRLDSearchQuery.h"
 #import "WRLDSearchResultSet.h"
 
 @implementation SearchProviders
@@ -24,7 +25,7 @@
     return resultsSet;
 }
 
--(void) doSearch: (NSString*) query {
+-(void) doSearch: (WRLDSearchQuery *) query {
     for(id<WRLDSearchProvider> provider in m_searchProviders){
         [provider search: query];
     }
@@ -36,6 +37,11 @@
 
 -(CGFloat) getCellExpectedHeightForSetAtIndex:(NSInteger) index {
     return m_searchProviders[index].cellExpectedHeight;
+}
+
+-(NSInteger) count
+{
+    return [m_searchProviders count];
 }
 
 @end
