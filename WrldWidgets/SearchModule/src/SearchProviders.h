@@ -9,4 +9,7 @@
 
 @interface SearchProviders : NSObject<WRLDSearchDelegate>
 -(WRLDSearchResultSet *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
+-(NSString *) getCellIdentifierForSetAtIndex:(NSInteger) index;
+-(CGFloat) getCellExpectedHeightForSetAtIndex:(NSInteger) index;
+
 @end

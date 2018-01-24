@@ -24,6 +24,8 @@
         m_poiService = poiService;
         m_poiSearchId = 0;
         m_searchType = WRLDResult;
+        cellIdentifier = @"WRLDGenericSearchResult";
+        cellExpectedHeight = 48;
         
         m_mapView.delegate = self;
     }
@@ -96,6 +98,10 @@
 }
 
 @synthesize title;
+
+@synthesize cellIdentifier;
+
+@synthesize cellExpectedHeight;
 
 @end
 

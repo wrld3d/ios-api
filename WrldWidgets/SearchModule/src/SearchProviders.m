@@ -30,5 +30,13 @@
     }
 }
 
+-(NSString *) getCellIdentifierForSetAtIndex:(NSInteger) index {
+    return m_searchProviders[index].cellIdentifier;
+}
+
+-(CGFloat) getCellExpectedHeightForSetAtIndex:(NSInteger) index {
+    return m_searchProviders[index].cellExpectedHeight;
+}
+
 @end
 

@@ -10,3 +10,4 @@ FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 #import "WRLDSearchWidgetView.h"
 #import "WRLDSearchProvider.h"
 #import "POIServiceSearchProvider.h"
+#import "MockSearchProvider.h"

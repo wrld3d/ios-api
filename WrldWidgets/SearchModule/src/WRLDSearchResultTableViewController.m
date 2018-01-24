@@ -3,20 +3,31 @@
 #import "WRLDSearchResult.h"
 #import "WRLDSearchResultTableViewController.h"
 #import "WRLDSearchResultSet.h"
+#import "SearchProviders.h"
 
 @implementation WRLDSearchResultTableViewController
 {
     NSMutableArray<WRLDSearchResultSet *> *m_resultSets;
     UITableView * m_tableView;
     NSLayoutConstraint * m_heightConstraint;
+    NSString* m_defaultCellStyleIdentifier;
+    NSString* m_footerCellStyleIentifier;
+    SearchProviders * m_searchProviders;
 }
 
--(WRLDSearchResultTableViewController *) init : (UITableView *) tableView
+-(instancetype) init : (UITableView *) tableView :(SearchProviders *) searchProviders
 {
     self = [super init];
     m_resultSets = [[NSMutableArray<WRLDSearchResultSet *> alloc] init];
     if(self){
         m_tableView = tableView;
+        m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
+        m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
+        m_searchProviders = searchProviders;
+        
+        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
+        [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIentifier];
     }
     return self;
 }
@@ -33,22 +44,15 @@
     NSString* cellIdentifier = [self getIdentifierForCellAtPosition: indexPath];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if(cell == nil)
-    {
-        NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
-        [tableView registerNib:[UINib nibWithNibName:cellIdentifier bundle:widgetsBundle] forCellReuseIdentifier: cellIdentifier];
-        cell = [tableView dequeueReusableCellWithIdentifier: cellIdentifier forIndexPath:indexPath];
-    }
-    
     return cell;
 }
 
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index {
     if([self isFooter:index]){
-        return @"DisplayMoreResultsCell";
+        return m_footerCellStyleIentifier;
     }
     
-    return @"GenericSearchResult";
+    return [m_searchProviders getCellIdentifierForSetAtIndex: [index section]];
 }
 
 -(bool) isFooter: (NSIndexPath * ) index
@@ -119,7 +123,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     if([self isFooter:indexPath]){
         return 32;
     }
-    return 73;
+    return [m_searchProviders getCellExpectedHeightForSetAtIndex: [indexPath section]];
 }
 
 -(void) setHeightConstraint:(NSLayoutConstraint *)heightConstraint

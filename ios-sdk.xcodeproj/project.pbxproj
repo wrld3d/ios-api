@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 024286931F0BFFC400D63CCA /* WRLDOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */ = {isa = PBXBuildFile; fileRef = 26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		267507DF2017790800922BD3 /* DisplayMoreResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267507DE2017790800922BD3 /* DisplayMoreResultsCell.xib */; };
+		267507DF2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267507DE2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib */; };
 		267507E720177A5400922BD3 /* Back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E020177A5400922BD3 /* Back_btn.png */; };
 		267507E820177A5400922BD3 /* GradientShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E120177A5400922BD3 /* GradientShadow.png */; };
 		267507E920177A5400922BD3 /* Expander.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E220177A5400922BD3 /* Expander.png */; };
@@ -17,7 +17,7 @@
 		267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E420177A5400922BD3 /* MoreResults_butn.png */; };
 		267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E520177A5400922BD3 /* DeleteSearch_btn.png */; };
 		267507ED20177A5400922BD3 /* Menu_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 267507E620177A5400922BD3 /* Menu_btn.png */; };
-		267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 267507EE2017874D00922BD3 /* MockSearchProvider.h */; };
+		267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 267507EE2017874D00922BD3 /* MockSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		267507F12017878900922BD3 /* MockSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 267507F02017878900922BD3 /* MockSearchProvider.m */; };
 		268C2DEF201634D6009EB66B /* POIServiceSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */; };
 		268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,10 +36,14 @@
 		268C2E0A20173D88009EB66B /* WRLDSearchResultTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		268C2E0C20173E4C009EB66B /* WRLDSearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */; };
 		268C2E0E20174734009EB66B /* WRLDSearchResultsArrivedDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2E0D20174734009EB66B /* WRLDSearchResultsArrivedDelegate.h */; };
-		268C2E1020174AE6009EB66B /* GenericSearchResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 268C2E0F20174AE6009EB66B /* GenericSearchResult.xib */; };
+		268C2E1020174AE6009EB66B /* WRLDGenericSearchResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */; };
 		269940EE2010C4A20099E34A /* WRLDSearchWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */; };
 		269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269941062010D5890099E34A /* WRLDSearchWidgetView.xib */; };
 		2699411E2010FCF30099E34A /* icon1_pin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699411D2010FCF30099E34A /* icon1_pin@3x.png */; };
+		26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */; };
+		26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */; };
+		26CA2C192018A6A600F24EC5 /* YelpSearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */; };
+		26CA2C1F2018ABCE00F24EC5 /* YelpAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C1E2018ABCE00F24EC5 /* YelpAssets.xcassets */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -251,7 +255,7 @@
 		024286931F0BFFC400D63CCA /* WRLDOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDOverlay.h; sourceTree = "<group>"; };
 		26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetView.h; sourceTree = "<group>"; };
 		26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetView.m; sourceTree = "<group>"; };
-		267507DE2017790800922BD3 /* DisplayMoreResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisplayMoreResultsCell.xib; sourceTree = "<group>"; };
+		267507DE2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDDisplayMoreResultsCell.xib; sourceTree = "<group>"; };
 		267507E020177A5400922BD3 /* Back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_btn.png; sourceTree = "<group>"; };
 		267507E120177A5400922BD3 /* GradientShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GradientShadow.png; sourceTree = "<group>"; };
 		267507E220177A5400922BD3 /* Expander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Expander.png; sourceTree = "<group>"; };
@@ -278,9 +282,13 @@
 		268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultTableViewCell.h; sourceTree = "<group>"; };
 		268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultTableViewCell.m; sourceTree = "<group>"; };
 		268C2E0D20174734009EB66B /* WRLDSearchResultsArrivedDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultsArrivedDelegate.h; sourceTree = "<group>"; };
-		268C2E0F20174AE6009EB66B /* GenericSearchResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericSearchResult.xib; sourceTree = "<group>"; };
+		268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDGenericSearchResult.xib; sourceTree = "<group>"; };
 		269941062010D5890099E34A /* WRLDSearchWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchWidgetView.xib; sourceTree = "<group>"; };
 		2699411D2010FCF30099E34A /* icon1_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_pin@3x.png"; sourceTree = "<group>"; };
+		26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YelpSearchResultCell.xib; sourceTree = "<group>"; };
+		26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSearchResultTableViewCell.h; sourceTree = "<group>"; };
+		26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSearchResultTableViewCell.m; sourceTree = "<group>"; };
+		26CA2C1E2018ABCE00F24EC5 /* YelpAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YelpAssets.xcassets; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -528,7 +536,6 @@
 		26062EEB2010A866004DA5B3 /* private */ = {
 			isa = PBXGroup;
 			children = (
-				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
 				268C2E01201651BF009EB66B /* WRLDSearchResultSet.h */,
 				268C2E02201651BF009EB66B /* WRLDSearchResultSet.m */,
 				268C2DF5201635B3009EB66B /* WRLDSearchResult.mm */,
@@ -542,6 +549,7 @@
 				268C2E07201737DB009EB66B /* WRLDSearchResultTableViewController.m */,
 				268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */,
 				268C2E0D20174734009EB66B /* WRLDSearchResultsArrivedDelegate.h */,
+				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
 			);
 			name = private;
 			sourceTree = "<group>";
@@ -549,10 +557,13 @@
 		268C2DEC20163437009EB66B /* SearchProviders */ = {
 			isa = PBXGroup;
 			children = (
+				26CA2C132018A21200F24EC5 /* resources */,
 				268C2DEE201634D5009EB66B /* POIServiceSearchProvider.h */,
 				268C2DED201634D5009EB66B /* POIServiceSearchProvider.m */,
 				267507EE2017874D00922BD3 /* MockSearchProvider.h */,
 				267507F02017878900922BD3 /* MockSearchProvider.m */,
+				26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */,
+				26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */,
 			);
 			path = SearchProviders;
 			sourceTree = "<group>";
@@ -568,9 +579,18 @@
 				267507E420177A5400922BD3 /* MoreResults_butn.png */,
 				267507E320177A5400922BD3 /* Search_btn.png */,
 				2699411D2010FCF30099E34A /* icon1_pin@3x.png */,
-				267507DE2017790800922BD3 /* DisplayMoreResultsCell.xib */,
-				268C2E0F20174AE6009EB66B /* GenericSearchResult.xib */,
+				267507DE2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib */,
+				268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */,
 				269941062010D5890099E34A /* WRLDSearchWidgetView.xib */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		26CA2C132018A21200F24EC5 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */,
+				26CA2C1E2018ABCE00F24EC5 /* YelpAssets.xcassets */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -910,6 +930,7 @@
 				268C2E062016558D009EB66B /* WRLDSearchResultTableViewController.h in Headers */,
 				26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
+				26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */,
 				268C2DFA201636C4009EB66B /* WRLDSearchProvider.h in Headers */,
 				268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
@@ -1125,12 +1146,14 @@
 				267507EA20177A5400922BD3 /* Search_btn.png in Resources */,
 				2699411E2010FCF30099E34A /* icon1_pin@3x.png in Resources */,
 				267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */,
-				267507DF2017790800922BD3 /* DisplayMoreResultsCell.xib in Resources */,
+				267507DF2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib in Resources */,
+				26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
 				267507E720177A5400922BD3 /* Back_btn.png in Resources */,
-				268C2E1020174AE6009EB66B /* GenericSearchResult.xib in Resources */,
+				268C2E1020174AE6009EB66B /* WRLDGenericSearchResult.xib in Resources */,
 				267507ED20177A5400922BD3 /* Menu_btn.png in Resources */,
 				267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */,
+				26CA2C1F2018ABCE00F24EC5 /* YelpAssets.xcassets in Resources */,
 				267507E820177A5400922BD3 /* GradientShadow.png in Resources */,
 				267507E920177A5400922BD3 /* Expander.png in Resources */,
 				269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */,
@@ -1234,6 +1257,7 @@
 			files = (
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
 				268C2E04201651C0009EB66B /* WRLDSearchResultSet.m in Sources */,
+				26CA2C192018A6A600F24EC5 /* YelpSearchResultTableViewCell.m in Sources */,
 				2CB2C5B91EC1D93F00C0B401 /* WRLDIndoorControlView.m in Sources */,
 				2CB2C5B31EC1D93F00C0B401 /* UIColors.mm in Sources */,
 				2CB2C5B11EC1D93F00C0B401 /* UIButton+DefaultStates.mm in Sources */,

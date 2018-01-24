@@ -18,6 +18,8 @@
     if (self = [super init])
     {
         m_searchType = WRLDResult;
+        cellIdentifier = @"YelpSearchResultCell";
+        cellExpectedHeight = 80;
     }
     
     return self;
@@ -59,6 +61,9 @@
 }
 
 @synthesize title;
+
+@synthesize cellIdentifier;
+@synthesize cellExpectedHeight;
 
 @end
 
