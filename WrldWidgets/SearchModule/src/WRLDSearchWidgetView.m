@@ -21,6 +21,7 @@
     id<WRLDSearchDelegate> m_wrldSearchDelegate;
     SearchProviders* m_searchProviders;
     WRLDSearchResultTableViewController* m_searchResultsTableViewController;
+    bool m_isAnimatingOut;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -29,6 +30,7 @@
     if(self)
     {
         [self customInit];
+        m_isAnimatingOut = false;
     }
     
     return self;
@@ -80,9 +82,18 @@
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
 {
     NSLog(@"Get Suggestions for %@", searchText);
-    if([searchText length] == 0)
+    if([searchText length] == 0 && !m_isAnimatingOut)
     {
-        self.wrldSearchWidgetTableView.hidden =  YES;
+        m_isAnimatingOut = true;
+        [UIView animateWithDuration: 0.25 animations:^{
+            self.wrldSearchWidgetTableView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if(finished){
+                self.wrldSearchWidgetTableView.hidden =  YES;
+                NSLog(@"self.wrldSearchWidgetTableView.hidden");
+                m_isAnimatingOut = false;
+            }
+        }];
     }
 }
 
@@ -103,21 +114,6 @@
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
 {
     [self.wrldSearchWidgetTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
-}
-
-- (void)adjustHeightOfTableview
-{
-    CGFloat height = self.wrldSearchWidgetTableView.contentSize.height;
-    CGFloat maxHeight = self.wrldSearchWidgetTableView.superview.frame.size.height - self.wrldSearchWidgetTableView.frame.origin.y;
-    
-    if (height > maxHeight)
-        height = maxHeight;
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        CGRect frame = self.wrldSearchWidgetTableView.frame;
-        frame.size.height = height;
-        self.wrldSearchWidgetTableView.frame = frame;
-    }];
 }
 
 @end

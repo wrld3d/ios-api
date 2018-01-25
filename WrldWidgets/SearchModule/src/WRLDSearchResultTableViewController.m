@@ -149,6 +149,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     [UIView animateWithDuration: 0.25 animations:^{
         m_heightConstraint.constant = height;
         [m_tableView layoutIfNeeded];
+        m_tableView.alpha = 1.0;
     }];
     m_tableView.hidden = NO;
 }

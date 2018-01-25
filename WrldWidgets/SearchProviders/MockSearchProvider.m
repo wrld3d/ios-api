@@ -39,7 +39,7 @@
 
 - (void) search: (WRLDSearchQuery*) query
 {
-    NSDictionary * userInfo = @{ @"Query" : query };    
+    NSDictionary * userInfo = @{ @"Query" : query };
     [NSTimer scheduledTimerWithTimeInterval:3
                                      target:self
                                    selector:@selector(doSearch:)
