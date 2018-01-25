@@ -25,7 +25,6 @@
 		268C2DF6201635B3009EB66B /* WRLDSearchResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DF5201635B3009EB66B /* WRLDSearchResult.mm */; };
 		268C2DF8201635D6009EB66B /* WRLDSearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DF7201635D6009EB66B /* WRLDSearchResult.h */; };
 		268C2DFA201636C4009EB66B /* WRLDSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DF9201636C3009EB66B /* WRLDSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		268C2DFC20163DD8009EB66B /* WRLDSearchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DFB20163DD8009EB66B /* WRLDSearchDelegate.h */; };
 		268C2DFE20164590009EB66B /* SearchProviders.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2DFD20164590009EB66B /* SearchProviders.h */; };
 		268C2E00201645A1009EB66B /* SearchProviders.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C2DFF201645A1009EB66B /* SearchProviders.m */; };
 		268C2E03201651C0009EB66B /* WRLDSearchResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 268C2E01201651BF009EB66B /* WRLDSearchResultSet.h */; };
@@ -38,6 +37,11 @@
 		269940EE2010C4A20099E34A /* WRLDSearchWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */; };
 		269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269941062010D5890099E34A /* WRLDSearchWidgetView.xib */; };
 		2699411E2010FCF30099E34A /* icon1_pin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699411D2010FCF30099E34A /* icon1_pin@3x.png */; };
+		269A7625201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269A7624201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib */; };
+		269A7628201A226B00C0A2DE /* WRLDSearchSuggestionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 269A7626201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.h */; };
+		269A7629201A226B00C0A2DE /* WRLDSearchSuggestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 269A7627201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.m */; };
+		269A762B201A251400C0A2DE /* WRLDSearchSuggestionsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 269A762A201A251300C0A2DE /* WRLDSearchSuggestionsViewController.h */; };
+		269A762D201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */; };
 		26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */; };
 		26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */; };
 		26CA2C192018A6A600F24EC5 /* YelpSearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */; };
@@ -274,7 +278,6 @@
 		268C2DF5201635B3009EB66B /* WRLDSearchResult.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDSearchResult.mm; sourceTree = "<group>"; };
 		268C2DF7201635D6009EB66B /* WRLDSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResult.h; sourceTree = "<group>"; };
 		268C2DF9201636C3009EB66B /* WRLDSearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchProvider.h; sourceTree = "<group>"; };
-		268C2DFB20163DD8009EB66B /* WRLDSearchDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchDelegate.h; sourceTree = "<group>"; };
 		268C2DFD20164590009EB66B /* SearchProviders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchProviders.h; sourceTree = "<group>"; };
 		268C2DFF201645A1009EB66B /* SearchProviders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchProviders.m; sourceTree = "<group>"; };
 		268C2E01201651BF009EB66B /* WRLDSearchResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultSet.h; sourceTree = "<group>"; };
@@ -286,6 +289,11 @@
 		268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDGenericSearchResult.xib; sourceTree = "<group>"; };
 		269941062010D5890099E34A /* WRLDSearchWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchWidgetView.xib; sourceTree = "<group>"; };
 		2699411D2010FCF30099E34A /* icon1_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1_pin@3x.png"; sourceTree = "<group>"; };
+		269A7624201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDSearchWidgetSuggestion.xib; sourceTree = "<group>"; };
+		269A7626201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchSuggestionTableViewCell.h; sourceTree = "<group>"; };
+		269A7627201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchSuggestionTableViewCell.m; sourceTree = "<group>"; };
+		269A762A201A251300C0A2DE /* WRLDSearchSuggestionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchSuggestionsViewController.h; sourceTree = "<group>"; };
+		269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchSuggestionsViewController.m; sourceTree = "<group>"; };
 		26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YelpSearchResultCell.xib; sourceTree = "<group>"; };
 		26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSearchResultTableViewCell.h; sourceTree = "<group>"; };
 		26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSearchResultTableViewCell.m; sourceTree = "<group>"; };
@@ -543,16 +551,19 @@
 		26062EEB2010A866004DA5B3 /* private */ = {
 			isa = PBXGroup;
 			children = (
+				269A7626201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.h */,
+				269A7627201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.m */,
 				268C2E01201651BF009EB66B /* WRLDSearchResultSet.h */,
 				268C2E02201651BF009EB66B /* WRLDSearchResultSet.m */,
 				268C2DF5201635B3009EB66B /* WRLDSearchResult.mm */,
 				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
 				268C2DFD20164590009EB66B /* SearchProviders.h */,
 				268C2DFF201645A1009EB66B /* SearchProviders.m */,
-				268C2DFB20163DD8009EB66B /* WRLDSearchDelegate.h */,
 				268C2DF7201635D6009EB66B /* WRLDSearchResult.h */,
 				268C2E052016558D009EB66B /* WRLDSearchResultTableViewController.h */,
 				268C2E07201737DB009EB66B /* WRLDSearchResultTableViewController.m */,
+				269A762A201A251300C0A2DE /* WRLDSearchSuggestionsViewController.h */,
+				269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */,
 				268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */,
 				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
 				26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */,
@@ -591,6 +602,7 @@
 				268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */,
 				26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */,
 				269941062010D5890099E34A /* WRLDSearchWidgetView.xib */,
+				269A7624201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -939,14 +951,15 @@
 				268C2E062016558D009EB66B /* WRLDSearchResultTableViewController.h in Headers */,
 				26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
+				269A7628201A226B00C0A2DE /* WRLDSearchSuggestionTableViewCell.h in Headers */,
 				26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */,
 				268C2DFA201636C4009EB66B /* WRLDSearchProvider.h in Headers */,
 				268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
 				26CA2C232018D9C400F24EC5 /* WRLDSearchQuery.h in Headers */,
 				268C2DF8201635D6009EB66B /* WRLDSearchResult.h in Headers */,
+				269A762B201A251400C0A2DE /* WRLDSearchSuggestionsViewController.h in Headers */,
 				267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */,
-				268C2DFC20163DD8009EB66B /* WRLDSearchDelegate.h in Headers */,
 				2CB2C5A91EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.h in Headers */,
 				2CB2C5B41EC1D93F00C0B401 /* UIHelpers.h in Headers */,
 				268C2E03201651C0009EB66B /* WRLDSearchResultSet.h in Headers */,
@@ -1163,6 +1176,7 @@
 				267507E720177A5400922BD3 /* Back_btn.png in Resources */,
 				268C2E1020174AE6009EB66B /* WRLDGenericSearchResult.xib in Resources */,
 				267507ED20177A5400922BD3 /* Menu_btn.png in Resources */,
+				269A7625201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib in Resources */,
 				267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */,
 				26CA2C1F2018ABCE00F24EC5 /* YelpAssets.xcassets in Resources */,
 				267507E820177A5400922BD3 /* GradientShadow.png in Resources */,
@@ -1267,6 +1281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26F9C0FD2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m in Sources */,
+				269A7629201A226B00C0A2DE /* WRLDSearchSuggestionTableViewCell.m in Sources */,
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
 				26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */,
 				268C2E04201651C0009EB66B /* WRLDSearchResultSet.m in Sources */,
@@ -1284,6 +1299,7 @@
 				268C2E00201645A1009EB66B /* SearchProviders.m in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,
 				267507F12017878900922BD3 /* MockSearchProvider.m in Sources */,
+				269A762D201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m in Sources */,
 				2CB2C5B51EC1D93F00C0B401 /* UIHelpers.mm in Sources */,
 				268C2E0C20173E4C009EB66B /* WRLDSearchResultTableViewCell.m in Sources */,
 			);

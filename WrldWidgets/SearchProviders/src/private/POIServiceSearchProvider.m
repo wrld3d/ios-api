@@ -14,7 +14,6 @@
     WRLDMapView* m_mapView;
     
     int m_poiSearchId;
-    WRLDSearchResultType m_searchType;
     
     WRLDSearchQuery *m_currentQuery;
 }
@@ -26,7 +25,6 @@
         m_mapView = mapView;
         m_poiService = poiService;
         m_poiSearchId = 0;
-        m_searchType = WRLDResult;
         cellIdentifier = @"WRLDGenericSearchResult";
         cellExpectedHeight = 48;
         
@@ -40,29 +38,23 @@
 - (void)mapView:(WRLDMapView *)mapView poiSearchDidComplete: (int) poiSearchId poiSearchResponse: (WRLDPoiSearchResponse*) poiSearchResponse
 {
     if(m_poiSearchId != poiSearchId)
+    {
         return;
+    }
     
     // Unpack search results, fill structures up
-    NSMutableArray<WRLDSearchResult*>* searchResultSet = [[NSMutableArray<WRLDSearchResult*> alloc] init];
+    NSMutableArray<WRLDSearchResult*>* searchResults= [[NSMutableArray<WRLDSearchResult*> alloc] init];
 
-    if(![poiSearchResponse succeeded])
-    {
-        [searchResultSet addObject: [self createSearchResult: @"Failed to get poi service results" latLng: [m_mapView centerCoordinate] subTitle:@"" tags:@""]];
-    }
-    else if([[poiSearchResponse results] count] == 0)
-    {
-        [searchResultSet addObject: [self createSearchResult: @"No results found" latLng: [m_mapView centerCoordinate] subTitle:@"" tags:@""]];
-    }
-    else
+    if([poiSearchResponse succeeded])
     {
         for(WRLDPoiSearchResult *poiSearchResult in [poiSearchResponse results])
         {
             // Add to result set
-            [searchResultSet addObject: [self createSearchResult: [poiSearchResult title] latLng: [poiSearchResult latLng] subTitle:[poiSearchResult subtitle] tags:[poiSearchResult tags]]];
+            [searchResults addObject: [self createSearchResult: [poiSearchResult title] latLng: [poiSearchResult latLng] subTitle:[poiSearchResult subtitle] tags:[poiSearchResult tags]]];
         }
     }
     
-    [m_currentQuery addResults: self :searchResultSet];
+    [m_currentQuery addResults: self :searchResults];
 
 }
 
@@ -73,28 +65,25 @@
     [searchResult setLatLng: latLng];
     [searchResult setSubTitle: subTitle];
     [searchResult setTags: tags];
-    [searchResult setType:m_searchType];
     return searchResult;
 }
 
 - (void) search: (WRLDSearchQuery*) query
 {
     m_currentQuery = query;
-    
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
     [textSearchOptions setQuery: query.queryString];
     [textSearchOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchText: textSearchOptions] poiSearchId];
-    m_searchType = WRLDResult;
 }
 
-- (void) searchSuggestions: (NSString*) query
+- (void) searchSuggestions: (WRLDSearchQuery*) query
 {
+    m_currentQuery = query;
     WRLDAutocompleteOptions* autocompleteOptions = [[WRLDAutocompleteOptions alloc] init];
-    [autocompleteOptions setQuery: query];
+    [autocompleteOptions setQuery: query.queryString];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchAutocomplete: autocompleteOptions] poiSearchId];
-    m_searchType = WRLDSuggestion;
 }
 
 @synthesize title;

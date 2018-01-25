@@ -11,12 +11,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetView">
             <connections>
-                <outlet property="heightConstraint" destination="Ch0-Pu-hmk" id="pGY-sg-Fzb"/>
+                <outlet property="resultsHeightConstraint" destination="Ch0-Pu-hmk" id="94i-LH-4yV"/>
+                <outlet property="suggestionsHeightConstraint" destination="5Bv-Sr-MfB" id="pYe-Hj-Jic"/>
                 <outlet property="wrldSearchWidgetMenuButton" destination="Gsy-aj-hKu" id="cPM-Pb-eZt"/>
+                <outlet property="wrldSearchWidgetResultsTableView" destination="URT-uZ-0JQ" id="xTA-ch-t9e"/>
+                <outlet property="wrldSearchWidgetResultsTableViewContainer" destination="fS6-Uh-JhU" id="hSJ-Ej-xgm"/>
                 <outlet property="wrldSearchWidgetRootView" destination="iN0-l3-epB" id="VRG-b4-Y61"/>
                 <outlet property="wrldSearchWidgetSearchBar" destination="nwq-hq-zts" id="uce-c9-h7F"/>
-                <outlet property="wrldSearchWidgetTableView" destination="URT-uZ-0JQ" id="zrA-Lg-B4f"/>
-                <outlet property="wrldSearchWidgetTableViewContainer" destination="fS6-Uh-JhU" id="XdO-QA-7rc"/>
+                <outlet property="wrldSearchWidgetSuggestionsTableView" destination="0kP-eT-3ph" id="FGA-2h-o3P"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -56,7 +58,7 @@
                     </constraints>
                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="TableViewContainer">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
                     <rect key="frame" x="0.0" y="64" width="375" height="555"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
@@ -74,14 +76,24 @@
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
                     </constraints>
                 </view>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                    <rect key="frame" x="0.0" y="56" width="375" height="200"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="5Bv-Sr-MfB"/>
+                    </constraints>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="ArS-fC-PEs"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="GFW-xn-0ZX"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="Isy-2w-2cj"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="Pia-XC-lnK"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Psk-go-21m"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="fmG-qx-fte"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="jBh-MQ-Kwp"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="8" symbolic="YES" id="lrz-ys-zTz"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vp8-NJ-WJG"/>
             </constraints>

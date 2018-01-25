@@ -27,6 +27,6 @@
  
  @param query The text to provide suggestions for.
  */
-- (void) searchSuggestions: (NSString*) query;
+- (void) searchSuggestions: (WRLDSearchQuery *) query;
 
 @end

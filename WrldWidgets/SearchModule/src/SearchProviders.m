@@ -28,6 +28,13 @@
     }
 }
 
+
+-(void) doSuggestions: (WRLDSearchQuery *) query {
+    for(id<WRLDSearchProvider> provider in m_searchProviders){
+        [provider searchSuggestions: query];
+    }
+}
+
 -(NSString *) getCellIdentifierForSetAtIndex:(NSInteger) index {
     return m_searchProviders[index].cellIdentifier;
 }

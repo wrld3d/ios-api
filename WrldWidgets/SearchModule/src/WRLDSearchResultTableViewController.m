@@ -16,6 +16,7 @@
     NSString* m_footerCellStyleIentifier;
     NSString* m_searchingCellStyleIentifier;
     SearchProviders * m_searchProviders;
+    bool m_isAnimatingOut;
 }
 
 -(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders
@@ -29,6 +30,7 @@
         m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
         m_searchingCellStyleIentifier = @"WRLDSearchInProgressCell";
         m_searchProviders = searchProviders;
+        m_isAnimatingOut = false;
         
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
@@ -160,7 +162,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     m_tableViewContainer.hidden = NO;
 }
 
--(CGFloat) getHeightForSet : (NSInteger*) setIndex
+-(CGFloat) getHeightForSet : (NSInteger) setIndex
 {
     CGFloat height = 0;
     WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: setIndex];
@@ -243,6 +245,22 @@ heightForHeaderInSection:(NSInteger)section
 heightForFooterInSection:(NSInteger)section
 {
     return CGFLOAT_MIN;
+}
+
+-(void) fadeOut
+{
+    if(!m_isAnimatingOut)
+    {
+        m_isAnimatingOut = true;
+        [UIView animateWithDuration: 0.25 animations:^{
+            m_tableViewContainer.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if(finished){
+                m_tableViewContainer.hidden =  YES;
+                m_isAnimatingOut = false;
+            }
+        }];
+    }
 }
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView

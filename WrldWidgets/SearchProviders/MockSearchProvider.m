@@ -56,7 +56,7 @@
     
     for(int i = 0; i < 20; ++i){
         [searchResults addObject: [self createSearchResult:
-                                   [NSString stringWithFormat:@"Mock Result %d", i]
+                                   [NSString stringWithFormat:@"Mock Result %@ %d", query.queryString, i]
                                                     latLng: CLLocationCoordinate2DMake(0, 0)
                                                   subTitle: [NSString stringWithFormat:@"Mock Result Description %d", i]
                                                       tags: tags]];
@@ -65,8 +65,21 @@
     [query addResults: self :searchResults];
 }
 
-- (void) searchSuggestions: (NSString*) query
+- (void) searchSuggestions: (WRLDSearchQuery *) query
 {
+    NSMutableArray<WRLDSearchResult *> * searchResults = [[NSMutableArray<WRLDSearchResult *> alloc] init];
+    
+    NSString * tags = @"";
+    
+    for(int i = 0; i < 20; ++i){
+        [searchResults addObject: [self createSearchResult:
+                                   [NSString stringWithFormat:@"Mock Suggestion %@ %d", query.queryString, i]
+                                                    latLng: CLLocationCoordinate2DMake(0, 0)
+                                                  subTitle: [NSString stringWithFormat:@"Mock Result Description %d", i]
+                                                      tags: tags]];
+    }
+    
+    [query addResults: self :searchResults];
 }
 
 @synthesize title;
