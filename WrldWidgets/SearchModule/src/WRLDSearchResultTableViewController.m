@@ -152,6 +152,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         m_heightConstraint.constant = height;
         [m_tableView layoutIfNeeded];
         m_tableViewContainer.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        if(finished){
+            [self applyGradient: [self getGradientState:m_tableView]];
+        }
     }];
     m_tableViewContainer.hidden = NO;
 }
@@ -239,6 +243,64 @@ heightForHeaderInSection:(NSInteger)section
 heightForFooterInSection:(NSInteger)section
 {
     return CGFLOAT_MIN;
+}
+
+-(void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self applyGradient: [self getGradientState:scrollView]];
+}
+
+-(GradientState) getGradientState : (UIScrollView*) scrollView
+{
+    bool belowTop = false;
+    bool aboveBottom = false;
+    if (scrollView.contentOffset.y + scrollView.contentInset.top > 0) {
+        belowTop = true;
+    }
+    if (scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height) {
+        aboveBottom = true;
+    }
+    
+    if(belowTop && aboveBottom){
+        return TopAndBottom;
+    }
+    if(belowTop){
+        return Top;
+    }
+    if(aboveBottom){
+        return Bottom;
+    }
+    return None;
+}
+
+-(void) applyGradient: (GradientState) state
+{
+    CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
+    gradient.frame = [m_tableView bounds];
+    
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    
+    switch (state) {
+        case None:
+            m_tableView.layer.mask = nil;
+            break;
+        case Top:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.2]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case Bottom:
+            gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case TopAndBottom:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor, (__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+    }
 }
 
 @end

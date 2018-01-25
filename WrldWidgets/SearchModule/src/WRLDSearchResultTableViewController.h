@@ -9,4 +9,11 @@
 -(WRLDSearchResultTableViewController *) init : (UIView *) tableViewContainer : (UITableView *) tableView :(SearchProviders *) searchProviders;
 -(void) setCurrentQuery: (WRLDSearchQuery *) currentQuery;
 -(void) setHeightConstraint: (NSLayoutConstraint *) heightConstraint;
+
+typedef NS_ENUM(NSInteger, GradientState) {
+    None,
+    Top,
+    Bottom,
+    TopAndBottom
+};
 @end
