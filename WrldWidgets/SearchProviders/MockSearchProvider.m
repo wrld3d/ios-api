@@ -39,6 +39,17 @@
 
 - (void) search: (WRLDSearchQuery*) query
 {
+    NSDictionary * userInfo = @{ @"Query" : query };    
+    [NSTimer scheduledTimerWithTimeInterval:3
+                                     target:self
+                                   selector:@selector(doSearch:)
+                                   userInfo:userInfo
+                                    repeats:NO];
+}
+
+- (void)doSearch:(NSTimer*)theTimer {
+    WRLDSearchQuery *query = [[theTimer userInfo] objectForKey:@"Query"];
+
     NSMutableArray<WRLDSearchResult *> * searchResults = [[NSMutableArray<WRLDSearchResult *> alloc] init];
     
     NSString * tags = @"";

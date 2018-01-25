@@ -44,6 +44,9 @@
 		26CA2C1F2018ABCE00F24EC5 /* YelpAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C1E2018ABCE00F24EC5 /* YelpAssets.xcassets */; };
 		26CA2C232018D9C400F24EC5 /* WRLDSearchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 26CA2C222018D9C400F24EC5 /* WRLDSearchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */; };
+		26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */; };
+		26F9C0F92019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */; };
+		26F9C0FD2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -289,6 +292,9 @@
 		26CA2C1E2018ABCE00F24EC5 /* YelpAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YelpAssets.xcassets; sourceTree = "<group>"; };
 		26CA2C222018D9C400F24EC5 /* WRLDSearchQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchQuery.h; sourceTree = "<group>"; };
 		26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchQuery.m; sourceTree = "<group>"; };
+		26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchInProgressCell.xib; sourceTree = "<group>"; };
+		26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchInProgressTableViewCell.h; sourceTree = "<group>"; };
+		26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchInProgressTableViewCell.m; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -550,6 +556,8 @@
 				268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */,
 				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
 				26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */,
+				26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */,
+				26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */,
 			);
 			name = private;
 			sourceTree = "<group>";
@@ -581,6 +589,7 @@
 				2699411D2010FCF30099E34A /* icon1_pin@3x.png */,
 				267507DE2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib */,
 				268C2E0F20174AE6009EB66B /* WRLDGenericSearchResult.xib */,
+				26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */,
 				269941062010D5890099E34A /* WRLDSearchWidgetView.xib */,
 			);
 			path = resources;
@@ -943,6 +952,7 @@
 				268C2E03201651C0009EB66B /* WRLDSearchResultSet.h in Headers */,
 				268C2DF420163587009EB66B /* WRLDSearchProviderDelegate.h in Headers */,
 				2CB2C5AB1EC1D93F00C0B401 /* IndoorControl.h in Headers */,
+				26F9C0F92019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h in Headers */,
 				2CB2C5A71EC1D93F00C0B401 /* ImageHelpers.h in Headers */,
 				2CB2C5AD1EC1D93F00C0B401 /* IndoorControlDelegate.h in Headers */,
 				2CB2C5B01EC1D93F00C0B401 /* UIButton+DefaultStates.h in Headers */,
@@ -1148,6 +1158,7 @@
 				267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */,
 				267507DF2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib in Resources */,
 				26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */,
+				26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
 				267507E720177A5400922BD3 /* Back_btn.png in Resources */,
 				268C2E1020174AE6009EB66B /* WRLDGenericSearchResult.xib in Resources */,
@@ -1255,6 +1266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F9C0FD2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m in Sources */,
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
 				26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */,
 				268C2E04201651C0009EB66B /* WRLDSearchResultSet.m in Sources */,

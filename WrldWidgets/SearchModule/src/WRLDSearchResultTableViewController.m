@@ -13,6 +13,7 @@
     NSLayoutConstraint * m_heightConstraint;
     NSString* m_defaultCellStyleIdentifier;
     NSString* m_footerCellStyleIentifier;
+    NSString* m_searchingCellStyleIentifier;
     SearchProviders * m_searchProviders;
 }
 
@@ -24,11 +25,13 @@
         m_tableView = tableView;
         m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
         m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
+        m_searchingCellStyleIentifier = @"WRLDSearchInProgressCell";
         m_searchProviders = searchProviders;
         
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
         [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIentifier];
+        [tableView registerNib:[UINib nibWithNibName:m_searchingCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_searchingCellStyleIentifier];
     }
     
     return self;
@@ -38,6 +41,7 @@
 {
     m_currentQuery = newQuery;
     [newQuery setCompletionDelegate: self];
+    [self updateResults];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -51,6 +55,10 @@
 
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
 {
+    if([m_currentQuery progress] == InFlight){
+        return m_searchingCellStyleIentifier;
+    }
+    
     if([self isFooter:index])
     {
         return m_footerCellStyleIentifier;
@@ -74,7 +82,7 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO Handle casting propertly
-    if(![self isFooter:indexPath])
+    if(![self isFooter:indexPath] && !([m_currentQuery progress] == InFlight))
     {
         WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
     
@@ -88,11 +96,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //NSLog(@"numberOfSectionsInTableView %d", [m_resultSets count]);
+    
+    if([m_currentQuery progress] == InFlight){
+        return 1;
+    }
+    
     return [m_searchProviders count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section{
+    
+    if([m_currentQuery progress] == InFlight){
+        return 1;
+    }
+    
     WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: section];
     NSInteger visibleCells = [set getVisibleResultCount];
     if([self hasFooter : set])
@@ -113,17 +131,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //NSLog(@"updateResults");
     [m_tableView reloadData];
     //CGRect bounds = m_tableView.bounds;
+    
     CGFloat height = 0;
-    for(int i = 0; i < [m_searchProviders count]; ++i)
+    if([m_currentQuery progress] == InFlight)
     {
-        height += [self getHeightForSet: i];
+        height = 48;
+    }
+    else
+    {
+        for(int i = 0; i < [m_searchProviders count]; ++i)
+        {
+            height += [self getHeightForSet: i];
+        }
+        height = MIN(400, height);
     }
     
-    height = MIN(400, height);
-    
-    //bounds.size.height = height;
-
-    //m_tableView.bounds = bounds;
     [UIView animateWithDuration: 0.25 animations:^{
         m_heightConstraint.constant = height;
         [m_tableView layoutIfNeeded];
