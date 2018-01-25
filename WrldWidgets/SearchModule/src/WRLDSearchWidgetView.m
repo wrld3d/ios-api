@@ -12,6 +12,7 @@
 @property (strong, nonatomic) IBOutlet UIView *wrldSearchWidgetRootView;
 @property (weak, nonatomic) IBOutlet UIButton *wrldSearchWidgetMenuButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UISearchBar *wrldSearchWidgetSearchBar;
+@property (weak, nonatomic) IBOutlet UIView *wrldSearchWidgetTableViewContainer;
 @property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @end
@@ -57,7 +58,7 @@
     
     [widgetsBundle.self loadNibNamed:@"WRLDSearchWidgetView" owner:self options:nil];
     
-    m_searchResultsTableViewController = [[WRLDSearchResultTableViewController alloc] init: self.wrldSearchWidgetTableView : m_searchProviders];
+    m_searchResultsTableViewController = [[WRLDSearchResultTableViewController alloc] init: self.wrldSearchWidgetTableViewContainer : self.wrldSearchWidgetTableView : m_searchProviders];
     
     [self addSubview:self.wrldSearchWidgetRootView];
     
@@ -86,10 +87,10 @@
     {
         m_isAnimatingOut = true;
         [UIView animateWithDuration: 0.25 animations:^{
-            self.wrldSearchWidgetTableView.alpha = 0.0;
+            self.wrldSearchWidgetTableViewContainer.alpha = 0.0;
         } completion:^(BOOL finished) {
             if(finished){
-                self.wrldSearchWidgetTableView.hidden =  YES;
+                self.wrldSearchWidgetTableViewContainer.hidden =  YES;
                 NSLog(@"self.wrldSearchWidgetTableView.hidden");
                 m_isAnimatingOut = false;
             }

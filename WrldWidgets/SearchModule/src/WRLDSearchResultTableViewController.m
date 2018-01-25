@@ -9,6 +9,7 @@
 @implementation WRLDSearchResultTableViewController
 {
     WRLDSearchQuery *m_currentQuery;
+    UIView * m_tableViewContainer;
     UITableView * m_tableView;
     NSLayoutConstraint * m_heightConstraint;
     NSString* m_defaultCellStyleIdentifier;
@@ -17,11 +18,12 @@
     SearchProviders * m_searchProviders;
 }
 
--(instancetype) init : (UITableView *) tableView :(SearchProviders *) searchProviders
+-(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders
 {
     self = [super init];
     if(self)
     {
+        m_tableViewContainer = tableViewContainer;
         m_tableView = tableView;
         m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
         m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
@@ -149,9 +151,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     [UIView animateWithDuration: 0.25 animations:^{
         m_heightConstraint.constant = height;
         [m_tableView layoutIfNeeded];
-        m_tableView.alpha = 1.0;
+        m_tableViewContainer.alpha = 1.0;
     }];
-    m_tableView.hidden = NO;
+    m_tableViewContainer.hidden = NO;
 }
 
 -(CGFloat) getHeightForSet : (NSInteger*) setIndex

@@ -6,7 +6,7 @@
 @class SearchProviders;
 
 @interface WRLDSearchResultTableViewController : NSObject <UITableViewDataSource, UITableViewDelegate, WRLDSearchQueryCompleteDelegate>
--(WRLDSearchResultTableViewController *) init : (UITableView *) tableView :(SearchProviders *) searchProviders;
+-(WRLDSearchResultTableViewController *) init : (UIView *) tableViewContainer : (UITableView *) tableView :(SearchProviders *) searchProviders;
 -(void) setCurrentQuery: (WRLDSearchQuery *) currentQuery;
 -(void) setHeightConstraint: (NSLayoutConstraint *) heightConstraint;
 @end
