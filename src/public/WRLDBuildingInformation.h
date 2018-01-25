@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 #import "WRLDBuildingDimensions.h"
+#import "WRLDBuildingContour.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,20 +16,18 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  A unique identifier for the building. The BuildingId for a building on the map is not
  necessarily maintained between versions of the map or Api.
-
- @returns A unique identifier for the building.
  */
-- (NSString*) buildingId;
+@property (nonatomic, readonly, copy) NSString* buildingId;
 
 /*!
- @returns Summary information about the dimensions of the building.
+ Summary information about the dimensions of the building.
  */
-- (WRLDBuildingDimensions*) buildingDimensions;
+@property (nonatomic, readonly, copy) WRLDBuildingDimensions* buildingDimensions;
 
 /*!
- @returns An array of WRLDBuildingContour objects, representing the geometry of the building.
+ An array of WRLDBuildingContour objects, representing the geometry of the building.
  */
-- (NSMutableArray*) contours;
+@property (nonatomic, readonly, copy) NSArray<WRLDBuildingContour*>* contours;
 
 @end
 

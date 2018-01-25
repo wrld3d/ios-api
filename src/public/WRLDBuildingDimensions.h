@@ -11,19 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDBuildingDimensions : NSObject
 
 /*!
- @returns The altitude of the building’s baseline - nominally at local ground level.
+ The altitude of the building’s baseline - nominally at local ground level.
  */
-- (CLLocationDistance) baseAltitude;
+@property (nonatomic, readonly) CLLocationDistance baseAltitude;
 
 /*!
- @returns The altitude of the building’s highest point.
+ The altitude of the building’s highest point.
  */
-- (CLLocationDistance) topAltitude;
+@property (nonatomic, readonly) CLLocationDistance topAltitude;
 
 /*!
- @returns The centroid of the building in plan view.
+ The centroid of the building in plan view.
  */
-- (CLLocationCoordinate2D) centroid;
+@property (nonatomic, readonly) CLLocationCoordinate2D centroid;
 
 @end
 

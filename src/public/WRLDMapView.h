@@ -243,18 +243,16 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 /*! @name Building highlights */
 
 /*!
- Create a building highlight and add it to the map.
- @param buildingHighlightOptions Creation parameters for the building highlight.
-
- @return The WRLDBuildingHighlight that was added.
+ Add a building highlight to the map.
+ @param buildingHighlight The <WRLDBuildingHighlight> object to add to the map.
  */
-- (WRLDBuildingHighlight*) addBuildingHighlight:(WRLDBuildingHighlightOptions*) buildingHighlightOptions;
+- (void)addBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
 
 /*!
  Remove a WRLDBuildingHighlight from the map and destroy it.
- @param buildingHighlight The WRLDBuildingHighlight to remove.
+ @param buildingHighlight The <WRLDBuildingHighlight> object to remove from the map.
  */
-- (void) removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
+- (void)removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
 
 
 #pragma mark - overlays -

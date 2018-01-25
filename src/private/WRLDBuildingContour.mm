@@ -7,10 +7,7 @@
 
 @implementation WRLDBuildingContour
 {
-    CLLocationDistance m_bottomAltitude;
-    CLLocationDistance m_topAltitude;
-    CLLocationCoordinate2D* m_points;
-    int m_pointCount;
+    
 }
 
 - (instancetype) initWithBottomAltitude:(CLLocationDistance)bottomAltitude
@@ -20,33 +17,13 @@
 {
     if (self = [super init])
     {
-        m_bottomAltitude = bottomAltitude;
-        m_topAltitude = topAltitude;
-        m_points = points;
-        m_pointCount = pointCount;
+        _bottomAltitude = bottomAltitude;
+        _topAltitude = topAltitude;
+        _points = points;
+        _pointCount = pointCount;
     }
 
     return self;
-}
-
-- (CLLocationDistance) bottomAltitude
-{
-    return m_bottomAltitude;
-}
-
-- (CLLocationDistance) topAltitude
-{
-    return m_topAltitude;
-}
-
-- (CLLocationCoordinate2D*) points
-{
-    return m_points;
-}
-
-- (int) pointCount
-{
-    return m_pointCount;
 }
 
 @end

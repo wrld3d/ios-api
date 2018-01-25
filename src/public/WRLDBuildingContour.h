@@ -13,24 +13,24 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDBuildingContour : NSObject
 
 /*!
- @returns The minimum altitude above sea level.
+ The minimum altitude above sea level.
  */
-- (CLLocationDistance) bottomAltitude;
+@property (nonatomic, readonly) CLLocationDistance bottomAltitude;
 
 /*!
- @returns The maximum altitude above sea level.
+ The maximum altitude above sea level.
  */
-- (CLLocationDistance) topAltitude;
+@property (nonatomic, readonly) CLLocationDistance topAltitude;
 
 /*!
- @returns The vertices of the building outline polygon, ordered clockwise from above.
+ The vertices of the building outline polygon, ordered clockwise from above.
  */
-- (CLLocationCoordinate2D*) points;
+@property (nonatomic, readonly) CLLocationCoordinate2D* points;
 
 /*!
- @returns The count of CLLocationCoordinate2D points.
+ The count of CLLocationCoordinate2D points.
  */
-- (int) pointCount;
+@property (nonatomic, readonly) int pointCount;
 
 @end
 

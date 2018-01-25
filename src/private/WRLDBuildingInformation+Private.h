@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) initWithBuildingId:(NSString*)buildingId
                  buildingDimensions:(WRLDBuildingDimensions*)buildingDimensions
-                           contours:(NSMutableArray*)contours;
+                           contours:(NSArray<WRLDBuildingContour*>*)contours;
 
 @end
 

@@ -11,10 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDBuildingHighlight (Private)
 
-- (instancetype) initWithApi:(Eegeo::Api::EegeoBuildingsApi&)buildingsApi
-    buildingHighlightOptions:(WRLDBuildingHighlightOptions*)buildingHighlightOptions;
-
-- (void) destroy;
+- (instancetype) initWithHighlightOptions:(WRLDBuildingHighlightOptions*)buildingHighlightOptions;
 
 - (int) buildingHighlightId;
 

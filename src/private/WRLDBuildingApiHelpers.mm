@@ -15,6 +15,13 @@
 
 }
 
++ (const Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type) ToBuildingHighlightSelectionMode:(WRLDBuildingHighlightSelectionMode)selectionMode
+{
+    return (selectionMode == WRLDBuildingHighlightSelectionMode::WRLDBuildingHighlightSelectAtLocation)
+    ? Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type::SelectAtLocation
+    : Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type::SelectAtScreenPoint;
+}
+
 + (Eegeo::BuildingHighlights::BuildingHighlightCreateParams)createBuildingHighlightCreateParams:(WRLDBuildingHighlightOptions*) buildingHighlightOptions
 {
     CLLocationCoordinate2D selectionLocation = buildingHighlightOptions.selectionLocation;
@@ -22,8 +29,7 @@
 
     CGPoint selectionScreenPoint = buildingHighlightOptions.selectionScreenPoint;
 
-    int typeIntValue = static_cast<int>(buildingHighlightOptions.selectionMode);
-    Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type type = static_cast<Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type>(typeIntValue);
+    Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type type = [WRLDBuildingApiHelpers ToBuildingHighlightSelectionMode:buildingHighlightOptions.selectionMode];
 
     Eegeo::BuildingHighlights::BuildingHighlightCreateParams highlightCreateParams
     {
@@ -60,7 +66,7 @@
     return points;
 }
 
-+ (NSMutableArray*) createWRLDBuildingContours:(const std::vector<Eegeo::BuildingHighlights::BuildingContour>&) withBuildingContours
++ (NSArray<WRLDBuildingContour*>*) createWRLDBuildingContours:(const std::vector<Eegeo::BuildingHighlights::BuildingContour>&) withBuildingContours
 {
     NSMutableArray* buildingContours = [[NSMutableArray alloc] initWithCapacity:withBuildingContours.size()];
 
@@ -76,7 +82,7 @@
         [buildingContours addObject:buildingContour];
     }
 
-    return buildingContours;
+    return [buildingContours copy];
 }
 
 + (WRLDBuildingInformation*) createWRLDBuildingInformation:(const Eegeo::BuildingHighlights::BuildingInformation&) withBuildingInformation

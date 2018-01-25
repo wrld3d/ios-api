@@ -4,6 +4,9 @@
 #import <UIKit/UIKit.h>
 
 #import "WRLDBuildingInformation.h"
+#import "WRLDBuildingHighlightOptions.h"
+
+#import "WRLDOverlay.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -12,19 +15,19 @@ NS_ASSUME_NONNULL_BEGIN
  for displaying a graphical overlay to highlight the building, or for obtaining information about
  the building.
  */
-@interface WRLDBuildingHighlight : NSObject
+@interface WRLDBuildingHighlight : NSObject<WRLDOverlay>
 
 /*!
- @returns The color of the highlight.
+ Instantiate a highlight with highlight options.
+ @param highlightOptions A set of parameters for WRLDBuildingHighlight.
+ @returns A WRLDBuildingHighlight instance.
  */
-- (UIColor*) color;
++ (instancetype)highlightWithOptions:(WRLDBuildingHighlightOptions*)highlightOptions;
 
 /*!
- Sets the color for this highlight.
-
- @param color The color of the highlight.
+ The color for this highlight.
  */
-- (void) setColor:(UIColor*)color;
+@property (nonatomic, copy) UIColor* color;
 
 /*!
  Returns building information for the map building associated with this highlight, if available.
@@ -33,9 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
  Also returns nil if no building information was successfully retrieved for this building
  highlight. This may be either because no building exists at the query location supplied in
  the WRLDBuildingHighlightOptions construction parameters, or because an internal web request failed.
- @return the WRLDBuildingInformation associated with this highlight, or null.
  */
-- (nullable WRLDBuildingInformation*) buildingInformation;
+@property (nonatomic, readonly, copy, nullable) WRLDBuildingInformation* buildingInformation;
 
 @end
 
