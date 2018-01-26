@@ -29,6 +29,7 @@
     WRLDSearchSuggestionsViewController* m_searchSuggestionsTableViewController;
     bool m_byPassSuggestions;
     NSString* m_suggestionsText;
+    UITextField *m_searchBarTextFieldObject;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -85,22 +86,39 @@
     
     UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
     [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
-    [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar];
+    m_searchBarTextFieldObject = [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar color:[UIColor grayColor]];
 }
 
--(void) addBorderToSearchBar:(UISearchBar*) searchBar
+-(UITextField *) addBorderToSearchBar:(UISearchBar*) searchBar
+                       color: (UIColor *) color
 {
     for (id object in [[[searchBar subviews] objectAtIndex:0] subviews])
     {
         if ([object isKindOfClass:[UITextField class]])
         {
             UITextField *textFieldObject = (UITextField *)object;
-            textFieldObject.layer.borderColor = [[UIColor blueColor] CGColor];
+            textFieldObject.layer.borderColor = [color CGColor];
             textFieldObject.layer.borderWidth = 1.0;
             textFieldObject.layer.cornerRadius = 10;
-            break;
+            return textFieldObject;
         }
     }
+    return nil;
+}
+
+-(void) setSearchBarBorderColor :(UIColor *) color
+{
+    m_searchBarTextFieldObject.layer.borderColor = [color CGColor];
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [self setSearchBarBorderColor: [UIColor blueColor]];
+}
+
+-(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self setSearchBarBorderColor: [UIColor grayColor]];
 }
 
 -(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
