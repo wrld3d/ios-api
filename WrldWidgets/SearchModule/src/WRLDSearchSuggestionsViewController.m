@@ -12,10 +12,12 @@
     NSLayoutConstraint * m_heightConstraint;
     NSString* m_cellStyleIdentifier;
     SearchProviders * m_searchProviders;
+    SuggestionSelectedCallback m_suggestionSelectedCallback;
+    
     bool m_isAnimatingOut;
 }
 
--(instancetype) init : (UITableView *) tableView : (SearchProviders *) searchProviders
+-(instancetype) init : (UITableView *) tableView : (SearchProviders *) searchProviders :(SuggestionSelectedCallback) callback
 {
     self = [super init];
     if(self)
@@ -23,7 +25,13 @@
         m_tableView = tableView;
         m_searchProviders = searchProviders;
         m_isAnimatingOut = false;
+        m_suggestionSelectedCallback = callback;
         m_cellStyleIdentifier = @"WRLDSearchWidgetSuggestion";
+        
+        m_tableView.delegate = self;
+        m_tableView.dataSource = self;
+        m_tableView.sectionHeaderHeight = 0;
+        m_tableView.sectionFooterHeight = 0;
         
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchSuggestionTableViewCell class]];
         UINib * nib = [UINib nibWithNibName:m_cellStyleIdentifier bundle:widgetsBundle];
@@ -115,9 +123,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
-    //WRLDSearchResult *result = [set getResult: [indexPath row]];
-    
+    WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
+    WRLDSearchResult *result = [set getResult: [indexPath row]];
+    m_suggestionSelectedCallback(result.title);
 }
 
 -(void) fadeOut

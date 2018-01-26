@@ -26,6 +26,7 @@
     WRLDSearchResultTableViewController* m_searchResultsTableViewController;
     WRLDSearchSuggestionsViewController* m_searchSuggestionsTableViewController;
     bool m_byPassSuggestions;
+    NSString* m_suggestionsText;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -55,6 +56,7 @@
 {
     m_searchProviders = [[SearchProviders alloc] init];
     m_byPassSuggestions = false;
+    m_suggestionsText = @"";
     
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
     
@@ -68,19 +70,15 @@
                                           self.wrldSearchWidgetResultsTableView :
                                           m_searchProviders];
     
-    self.wrldSearchWidgetResultsTableView.dataSource = m_searchResultsTableViewController;
-    self.wrldSearchWidgetResultsTableView.delegate = m_searchResultsTableViewController;
-    self.wrldSearchWidgetResultsTableView.sectionFooterHeight = 0;
     [m_searchResultsTableViewController setHeightConstraint: self.resultsHeightConstraint];
-    
     
     m_searchSuggestionsTableViewController = [[WRLDSearchSuggestionsViewController alloc] init :
                                               self.wrldSearchWidgetSuggestionsTableView :
-                                              m_searchProviders];
-    self.wrldSearchWidgetSuggestionsTableView.dataSource = m_searchSuggestionsTableViewController;
-    self.wrldSearchWidgetSuggestionsTableView.delegate = m_searchSuggestionsTableViewController;
-    self.wrldSearchWidgetSuggestionsTableView.sectionHeaderHeight = 0;
-    self.wrldSearchWidgetSuggestionsTableView.sectionFooterHeight = 0;
+                                              m_searchProviders :
+                                               ^(NSString* queryText) {
+                                                   [self searchForSuggestion: queryText];
+                                               }];
+    
     [m_searchSuggestionsTableViewController setHeightConstraint: self.suggestionsHeightConstraint];
     
     // assigns cancel button image in searchbar
@@ -95,13 +93,22 @@
 
 -(void)searchBar:(UISearchBar *)_searchBar textDidChange:(NSString *)searchText
 {
+    NSString *trimmedString = [searchText stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]];
+    
+    if([trimmedString isEqualToString:m_suggestionsText]){
+        return;
+    }
+    
+    m_suggestionsText = trimmedString;
+    
     if(!m_byPassSuggestions)
     {
         [m_searchResultsTableViewController fadeOut];
         
         if([searchText length] > 0)
         {
-            WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: searchText : m_searchProviders];
+            WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: trimmedString : m_searchProviders];
             [m_searchSuggestionsTableViewController setCurrentQuery:newQuery];
             [m_searchProviders doSuggestions: newQuery];
         }
@@ -125,6 +132,7 @@
 
 -(void) runSearch:(NSString *) queryString
 {
+    m_suggestionsText = @"";
     [m_searchSuggestionsTableViewController fadeOut];
     WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString : m_searchProviders];
     

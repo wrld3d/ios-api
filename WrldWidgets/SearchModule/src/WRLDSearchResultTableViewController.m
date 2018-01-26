@@ -32,6 +32,10 @@
         m_searchProviders = searchProviders;
         m_isAnimatingOut = false;
         
+        m_tableView.dataSource = self;
+        m_tableView.delegate = self;
+        m_tableView.sectionFooterHeight = 0;
+        
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
         [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIentifier];
