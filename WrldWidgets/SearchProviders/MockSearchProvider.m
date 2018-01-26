@@ -21,6 +21,7 @@
         m_searchType = WRLDResult;
         cellIdentifier = @"YelpSearchResultCell";
         cellExpectedHeight = 80;
+        title = @"Mock";
     }
     
     return self;

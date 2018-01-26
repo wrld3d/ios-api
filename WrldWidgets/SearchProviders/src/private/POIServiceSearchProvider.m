@@ -27,6 +27,7 @@
         m_poiSearchId = 0;
         cellIdentifier = @"WRLDGenericSearchResult";
         cellExpectedHeight = 48;
+        title = @"WRLD";
         
         m_mapView.delegate = self;
     }

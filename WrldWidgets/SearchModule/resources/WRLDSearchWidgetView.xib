@@ -29,17 +29,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
-                            <rect key="frame" x="0.0" y="0.0" width="32" height="56"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="32" id="MJU-fm-ezz"/>
+                                <constraint firstAttribute="width" constant="56" id="MJU-fm-ezz"/>
                             </constraints>
-                            <state key="normal" title="Menu"/>
+                            <state key="normal" title="Menu" image="Menu_btn.png"/>
                         </button>
-                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
-                            <rect key="frame" x="31" y="0.0" width="343" height="56"/>
+                        <searchBar contentMode="redraw" misplaced="YES" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
+                            <rect key="frame" x="56" y="0.0" width="319" height="56"/>
                             <color key="tintColor" red="1" green="0.0" blue="0.02328635045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Axe-xC-ueg"/>
@@ -65,7 +66,7 @@
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="555"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            <color key="separatorColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="separatorColor" red="0.0055308948863636367" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,4 +103,7 @@
             <point key="canvasLocation" x="-310.5" y="23.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="Menu_btn.png" width="32" height="32"/>
+    </resources>
 </document>

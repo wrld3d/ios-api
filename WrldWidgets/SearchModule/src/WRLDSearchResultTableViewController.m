@@ -5,6 +5,7 @@
 #import "WRLDSearchResultTableViewController.h"
 #import "WRLDSearchResultSet.h"
 #import "SearchProviders.h"
+#import "WRLDSearchResultFooterTableViewCell.h"
 
 @implementation WRLDSearchResultTableViewController
 {
@@ -13,10 +14,13 @@
     UITableView * m_tableView;
     NSLayoutConstraint * m_heightConstraint;
     NSString* m_defaultCellStyleIdentifier;
-    NSString* m_footerCellStyleIentifier;
-    NSString* m_searchingCellStyleIentifier;
+    NSString* m_footerCellStyleIdentifier;
+    NSString* m_searchingCellStyleIdentifier;
+    NSString* m_footerCellTextContent;
     SearchProviders * m_searchProviders;
     bool m_isAnimatingOut;
+    UIImage *m_imgMore;
+    UIImage *m_imgBack;
 }
 
 -(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders
@@ -27,8 +31,9 @@
         m_tableViewContainer = tableViewContainer;
         m_tableView = tableView;
         m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
-        m_footerCellStyleIentifier = @"WRLDDisplayMoreResultsCell";
-        m_searchingCellStyleIentifier = @"WRLDSearchInProgressCell";
+        m_footerCellStyleIdentifier = @"WRLDDisplayMoreResultsCell";
+        m_searchingCellStyleIdentifier = @"WRLDSearchInProgressCell";
+        m_footerCellTextContent = @"Show more %@ (%d) results";
         m_searchProviders = searchProviders;
         m_isAnimatingOut = false;
         
@@ -38,8 +43,10 @@
         
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
-        [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIentifier];
-        [tableView registerNib:[UINib nibWithNibName:m_searchingCellStyleIentifier bundle:widgetsBundle] forCellReuseIdentifier: m_searchingCellStyleIentifier];
+        [tableView registerNib:[UINib nibWithNibName:m_footerCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_footerCellStyleIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:m_searchingCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_searchingCellStyleIdentifier];
+        m_imgMore = [UIImage imageNamed:@"MoreResults_butn.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
+        m_imgBack = [UIImage imageNamed:@"Back_btn.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
     }
     
     return self;
@@ -65,12 +72,12 @@
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
 {
     if([m_currentQuery progress] == InFlight){
-        return m_searchingCellStyleIentifier;
+        return m_searchingCellStyleIdentifier;
     }
     
     if([self isFooter:index])
     {
-        return m_footerCellStyleIentifier;
+        return m_footerCellStyleIdentifier;
     }
     
     return [m_searchProviders getCellIdentifierForSetAtIndex: [index section]];
@@ -93,11 +100,37 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     //TODO Handle casting propertly
     if(![self isFooter:indexPath] && !([m_currentQuery progress] == InFlight))
     {
-        WRLDSearchResultTableViewCell* castCell = (WRLDSearchResultTableViewCell*)cell;
-    
-        WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
-        WRLDSearchResult *result = [set getResult: [indexPath row]];
-        [castCell.titleLabel setText:[result title]];
+        [self populateContentCell:(WRLDSearchResultTableViewCell*)cell forRowAtIndexPath:indexPath];
+    }
+    else if([self isFooter:indexPath])
+    {
+        [self populateFooter: (WRLDSearchResultFooterTableViewCell*)cell forRowAtIndexPath:indexPath];
+    }
+}
+
+-(void) populateContentCell:(WRLDSearchResultTableViewCell*) cell
+     forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
+    WRLDSearchResult *result = [set getResult: [indexPath row]];
+    [cell.titleLabel setText:[result title]];
+}
+
+-(void) populateFooter:(WRLDSearchResultFooterTableViewCell*) cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
+    WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
+    if(set.getExpandedState == Expanded){
+        [cell.label setText: @"Back"];
+        [cell.icon setImage:m_imgBack];
+    }
+    else{
+        NSString* searchProviderTitle = [m_searchProviders getTitleForSetAtIndex:[indexPath section]];
+        NSInteger moreResults = [set getResultCount]  - [set getVisibleResultCount];
+        NSString * displayString = [NSString stringWithFormat:m_footerCellTextContent, searchProviderTitle, moreResults];
+        [cell.label setText: displayString];
+        [cell.icon setImage:m_imgMore];
     }
 }
 

@@ -1,3 +1,5 @@
+#import <QuartzCore/QuartzCore.h>
+
 #import "WRLDSearchWidgetView.h"
 #import "WRLDMapView.h"
 #import "WRLDSearchProvider.h"
@@ -84,6 +86,22 @@
     // assigns cancel button image in searchbar
 //    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+    [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar];
+}
+
+-(void) addBorderToSearchBar:(UISearchBar*) searchBar
+{
+    for (id object in [[[searchBar subviews] objectAtIndex:0] subviews])
+    {
+        if ([object isKindOfClass:[UITextField class]])
+        {
+            UITextField *textFieldObject = (UITextField *)object;
+            textFieldObject.layer.borderColor = [[UIColor blueColor] CGColor];
+            textFieldObject.layer.borderWidth = 1.0;
+            textFieldObject.layer.cornerRadius = 10;
+            break;
+        }
+    }
 }
 
 -(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
@@ -138,6 +156,7 @@
     
     [m_searchResultsTableViewController setCurrentQuery:newQuery];
     [m_searchProviders doSearch: newQuery];
+    [self.wrldSearchWidgetSearchBar resignFirstResponder];
 }
 
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
