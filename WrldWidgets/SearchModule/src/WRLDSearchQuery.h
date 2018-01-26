@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, ProgressStatus) {
 
 -(void) setCompletionDelegate: (id<WRLDSearchQueryCompleteDelegate>) delegate;
 -(void) addResults: (id<WRLDSearchProvider>) provider : (NSMutableArray<WRLDSearchResult*>*) results;
+-(void) cancel;
 
 -(WRLDSearchResultSet *) getResultSetForProviderAtIndex : (NSInteger) providerId;
 

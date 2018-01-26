@@ -65,4 +65,9 @@
     return m_allResults[index];
 }
 
+-(void) cancel
+{
+    _progress = Cancelled;
+}
+
 @end

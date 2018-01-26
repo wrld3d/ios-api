@@ -47,6 +47,7 @@
 
 -(void) setCurrentQuery:(WRLDSearchQuery *)newQuery
 {
+    [self cancelInFlightQuery];
     m_currentQuery = newQuery;
     [newQuery setCompletionDelegate: self];
     [self updateResults];
@@ -255,6 +256,7 @@ heightForFooterInSection:(NSInteger)section
 {
     if(!m_isAnimatingOut)
     {
+        [self cancelInFlightQuery];
         m_isAnimatingOut = true;
         [UIView animateWithDuration: 0.25 animations:^{
             m_tableViewContainer.alpha = 0.0;
@@ -322,6 +324,14 @@ heightForFooterInSection:(NSInteger)section
             gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
             m_tableView.layer.mask = gradient;
             break;
+    }
+}
+
+-(void) cancelInFlightQuery
+{
+    if(m_currentQuery && m_currentQuery.progress == InFlight)
+    {
+        [m_currentQuery cancel];
     }
 }
 

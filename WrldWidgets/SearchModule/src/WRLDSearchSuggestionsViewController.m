@@ -43,6 +43,7 @@
 
 -(void) setCurrentQuery:(WRLDSearchQuery *)newQuery
 {
+    [self cancelInFlightQuery];
     m_currentQuery = newQuery;
     [newQuery setCompletionDelegate: self];
 }
@@ -132,6 +133,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     if(!m_isAnimatingOut)
     {
         m_isAnimatingOut = true;
+        [self cancelInFlightQuery];
         [UIView animateWithDuration: 0.25 animations:^{
             m_tableView.alpha = 0.0;
         } completion:^(BOOL finished) {
@@ -140,6 +142,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
                 m_isAnimatingOut = false;
             }
         }];
+    }
+}
+
+-(void) cancelInFlightQuery
+{
+    if(m_currentQuery && m_currentQuery.progress == InFlight)
+    {
+        [m_currentQuery cancel];
     }
 }
 @end
