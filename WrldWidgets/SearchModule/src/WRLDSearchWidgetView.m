@@ -83,9 +83,8 @@
     
     [m_searchSuggestionsTableViewController setHeightConstraint: self.suggestionsHeightConstraint];
     
-    // assigns cancel button image in searchbar
-//    UIImage *imgClear = [UIImage imageNamed:@"icon1_pin@3x.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
-//    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+    UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
+    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
     [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar];
 }
 
