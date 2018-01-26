@@ -9,7 +9,6 @@
 
 @interface WRLDSearchQuery : NSObject
 
-
 typedef NS_ENUM(NSInteger, ProgressStatus) {
     InFlight,
     Cancelled,

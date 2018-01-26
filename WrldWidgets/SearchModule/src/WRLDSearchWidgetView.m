@@ -132,7 +132,7 @@
 
 -(void) runSearch:(NSString *) queryString
 {
-    m_suggestionsText = @"";
+    m_suggestionsText = queryString;
     [m_searchSuggestionsTableViewController fadeOut];
     WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString : m_searchProviders];
     
