@@ -23,14 +23,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CLLocationDistance topAltitude;
 
 /*!
- The vertices of the building outline polygon, ordered clockwise from above.
+ The count of CLLocationCoordinate2D points in this contour.
  */
-@property (nonatomic, readonly) CLLocationCoordinate2D* points;
+@property (nonatomic, readonly) NSUInteger pointCount;
 
 /*!
- The count of CLLocationCoordinate2D points.
+ Get points that are vertices of the building outline polygon, ordered clockwise from above.
+
+ @param coords The array of coordinates for points. It must be large enough to hold the desired number of coordinates
+ @param range The range of points to copy.
  */
-@property (nonatomic, readonly) int pointCount;
+
+- (void)getPoints:(CLLocationCoordinate2D *)coords range:(NSRange)range;
 
 @end
 

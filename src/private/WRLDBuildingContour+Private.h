@@ -2,6 +2,8 @@
 
 #import "WRLDBuildingContour.h"
 
+#include <vector>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class WRLDBuildingContour;
@@ -10,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) initWithBottomAltitude:(CLLocationDistance)bottomAltitude
                             topAltitude:(CLLocationDistance)topAltitude
-                                 points:(CLLocationCoordinate2D*)points
-                             pointCount:(int)pointCount;
+                                 points:(std::vector<CLLocationCoordinate2D>)points;
 
 @end
 

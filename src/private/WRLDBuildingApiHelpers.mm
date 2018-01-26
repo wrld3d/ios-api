@@ -15,6 +15,22 @@
 
 }
 
+std::vector<CLLocationCoordinate2D> CreateWRLDBuildingContourPoints (const std::vector<Eegeo::Space::LatLong>& withPoints)
+{
+    std::vector<CLLocationCoordinate2D> locationPoints;
+    locationPoints.reserve(withPoints.size());
+
+    for (int i=0; i<withPoints.size(); i++)
+    {
+        const Eegeo::Space::LatLong& pointLatLong = withPoints[i];
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(pointLatLong.GetLatitudeInDegrees(), pointLatLong.GetLongitudeInDegrees());
+
+        locationPoints.emplace_back(coordinate);
+    }
+
+    return locationPoints;
+}
+
 + (const Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type) ToBuildingHighlightSelectionMode:(WRLDBuildingHighlightSelectionMode)selectionMode
 {
     return (selectionMode == WRLDBuildingHighlightSelectionMode::WRLDBuildingHighlightSelectAtLocation)
@@ -52,33 +68,15 @@
     return buildingDimensions;
 }
 
-+ (CLLocationCoordinate2D*)createWRLDBuildingContourPoints:(const std::vector<Eegeo::Space::LatLong>&) withPoints
-{
-    int pointCount = static_cast<int>(withPoints.size());
-    CLLocationCoordinate2D* points = new CLLocationCoordinate2D[pointCount];
-
-    for (int i=0; i<pointCount; i++)
-    {
-        const Eegeo::Space::LatLong& pointLatLong = withPoints[i];
-        points[i] = CLLocationCoordinate2DMake(pointLatLong.GetLatitudeInDegrees(), pointLatLong.GetLongitudeInDegrees());
-    }
-
-    return points;
-}
-
 + (NSArray<WRLDBuildingContour*>*) createWRLDBuildingContours:(const std::vector<Eegeo::BuildingHighlights::BuildingContour>&) withBuildingContours
 {
     NSMutableArray* buildingContours = [[NSMutableArray alloc] initWithCapacity:withBuildingContours.size()];
 
     for(auto& nativeBuildingContour : withBuildingContours)
     {
-        const std::vector<Eegeo::Space::LatLong>& nativePoints = nativeBuildingContour.GetPoints();
-        int pointCount = static_cast<int>(nativePoints.size());
-
         WRLDBuildingContour* buildingContour = [[WRLDBuildingContour alloc] initWithBottomAltitude:nativeBuildingContour.GetBottomAltitude()
                                                                                        topAltitude:nativeBuildingContour.GetTopAltitude()
-                                                                                            points:[WRLDBuildingApiHelpers createWRLDBuildingContourPoints:nativePoints]
-                                                                                        pointCount:pointCount];
+                                                                                            points:CreateWRLDBuildingContourPoints(nativeBuildingContour.GetPoints())];
         [buildingContours addObject:buildingContour];
     }
 

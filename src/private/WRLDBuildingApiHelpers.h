@@ -22,8 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (WRLDBuildingDimensions*) createWRLDBuildingDimensions:(const Eegeo::BuildingHighlights::BuildingDimensions&) withBuildingDimensions;
 
-+ (CLLocationCoordinate2D*)createWRLDBuildingContourPoints:(const std::vector<Eegeo::Space::LatLong>&) withPoints;
-
 + (NSArray<WRLDBuildingContour*>*) createWRLDBuildingContours:(const std::vector<Eegeo::BuildingHighlights::BuildingContour>&) withBuildingContours;
 
 + (WRLDBuildingInformation*) createWRLDBuildingInformation:(const Eegeo::BuildingHighlights::BuildingInformation&) withBuildingInformation;
