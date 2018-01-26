@@ -63,9 +63,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     WRLDSearchSuggestionTableViewCell* castCell = (WRLDSearchSuggestionTableViewCell*)cell;
     WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
     WRLDSearchResult *result = [set getResult: [indexPath row]];
-    [castCell.titleLabel setText:[result title]];
+    [castCell setTitleLabelText: result.title : m_currentQuery.queryString];
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
