@@ -1,7 +1,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "WRLDSearchWidgetView.h"
-#import "WRLDMapView.h"
 #import "WRLDSearchProvider.h"
 #import "WRLDSearchQuery.h"
 #import "SearchProviders.h"
@@ -81,6 +80,7 @@
                                                ^(NSString* queryText) {
                                                    [self searchForSuggestion: queryText];
                                                }];
+    
     
     [m_searchSuggestionsTableViewController setHeightConstraint: self.suggestionsHeightConstraint];
     

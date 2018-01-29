@@ -114,12 +114,31 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
     WRLDSearchResult *result = [set getResult: [indexPath row]];
     [cell.titleLabel setText:[result title]];
+//    NSLayoutConstraint *leftIndent = [NSLayoutConstraint
+//                                                        constraintWithItem:cell
+//                                                        attribute:NSLayoutAttributeLeading
+//                                                        relatedBy:NSLayoutRelationEqual
+//                                                        toItem:m_tableView
+//                                                        attribute:NSLayoutAttributeLeading
+//                                                        multiplier:1.0
+//                                                        constant:10];
+//    NSLayoutConstraint *rightIndent = [NSLayoutConstraint
+//                                      constraintWithItem:cell
+//                                      attribute:NSLayoutAttributeTrailing
+//                                      relatedBy:NSLayoutRelationEqual
+//                                      toItem:m_tableView
+//                                      attribute:NSLayoutAttributeTrailing
+//                                      multiplier:1.0
+//                                      constant:-10];
+//
+//    [m_tableView addConstraint:leftIndent];
+//    [m_tableView addConstraint:rightIndent];
 }
 
 -(void) populateFooter:(WRLDSearchResultFooterTableViewCell*) cell
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    cell.backgroundColor = [UIColor colorWithWhite:0.8f alpha:1.0f];
+    cell.backgroundColor = [UIColor colorWithWhite:0.94f alpha:1.0f];
     WRLDSearchResultSet * set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
     if(set.getExpandedState == Expanded){
         [cell.label setText: @"Back"];
@@ -215,7 +234,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         height += [self tableView:m_tableView heightForRowAtIndexPath:[NSIndexPath indexPathForItem:i inSection:setIndex]];
     }
     
-    height += 8;
+    height += [self tableView:m_tableView heightForHeaderInSection: setIndex];
     return height;
 }
 
@@ -269,14 +288,24 @@ viewForHeaderInSection:(NSInteger)section
         return view;
     } else
     {
-        return [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, 8)];
+        UIView* newView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, 8)];
+        newView.backgroundColor = [UIColor colorWithRed:0.0f green:43.0f/255.0f blue:99.0f/255.0f alpha:1.0f];
+        
+        [newView.layer setShadowColor:[[UIColor blackColor] CGColor]];
+        [newView.layer setShadowOffset:CGSizeMake(0, 0)];
+        [newView.layer setShadowRadius:5.0];
+        [newView.layer setShadowOpacity:1];
+        newView.layer.masksToBounds = NO;
+        
+        return newView;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForHeaderInSection:(NSInteger)section
 {
-    return 8;
+    WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex:section];
+    return ([set getResultCount] > 0) ? 8 : CGFLOAT_MIN;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
