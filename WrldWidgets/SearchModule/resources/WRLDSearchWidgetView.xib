@@ -27,18 +27,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
-                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="64"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="56" id="MJU-fm-ezz"/>
                             </constraints>
                             <state key="normal" title="Menu" image="Menu_btn.png"/>
                         </button>
-                        <searchBar contentMode="redraw" misplaced="YES" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
-                            <rect key="frame" x="56" y="0.0" width="319" height="56"/>
+                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
+                            <rect key="frame" x="56" y="0.0" width="319" height="64"/>
                             <color key="tintColor" red="1" green="0.0" blue="0.02328635045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits"/>
@@ -50,21 +50,22 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="nwq-hq-zts" secondAttribute="trailing" constant="1" id="Iqi-7X-vSd"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="6OV-3b-79f"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="JEs-0k-OWe"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" constant="31" id="OPT-rV-RZs"/>
-                        <constraint firstAttribute="bottom" secondItem="Gsy-aj-hKu" secondAttribute="bottom" id="T5l-jv-Fz2"/>
-                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="nwq-hq-zts" secondAttribute="bottom" id="eYz-68-h6X"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="Gsy-aj-hKu" secondAttribute="trailing" symbolic="YES" id="OPT-rV-RZs"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="T5l-jv-Fz2"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="hFW-Cg-3Yg"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="mPJ-uN-pe0"/>
+                        <constraint firstAttribute="height" constant="64" id="ndG-A3-qxD"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="oUB-dj-0dd"/>
-                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="nwq-hq-zts" secondAttribute="top" id="ooE-Zq-4Xs"/>
                     </constraints>
                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
                     <rect key="frame" x="0.0" y="64" width="375" height="555"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="555"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
+                            <rect key="frame" x="0.0" y="-9" width="375" height="564"/>
                             <color key="backgroundColor" red="0.94031427556818181" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="tintColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="separatorColor" red="0.74901960784313726" green="0.85882352941176465" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -81,11 +82,11 @@
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
                     </constraints>
                 </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
-                    <rect key="frame" x="0.0" y="56" width="375" height="200"/>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                    <rect key="frame" x="0.0" y="66" width="375" height="256"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="200" id="5Bv-Sr-MfB"/>
+                        <constraint firstAttribute="height" constant="256" id="5Bv-Sr-MfB"/>
                     </constraints>
                 </tableView>
             </subviews>
@@ -99,7 +100,7 @@
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Psk-go-21m"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="fmG-qx-fte"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="jBh-MQ-Kwp"/>
-                <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="8" symbolic="YES" id="lrz-ys-zTz"/>
+                <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="lrz-ys-zTz"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vp8-NJ-WJG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

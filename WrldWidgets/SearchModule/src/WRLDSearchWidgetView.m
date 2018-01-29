@@ -29,6 +29,7 @@
     bool m_byPassSuggestions;
     NSString* m_suggestionsText;
     UITextField *m_searchBarTextFieldObject;
+    UIColor *m_searchBarActiveColor;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -84,9 +85,11 @@
     
     [m_searchSuggestionsTableViewController setHeightConstraint: self.suggestionsHeightConstraint];
     
-    UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
-    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+//    UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
+//    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
     m_searchBarTextFieldObject = [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar color:[UIColor grayColor]];
+    
+    m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:158.0f/255.0f alpha:1.0f];
 }
 
 -(UITextField *) addBorderToSearchBar:(UISearchBar*) searchBar
@@ -113,7 +116,7 @@
 
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    [self setSearchBarBorderColor: [UIColor blueColor]];
+    [self setSearchBarBorderColor: m_searchBarActiveColor];
 }
 
 -(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar

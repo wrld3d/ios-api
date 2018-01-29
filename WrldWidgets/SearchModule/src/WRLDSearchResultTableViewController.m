@@ -113,7 +113,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex: [indexPath section]];
     WRLDSearchResult *result = [set getResult: [indexPath row]];
-    [cell.titleLabel setText:[result title]];
+    [cell populate:result : m_currentQuery.queryString];
 //    NSLayoutConstraint *leftIndent = [NSLayoutConstraint
 //                                                        constraintWithItem:cell
 //                                                        attribute:NSLayoutAttributeLeading
@@ -204,7 +204,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         {
             height += [self getHeightForSet: i];
         }
-        height = MIN(400, height);
+        height = MIN(568, height);
     }
     
     [UIView animateWithDuration: 0.25 animations:^{
@@ -290,12 +290,13 @@ viewForHeaderInSection:(NSInteger)section
     {
         UIView* newView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, 8)];
         newView.backgroundColor = [UIColor colorWithRed:0.0f green:43.0f/255.0f blue:99.0f/255.0f alpha:1.0f];
-        
-        [newView.layer setShadowColor:[[UIColor blackColor] CGColor]];
-        [newView.layer setShadowOffset:CGSizeMake(0, 0)];
-        [newView.layer setShadowRadius:5.0];
-        [newView.layer setShadowOpacity:1];
-        newView.layer.masksToBounds = NO;
+//        
+//        [newView.layer setShadowColor:[[UIColor blackColor] CGColor]];
+//        [newView.layer setShadowOffset:CGSizeMake(0, 0)];
+//        [newView.layer setShadowRadius:5.0];
+//        [newView.layer setShadowOpacity:1];
+//        newView.layer.masksToBounds = YES;
+//        newView.clipsToBounds = NO;
         
         return newView;
     }

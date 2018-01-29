@@ -43,6 +43,20 @@
 		269A762D201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */; };
 		269A7638201B8B3100C0A2DE /* WRLDSearchResultFooterTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 269A7636201B8B2F00C0A2DE /* WRLDSearchResultFooterTableViewCell.h */; };
 		269A7639201B8B3100C0A2DE /* WRLDSearchResultFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 269A7637201B8B3000C0A2DE /* WRLDSearchResultFooterTableViewCell.m */; };
+		269A7648201F794A00C0A2DE /* GradientShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763A201F794000C0A2DE /* GradientShadow@2x.png */; };
+		269A7649201F794A00C0A2DE /* Back_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763B201F794000C0A2DE /* Back_btn@2x.png */; };
+		269A764A201F794A00C0A2DE /* Search_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763C201F794200C0A2DE /* Search_btn@2x.png */; };
+		269A764B201F794A00C0A2DE /* Expander@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763D201F794300C0A2DE /* Expander@3x.png */; };
+		269A764C201F794A00C0A2DE /* DeleteSearch_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763E201F794300C0A2DE /* DeleteSearch_btn@2x.png */; };
+		269A764D201F794A00C0A2DE /* MoreResults_butn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A763F201F794400C0A2DE /* MoreResults_butn@2x.png */; };
+		269A764E201F794A00C0A2DE /* DeleteSearch_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7640201F794400C0A2DE /* DeleteSearch_btn@3x.png */; };
+		269A764F201F794A00C0A2DE /* Menu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7641201F794500C0A2DE /* Menu_btn@2x.png */; };
+		269A7650201F794A00C0A2DE /* Search_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7642201F794600C0A2DE /* Search_btn@3x.png */; };
+		269A7651201F794A00C0A2DE /* Menu_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7643201F794600C0A2DE /* Menu_btn@3x.png */; };
+		269A7652201F794A00C0A2DE /* GradientShadow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7644201F794700C0A2DE /* GradientShadow@3x.png */; };
+		269A7653201F794A00C0A2DE /* Back_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7645201F794800C0A2DE /* Back_btn@3x.png */; };
+		269A7654201F794A00C0A2DE /* MoreResults_butn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7646201F794900C0A2DE /* MoreResults_butn@3x.png */; };
+		269A7655201F794A00C0A2DE /* Expander@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7647201F794900C0A2DE /* Expander@2x.png */; };
 		26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */; };
 		26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */; };
 		26CA2C192018A6A600F24EC5 /* YelpSearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */; };
@@ -296,6 +310,20 @@
 		269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchSuggestionsViewController.m; sourceTree = "<group>"; };
 		269A7636201B8B2F00C0A2DE /* WRLDSearchResultFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultFooterTableViewCell.h; sourceTree = "<group>"; };
 		269A7637201B8B3000C0A2DE /* WRLDSearchResultFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultFooterTableViewCell.m; sourceTree = "<group>"; };
+		269A763A201F794000C0A2DE /* GradientShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GradientShadow@2x.png"; sourceTree = "<group>"; };
+		269A763B201F794000C0A2DE /* Back_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back_btn@2x.png"; sourceTree = "<group>"; };
+		269A763C201F794200C0A2DE /* Search_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search_btn@2x.png"; sourceTree = "<group>"; };
+		269A763D201F794300C0A2DE /* Expander@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expander@3x.png"; sourceTree = "<group>"; };
+		269A763E201F794300C0A2DE /* DeleteSearch_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSearch_btn@2x.png"; sourceTree = "<group>"; };
+		269A763F201F794400C0A2DE /* MoreResults_butn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreResults_butn@2x.png"; sourceTree = "<group>"; };
+		269A7640201F794400C0A2DE /* DeleteSearch_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSearch_btn@3x.png"; sourceTree = "<group>"; };
+		269A7641201F794500C0A2DE /* Menu_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_btn@2x.png"; sourceTree = "<group>"; };
+		269A7642201F794600C0A2DE /* Search_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search_btn@3x.png"; sourceTree = "<group>"; };
+		269A7643201F794600C0A2DE /* Menu_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_btn@3x.png"; sourceTree = "<group>"; };
+		269A7644201F794700C0A2DE /* GradientShadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GradientShadow@3x.png"; sourceTree = "<group>"; };
+		269A7645201F794800C0A2DE /* Back_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back_btn@3x.png"; sourceTree = "<group>"; };
+		269A7646201F794900C0A2DE /* MoreResults_butn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreResults_butn@3x.png"; sourceTree = "<group>"; };
+		269A7647201F794900C0A2DE /* Expander@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expander@2x.png"; sourceTree = "<group>"; };
 		26CA2C142018A23300F24EC5 /* YelpSearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YelpSearchResultCell.xib; sourceTree = "<group>"; };
 		26CA2C162018A61300F24EC5 /* YelpSearchResultTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YelpSearchResultTableViewCell.h; sourceTree = "<group>"; };
 		26CA2C182018A6A600F24EC5 /* YelpSearchResultTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpSearchResultTableViewCell.m; sourceTree = "<group>"; };
@@ -553,11 +581,15 @@
 		26062EEB2010A866004DA5B3 /* private */ = {
 			isa = PBXGroup;
 			children = (
+				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
+				26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */,
+				26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */,
 				269A7636201B8B2F00C0A2DE /* WRLDSearchResultFooterTableViewCell.h */,
 				269A7637201B8B3000C0A2DE /* WRLDSearchResultFooterTableViewCell.m */,
-				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
 				269A7626201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.h */,
 				269A7627201A226A00C0A2DE /* WRLDSearchSuggestionTableViewCell.m */,
+				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
+				268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */,
 				268C2E01201651BF009EB66B /* WRLDSearchResultSet.h */,
 				268C2E02201651BF009EB66B /* WRLDSearchResultSet.m */,
 				268C2DF7201635D6009EB66B /* WRLDSearchResult.h */,
@@ -568,11 +600,7 @@
 				268C2E07201737DB009EB66B /* WRLDSearchResultTableViewController.m */,
 				269A762A201A251300C0A2DE /* WRLDSearchSuggestionsViewController.h */,
 				269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */,
-				268C2E0920173D88009EB66B /* WRLDSearchResultTableViewCell.h */,
-				268C2E0B20173E4C009EB66B /* WRLDSearchResultTableViewCell.m */,
 				26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */,
-				26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */,
-				26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */,
 			);
 			name = private;
 			sourceTree = "<group>";
@@ -594,6 +622,20 @@
 		269940FD2010D55D0099E34A /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				269A763B201F794000C0A2DE /* Back_btn@2x.png */,
+				269A7645201F794800C0A2DE /* Back_btn@3x.png */,
+				269A763E201F794300C0A2DE /* DeleteSearch_btn@2x.png */,
+				269A7640201F794400C0A2DE /* DeleteSearch_btn@3x.png */,
+				269A7647201F794900C0A2DE /* Expander@2x.png */,
+				269A763D201F794300C0A2DE /* Expander@3x.png */,
+				269A763A201F794000C0A2DE /* GradientShadow@2x.png */,
+				269A7644201F794700C0A2DE /* GradientShadow@3x.png */,
+				269A7641201F794500C0A2DE /* Menu_btn@2x.png */,
+				269A7643201F794600C0A2DE /* Menu_btn@3x.png */,
+				269A763F201F794400C0A2DE /* MoreResults_butn@2x.png */,
+				269A7646201F794900C0A2DE /* MoreResults_butn@3x.png */,
+				269A763C201F794200C0A2DE /* Search_btn@2x.png */,
+				269A7642201F794600C0A2DE /* Search_btn@3x.png */,
 				267507E020177A5400922BD3 /* Back_btn.png */,
 				267507E520177A5400922BD3 /* DeleteSearch_btn.png */,
 				267507E220177A5400922BD3 /* Expander.png */,
@@ -1170,20 +1212,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				269A764F201F794A00C0A2DE /* Menu_btn@2x.png in Resources */,
 				267507EA20177A5400922BD3 /* Search_btn.png in Resources */,
+				269A764E201F794A00C0A2DE /* DeleteSearch_btn@3x.png in Resources */,
+				269A7652201F794A00C0A2DE /* GradientShadow@3x.png in Resources */,
 				267507EC20177A5400922BD3 /* DeleteSearch_btn.png in Resources */,
+				269A7651201F794A00C0A2DE /* Menu_btn@3x.png in Resources */,
+				269A7653201F794A00C0A2DE /* Back_btn@3x.png in Resources */,
 				267507DF2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib in Resources */,
 				26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */,
 				26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
+				269A7650201F794A00C0A2DE /* Search_btn@3x.png in Resources */,
+				269A7648201F794A00C0A2DE /* GradientShadow@2x.png in Resources */,
+				269A764B201F794A00C0A2DE /* Expander@3x.png in Resources */,
 				267507E720177A5400922BD3 /* Back_btn.png in Resources */,
 				268C2E1020174AE6009EB66B /* WRLDGenericSearchResult.xib in Resources */,
+				269A7655201F794A00C0A2DE /* Expander@2x.png in Resources */,
 				267507ED20177A5400922BD3 /* Menu_btn.png in Resources */,
 				269A7625201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib in Resources */,
+				269A7654201F794A00C0A2DE /* MoreResults_butn@3x.png in Resources */,
+				269A764A201F794A00C0A2DE /* Search_btn@2x.png in Resources */,
 				267507EB20177A5400922BD3 /* MoreResults_butn.png in Resources */,
+				269A7649201F794A00C0A2DE /* Back_btn@2x.png in Resources */,
 				26CA2C1F2018ABCE00F24EC5 /* YelpAssets.xcassets in Resources */,
+				269A764C201F794A00C0A2DE /* DeleteSearch_btn@2x.png in Resources */,
 				267507E820177A5400922BD3 /* GradientShadow.png in Resources */,
 				267507E920177A5400922BD3 /* Expander.png in Resources */,
+				269A764D201F794A00C0A2DE /* MoreResults_butn@2x.png in Resources */,
 				269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
