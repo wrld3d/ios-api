@@ -27,10 +27,17 @@
 
 -(void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
 {
-    const NSRange boldRange = [text rangeOfString:boldText options:NSCaseInsensitiveSearch];
-    
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:regularAttributes];
-    [attributedText setAttributes:boldAttributes range:boldRange];
+    NSRange remainingString = NSMakeRange(0, [text length]);
+    NSRange boldRange = [text rangeOfString:boldText options:NSCaseInsensitiveSearch range:remainingString];
+    
+    while(boldRange.location != NSNotFound)
+    {
+        [attributedText setAttributes:boldAttributes range:boldRange];
+        NSInteger endOfBoldText = boldRange.location + boldRange.length;
+        remainingString = NSMakeRange(endOfBoldText, [text length] - endOfBoldText);
+        boldRange = [text rangeOfString:boldText options:NSCaseInsensitiveSearch range:remainingString];
+    }
     
     [label setAttributedText: attributedText];
 }
