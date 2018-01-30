@@ -22,13 +22,16 @@
     UIImage *m_imgMore;
     UIImage *m_imgBack;
     NSInteger m_maxHeight;
+    ResultSelectedCallback m_resultSelectedCallback;
+    NSInteger m_headerHeight;
 }
 
--(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders
+-(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders :(ResultSelectedCallback) callback
 {
     self = [super init];
     if(self)
     {
+        m_headerHeight = 4;
         m_tableViewContainer = tableViewContainer;
         m_tableView = tableView;
         m_defaultCellStyleIdentifier = @"WRLDGenericSearchResult";
@@ -49,6 +52,8 @@
         [tableView registerNib:[UINib nibWithNibName:m_searchingCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_searchingCellStyleIdentifier];
         m_imgMore = [UIImage imageNamed:@"MoreResults_butn.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
         m_imgBack = [UIImage imageNamed:@"Back_btn.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
+        
+        m_resultSelectedCallback = callback;
     }
     
     return self;
@@ -261,10 +266,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger section = [indexPath section];
+    WRLDSearchResultSet * selectedSet = [m_currentQuery getResultSetForProviderAtIndex: section];
     if([self isFooter: indexPath])
     {
-        NSInteger section = [indexPath section];
-        WRLDSearchResultSet * selectedSet = [m_currentQuery getResultSetForProviderAtIndex: section];
         if([selectedSet getExpandedState] == Expanded)
         {
             for(int i = 0; i < [m_searchProviders count]; ++i)
@@ -282,6 +287,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
         }
         [self updateResults];
     }
+    else
+    {
+        WRLDSearchResult *result = [selectedSet getResult:[indexPath row]];
+        m_resultSelectedCallback(result);
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView
@@ -293,7 +303,7 @@ viewForHeaderInSection:(NSInteger)section
         return view;
     } else
     {
-        UIView* newView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, 8)];
+        UIView* newView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, tableView.frame.size.width, m_headerHeight)];
         newView.backgroundColor = [UIColor colorWithRed:0.0f green:43.0f/255.0f blue:99.0f/255.0f alpha:1.0f];
 //        
 //        [newView.layer setShadowColor:[[UIColor blackColor] CGColor]];
@@ -311,7 +321,7 @@ viewForHeaderInSection:(NSInteger)section
 heightForHeaderInSection:(NSInteger)section
 {
     WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex:section];
-    return ([set getVisibleResultCount] > 0) ? 8 : CGFLOAT_MIN;
+    return ([set getVisibleResultCount] > 0) ? m_headerHeight : CGFLOAT_MIN;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView

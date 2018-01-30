@@ -6,6 +6,7 @@
 #import "SearchProviders.h"
 #import "WRLDSearchResultTableViewController.h"
 #import "WRLDSearchSuggestionsViewController.h"
+#import "WRLDSearchResult.h"
 #import "WRLDSearchResultSet.h"
 
 
@@ -28,7 +29,7 @@
     WRLDSearchSuggestionsViewController* m_searchSuggestionsTableViewController;
     bool m_byPassSuggestions;
     NSString* m_suggestionsText;
-    UITextField *m_searchBarTextFieldObject;
+    CALayer *m_searchBarBorderObject;
     UIColor *m_searchBarActiveColor;
 }
 
@@ -61,6 +62,19 @@
     m_byPassSuggestions = false;
     m_suggestionsText = @"";
     
+    if (@available(iOS 9.0, *))
+    {
+        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setDefaultTextAttributes:@{
+                                                                                                                     NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],
+                                                                                                                     }];
+    }
+    else
+    {
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
+                                                                                                         NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],
+                                                                                                         }];
+    }
+    
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
     
     [widgetsBundle.self loadNibNamed:@"WRLDSearchWidgetView" owner:self options:nil];
@@ -71,7 +85,10 @@
     m_searchResultsTableViewController = [[WRLDSearchResultTableViewController alloc] init:
                                           self.wrldSearchWidgetResultsTableViewContainer :
                                           self.wrldSearchWidgetResultsTableView :
-                                          m_searchProviders];
+                                          m_searchProviders :
+                                          ^(WRLDSearchResult* result) {
+                                              [self setQueryTextWithoutSuggestions: result.title];
+                                          }];
     
     [m_searchResultsTableViewController setHeightConstraint: self.resultsHeightConstraint
                                                   maxHeight: self.bounds.size.height - self.wrldSearchWidgetSearchBar.bounds.size.height];
@@ -80,7 +97,8 @@
                                               self.wrldSearchWidgetSuggestionsTableView :
                                               m_searchProviders :
                                                ^(NSString* queryText) {
-                                                   [self searchForSuggestion: queryText];
+                                                   [self setQueryTextWithoutSuggestions: queryText];
+                                                   [self runSearch: queryText];
                                                }];
     
     
@@ -88,31 +106,43 @@
     
 //    UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
-    m_searchBarTextFieldObject = [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar color:[UIColor grayColor]];
+    m_searchBarBorderObject = [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar color:[UIColor grayColor]];
     
     m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:158.0f/255.0f alpha:1.0f];
 }
 
--(UITextField *) addBorderToSearchBar:(UISearchBar*) searchBar
+-(CALayer *) addBorderToSearchBar:(UISearchBar*) searchBar
                        color: (UIColor *) color
+{    
+    searchBar.layer.borderColor = [color CGColor];
+    searchBar.layer.borderWidth = 1.0;
+    searchBar.layer.cornerRadius = 10;
+    //UIImage *emptyImage = [[UIImage alloc] init];
+    //searchBar.backgroundImage = emptyImage;
+    return searchBar.layer;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    for (id object in [[[searchBar subviews] objectAtIndex:0] subviews])
-    {
-        if ([object isKindOfClass:[UITextField class]])
-        {
-            UITextField *textFieldObject = (UITextField *)object;
-            textFieldObject.layer.borderColor = [color CGColor];
-            textFieldObject.layer.borderWidth = 1.0;
-            textFieldObject.layer.cornerRadius = 10;
-            return textFieldObject;
-        }
+    if([self subviewContainsEvent: self.wrldSearchWidgetSearchBar point: point event: event]) return YES;
+    if([self subviewContainsEvent: self.wrldSearchWidgetResultsTableViewContainer point: point event: event]) return YES;
+    if([self subviewContainsEvent: self.wrldSearchWidgetSuggestionsTableView point: point event: event]) return YES;
+    return NO;
+}
+
+-(BOOL) subviewContainsEvent: (UIView*) view
+                       point: (CGPoint)point
+                        event: (UIEvent*) event
+{
+    if (view.userInteractionEnabled && ![view  isHidden] && [view pointInside:[self convertPoint:point toView:view] withEvent:event]) {
+        return YES;
     }
-    return nil;
+    return NO;
 }
 
 -(void) setSearchBarBorderColor :(UIColor *) color
 {
-    m_searchBarTextFieldObject.layer.borderColor = [color CGColor];
+    m_searchBarBorderObject.borderColor = [color CGColor];
 }
 
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -123,6 +153,11 @@
 -(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self setSearchBarBorderColor: [UIColor grayColor]];
+}
+
+- (void)dictationRecordingDidEnd
+{
+    [self runSearch:[self.wrldSearchWidgetSearchBar text]];
 }
 
 -(void) addSearchProvider:(id<WRLDSearchProvider>)searchProvider
@@ -157,12 +192,11 @@
     }
 }
 
--(void) searchForSuggestion: (NSString *) text
+-(void) setQueryTextWithoutSuggestions: (NSString *) text
 {
     m_byPassSuggestions = true;
     [self.wrldSearchWidgetSearchBar setText:text];
     m_byPassSuggestions = false;
-    [self runSearch: text];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

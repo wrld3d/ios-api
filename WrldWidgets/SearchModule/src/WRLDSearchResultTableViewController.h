@@ -5,7 +5,8 @@
 @class SearchProviders;
 
 @interface WRLDSearchResultTableViewController : NSObject <UITableViewDataSource, UITableViewDelegate, WRLDSearchQueryCompleteDelegate>
--(instancetype) init : (UIView *) tableViewContainer : (UITableView *) tableView :(SearchProviders *) searchProviders;
+typedef void (^ ResultSelectedCallback)(WRLDSearchResult *);
+-(instancetype) init : (UIView *) tableViewContainer : (UITableView *) tableView :(SearchProviders *) searchProviders :(ResultSelectedCallback)callback;
 -(void) setCurrentQuery: (WRLDSearchQuery *) currentQuery;
 -(void) setHeightConstraint:(NSLayoutConstraint *)heightConstraint
                   maxHeight:(NSInteger) maxHeight;

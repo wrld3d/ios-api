@@ -26,20 +26,20 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
-                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                            <rect key="frame" x="0.0" y="0.0" width="48" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="MJU-fm-ezz"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Menu" image="Menu_btn.png"/>
+                            <state key="normal" title=" " image="Menu_btn.png"/>
                         </button>
                         <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
-                            <rect key="frame" x="48" y="0.0" width="327" height="48"/>
+                            <rect key="frame" x="48" y="8" width="319" height="40"/>
                             <color key="tintColor" red="1" green="0.0" blue="0.02328635045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits"/>
@@ -51,19 +51,18 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="6OV-3b-79f"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="-8" id="6OV-3b-79f"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="JEs-0k-OWe"/>
                         <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="Gsy-aj-hKu" secondAttribute="trailing" symbolic="YES" id="OPT-rV-RZs"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="T5l-jv-Fz2"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="hFW-Cg-3Yg"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="mPJ-uN-pe0"/>
-                        <constraint firstAttribute="height" constant="48" id="ndG-A3-qxD"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" constant="8" id="hFW-Cg-3Yg"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-8" id="mPJ-uN-pe0"/>
+                        <constraint firstAttribute="height" constant="56" id="ndG-A3-qxD"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="oUB-dj-0dd"/>
                     </constraints>
-                    <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
-                    <rect key="frame" x="0.0" y="48" width="375" height="400"/>
+                    <rect key="frame" x="0.0" y="56" width="375" height="400"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
                             <rect key="frame" x="0.0" y="-9" width="375" height="564"/>
