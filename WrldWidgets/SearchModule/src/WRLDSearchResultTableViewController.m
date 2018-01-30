@@ -311,7 +311,7 @@ viewForHeaderInSection:(NSInteger)section
 heightForHeaderInSection:(NSInteger)section
 {
     WRLDSearchResultSet *set = [m_currentQuery getResultSetForProviderAtIndex:section];
-    return ([set getResultCount] > 0) ? 8 : CGFLOAT_MIN;
+    return ([set getVisibleResultCount] > 0) ? 8 : CGFLOAT_MIN;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView

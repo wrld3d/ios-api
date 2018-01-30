@@ -26,7 +26,7 @@
         m_poiService = poiService;
         m_poiSearchId = 0;
         cellIdentifier = @"WRLDGenericSearchResult";
-        cellExpectedHeight = 48;
+        cellExpectedHeight = 64;
         title = @"WRLD";
         
         m_mapView.delegate = self;

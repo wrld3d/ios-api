@@ -157,7 +157,8 @@
     }
 }
 
--(void) searchForSuggestion: (NSString *) text{
+-(void) searchForSuggestion: (NSString *) text
+{
     m_byPassSuggestions = true;
     [self.wrldSearchWidgetSearchBar setText:text];
     m_byPassSuggestions = false;
