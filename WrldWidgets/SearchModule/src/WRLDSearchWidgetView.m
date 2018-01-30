@@ -118,8 +118,7 @@
     searchBar.layer.borderColor = [color CGColor];
     searchBar.layer.borderWidth = 1.0;
     searchBar.layer.cornerRadius = 10;
-    searchBar.barStyle = UIBarStyleDefault;
-    searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    [searchBar setBackgroundImage:[UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])]];
     
     m_searchBarIcon = [searchBar imageForSearchBarIcon:
                        UISearchBarIconSearch state: UIControlStateNormal];
