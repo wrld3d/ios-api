@@ -4,11 +4,6 @@
 
 @implementation WRLDMapCamera
 
-+ (BOOL)supportsSecureCoding
-{
-    return YES;
-}
-
 + (instancetype)camera
 {
     return [[self alloc] init];
@@ -20,6 +15,7 @@
 {
     CLLocationDistance distance = 0;
     CLLocationDirection heading = 0;
+    CLLocationDistance elevation = 0;
     CGFloat pitch = 0;
     if (CLLocationCoordinate2DIsValid(centerCoordinate) && CLLocationCoordinate2DIsValid(eyeCoordinate)) {
         CLLocation *centerLocation = [[CLLocation alloc] initWithLatitude:centerCoordinate.latitude longitude:centerCoordinate.longitude];
@@ -44,7 +40,11 @@
     return [[self alloc] initWithCenterCoordinate:centerCoordinate
                                          distance:distance
                                             pitch:pitch
-                                          heading:heading];
+                                          heading:heading
+                                        elevation:elevation
+                                    elevationMode:(WRLDElevationMode)WRLDElevationMode::WRLDElevationModeHeightAboveGround
+                                      indoorMapId:(NSString*)@""
+                                 indoorMapFloorId:(NSInteger)0];
 }
 
 + (instancetype)cameraLookingAtCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
@@ -55,13 +55,40 @@
     return [[self alloc] initWithCenterCoordinate:centerCoordinate
                                          distance:distance
                                             pitch:pitch
-                                          heading:heading];
+                                          heading:heading
+                                        elevation:(CLLocationDistance)0
+                          elevationMode:(WRLDElevationMode)WRLDElevationMode::WRLDElevationModeHeightAboveGround
+                            indoorMapId:(NSString*)@""
+                       indoorMapFloorId:(NSInteger)0];
+}
+
++ (instancetype)cameraLookingAtCenterCoordinateIndoors:(CLLocationCoordinate2D)centerCoordinate
+                                           fromDistance:(CLLocationDistance)distance
+                                                  pitch:(CGFloat)pitch
+                                                heading:(CLLocationDirection)heading
+                                              elevation:(CLLocationDistance)elevation
+                                          elevationMode:(WRLDElevationMode)elevationMode
+                                            indoorMapId:(NSString*)indoorMapId
+                                       indoorMapFloorId:(NSInteger)indoorMapFloorId
+{
+    return [[self alloc] initWithCenterCoordinate:centerCoordinate
+                                         distance:distance
+                                            pitch:pitch
+                                          heading:heading
+                                        elevation:elevation
+                                    elevationMode:(WRLDElevationMode)elevationMode
+                                      indoorMapId:(NSString*)indoorMapId
+                                 indoorMapFloorId:(NSInteger)indoorMapFloorId];
 }
 
 - (instancetype)initWithCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
                                 distance:(CLLocationDistance)distance
                                    pitch:(CGFloat)pitch
                                  heading:(CLLocationDirection)heading
+                               elevation:(CLLocationDistance)elevation
+                           elevationMode:(WRLDElevationMode)elevationMode
+                             indoorMapId:(NSString*)indoorMapId
+                        indoorMapFloorId:(NSInteger)indoorMapFloorId
 {
     if (self = [super init])
     {
@@ -69,6 +96,10 @@
         _distance = distance;
         _pitch = pitch;
         _heading = heading;
+        _elevation = elevation;
+        _elevationMode = elevationMode;
+        _indoorMapId = indoorMapId;
+        _indoorMapFloorId = indoorMapFloorId;
     }
     return self;
 }
@@ -78,34 +109,16 @@
     return cos(_pitch * M_PI / 180) * _distance;
 }
 
-- (void)encodeWithCoder:(NSCoder *)encoder
-{
-    [encoder encodeDouble:_centerCoordinate.latitude forKey:@"centerCoordinateLatitude"];
-    [encoder encodeDouble:_centerCoordinate.longitude forKey:@"centerCoordinateLongitude"];
-    [encoder encodeDouble:_distance forKey:@"distance"];
-    [encoder encodeDouble:_pitch forKey:@"pitch"];
-    [encoder encodeDouble:_heading forKey:@"heading"];
-}
-
-- (nullable instancetype)initWithCoder:(NSCoder *)decoder
-{
-    if (self = [super init])
-    {
-        _centerCoordinate = CLLocationCoordinate2DMake([decoder decodeDoubleForKey:@"centerCoordinateLatitude"],
-                                                       [decoder decodeDoubleForKey:@"centerCoordinateLongitude"]);
-        _distance = [decoder decodeDoubleForKey:@"distance"];
-        _pitch = [decoder decodeFloatForKey:@"pitch"];
-        _heading = [decoder decodeDoubleForKey:@"heading"];
-    }
-    return self;
-}
-
 - (id)copyWithZone:(nullable NSZone *)zone
 {
     return [[WRLDMapCamera allocWithZone:zone] initWithCenterCoordinate:_centerCoordinate
                                                                distance:_distance
                                                                   pitch:_pitch
-                                                                heading:_heading];
+                                                                heading:_heading
+                                                              elevation:_elevation
+                                                          elevationMode:_elevationMode
+                                                            indoorMapId:_indoorMapId
+                                                       indoorMapFloorId:_indoorMapFloorId];
 }
 
 @end
