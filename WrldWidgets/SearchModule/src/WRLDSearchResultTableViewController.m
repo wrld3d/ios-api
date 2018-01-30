@@ -21,6 +21,7 @@
     bool m_isAnimatingOut;
     UIImage *m_imgMore;
     UIImage *m_imgBack;
+    NSInteger m_maxHeight;
 }
 
 -(instancetype) init : (UIView *) tableViewContainer :(UITableView *) tableView : (SearchProviders *) searchProviders
@@ -40,6 +41,7 @@
         m_tableView.dataSource = self;
         m_tableView.delegate = self;
         m_tableView.sectionFooterHeight = 0;
+        m_maxHeight = 400;
         
         NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
         [tableView registerNib:[UINib nibWithNibName:m_defaultCellStyleIdentifier bundle:widgetsBundle] forCellReuseIdentifier: m_defaultCellStyleIdentifier];
@@ -204,8 +206,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         {
             height += [self getHeightForSet: i];
         }
-        height = MIN(568, height);
     }
+    
+    height = MIN(m_maxHeight, height);
     
     [UIView animateWithDuration: 0.25 animations:^{
         m_heightConstraint.constant = height;
@@ -249,8 +252,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 -(void) setHeightConstraint:(NSLayoutConstraint *)heightConstraint
+                  maxHeight:(NSInteger) maxHeight
 {
     m_heightConstraint = heightConstraint;
+    m_maxHeight = maxHeight;
 }
 
 - (void)tableView:(UITableView *)tableView

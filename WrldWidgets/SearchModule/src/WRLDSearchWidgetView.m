@@ -73,7 +73,8 @@
                                           self.wrldSearchWidgetResultsTableView :
                                           m_searchProviders];
     
-    [m_searchResultsTableViewController setHeightConstraint: self.resultsHeightConstraint];
+    [m_searchResultsTableViewController setHeightConstraint: self.resultsHeightConstraint
+                                                  maxHeight: self.bounds.size.height - self.wrldSearchWidgetSearchBar.bounds.size.height];
     
     m_searchSuggestionsTableViewController = [[WRLDSearchSuggestionsViewController alloc] init :
                                               self.wrldSearchWidgetSuggestionsTableView :
