@@ -31,6 +31,7 @@
     NSString* m_suggestionsText;
     CALayer *m_searchBarBorderObject;
     UIColor *m_searchBarActiveColor;
+    UIImage * m_searchBarIcon;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -117,8 +118,11 @@
     searchBar.layer.borderColor = [color CGColor];
     searchBar.layer.borderWidth = 1.0;
     searchBar.layer.cornerRadius = 10;
-    //UIImage *emptyImage = [[UIImage alloc] init];
-    //searchBar.backgroundImage = emptyImage;
+    searchBar.barStyle = UIBarStyleDefault;
+    searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    
+    m_searchBarIcon = [searchBar imageForSearchBarIcon:
+                       UISearchBarIconSearch state: UIControlStateNormal];
     return searchBar.layer;
 }
 
@@ -137,6 +141,9 @@
     if (view.userInteractionEnabled && ![view  isHidden] && [view pointInside:[self convertPoint:point toView:view] withEvent:event]) {
         return YES;
     }
+    if([self.wrldSearchWidgetSearchBar isFirstResponder]){
+        [self.wrldSearchWidgetSearchBar resignFirstResponder];
+    }
     return NO;
 }
 
@@ -148,11 +155,19 @@
 -(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [self setSearchBarBorderColor: m_searchBarActiveColor];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        [searchBar setPositionAdjustment:UIOffsetMake(-24, 0) forSearchBarIcon:UISearchBarIconSearch];
+    }];
 }
 
 -(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self setSearchBarBorderColor: [UIColor grayColor]];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        [searchBar setPositionAdjustment:UIOffsetMake(0, 0) forSearchBarIcon:UISearchBarIconSearch];
+    }];
 }
 
 - (void)dictationRecordingDidEnd
