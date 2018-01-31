@@ -36,7 +36,9 @@
                                 <constraint firstAttribute="width" constant="48" id="MJU-fm-ezz"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title=" " image="Menu_btn.png"/>
+                            <state key="normal" image="Menu_btn.png">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                         </button>
                         <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
                             <rect key="frame" x="48" y="8" width="319" height="40"/>
