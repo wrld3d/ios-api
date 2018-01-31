@@ -30,11 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  Get points that are vertices of the building outline polygon, ordered clockwise from above.
 
- @param coords The array of coordinates for points. It must be large enough to hold the desired number of coordinates
- @param range The range of points to copy.
+ @param coordinates The array of coordinates for points. It must be large enough to hold the coordinates.
  */
 
-- (void)getPoints:(CLLocationCoordinate2D *)coords range:(NSRange)range;
+- (void)getPoints:(CLLocationCoordinate2D *)coordinates;
 
 @end
 

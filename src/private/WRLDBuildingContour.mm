@@ -26,13 +26,11 @@
     return self;
 }
 
-- (void)getPoints:(CLLocationCoordinate2D *)coords range:(NSRange)range
+- (void)getPoints:(CLLocationCoordinate2D *)coordinates
 {
-    NSInteger count = range.length > _pointCount ? _pointCount : range.length;
-
-    for (NSUInteger i=0; count; i++)
+    for (NSUInteger i=0; i<_pointCount; i++)
     {
-        coords[i] = m_points[i];
+        coordinates[i] = m_points[i];
     }
 }
 
