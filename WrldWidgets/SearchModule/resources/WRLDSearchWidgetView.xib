@@ -13,11 +13,14 @@
             <connections>
                 <outlet property="resultsHeightConstraint" destination="Ch0-Pu-hmk" id="94i-LH-4yV"/>
                 <outlet property="suggestionsHeightConstraint" destination="5Bv-Sr-MfB" id="pYe-Hj-Jic"/>
+                <outlet property="voiceButtonWidthConstraint" destination="H1B-jY-ZqS" id="pU8-gb-WBc"/>
                 <outlet property="wrldSearchWidgetMenuButton" destination="Gsy-aj-hKu" id="cPM-Pb-eZt"/>
                 <outlet property="wrldSearchWidgetResultsTableView" destination="URT-uZ-0JQ" id="xTA-ch-t9e"/>
                 <outlet property="wrldSearchWidgetResultsTableViewContainer" destination="fS6-Uh-JhU" id="hSJ-Ej-xgm"/>
                 <outlet property="wrldSearchWidgetRootView" destination="iN0-l3-epB" id="VRG-b4-Y61"/>
                 <outlet property="wrldSearchWidgetSearchBar" destination="nwq-hq-zts" id="uce-c9-h7F"/>
+                <outlet property="wrldSearchWidgetSearchBarContainerView" destination="WFD-kW-rVH" id="Il0-CU-UZ9"/>
+                <outlet property="wrldSearchWidgetSpeechButton" destination="1UJ-t9-Gjy" id="ky4-VE-PCq"/>
                 <outlet property="wrldSearchWidgetSuggestionsTableView" destination="0kP-eT-3ph" id="FGA-2h-o3P"/>
             </connections>
         </placeholder>
@@ -40,35 +43,60 @@
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                         </button>
-                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFD-kW-rVH" userLabel="Search Bar Container">
                             <rect key="frame" x="48" y="8" width="319" height="40"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
-                            <color key="tintColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
-                            <color key="barTintColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="Axe-xC-ueg"/>
-                            </connections>
-                        </searchBar>
+                            <subviews>
+                                <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="40"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="barTintColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="Axe-xC-ueg"/>
+                                    </connections>
+                                </searchBar>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1UJ-t9-Gjy" userLabel="Activate Voice Search Button">
+                                    <rect key="frame" x="287" y="0.0" width="32" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="32" id="H1B-jY-ZqS"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="Microphone_Available.png"/>
+                                    <connections>
+                                        <action selector="voiceButtonClicked:" destination="-1" eventType="primaryActionTriggered" id="Bah-k9-xqv"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="WFD-kW-rVH" secondAttribute="bottom" id="L8U-bk-HC2"/>
+                                <constraint firstItem="1UJ-t9-Gjy" firstAttribute="trailing" secondItem="WFD-kW-rVH" secondAttribute="trailing" id="Ofo-gL-OwR"/>
+                                <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="WFD-kW-rVH" secondAttribute="leading" id="V3l-uL-H5u"/>
+                                <constraint firstItem="1UJ-t9-Gjy" firstAttribute="leading" secondItem="nwq-hq-zts" secondAttribute="trailing" id="Xog-5E-nqJ"/>
+                                <constraint firstItem="1UJ-t9-Gjy" firstAttribute="bottom" secondItem="WFD-kW-rVH" secondAttribute="bottom" id="ZPo-Mu-eQJ"/>
+                                <constraint firstItem="1UJ-t9-Gjy" firstAttribute="top" secondItem="WFD-kW-rVH" secondAttribute="top" id="sFP-JD-BqM"/>
+                                <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="WFD-kW-rVH" secondAttribute="top" id="sTi-TB-OqV"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="-8" id="6OV-3b-79f"/>
-                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="JEs-0k-OWe"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="Gsy-aj-hKu" secondAttribute="trailing" symbolic="YES" id="OPT-rV-RZs"/>
-                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="T5l-jv-Fz2"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" constant="8" id="hFW-Cg-3Yg"/>
-                        <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-8" id="mPJ-uN-pe0"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="6U8-9k-NKP"/>
+                        <constraint firstItem="WFD-kW-rVH" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" constant="8" id="8Tg-cZ-wbK"/>
+                        <constraint firstItem="WFD-kW-rVH" firstAttribute="leading" secondItem="Gsy-aj-hKu" secondAttribute="trailing" id="DpY-tV-Yw4"/>
+                        <constraint firstItem="WFD-kW-rVH" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="-8" id="T10-Ty-47Q"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="caj-ko-mtc"/>
+                        <constraint firstItem="WFD-kW-rVH" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-8" id="f9F-aJ-wsZ"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="mmO-3q-rZe"/>
                         <constraint firstAttribute="height" constant="56" id="ndG-A3-qxD"/>
-                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="oUB-dj-0dd"/>
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
                     <rect key="frame" x="0.0" y="56" width="375" height="400"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
-                            <rect key="frame" x="0.0" y="-9" width="375" height="564"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                             <color key="backgroundColor" red="0.94031427556818181" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="tintColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="separatorColor" red="0.74901960784313726" green="0.85882352941176465" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -85,8 +113,8 @@
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
                     </constraints>
                 </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
-                    <rect key="frame" x="0.0" y="66" width="375" height="256"/>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                    <rect key="frame" x="0.0" y="56" width="375" height="256"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="256" id="5Bv-Sr-MfB"/>
@@ -112,5 +140,6 @@
     </objects>
     <resources>
         <image name="Menu_btn.png" width="32" height="32"/>
+        <image name="Microphone_Available.png" width="28" height="28"/>
     </resources>
 </document>

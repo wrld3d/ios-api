@@ -8,6 +8,7 @@ FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 
 #import "WRLDIndoorControlView.h"
 #import "WRLDSearchWidgetView.h"
+#import "WRLDSearchWidgetViewWithSpeechRecognition.h"
 #import "WRLDSearchProvider.h"
 #import "WRLDSearchQuery.h"
 #import "POIServiceSearchProvider.h"

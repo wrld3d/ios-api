@@ -94,6 +94,12 @@
 		26CA2C232018D9C400F24EC5 /* WRLDSearchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 26CA2C222018D9C400F24EC5 /* WRLDSearchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */; };
 		26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */; };
+		26D4ECBE2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h in Headers */ = {isa = PBXBuildFile; fileRef = 26D4ECBD2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */; };
+		26D4ECC22021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = 26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */; };
+		26D4ECC6202231E200C86C81 /* Microphone_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = 26D4ECC3202231E000C86C81 /* Microphone_Available.png */; };
+		26D4ECC7202231E200C86C81 /* Microphone_Available@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */; };
+		26D4ECC8202231E200C86C81 /* Microphone_Available@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26D4ECC5202231E100C86C81 /* Microphone_Available@2x.png */; };
 		26F9C0F92019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */; };
 		26F9C0FD2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
@@ -391,6 +397,12 @@
 		26CA2C222018D9C400F24EC5 /* WRLDSearchQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchQuery.h; sourceTree = "<group>"; };
 		26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchQuery.m; sourceTree = "<group>"; };
 		26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchInProgressCell.xib; sourceTree = "<group>"; };
+		26D4ECBD2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewWithSpeechRecognition.h; sourceTree = "<group>"; };
+		26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewWIthSpeechRecognition.m; sourceTree = "<group>"; };
+		26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewSubclass.h; sourceTree = "<group>"; };
+		26D4ECC3202231E000C86C81 /* Microphone_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Microphone_Available.png; sourceTree = "<group>"; };
+		26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Microphone_Available@3x.png"; sourceTree = "<group>"; };
+		26D4ECC5202231E100C86C81 /* Microphone_Available@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Microphone_Available@2x.png"; sourceTree = "<group>"; };
 		26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchInProgressTableViewCell.h; sourceTree = "<group>"; };
 		26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchInProgressTableViewCell.m; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
@@ -634,6 +646,7 @@
 				268C2DF220163587009EB66B /* WRLDSearchProviderDelegate.h */,
 				268C2DF9201636C3009EB66B /* WRLDSearchProvider.h */,
 				26327CB52010B9870081E6F2 /* WRLDSearchWidgetView.h */,
+				26D4ECBD2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h */,
 			);
 			name = public;
 			sourceTree = "<group>";
@@ -642,6 +655,8 @@
 			isa = PBXGroup;
 			children = (
 				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
+				26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */,
+				26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */,
 				26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */,
 				26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */,
 				269A7636201B8B2F00C0A2DE /* WRLDSearchResultFooterTableViewCell.h */,
@@ -682,6 +697,9 @@
 		269940FD2010D55D0099E34A /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				26D4ECC3202231E000C86C81 /* Microphone_Available.png */,
+				26D4ECC5202231E100C86C81 /* Microphone_Available@2x.png */,
+				26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */,
 				269A763B201F794000C0A2DE /* Back_btn@2x.png */,
 				269A7645201F794800C0A2DE /* Back_btn@3x.png */,
 				269A763E201F794300C0A2DE /* DeleteSearch_btn@2x.png */,
@@ -1083,9 +1101,11 @@
 				268C2E0A20173D88009EB66B /* WRLDSearchResultTableViewCell.h in Headers */,
 				268C2DFE20164590009EB66B /* SearchProviders.h in Headers */,
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
+				26D4ECC22021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h in Headers */,
 				268C2E062016558D009EB66B /* WRLDSearchResultTableViewController.h in Headers */,
 				26327CB62010B9870081E6F2 /* WRLDSearchWidgetView.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
+				26D4ECBE2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h in Headers */,
 				269A7628201A226B00C0A2DE /* WRLDSearchSuggestionTableViewCell.h in Headers */,
 				269A7638201B8B3100C0A2DE /* WRLDSearchResultFooterTableViewCell.h in Headers */,
 				26CA2C172018A61300F24EC5 /* YelpSearchResultTableViewCell.h in Headers */,
@@ -1327,6 +1347,7 @@
 				26B4A51E2020CB31001DB59E /* small_1_half.png in Resources */,
 				26B4A51A2020CB31001DB59E /* small_3_half@2x.png in Resources */,
 				26B4A51B2020CB31001DB59E /* small_4_half@3x.png in Resources */,
+				26D4ECC7202231E200C86C81 /* Microphone_Available@3x.png in Resources */,
 				26B4A5192020CB31001DB59E /* small_1@2x.png in Resources */,
 				26B4A5012020CB31001DB59E /* small_3_half@3x.png in Resources */,
 				26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */,
@@ -1353,11 +1374,13 @@
 				26B4A5072020CB31001DB59E /* small_2_half@2x.png in Resources */,
 				269A7649201F794A00C0A2DE /* Back_btn@2x.png in Resources */,
 				269A764C201F794A00C0A2DE /* DeleteSearch_btn@2x.png in Resources */,
+				26D4ECC6202231E200C86C81 /* Microphone_Available.png in Resources */,
 				267507E820177A5400922BD3 /* GradientShadow.png in Resources */,
 				26B4A5182020CB31001DB59E /* small_3@2x.png in Resources */,
 				267507E920177A5400922BD3 /* Expander.png in Resources */,
 				269A764D201F794A00C0A2DE /* MoreResults_butn@2x.png in Resources */,
 				26B4A5162020CB31001DB59E /* small_2_half.png in Resources */,
+				26D4ECC8202231E200C86C81 /* Microphone_Available@2x.png in Resources */,
 				26B4A5102020CB31001DB59E /* small_5.png in Resources */,
 				269941182010D6150099E34A /* WRLDSearchWidgetView.xib in Resources */,
 				26B4A5022020CB31001DB59E /* small_4@3x.png in Resources */,
@@ -1475,6 +1498,7 @@
 				268C2E08201737DB009EB66B /* WRLDSearchResultTableViewController.m in Sources */,
 				268C2DF6201635B3009EB66B /* WRLDSearchResult.mm in Sources */,
 				268C2DEF201634D6009EB66B /* POIServiceSearchProvider.m in Sources */,
+				26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m in Sources */,
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
 				268C2E00201645A1009EB66B /* SearchProviders.m in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,

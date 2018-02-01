@@ -1,6 +1,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "WRLDSearchWidgetView.h"
+#import "WRLDSearchWidgetViewSubclass.h"
 #import "WRLDSearchProvider.h"
 #import "WRLDSearchQuery.h"
 #import "SearchProviders.h"
@@ -8,19 +9,6 @@
 #import "WRLDSearchSuggestionsViewController.h"
 #import "WRLDSearchResult.h"
 #import "WRLDSearchResultSet.h"
-
-
-@interface WRLDSearchWidgetView()
-
-@property (strong, nonatomic) IBOutlet UIView *wrldSearchWidgetRootView;
-@property (weak, nonatomic) IBOutlet UIButton *wrldSearchWidgetMenuButton;
-@property (unsafe_unretained, nonatomic) IBOutlet UISearchBar *wrldSearchWidgetSearchBar;
-@property (weak, nonatomic) IBOutlet UIView *wrldSearchWidgetResultsTableViewContainer;
-@property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetResultsTableView;
-@property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetSuggestionsTableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsHeightConstraint;
-@end
 
 @implementation WRLDSearchWidgetView
 {
@@ -62,18 +50,15 @@
     m_searchProviders = [[SearchProviders alloc] init];
     m_byPassSuggestions = false;
     m_suggestionsText = @"";
-    
-    if (@available(iOS 9.0, *))
+    if(@available(iOS 9.0, *))
     {
-        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setDefaultTextAttributes:@{
-                                                                                                                     NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],
-                                                                                                                     }];
+        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setDefaultTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],}];
+        //[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].leftView = nil;
     }
     else
     {
-        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
-                                                                                                         NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],
-                                                                                                         }];
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16],}];
+        //[UITextField appearanceWhenContainedIn:[UISearchBar class], nil].leftView = nil;
     }
     
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
@@ -107,27 +92,24 @@
     
 //    UIImage *imgClear = [UIImage imageNamed:@"Expander.png" inBundle: widgetsBundle compatibleWithTraitCollection:nil];
 //    [_wrldSearchWidgetSearchBar setImage:imgClear forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
-    m_searchBarBorderObject = [self addBorderToSearchBar: self.wrldSearchWidgetSearchBar color:[UIColor grayColor]];
-    
+    m_searchBarBorderObject = [self styleSearchBar];
     m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:158.0f/255.0f alpha:1.0f];
+    [self setSearchBarBorderColor: [UIColor grayColor]];
 }
 
--(CALayer *) addBorderToSearchBar:(UISearchBar*) searchBar
-                       color: (UIColor *) color
-{    
-    searchBar.layer.borderColor = [color CGColor];
-    searchBar.layer.borderWidth = 1.0;
-    searchBar.layer.cornerRadius = 10;
-    [searchBar setBackgroundImage:[UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])]];
-    
-    m_searchBarIcon = [searchBar imageForSearchBarIcon:
+-(CALayer *) styleSearchBar
+{
+    self.wrldSearchWidgetSearchBarContainerView.layer.borderWidth = 1.0;
+    self.wrldSearchWidgetSearchBarContainerView.layer.cornerRadius = 10;
+    [self.wrldSearchWidgetSearchBar setBackgroundImage:[UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])]];
+    m_searchBarIcon = [self.wrldSearchWidgetSearchBar imageForSearchBarIcon:
                        UISearchBarIconSearch state: UIControlStateNormal];
-    return searchBar.layer;
+    return self.wrldSearchWidgetSearchBarContainerView.layer;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if([self subviewContainsEvent: self.wrldSearchWidgetSearchBar point: point event: event]) return YES;
+    if([self subviewContainsEvent: self.wrldSearchWidgetSearchBarContainerView point: point event: event]) return YES;
     if([self subviewContainsEvent: self.wrldSearchWidgetResultsTableViewContainer point: point event: event]) return YES;
     if([self subviewContainsEvent: self.wrldSearchWidgetSuggestionsTableView point: point event: event]) return YES;
     return NO;
@@ -156,7 +138,12 @@
     [self setSearchBarBorderColor: m_searchBarActiveColor];
     
     [UIView animateWithDuration:0.25 animations:^{
-        [searchBar setPositionAdjustment:UIOffsetMake(-24, 0) forSearchBarIcon:UISearchBarIconSearch];
+        NSInteger iconWidth = 24;
+        if(@available(iOS 11.0, *))
+        {
+            iconWidth += 6;
+        }
+        [searchBar setPositionAdjustment:UIOffsetMake(-iconWidth, 0) forSearchBarIcon:UISearchBarIconSearch];
     }];
 }
 
@@ -193,24 +180,49 @@
     if(!m_byPassSuggestions)
     {
         [m_searchResultsTableViewController fadeOut];
-        
         if([searchText length] > 0)
         {
             WRLDSearchQuery * newQuery = [[WRLDSearchQuery alloc] initWithQueryString: trimmedString : m_searchProviders];
             [m_searchSuggestionsTableViewController setCurrentQuery:newQuery];
             [m_searchProviders doSuggestions: newQuery];
         }
-        else{
-            [m_searchSuggestionsTableViewController fadeOut];
-        }
     }
+    
+    [self determineVoiceButtonVisibility];
 }
 
 -(void) setQueryTextWithoutSuggestions: (NSString *) text
 {
     m_byPassSuggestions = true;
     [self.wrldSearchWidgetSearchBar setText:text];
+    [self determineVoiceButtonVisibility];
     m_byPassSuggestions = false;
+}
+
+-(void) determineVoiceButtonVisibility
+{
+    if([[self.wrldSearchWidgetSearchBar text] length] > 0)
+    {
+        if(![self.wrldSearchWidgetSpeechButton isHidden]){
+            [UIView animateWithDuration: 0.25 animations:^{
+                [self.voiceButtonWidthConstraint setConstant:0];
+            } completion:^(BOOL finished) {
+                if(finished){
+                    self.wrldSearchWidgetSpeechButton.hidden = YES;
+                }
+            }];
+        }
+    }
+    else {
+        [m_searchSuggestionsTableViewController fadeOut];
+        if([self showVoiceButton] && self.voiceButtonWidthConstraint.constant < 32)
+        {
+            self.wrldSearchWidgetSpeechButton.hidden = NO;
+            [UIView animateWithDuration: 0.25 animations:^{
+                [self.voiceButtonWidthConstraint setConstant:32];
+            }];
+        }
+    }
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -227,11 +239,22 @@
     [m_searchResultsTableViewController setCurrentQuery:newQuery];
     [m_searchProviders doSearch: newQuery];
     [self.wrldSearchWidgetSearchBar resignFirstResponder];
+    [self determineVoiceButtonVisibility];
 }
 
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
 {
     [self.wrldSearchWidgetResultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
+}
+
+-(IBAction)voiceButtonClicked:(id)sender
+{
+    //Do Nothing - not supported on iOS < 10
+}
+
+-(BOOL) showVoiceButton
+{
+    return NO;
 }
 
 @end
