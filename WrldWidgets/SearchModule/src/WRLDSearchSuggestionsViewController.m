@@ -85,7 +85,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 -(void) updateResults
 {
     [m_tableView reloadData];
-    
+    [self fadeIn];
+}
+
+-(void) fadeIn
+{
     CGFloat height = 0;
     if([m_currentQuery progress] == InFlight)
     {

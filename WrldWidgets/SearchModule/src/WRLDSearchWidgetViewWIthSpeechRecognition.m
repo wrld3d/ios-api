@@ -8,6 +8,8 @@
     AVAudioEngine * m_audioEngine;
     SFSpeechAudioBufferRecognitionRequest *m_recognitionRequest;
     SFSpeechRecognitionTask *m_recognitionTask;
+    BOOL m_hasPartialResult;
+    NSTimer * m_speechTimeout;
 }
 -(void)customInit
 {
@@ -45,6 +47,20 @@
     }];
 }
 
+-(void) completeVoiceQuery:(NSTimer*) timer
+{
+    if ([m_audioEngine isRunning]) {
+        [m_audioEngine stop];
+        [m_recognitionRequest endAudio];
+    }
+}
+
+-(void) processVoiceResult:(NSString *) bestTranscription
+{
+    [self setQueryTextWithoutSuggestions: bestTranscription];
+    [self runSearch:bestTranscription];
+}
+
 -(void) voiceButtonClicked:(id)sender
 {
     if ([m_audioEngine isRunning]) {
@@ -52,6 +68,9 @@
         [m_recognitionRequest endAudio];
     } else {
         [self startRecording];
+        [self.wrldSearchWidgetSearchBar setPlaceholder:@"Listening..."];
+        [self.wrldSearchWidgetSearchBar setText:@""];
+        [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:NO];
     }
 }
 
@@ -92,15 +111,32 @@
         if (error != nil || result.isFinal) {
             [m_audioEngine stop];
             [inputNode removeTapOnBus: 0];
+            if(m_speechTimeout){
+                [m_speechTimeout invalidate];
+            }
+            
+            [self.wrldSearchWidgetSearchBar setPlaceholder:@"Search the WRLD"];
+            [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:YES];
             
             NSString* bestTranscription = result.bestTranscription.formattedString;
             if(bestTranscription && [bestTranscription length]){
-                [self setQueryTextWithoutSuggestions: bestTranscription];
-                [self runSearch:bestTranscription];
+                [self processVoiceResult:bestTranscription];
             }
             
             m_recognitionRequest = nil;
             m_recognitionTask = nil;
+        }
+        if(error == nil && !result.isFinal)
+        {
+            m_hasPartialResult = YES;
+            if(m_speechTimeout){
+                [m_speechTimeout invalidate];
+            }
+            m_speechTimeout = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                               target:self
+                                                             selector:@selector(completeVoiceQuery:)
+                                                             userInfo:nil
+                                                              repeats:NO];
         }
     }];
     
@@ -111,6 +147,7 @@
     
     [m_audioEngine prepare];
     
+    m_hasPartialResult = false;
     [m_audioEngine startAndReturnError:&error];
 }
 

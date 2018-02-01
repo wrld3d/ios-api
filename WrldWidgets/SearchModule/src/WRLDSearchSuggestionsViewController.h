@@ -11,6 +11,7 @@ typedef void (^ SuggestionSelectedCallback)(NSString *);
 -(instancetype) init : (UITableView *) tableView : (SearchProviders *) searchProviders :(SuggestionSelectedCallback)callback;
 -(void) setCurrentQuery: (WRLDSearchQuery *) currentQuery;
 -(void) setHeightConstraint: (NSLayoutConstraint *) heightConstraint;
+-(void) fadeIn;
 -(void) fadeOut;
 @end
 

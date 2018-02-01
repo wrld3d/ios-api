@@ -124,6 +124,9 @@
     }
     if([self.wrldSearchWidgetSearchBar isFirstResponder]){
         [self.wrldSearchWidgetSearchBar resignFirstResponder];
+        if(![self.wrldSearchWidgetSuggestionsTableView isHidden]){
+            [m_searchSuggestionsTableViewController fadeOut];
+        }
     }
     return NO;
 }
@@ -145,6 +148,10 @@
         }
         [searchBar setPositionAdjustment:UIOffsetMake(-iconWidth, 0) forSearchBarIcon:UISearchBarIconSearch];
     }];
+    
+    if([[searchBar text] length] > 0 && self.wrldSearchWidgetResultsTableViewContainer.hidden){
+        [m_searchSuggestionsTableViewController fadeIn];
+    }
 }
 
 -(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -187,6 +194,9 @@
             [m_searchProviders doSuggestions: newQuery];
         }
     }
+    if([searchText length] == 0){
+        [m_searchSuggestionsTableViewController fadeOut];
+    }
     
     [self determineVoiceButtonVisibility];
 }
@@ -214,7 +224,6 @@
         }
     }
     else {
-        [m_searchSuggestionsTableViewController fadeOut];
         if([self showVoiceButton] && self.voiceButtonWidthConstraint.constant < 32)
         {
             self.wrldSearchWidgetSpeechButton.hidden = NO;
