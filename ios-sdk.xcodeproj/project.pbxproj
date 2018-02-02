@@ -57,6 +57,12 @@
 		269A7653201F794A00C0A2DE /* Back_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7645201F794800C0A2DE /* Back_btn@3x.png */; };
 		269A7654201F794A00C0A2DE /* MoreResults_butn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7646201F794900C0A2DE /* MoreResults_butn@3x.png */; };
 		269A7655201F794A00C0A2DE /* Expander@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 269A7647201F794900C0A2DE /* Expander@2x.png */; };
+		26B3C238202359EA0040D965 /* Large_Mic.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3C235202359E90040D965 /* Large_Mic.png */; };
+		26B3C239202359EA0040D965 /* Large_Mic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3C236202359EA0040D965 /* Large_Mic@2x.png */; };
+		26B3C23A202359EA0040D965 /* Large_Mic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3C237202359EA0040D965 /* Large_Mic@3x.png */; };
+		26B3C23C20235BC40040D965 /* WRLDMicrophoneOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26B3C23B20235BC40040D965 /* WRLDMicrophoneOverlay.xib */; };
+		26B3C23E202361440040D965 /* WRLDSpeechHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B3C23D202361440040D965 /* WRLDSpeechHandler.h */; };
+		26B3C240202361550040D965 /* WRLDSpeechHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B3C23F202361550040D965 /* WRLDSpeechHandler.m */; };
 		26B4A5002020CB31001DB59E /* small_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B4A4E12020CB28001DB59E /* small_1.png */; };
 		26B4A5012020CB31001DB59E /* small_3_half@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B4A4E22020CB29001DB59E /* small_3_half@3x.png */; };
 		26B4A5022020CB31001DB59E /* small_4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B4A4E32020CB29001DB59E /* small_4@3x.png */; };
@@ -360,6 +366,12 @@
 		269A7645201F794800C0A2DE /* Back_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back_btn@3x.png"; sourceTree = "<group>"; };
 		269A7646201F794900C0A2DE /* MoreResults_butn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreResults_butn@3x.png"; sourceTree = "<group>"; };
 		269A7647201F794900C0A2DE /* Expander@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expander@2x.png"; sourceTree = "<group>"; };
+		26B3C235202359E90040D965 /* Large_Mic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Large_Mic.png; sourceTree = "<group>"; };
+		26B3C236202359EA0040D965 /* Large_Mic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Large_Mic@2x.png"; sourceTree = "<group>"; };
+		26B3C237202359EA0040D965 /* Large_Mic@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Large_Mic@3x.png"; sourceTree = "<group>"; };
+		26B3C23B20235BC40040D965 /* WRLDMicrophoneOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDMicrophoneOverlay.xib; sourceTree = "<group>"; };
+		26B3C23D202361440040D965 /* WRLDSpeechHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSpeechHandler.h; sourceTree = "<group>"; };
+		26B3C23F202361550040D965 /* WRLDSpeechHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSpeechHandler.m; sourceTree = "<group>"; };
 		26B4A4E12020CB28001DB59E /* small_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_1.png; sourceTree = "<group>"; };
 		26B4A4E22020CB29001DB59E /* small_3_half@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_3_half@3x.png"; sourceTree = "<group>"; };
 		26B4A4E32020CB29001DB59E /* small_4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_4@3x.png"; sourceTree = "<group>"; };
@@ -676,6 +688,8 @@
 				269A762A201A251300C0A2DE /* WRLDSearchSuggestionsViewController.h */,
 				269A762C201A258600C0A2DE /* WRLDSearchSuggestionsViewController.m */,
 				26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */,
+				26B3C23D202361440040D965 /* WRLDSpeechHandler.h */,
+				26B3C23F202361550040D965 /* WRLDSpeechHandler.m */,
 			);
 			name = private;
 			sourceTree = "<group>";
@@ -697,6 +711,9 @@
 		269940FD2010D55D0099E34A /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				26B3C235202359E90040D965 /* Large_Mic.png */,
+				26B3C236202359EA0040D965 /* Large_Mic@2x.png */,
+				26B3C237202359EA0040D965 /* Large_Mic@3x.png */,
 				26D4ECC3202231E000C86C81 /* Microphone_Available.png */,
 				26D4ECC5202231E100C86C81 /* Microphone_Available@2x.png */,
 				26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */,
@@ -726,6 +743,7 @@
 				26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */,
 				269941062010D5890099E34A /* WRLDSearchWidgetView.xib */,
 				269A7624201A21F700C0A2DE /* WRLDSearchWidgetSuggestion.xib */,
+				26B3C23B20235BC40040D965 /* WRLDMicrophoneOverlay.xib */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -1113,6 +1131,7 @@
 				268C2DF0201634D6009EB66B /* POIServiceSearchProvider.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
 				26CA2C232018D9C400F24EC5 /* WRLDSearchQuery.h in Headers */,
+				26B3C23E202361440040D965 /* WRLDSpeechHandler.h in Headers */,
 				268C2DF8201635D6009EB66B /* WRLDSearchResult.h in Headers */,
 				269A762B201A251400C0A2DE /* WRLDSearchSuggestionsViewController.h in Headers */,
 				267507EF2017874D00922BD3 /* MockSearchProvider.h in Headers */,
@@ -1322,6 +1341,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26B3C23A202359EA0040D965 /* Large_Mic@3x.png in Resources */,
 				26B4A5062020CB31001DB59E /* small_4@2x.png in Resources */,
 				269A764F201F794A00C0A2DE /* Menu_btn@2x.png in Resources */,
 				26B4A50E2020CB31001DB59E /* small_4.png in Resources */,
@@ -1338,9 +1358,11 @@
 				269A7653201F794A00C0A2DE /* Back_btn@3x.png in Resources */,
 				26B4A5152020CB31001DB59E /* small_5@2x.png in Resources */,
 				267507DF2017790800922BD3 /* WRLDDisplayMoreResultsCell.xib in Resources */,
+				26B3C239202359EA0040D965 /* Large_Mic@2x.png in Resources */,
 				26B4A5032020CB31001DB59E /* small_2.png in Resources */,
 				26CA2C152018A23300F24EC5 /* YelpSearchResultCell.xib in Resources */,
 				26B4A5042020CB31001DB59E /* small_2@3x.png in Resources */,
+				26B3C23C20235BC40040D965 /* WRLDMicrophoneOverlay.xib in Resources */,
 				26B4A5122020CB31001DB59E /* small_3.png in Resources */,
 				26B4A5002020CB31001DB59E /* small_1.png in Resources */,
 				26B4A5172020CB31001DB59E /* small_5@3x.png in Resources */,
@@ -1352,6 +1374,7 @@
 				26B4A5012020CB31001DB59E /* small_3_half@3x.png in Resources */,
 				26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */,
 				26B4A5092020CB31001DB59E /* small_2_half@3x.png in Resources */,
+				26B3C238202359EA0040D965 /* Large_Mic.png in Resources */,
 				26B4A50D2020CB31001DB59E /* small_0@3x.png in Resources */,
 				26B4A51C2020CB31001DB59E /* small_3_half.png in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
@@ -1488,6 +1511,7 @@
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
 				26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */,
 				268C2E04201651C0009EB66B /* WRLDSearchResultSet.m in Sources */,
+				26B3C240202361550040D965 /* WRLDSpeechHandler.m in Sources */,
 				26CA2C192018A6A600F24EC5 /* YelpSearchResultTableViewCell.m in Sources */,
 				2CB2C5B91EC1D93F00C0B401 /* WRLDIndoorControlView.m in Sources */,
 				2CB2C5B31EC1D93F00C0B401 /* UIColors.mm in Sources */,

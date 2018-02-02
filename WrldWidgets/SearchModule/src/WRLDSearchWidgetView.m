@@ -261,6 +261,11 @@
     //Do Nothing - not supported on iOS < 10
 }
 
+-(void) cancelVoiceSearch
+{
+    //Do Nothing - not supported on iOS < 10
+}
+
 -(BOOL) showVoiceButton
 {
     return NO;

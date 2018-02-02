@@ -21,4 +21,5 @@
 
 -(void) setQueryTextWithoutSuggestions: (NSString *) text;
 -(void) runSearch:(NSString *) queryString;
+-(void) cancelVoiceSearch;
 @end

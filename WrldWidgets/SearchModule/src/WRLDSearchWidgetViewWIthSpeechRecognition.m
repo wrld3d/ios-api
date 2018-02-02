@@ -1,164 +1,59 @@
 #import "WRLDSearchWidgetViewWithSpeechRecognition.h"
 #import "WRLDSearchWidgetViewSubclass.h"
+#import "WRLDSpeechHandler.h"
 
 @implementation WRLDSearchWidgetViewWithSpeechRecognition
 {
-    SFSpeechRecognizer * m_speechRecognizer;
-    BOOL m_voiceAuthorized;
-    AVAudioEngine * m_audioEngine;
-    SFSpeechAudioBufferRecognitionRequest *m_recognitionRequest;
-    SFSpeechRecognitionTask *m_recognitionTask;
-    BOOL m_hasPartialResult;
-    NSTimer * m_speechTimeout;
+    WRLDSpeechHandler *m_speechHandler;
 }
+
 -(void)customInit
 {
     [super customInit];
-    NSLog(@"Init for WRLDSearchWidgetViewWithSpeechRecognition");
-    m_speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale: [[NSLocale alloc]initWithLocaleIdentifier: @"en-GB"]];
-    m_speechRecognizer.delegate = self;
-    
-    m_voiceAuthorized = NO;
-    
-    m_audioEngine = [[AVAudioEngine alloc] init];
-    
-    [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            switch (status) {
-                case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                    NSLog(@"Authorized");
-                    m_voiceAuthorized = YES;
-                    self.wrldSearchWidgetSpeechButton.hidden = NO;
-                    break;
-                case SFSpeechRecognizerAuthorizationStatusDenied:
-                    m_voiceAuthorized = NO;
-                    break;
-                case SFSpeechRecognizerAuthorizationStatusNotDetermined:
-                    m_voiceAuthorized = NO;
-                    NSLog(@"Not Determined");
-                    break;
-                case SFSpeechRecognizerAuthorizationStatusRestricted:
-                    m_voiceAuthorized = NO;
-                    break;
-                default:
-                    break;
-            }
-        });
-    }];
-}
-
--(void) completeVoiceQuery:(NSTimer*) timer
-{
-    if ([m_audioEngine isRunning]) {
-        [m_audioEngine stop];
-        [m_recognitionRequest endAudio];
-    }
-}
-
--(void) processVoiceResult:(NSString *) bestTranscription
-{
-    [self setQueryTextWithoutSuggestions: bestTranscription];
-    [self runSearch:bestTranscription];
+    CGRect fullscreen = [[UIScreen mainScreen] bounds];
+    m_speechHandler = [[WRLDSpeechHandler alloc] initWithFrame:fullscreen];
+    [m_speechHandler setSearchView:self];
+    [self addSubview:m_speechHandler];
 }
 
 -(void) voiceButtonClicked:(id)sender
 {
-    if ([m_audioEngine isRunning]) {
-        [m_audioEngine stop];
-        [m_recognitionRequest endAudio];
-    } else {
-        [self startRecording];
+    if(!m_speechHandler.isRecording)
+    {
+        [m_speechHandler startRecording];
         [self.wrldSearchWidgetSearchBar setPlaceholder:@"Listening..."];
         [self.wrldSearchWidgetSearchBar setText:@""];
         [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:NO];
     }
+    else
+    {
+        [m_speechHandler endRecording];
+    }
 }
 
--(void) startRecording
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if(!m_voiceAuthorized){
-        NSLog(@"Recording Unauthorized");
-        return;
+    if([m_speechHandler pointInside:point withEvent:event])
+    {
+        return YES;
     }
-    if(m_recognitionTask){
-        [m_recognitionTask cancel];
-        m_recognitionTask = nil;
-    }
-    
-    NSError * error;
-    AVAudioSession* audioSession = [AVAudioSession sharedInstance];
-    if(![audioSession setCategory:AVAudioSessionCategoryRecord error:&error]){
-        NSLog(@"%@", [error domain]);
-        return;
-    }
-    if(![audioSession setMode:AVAudioSessionModeMeasurement error:&error]){
-        NSLog(@"%@", [error domain]);
-        return;
-    }
-    if(![audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]){
-        NSLog(@"%@", [error domain]);
-        return;
-    }
-    
-    m_recognitionRequest = [[SFSpeechAudioBufferRecognitionRequest alloc]init];
-    
-    AVAudioInputNode *inputNode = m_audioEngine.inputNode;
-    m_recognitionRequest.shouldReportPartialResults = true;
-    
-    m_recognitionTask = [m_speechRecognizer recognitionTaskWithRequest: m_recognitionRequest
-                                                          resultHandler:^(SFSpeechRecognitionResult *result, NSError *error){
-        
-        if (error != nil || result.isFinal) {
-            [m_audioEngine stop];
-            [inputNode removeTapOnBus: 0];
-            if(m_speechTimeout){
-                [m_speechTimeout invalidate];
-            }
-            
-            [self.wrldSearchWidgetSearchBar setPlaceholder:@"Search the WRLD"];
-            [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:YES];
-            
-            NSString* bestTranscription = result.bestTranscription.formattedString;
-            if(bestTranscription && [bestTranscription length]){
-                [self processVoiceResult:bestTranscription];
-            }
-            
-            m_recognitionRequest = nil;
-            m_recognitionTask = nil;
-        }
-        if(error == nil && !result.isFinal)
-        {
-            m_hasPartialResult = YES;
-            if(m_speechTimeout){
-                [m_speechTimeout invalidate];
-            }
-            m_speechTimeout = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                               target:self
-                                                             selector:@selector(completeVoiceQuery:)
-                                                             userInfo:nil
-                                                              repeats:NO];
-        }
-    }];
-    
-    AVAudioFormat* recordingFormat = [inputNode outputFormatForBus: 0];
-    [inputNode installTapOnBus: 0 bufferSize: 1024 format: recordingFormat block:^(AVAudioPCMBuffer *buffer, AVAudioTime *when){
-        [m_recognitionRequest appendAudioPCMBuffer: buffer];
-    }];
-    
-    [m_audioEngine prepare];
-    
-    m_hasPartialResult = false;
-    [m_audioEngine startAndReturnError:&error];
+    return [super pointInside:point withEvent:event];
 }
 
-- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer
-   availabilityDidChange:(BOOL)available
+-(void) runSearch:(NSString *) queryString
 {
-    m_voiceAuthorized = available;
+    [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:YES];
+    [super runSearch:queryString];
+}
+
+-(void) cancelVoiceSearch
+{
+    [self.wrldSearchWidgetSearchBar setPlaceholder:@"Search the WRLD"];
+    [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:YES];
 }
 
 -(BOOL) showVoiceButton
 {
-    return m_voiceAuthorized;
+    return m_speechHandler.isAuthorized;
 }
 @end
