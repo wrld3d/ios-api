@@ -150,6 +150,18 @@
 		BB6B6DBD1FEB982B0070E78F /* WRLDBuildingApiHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6B6DBC1FEB982B0070E78F /* WRLDBuildingApiHelpers.h */; };
 		BB8448282018A1DB00F86EFC /* WRLDMathApiHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB8448262018A1DB00F86EFC /* WRLDMathApiHelpers.mm */; };
 		BB84482A2018A1EE00F86EFC /* WRLDMathApiHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8448292018A1EE00F86EFC /* WRLDMathApiHelpers.h */; };
+		BB84482C2018AFA700F86EFC /* WRLDMapFeatureType.h in Headers */ = {isa = PBXBuildFile; fileRef = BB84482B2018AFA700F86EFC /* WRLDMapFeatureType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB84482E2018B0C400F86EFC /* WRLDPickResult.h in Headers */ = {isa = PBXBuildFile; fileRef = BB84482D2018B0C400F86EFC /* WRLDPickResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB8448302018B5B600F86EFC /* WRLDVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = BB84482F2018B5B600F86EFC /* WRLDVector3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB8448322018B6B700F86EFC /* WRLDVector3.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8448312018B6B700F86EFC /* WRLDVector3.m */; };
+		BBFA4A222021DB0400124AF1 /* WRLDPickResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBFA4A212021DB0400124AF1 /* WRLDPickResult.mm */; };
+		BBFA4A242021DB3000124AF1 /* WRLDPickResult+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BBFA4A232021DB3000124AF1 /* WRLDPickResult+Private.h */; };
+		BBFA4A2A2021ED5000124AF1 /* WRLDPickingApiHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBFA4A292021ED5000124AF1 /* WRLDPickingApiHelpers.mm */; };
+		BBFA4A2C2021ED6000124AF1 /* WRLDPickingApiHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BBFA4A2B2021ED6000124AF1 /* WRLDPickingApiHelpers.h */; };
+		BBFA4A3320230FF700124AF1 /* WRLDScreenProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = BBFA4A3220230FF700124AF1 /* WRLDScreenProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BBFA4A352023107400124AF1 /* WRLDScreenProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA4A342023107400124AF1 /* WRLDScreenProperties.m */; };
+		BBFA4A36202315EA00124AF1 /* WRLDScreenProperties.m in Headers */ = {isa = PBXBuildFile; fileRef = BBFA4A342023107400124AF1 /* WRLDScreenProperties.m */; settings = {ATTRIBUTES = (Public, ); }; };
+		BBFA4A3B202491F300124AF1 /* WRLDMapFeatureType.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFA4A3A202491F300124AF1 /* WRLDMapFeatureType.m */; };
 		D01B67731F338B7600B164FB /* Sphere.POD in Resources */ = {isa = PBXBuildFile; fileRef = D01B67641F31DE5800B164FB /* Sphere.POD */; };
 		D01B67751F338B7D00B164FB /* Sphere_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */; };
 		D01B67761F338B7D00B164FB /* Sphere_Night_8bit.pvr in Resources */ = {isa = PBXBuildFile; fileRef = D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */; };
@@ -374,6 +386,10 @@
 		BB6B6DBC1FEB982B0070E78F /* WRLDBuildingApiHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDBuildingApiHelpers.h; sourceTree = "<group>"; };
 		BB8448262018A1DB00F86EFC /* WRLDMathApiHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDMathApiHelpers.mm; sourceTree = "<group>"; };
 		BB8448292018A1EE00F86EFC /* WRLDMathApiHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMathApiHelpers.h; sourceTree = "<group>"; };
+		BB84482B2018AFA700F86EFC /* WRLDMapFeatureType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMapFeatureType.h; sourceTree = "<group>"; };
+		BB84482D2018B0C400F86EFC /* WRLDPickResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPickResult.h; sourceTree = "<group>"; };
+		BB84482F2018B5B600F86EFC /* WRLDVector3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDVector3.h; sourceTree = "<group>"; };
+		BB8448312018B6B700F86EFC /* WRLDVector3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDVector3.m; sourceTree = "<group>"; };
 		BB9742391FD52C5500EE2A39 /* WRLDRoutingQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQuery.h; sourceTree = "<group>"; };
 		BB97423A1FD52CFE00EE2A39 /* WRLDRoutingQuery.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQuery.mm; sourceTree = "<group>"; };
 		BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQuery+Private.h"; sourceTree = "<group>"; };
@@ -391,6 +407,13 @@
 		BBCDBCDA1FCFE069007B19C7 /* WRLDRoutingQueryOptions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryOptions.mm; sourceTree = "<group>"; };
 		BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoute.h; sourceTree = "<group>"; };
 		BBCDBCDD1FCFE673007B19C7 /* WRLDRoute.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoute.mm; sourceTree = "<group>"; };
+		BBFA4A212021DB0400124AF1 /* WRLDPickResult.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPickResult.mm; sourceTree = "<group>"; };
+		BBFA4A232021DB3000124AF1 /* WRLDPickResult+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDPickResult+Private.h"; sourceTree = "<group>"; };
+		BBFA4A292021ED5000124AF1 /* WRLDPickingApiHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDPickingApiHelpers.mm; sourceTree = "<group>"; };
+		BBFA4A2B2021ED6000124AF1 /* WRLDPickingApiHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPickingApiHelpers.h; sourceTree = "<group>"; };
+		BBFA4A3220230FF700124AF1 /* WRLDScreenProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDScreenProperties.h; sourceTree = "<group>"; };
+		BBFA4A342023107400124AF1 /* WRLDScreenProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDScreenProperties.m; sourceTree = "<group>"; };
+		BBFA4A3A202491F300124AF1 /* WRLDMapFeatureType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMapFeatureType.m; sourceTree = "<group>"; };
 		D01B67621F31DE5800B164FB /* Sphere_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_8bit.pvr; sourceTree = "<group>"; };
 		D01B67631F31DE5800B164FB /* Sphere_Night_8bit.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere_Night_8bit.pvr; sourceTree = "<group>"; };
 		D01B67641F31DE5800B164FB /* Sphere.POD */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sphere.POD; sourceTree = "<group>"; };
@@ -758,6 +781,13 @@
 				BB6B6DBC1FEB982B0070E78F /* WRLDBuildingApiHelpers.h */,
 				BB8448262018A1DB00F86EFC /* WRLDMathApiHelpers.mm */,
 				BB8448292018A1EE00F86EFC /* WRLDMathApiHelpers.h */,
+				BBFA4A3A202491F300124AF1 /* WRLDMapFeatureType.m */,
+				BB8448312018B6B700F86EFC /* WRLDVector3.m */,
+				BBFA4A212021DB0400124AF1 /* WRLDPickResult.mm */,
+				BBFA4A232021DB3000124AF1 /* WRLDPickResult+Private.h */,
+				BBFA4A292021ED5000124AF1 /* WRLDPickingApiHelpers.mm */,
+				BBFA4A2B2021ED6000124AF1 /* WRLDPickingApiHelpers.h */,
+				BBFA4A342023107400124AF1 /* WRLDScreenProperties.m */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -817,6 +847,10 @@
 				BB6B6DA81FEB7D510070E78F /* WRLDBuildingHighlight.h */,
 				BB6B6DAE1FEB80560070E78F /* WRLDBuildingInformation.h */,
 				BB6B6DB41FEB8A890070E78F /* WRLDBuildingHighlightOptions.h */,
+				BB84482B2018AFA700F86EFC /* WRLDMapFeatureType.h */,
+				BB84482F2018B5B600F86EFC /* WRLDVector3.h */,
+				BB84482D2018B0C400F86EFC /* WRLDPickResult.h */,
+				BBFA4A3220230FF700124AF1 /* WRLDScreenProperties.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -873,6 +907,7 @@
 				6FA013B61FDADFA200D51364 /* WRLDMapscene+Private.h in Headers */,
 				A82B34821FB4C731009B21D3 /* WRLDTagSearchOptions.h in Headers */,
 				528A5C811EDDB93B00C5454F /* WRLDElevationMode.h in Headers */,
+				BBFA4A3320230FF700124AF1 /* WRLDScreenProperties.h in Headers */,
 				E0F4E17A1EB347FB00949ACE /* Wrld.h in Headers */,
 				D09B2CDE2005197600162BCC /* WRLDRouteView.h in Headers */,
 				6F0FA8C41FE41E1F00C9D71D /* WRLDMapsceneSearchConfig.h in Headers */,
@@ -907,7 +942,12 @@
 				BB6B6DAF1FEB80560070E78F /* WRLDBuildingInformation.h in Headers */,
 				BB6B6D6A1FD567420070E78F /* WRLDRoutingQueryOptions.h in Headers */,
 				BB6B6D6B1FD567450070E78F /* WRLDRoutingQueryWaypoint.h in Headers */,
+				BB84482E2018B0C400F86EFC /* WRLDPickResult.h in Headers */,
+				BB8448302018B5B600F86EFC /* WRLDVector3.h in Headers */,
+				BBFA4A36202315EA00124AF1 /* WRLDScreenProperties.m in Headers */,
+				BB84482C2018AFA700F86EFC /* WRLDMapFeatureType.h in Headers */,
 				D09B2CE02005198E00162BCC /* WRLDRouteView+Private.h in Headers */,
+				BBFA4A2C2021ED6000124AF1 /* WRLDPickingApiHelpers.h in Headers */,
 				BB84482A2018A1EE00F86EFC /* WRLDMathApiHelpers.h in Headers */,
 				BB6B6D651FD567100070E78F /* WRLDRouteSection.h in Headers */,
 				BB6B6D6C1FD567460070E78F /* WRLDRoutingQueryResponse.h in Headers */,
@@ -945,6 +985,7 @@
 				BB6B6DB71FEB8E5E0070E78F /* WRLDBuildingHighlightOptions+Private.h in Headers */,
 				BB6B6DB91FEB900F0070E78F /* WRLDBuildingHighlightSelectionMode.h in Headers */,
 				BB6B6DBD1FEB982B0070E78F /* WRLDBuildingApiHelpers.h in Headers */,
+				BBFA4A242021DB3000124AF1 /* WRLDPickResult+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1190,6 +1231,7 @@
 				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
 				6F96F33F1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m in Sources */,
 				A8E5997B1FB5F8ED00695193 /* WRLDPoiSearchResult.mm in Sources */,
+				BBFA4A352023107400124AF1 /* WRLDScreenProperties.m in Sources */,
 				A8E599771FB5EDCF00695193 /* WRLDPoiSearchResponse.mm in Sources */,
 				E0E9B9131ED347EB00F94099 /* WRLDCoordinateWithAltitude.m in Sources */,
 				A89A8FD61FB5BDF50041ABD3 /* WRLDTextSearchOptions.mm in Sources */,
@@ -1206,16 +1248,20 @@
 				BB6B6D721FD567BA0070E78F /* WRLDRouteDirections.mm in Sources */,
 				BB6B6D731FD567BE0070E78F /* WRLDRoutingQueryOptions.mm in Sources */,
 				BB6B6D741FD567C30070E78F /* WRLDRoutingQueryWaypoint.mm in Sources */,
+				BB8448322018B6B700F86EFC /* WRLDVector3.m in Sources */,
 				D09B2CEC20051AEA00162BCC /* WRLDRouteView.m in Sources */,
 				BB6B6D761FD567D00070E78F /* WRLDRoutingQuery.mm in Sources */,
+				BBFA4A2A2021ED5000124AF1 /* WRLDPickingApiHelpers.mm in Sources */,
 				BB6B6D751FD567C60070E78F /* WRLDRoutingQueryResponse.mm in Sources */,
 				BB6B6D771FD567E00070E78F /* WRLDRoutingService.mm in Sources */,
 				BB6B6D881FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm in Sources */,
 				A89A8FDC1FB5C8230041ABD3 /* WRLDPoiService.mm in Sources */,
 				A88D8E881FB0C4F8009039A1 /* WRLDViewAnchor.m in Sources */,
 				D2960AF01FE82E8400A9C313 /* WRLDMapsceneServiceHelpers.mm in Sources */,
+				BBFA4A222021DB0400124AF1 /* WRLDPickResult.mm in Sources */,
 				6FA013B01FD80FC600D51364 /* WRLDMapsceneStartLocation.mm in Sources */,
 				BB6B6D991FEB76BD0070E78F /* WRLDBuildingContour.mm in Sources */,
+				BBFA4A3B202491F300124AF1 /* WRLDMapFeatureType.m in Sources */,
 				6F96F33B1FE0181700A560FF /* WRLDMapsceneDataSources.m in Sources */,
 				BB6B6DAB1FEB80330070E78F /* WRLDBuildingInformation.mm in Sources */,
 				BB6B6D9F1FEB7B670070E78F /* WRLDBuildingDimensions.mm in Sources */,
@@ -1239,7 +1285,6 @@
 				526F9AC91EC4B92A006F49C4 /* AppDelegate.m in Sources */,
 				526F9ACA1EC4B92A006F49C4 /* AppMapViewDelegate.m in Sources */,
 				526F9ACD1EC4B92A006F49C4 /* main.m in Sources */,
-				BB8448272018A1DB00F86EFC /* WRLDMathApiHelpers.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

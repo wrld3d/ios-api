@@ -5,6 +5,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreGraphics/CGGeometry.h>
 
+#import "WRLDScreenProperties.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
@@ -13,19 +15,21 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WRLDBuildingHighlightOptions : NSObject
 
 /*!
- Sets options to attempt to highlight any building present at the given CLLocationCoordinate2D location.
-
- @param location The location.
+ Instantiate highlight options to attempt to highlight any building present at the given CLLocationCoordinate2D location.
+ @param location  The location.
+ @returns A WRLDBuildingHighlightOptions instance.
  */
-- (void) highlightBuildingAtLocation:(CLLocationCoordinate2D)location;
++ (instancetype) highlightOptionsWithLocation:(CLLocationCoordinate2D)location;
 
 /*!
- Sets options to attempt to highlight any building present at the given screen point for the
+ Instantiate highlight options to attempt to highlight any building present at the given screen point for the
  current map view.
-
  @param screenPoint The screen-space point.
+ @param screenProperties Screen properties from WRLDMapView.
+ @returns A WRLDBuildingHighlightOptions instance.
  */
-- (void) highlightBuildingAtScreenPoint:(CGPoint)screenPoint;
++ (instancetype) highlightOptionsWithScreenPoint:(CGPoint)screenPoint
+                                screenProperties:(WRLDScreenProperties)screenProperties;
 
 /*!
  Sets the color of the building highlight as a UIColor. The default value is black.

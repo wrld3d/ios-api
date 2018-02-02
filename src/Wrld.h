@@ -56,3 +56,7 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDBuildingHighlight.h"
 #import "WRLDBuildingInformation.h"
 #import "WRLDBuildingHighlightOptions.h"
+#import "WRLDMapFeatureType.h"
+#import "WRLDVector3.h"
+#import "WRLDPickResult.h"
+#import "WRLDScreenProperties.h"

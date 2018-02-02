@@ -12,28 +12,47 @@
     UIColor* m_color;
     WRLDBuildingHighlightSelectionMode m_selectionMode;
     Boolean m_shouldCreateView;
+    WRLDScreenProperties m_screenProperties;
 }
 
-- (instancetype) init {
++ (instancetype) highlightOptionsWithLocation:(CLLocationCoordinate2D)location
+{
+    return [[self alloc] initWithLocation:location];
+}
+
++ (instancetype) highlightOptionsWithScreenPoint:(CGPoint)screenPoint
+                                screenProperties:(WRLDScreenProperties)screenProperties;
+{
+    return [[self alloc] initWithScreenPoint:screenPoint
+                            screenProperties:screenProperties];
+}
+
+- (instancetype) initWithLocation:(CLLocationCoordinate2D)location
+{
     self = [super init];
     if (self)
     {
+        m_selectionLocation = location;
+        m_selectionMode = WRLDBuildingHighlightSelectAtLocation;
         m_color = [[UIColor blackColor] colorWithAlphaComponent:1.0];
         m_shouldCreateView = true;
     }
     return self;
 }
 
-- (void) highlightBuildingAtLocation:(CLLocationCoordinate2D)location
+- (instancetype) initWithScreenPoint:(CGPoint)screenPoint
+                    screenProperties:(WRLDScreenProperties)screenProperties
 {
-    m_selectionLocation = location;
-    m_selectionMode = WRLDBuildingHighlightSelectAtLocation;
-}
-
-- (void) highlightBuildingAtScreenPoint:(CGPoint)screenPoint
-{
-    m_selectionScreenPoint = screenPoint;
-    m_selectionMode = WRLDBuildingHighlightSelectAtScreenPoint;
+    self = [super init];
+    if (self)
+    {
+        m_selectionScreenPoint = screenPoint;
+        m_screenProperties = screenProperties;
+        m_selectionMode = WRLDBuildingHighlightSelectAtScreenPoint;
+        m_color = [[UIColor blackColor] colorWithAlphaComponent:1.0];
+        m_shouldCreateView = true;
+    }
+    return self;
 }
 
 - (void) setColor:(UIColor*)color
@@ -69,6 +88,11 @@
 - (Boolean) shouldCreateView
 {
     return m_shouldCreateView;
+}
+
+- (WRLDScreenProperties) screenProperties
+{
+    return m_screenProperties;
 }
 
 @end

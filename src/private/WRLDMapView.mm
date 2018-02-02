@@ -22,6 +22,8 @@
 #import "RoutingQueryResponse.h"
 #import "WRLDRoutingServiceHelpers.h"
 #import "WRLDBuildingHighlight+Private.h"
+#import "WRLDPickResult.h"
+#import "WRLDPickingApiHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -45,6 +47,7 @@
 #include "EegeoMapsceneApi.h"
 #include "MapsceneRequestResponse.h"
 #include "EegeoBuildingsApi.h"
+#include "EegeoPickingApi.h"
 
 #include <string>
 
@@ -256,6 +259,10 @@ const double defaultStartZoomLevel = 8;
     [_apiGestureDelegate bind:self];
 
     _nativeMapView = Eegeo_NEW(WRLDNativeMapView)(self, *m_pApiRunner);
+
+    _screenProperties = WRLDScreenPropertiesMake(screenProperties.GetScreenWidth(),
+                                                 screenProperties.GetScreenHeight(),
+                                                 screenProperties.GetPixelScale());
 }
 
 - (Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions)getPlatformConfigOptions
@@ -760,6 +767,25 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 - (void)removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
 {
     [self removeOverlay: buildingHighlight];
+}
+
+#pragma mark - Feature Picking -
+
+-(WRLDPickResult*)pickFeatureAtScreenPoint:(CGPoint)screenPoint
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtScreenPoint(Eegeo::v2(static_cast<float>(screenPoint.x * _screenProperties.pixelScale),
+                                                                                      static_cast<float>(screenPoint.y * _screenProperties.pixelScale)));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
+}
+
+-(WRLDPickResult*)pickFeatureAtLocation:(CLLocationCoordinate2D)location
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtLatLong(Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
 }
 
 #pragma mark - overlays -
