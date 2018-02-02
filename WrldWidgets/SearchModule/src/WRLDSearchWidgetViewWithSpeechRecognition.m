@@ -42,6 +42,7 @@
 
 -(void) runSearch:(NSString *) queryString
 {
+    [self.wrldSearchWidgetSearchBar setPlaceholder:@"Search the WRLD"];
     [self.wrldSearchWidgetSearchBar setUserInteractionEnabled:YES];
     [super runSearch:queryString];
 }

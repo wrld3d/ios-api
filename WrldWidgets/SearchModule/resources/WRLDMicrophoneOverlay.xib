@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSpeechHandler">
             <connections>
+                <outlet property="wrldMicrophoneIconView" destination="2b9-8Z-uxL" id="gGi-NO-pBm"/>
                 <outlet property="wrldMicrophoneOverlayRootView" destination="gIe-92-dri" id="woN-1S-TYY"/>
             </connections>
         </placeholder>
@@ -43,20 +44,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-8Z-uxL">
-                            <rect key="frame" x="149" y="40" width="78" height="78"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Large_Mic.png" translatesAutoresizingMaskIntoConstraints="NO" id="er0-At-FYZ">
-                                    <rect key="frame" x="11" y="11" width="56" height="56"/>
-                                </imageView>
-                            </subviews>
+                            <rect key="frame" x="155.5" y="56" width="64" height="64"/>
                             <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="78" id="9cX-rE-Gep"/>
-                                <constraint firstItem="er0-At-FYZ" firstAttribute="centerY" secondItem="2b9-8Z-uxL" secondAttribute="centerY" id="SFO-G7-jwX"/>
-                                <constraint firstItem="er0-At-FYZ" firstAttribute="centerX" secondItem="2b9-8Z-uxL" secondAttribute="centerX" id="q7B-Ye-KIh"/>
-                                <constraint firstAttribute="height" constant="78" id="uwh-gq-gQI"/>
+                                <constraint firstAttribute="width" constant="64" id="9cX-rE-Gep"/>
+                                <constraint firstAttribute="height" constant="64" id="uwh-gq-gQI"/>
                             </constraints>
                         </view>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Large_Mic.png" translatesAutoresizingMaskIntoConstraints="NO" id="er0-At-FYZ">
+                            <rect key="frame" x="159" y="60.5" width="56" height="56"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QqG-df-Qab">
                             <rect key="frame" x="124" y="138" width="128" height="30"/>
                             <constraints>
@@ -71,13 +68,35 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="176" id="6GT-q1-0gb"/>
-                        <constraint firstItem="2b9-8Z-uxL" firstAttribute="top" secondItem="kMK-vJ-q44" secondAttribute="bottom" id="MbG-4g-ihF"/>
+                        <constraint firstItem="er0-At-FYZ" firstAttribute="centerX" secondItem="0jw-lE-ITo" secondAttribute="centerX" id="MuT-4N-Ynp"/>
                         <constraint firstItem="2b9-8Z-uxL" firstAttribute="centerX" secondItem="0jw-lE-ITo" secondAttribute="centerX" id="f50-42-m0Z"/>
-                        <constraint firstItem="2b9-8Z-uxL" firstAttribute="centerX" secondItem="kMK-vJ-q44" secondAttribute="centerX" id="gjl-cn-mPY"/>
+                        <constraint firstItem="kMK-vJ-q44" firstAttribute="centerX" secondItem="0jw-lE-ITo" secondAttribute="centerX" id="gjl-cn-mPY"/>
                         <constraint firstItem="QqG-df-Qab" firstAttribute="bottom" secondItem="0jw-lE-ITo" secondAttribute="bottomMargin" id="i83-Nz-f25"/>
+                        <constraint firstItem="er0-At-FYZ" firstAttribute="centerY" secondItem="0jw-lE-ITo" secondAttribute="centerY" id="mmT-2c-zud"/>
                         <constraint firstItem="kMK-vJ-q44" firstAttribute="top" secondItem="0jw-lE-ITo" secondAttribute="topMargin" id="slr-9D-8hW"/>
-                        <constraint firstItem="QqG-df-Qab" firstAttribute="centerX" secondItem="2b9-8Z-uxL" secondAttribute="centerX" id="zhL-jK-F8b"/>
+                        <constraint firstItem="2b9-8Z-uxL" firstAttribute="centerY" secondItem="0jw-lE-ITo" secondAttribute="centerY" id="uMe-Yd-hVw"/>
+                        <constraint firstItem="QqG-df-Qab" firstAttribute="centerX" secondItem="0jw-lE-ITo" secondAttribute="centerX" id="zhL-jK-F8b"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="er0-At-FYZ"/>
+                        </mask>
+                        <mask key="constraints">
+                            <exclude reference="uMe-Yd-hVw"/>
+                            <exclude reference="MuT-4N-Ynp"/>
+                            <exclude reference="mmT-2c-zud"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="subviews">
+                            <include reference="er0-At-FYZ"/>
+                        </mask>
+                        <mask key="constraints">
+                            <include reference="uMe-Yd-hVw"/>
+                            <include reference="MuT-4N-Ynp"/>
+                            <include reference="mmT-2c-zud"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="insideBoundsClickHandler:" destination="-1" eventType="primaryActionTriggered" id="rBI-br-nce"/>
                     </connections>

@@ -101,7 +101,7 @@
 		26CA2C252018DA4100F24EC5 /* WRLDSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */; };
 		26CA2C292018FED000F24EC5 /* WRLDSearchInProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */; };
 		26D4ECBE2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h in Headers */ = {isa = PBXBuildFile; fileRef = 26D4ECBD2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */; };
+		26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.m */; };
 		26D4ECC22021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = 26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */; };
 		26D4ECC6202231E200C86C81 /* Microphone_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = 26D4ECC3202231E000C86C81 /* Microphone_Available.png */; };
 		26D4ECC7202231E200C86C81 /* Microphone_Available@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */; };
@@ -410,7 +410,7 @@
 		26CA2C242018DA4100F24EC5 /* WRLDSearchQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchQuery.m; sourceTree = "<group>"; };
 		26CA2C282018FED000F24EC5 /* WRLDSearchInProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchInProgressCell.xib; sourceTree = "<group>"; };
 		26D4ECBD2021DD7100C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewWithSpeechRecognition.h; sourceTree = "<group>"; };
-		26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewWIthSpeechRecognition.m; sourceTree = "<group>"; };
+		26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewWithSpeechRecognition.m; sourceTree = "<group>"; };
 		26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewSubclass.h; sourceTree = "<group>"; };
 		26D4ECC3202231E000C86C81 /* Microphone_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Microphone_Available.png; sourceTree = "<group>"; };
 		26D4ECC4202231E100C86C81 /* Microphone_Available@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Microphone_Available@3x.png"; sourceTree = "<group>"; };
@@ -668,7 +668,7 @@
 			children = (
 				26327CB72010B9C40081E6F2 /* WRLDSearchWidgetView.m */,
 				26D4ECC12021EE4200C86C81 /* WRLDSearchWidgetViewSubclass.h */,
-				26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m */,
+				26D4ECBF2021DD8900C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.m */,
 				26F9C0F82019EDFA001C8E6B /* WRLDSearchInProgressTableViewCell.h */,
 				26F9C0FC2019F06E001C8E6B /* WRLDSearchInProgressTableViewCell.m */,
 				269A7636201B8B2F00C0A2DE /* WRLDSearchResultFooterTableViewCell.h */,
@@ -1522,7 +1522,7 @@
 				268C2E08201737DB009EB66B /* WRLDSearchResultTableViewController.m in Sources */,
 				268C2DF6201635B3009EB66B /* WRLDSearchResult.mm in Sources */,
 				268C2DEF201634D6009EB66B /* POIServiceSearchProvider.m in Sources */,
-				26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWIthSpeechRecognition.m in Sources */,
+				26D4ECC02021DD8900C86C81 /* WRLDSearchWidgetViewWithSpeechRecognition.m in Sources */,
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
 				268C2E00201645A1009EB66B /* SearchProviders.m in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,

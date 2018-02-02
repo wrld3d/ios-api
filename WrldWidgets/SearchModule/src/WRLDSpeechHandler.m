@@ -1,9 +1,11 @@
 #import <Foundation/Foundation.h>
+#import <Accelerate/Accelerate.h>
 #import "WRLDSpeechHandler.h"
 #import "WRLDSearchWidgetViewSubclass.h"
 
 @interface WRLDSpeechHandler()
 @property (strong, nonatomic) IBOutlet UIView *wrldMicrophoneOverlayRootView;
+@property (strong, nonatomic) IBOutlet UIView *wrldMicrophoneIconView;
 @end
 
 @implementation WRLDSpeechHandler
@@ -16,6 +18,8 @@
     NSTimer * m_speechTimeout;
     BOOL m_wasCancelled;
     WRLDSearchWidgetView * m_searchHandler;
+    CGFloat m_inputVolume;
+    CGRect m_originalIconBounds;
 }
 
 -(instancetype) initWithFrame:(CGRect)frame
@@ -30,8 +34,17 @@
         self.wrldMicrophoneOverlayRootView.frame = self.bounds;
         
         self.hidden = YES;
+        
+        float initialRadius =_wrldMicrophoneIconView.bounds.size.height / 2.0f;
+        self.wrldMicrophoneIconView.layer.cornerRadius = initialRadius + 5;
+        
+        m_originalIconBounds = _wrldMicrophoneIconView.bounds;
     }
     return self;
+}
+
+-(void) animateMicrophoneIcon
+{
 }
 
 -(void) setSearchView:(WRLDSearchWidgetView *) searchHandler
@@ -48,7 +61,7 @@
 
 -(IBAction)insideBoundsClickHandler:(id)sender
 {
-    [self endRecording];
+    //[self endRecording];
 }
 
 -(IBAction)cancelButtonClickHandler:(id)sender
@@ -191,7 +204,27 @@
     
     AVAudioFormat* recordingFormat = [inputNode outputFormatForBus: 0];
     [inputNode installTapOnBus: 0 bufferSize: 1024 format: recordingFormat block:^(AVAudioPCMBuffer *buffer, AVAudioTime *when){
+        UInt32 inNumberFrames = buffer.frameLength;
         [m_recognitionRequest appendAudioPCMBuffer: buffer];
+        Float32* samples = (Float32*)buffer.floatChannelData[0];
+        
+        Float32 avgActivity = 0;
+        
+        
+        vDSP_meamgv((Float32*)samples, 1, &avgActivity, inNumberFrames);
+        
+//        Float32 level_lowpass_trig = 0.3;
+//        avgActivity = (level_lowpass_trig*((avgActivity==0)?-100:20.0*log10f(avgActivity))) + ((1-level_lowpass_trig)*avgActivity) ;
+        
+        m_inputVolume = MAX(0, MIN(10, avgActivity * 1000));
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.3
+                         animations:^{
+                             [self.wrldMicrophoneIconView setBounds:CGRectInset(m_originalIconBounds, -m_inputVolume, -m_inputVolume)];
+                         }];
+        });
+        
     }];
     
     _isRecording = YES;
