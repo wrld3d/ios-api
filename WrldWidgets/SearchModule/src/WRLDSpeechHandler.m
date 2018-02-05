@@ -101,16 +101,20 @@
                     NSLog(@"Authorized");
                     _isAuthorized = YES;
                     m_searchHandler.wrldSearchWidgetSpeechButton.hidden = NO;
+                    [m_searchHandler.voiceButtonWidthConstraint setConstant:32];
                     break;
                 case SFSpeechRecognizerAuthorizationStatusDenied:
                     _isAuthorized = NO;
+                    [m_searchHandler.voiceButtonWidthConstraint setConstant:0];
                     break;
                 case SFSpeechRecognizerAuthorizationStatusNotDetermined:
                     _isAuthorized = NO;
+                    [m_searchHandler.voiceButtonWidthConstraint setConstant:0];
                     NSLog(@"Not Determined");
                     break;
                 case SFSpeechRecognizerAuthorizationStatusRestricted:
                     _isAuthorized = NO;
+                    [m_searchHandler.voiceButtonWidthConstraint setConstant:0];
                     break;
                 default:
                     break;
