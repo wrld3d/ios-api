@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetViewController">
+            <connections>
+                <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
+                <outlet property="resultsHeightConstraint" destination="Ch0-Pu-hmk" id="ugs-bP-EiR"/>
+                <outlet property="resultsTableContainerView" destination="fS6-Uh-JhU" id="jMj-F5-vIi"/>
+                <outlet property="searchBar" destination="nwq-hq-zts" id="3X3-RJ-bFn"/>
+                <outlet property="suggestionsHeightConstraint" destination="5Bv-Sr-MfB" id="kfw-bs-usa"/>
+                <outlet property="view" destination="q5F-mI-7jP" id="QkN-3a-GsU"/>
+                <outlet property="wrldSearchWidgetResultsTableView" destination="URT-uZ-0JQ" id="Lww-La-7ar"/>
+                <outlet property="wrldSearchWidgetSuggestionsTableView" destination="0kP-eT-3ph" id="c4O-DM-OZM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="q5F-mI-7jP" customClass="WRLDSearchWidgetView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
+                            <rect key="frame" x="0.0" y="0.0" width="48" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="MJU-fm-ezz"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" image="Menu_btn.png">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar" customClass="WRLDSearchWidgetSearchBar">
+                            <rect key="frame" x="48" y="10" width="317" height="36"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                            <color key="barTintColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="QOl-si-LR3"/>
+                            </connections>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="6U8-9k-NKP"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="leading" secondItem="Gsy-aj-hKu" secondAttribute="trailing" id="7K7-kT-zzp"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" constant="10" id="ZYT-Od-hQF"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="caj-ko-mtc"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-10" id="eFa-OQ-5Wn"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="-10" id="ml1-GI-YHB"/>
+                        <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="mmO-3q-rZe"/>
+                        <constraint firstAttribute="height" constant="56" id="ndG-A3-qxD"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
+                    <rect key="frame" x="0.0" y="56" width="375" height="400"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="8" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                            <color key="backgroundColor" red="0.94031427556818181" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="separatorColor" red="0.74901960784313726" green="0.85882352941176465" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <color key="sectionIndexBackgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
+                        <constraint firstAttribute="height" constant="400" identifier="Height" id="Ch0-Pu-hmk"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="Kxf-Ks-4jz"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="fS6-Uh-JhU" secondAttribute="top" id="Y0B-iS-tCL"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
+                    </constraints>
+                </view>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="32" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                    <rect key="frame" x="0.0" y="56" width="375" height="256"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="256" id="5Bv-Sr-MfB"/>
+                    </constraints>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="fS6-Uh-JhU" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="8Up-he-zih"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="DHc-jF-m2C"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="EIa-QG-6cw"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="q5F-mI-7jP" secondAttribute="top" id="Jl8-kl-jNr"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="Kcg-e4-fWr"/>
+                <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="dPX-51-niE"/>
+                <constraint firstItem="fS6-Uh-JhU" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="naq-EV-9wh"/>
+                <constraint firstItem="gYl-rC-nwo" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="sP7-kg-2Jl"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="ySO-R5-Gb6"/>
+            </constraints>
+            <connections>
+                <outlet property="menuSubView" destination="Gsy-aj-hKu" id="bLp-0R-4ex"/>
+                <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="P9o-Ru-bCM"/>
+                <outlet property="searchBarSubView" destination="nwq-hq-zts" id="Tgg-aV-HbC"/>
+                <outlet property="suggestionsSubView" destination="0kP-eT-3ph" id="ADr-2a-DFF"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="Menu_btn.png" width="32" height="32"/>
+    </resources>
+</document>

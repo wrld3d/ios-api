@@ -8,6 +8,44 @@
 
 /* Begin PBXBuildFile section */
 		024286941F0C012400D63CCA /* WRLDOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 024286931F0BFFC400D63CCA /* WRLDOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2619A02C202B2FE2002CF191 /* WRLDSearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619A02B202B2FE2002CF191 /* WRLDSearchResultModel.m */; };
+		2619A02E202B2FF2002CF191 /* WRLDSearchResultModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A02D202B2FF2002CF191 /* WRLDSearchResultModel.h */; };
+		2619A034202B5157002CF191 /* WRLDSearchWidgetSearchProviderReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A02F202B5156002CF191 /* WRLDSearchWidgetSearchProviderReference.h */; };
+		2619A035202B5157002CF191 /* WRLDSearchWidgetSuggestionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A030202B5156002CF191 /* WRLDSearchWidgetSuggestionProvider.h */; };
+		2619A036202B5157002CF191 /* WRLDSearchWidgetResultsReadyDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A031202B5156002CF191 /* WRLDSearchWidgetResultsReadyDelegate.h */; };
+		2619A037202B5157002CF191 /* WRLDSearchWidgetSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A032202B5156002CF191 /* WRLDSearchWidgetSearchProvider.h */; };
+		2619A038202B5157002CF191 /* WRLDSearchWidgetSuggestionProviderReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A033202B5156002CF191 /* WRLDSearchWidgetSuggestionProviderReference.h */; };
+		2693DEB1202AFEA4000F91CF /* WRLDSearchWidget.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEAB202AFEA4000F91CF /* WRLDSearchWidget.xib */; };
+		2693DED1202AFFFB000F91CF /* Menu_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEB6202AFFF9000F91CF /* Menu_btn.png */; };
+		2693DED2202AFFFB000F91CF /* Menu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEB7202AFFF9000F91CF /* Menu_btn@2x.png */; };
+		2693DED3202AFFFB000F91CF /* Search_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEB8202AFFF9000F91CF /* Search_btn@2x.png */; };
+		2693DED4202AFFFB000F91CF /* Microphone_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEB9202AFFFA000F91CF /* Microphone_Available.png */; };
+		2693DED5202AFFFB000F91CF /* Back_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBA202AFFFA000F91CF /* Back_btn@2x.png */; };
+		2693DED6202AFFFB000F91CF /* MoreResults_butn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBB202AFFFA000F91CF /* MoreResults_butn@3x.png */; };
+		2693DED7202AFFFB000F91CF /* Search_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBC202AFFFA000F91CF /* Search_btn.png */; };
+		2693DED8202AFFFB000F91CF /* MoreResults_butn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBD202AFFFA000F91CF /* MoreResults_butn.png */; };
+		2693DED9202AFFFB000F91CF /* DeleteSearch_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBE202AFFFA000F91CF /* DeleteSearch_btn@2x.png */; };
+		2693DEDA202AFFFB000F91CF /* Expander@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEBF202AFFFA000F91CF /* Expander@3x.png */; };
+		2693DEDB202AFFFB000F91CF /* GradientShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC0202AFFFA000F91CF /* GradientShadow@2x.png */; };
+		2693DEDC202AFFFB000F91CF /* Microphone_Available@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC1202AFFFA000F91CF /* Microphone_Available@3x.png */; };
+		2693DEDD202AFFFB000F91CF /* MoreResults_butn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC2202AFFFA000F91CF /* MoreResults_butn@2x.png */; };
+		2693DEDE202AFFFB000F91CF /* Expander@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC3202AFFFA000F91CF /* Expander@2x.png */; };
+		2693DEE2202AFFFB000F91CF /* Search_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC7202AFFFB000F91CF /* Search_btn@3x.png */; };
+		2693DEE3202AFFFB000F91CF /* Back_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC8202AFFFB000F91CF /* Back_btn@3x.png */; };
+		2693DEE4202AFFFB000F91CF /* Microphone_Available@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DEC9202AFFFB000F91CF /* Microphone_Available@2x.png */; };
+		2693DEE5202AFFFB000F91CF /* DeleteSearch_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECA202AFFFB000F91CF /* DeleteSearch_btn@3x.png */; };
+		2693DEE6202AFFFB000F91CF /* Back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECB202AFFFB000F91CF /* Back_btn.png */; };
+		2693DEE7202AFFFB000F91CF /* Menu_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECC202AFFFB000F91CF /* Menu_btn@3x.png */; };
+		2693DEE8202AFFFB000F91CF /* DeleteSearch_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECD202AFFFB000F91CF /* DeleteSearch_btn.png */; };
+		2693DEE9202AFFFB000F91CF /* GradientShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECE202AFFFB000F91CF /* GradientShadow.png */; };
+		2693DEEA202AFFFB000F91CF /* Expander.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DECF202AFFFB000F91CF /* Expander.png */; };
+		2693DEEB202AFFFB000F91CF /* GradientShadow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2693DED0202AFFFB000F91CF /* GradientShadow@3x.png */; };
+		2693DEF7202B0007000F91CF /* WRLDSearchWidgetViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2693DF13202B1045000F91CF /* WRLDSearchWidgetView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2693DF11202B1045000F91CF /* WRLDSearchWidgetView.h */; };
+		2693DF14202B1045000F91CF /* WRLDSearchWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2693DF12202B1045000F91CF /* WRLDSearchWidgetView.m */; };
+		2693DF16202B13BC000F91CF /* WRLDSearchWidgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2693DF15202B13BC000F91CF /* WRLDSearchWidgetViewController.m */; };
+		2693DF18202B1734000F91CF /* WRLDSearchWidgetSearchBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 2693DF17202B1734000F91CF /* WRLDSearchWidgetSearchBar.h */; };
+		2693DF1A202B1745000F91CF /* WRLDSearchWidgetSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2693DF19202B1745000F91CF /* WRLDSearchWidgetSearchBar.m */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -217,6 +255,44 @@
 
 /* Begin PBXFileReference section */
 		024286931F0BFFC400D63CCA /* WRLDOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDOverlay.h; sourceTree = "<group>"; };
+		2619A02B202B2FE2002CF191 /* WRLDSearchResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchResultModel.m; sourceTree = "<group>"; };
+		2619A02D202B2FF2002CF191 /* WRLDSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchResultModel.h; sourceTree = "<group>"; };
+		2619A02F202B5156002CF191 /* WRLDSearchWidgetSearchProviderReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSearchProviderReference.h; sourceTree = "<group>"; };
+		2619A030202B5156002CF191 /* WRLDSearchWidgetSuggestionProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSuggestionProvider.h; sourceTree = "<group>"; };
+		2619A031202B5156002CF191 /* WRLDSearchWidgetResultsReadyDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetResultsReadyDelegate.h; sourceTree = "<group>"; };
+		2619A032202B5156002CF191 /* WRLDSearchWidgetSearchProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSearchProvider.h; sourceTree = "<group>"; };
+		2619A033202B5156002CF191 /* WRLDSearchWidgetSuggestionProviderReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSuggestionProviderReference.h; sourceTree = "<group>"; };
+		2693DEAB202AFEA4000F91CF /* WRLDSearchWidget.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchWidget.xib; sourceTree = "<group>"; };
+		2693DEB6202AFFF9000F91CF /* Menu_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu_btn.png; sourceTree = "<group>"; };
+		2693DEB7202AFFF9000F91CF /* Menu_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_btn@2x.png"; sourceTree = "<group>"; };
+		2693DEB8202AFFF9000F91CF /* Search_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search_btn@2x.png"; sourceTree = "<group>"; };
+		2693DEB9202AFFFA000F91CF /* Microphone_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Microphone_Available.png; sourceTree = "<group>"; };
+		2693DEBA202AFFFA000F91CF /* Back_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back_btn@2x.png"; sourceTree = "<group>"; };
+		2693DEBB202AFFFA000F91CF /* MoreResults_butn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreResults_butn@3x.png"; sourceTree = "<group>"; };
+		2693DEBC202AFFFA000F91CF /* Search_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search_btn.png; sourceTree = "<group>"; };
+		2693DEBD202AFFFA000F91CF /* MoreResults_butn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreResults_butn.png; sourceTree = "<group>"; };
+		2693DEBE202AFFFA000F91CF /* DeleteSearch_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSearch_btn@2x.png"; sourceTree = "<group>"; };
+		2693DEBF202AFFFA000F91CF /* Expander@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expander@3x.png"; sourceTree = "<group>"; };
+		2693DEC0202AFFFA000F91CF /* GradientShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GradientShadow@2x.png"; sourceTree = "<group>"; };
+		2693DEC1202AFFFA000F91CF /* Microphone_Available@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Microphone_Available@3x.png"; sourceTree = "<group>"; };
+		2693DEC2202AFFFA000F91CF /* MoreResults_butn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoreResults_butn@2x.png"; sourceTree = "<group>"; };
+		2693DEC3202AFFFA000F91CF /* Expander@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expander@2x.png"; sourceTree = "<group>"; };
+		2693DEC7202AFFFB000F91CF /* Search_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search_btn@3x.png"; sourceTree = "<group>"; };
+		2693DEC8202AFFFB000F91CF /* Back_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back_btn@3x.png"; sourceTree = "<group>"; };
+		2693DEC9202AFFFB000F91CF /* Microphone_Available@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Microphone_Available@2x.png"; sourceTree = "<group>"; };
+		2693DECA202AFFFB000F91CF /* DeleteSearch_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSearch_btn@3x.png"; sourceTree = "<group>"; };
+		2693DECB202AFFFB000F91CF /* Back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_btn.png; sourceTree = "<group>"; };
+		2693DECC202AFFFB000F91CF /* Menu_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_btn@3x.png"; sourceTree = "<group>"; };
+		2693DECD202AFFFB000F91CF /* DeleteSearch_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteSearch_btn.png; sourceTree = "<group>"; };
+		2693DECE202AFFFB000F91CF /* GradientShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GradientShadow.png; sourceTree = "<group>"; };
+		2693DECF202AFFFB000F91CF /* Expander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Expander.png; sourceTree = "<group>"; };
+		2693DED0202AFFFB000F91CF /* GradientShadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GradientShadow@3x.png"; sourceTree = "<group>"; };
+		2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetViewController.h; sourceTree = "<group>"; };
+		2693DF11202B1045000F91CF /* WRLDSearchWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetView.h; sourceTree = "<group>"; };
+		2693DF12202B1045000F91CF /* WRLDSearchWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetView.m; sourceTree = "<group>"; };
+		2693DF15202B13BC000F91CF /* WRLDSearchWidgetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewController.m; sourceTree = "<group>"; };
+		2693DF17202B1734000F91CF /* WRLDSearchWidgetSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetSearchBar.h; sourceTree = "<group>"; };
+		2693DF19202B1745000F91CF /* WRLDSearchWidgetSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetSearchBar.m; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -433,6 +509,99 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2693DEA6202AFDC4000F91CF /* SearchWidget */ = {
+			isa = PBXGroup;
+			children = (
+				2693DEA8202AFE5A000F91CF /* images */,
+				2693DEA9202AFE79000F91CF /* layouts */,
+				2693DEFA202B0315000F91CF /* private */,
+				2693DEA7202AFDD5000F91CF /* public */,
+			);
+			path = SearchWidget;
+			sourceTree = "<group>";
+		};
+		2693DEA7202AFDD5000F91CF /* public */ = {
+			isa = PBXGroup;
+			children = (
+				2619A031202B5156002CF191 /* WRLDSearchWidgetResultsReadyDelegate.h */,
+				2619A032202B5156002CF191 /* WRLDSearchWidgetSearchProvider.h */,
+				2619A02F202B5156002CF191 /* WRLDSearchWidgetSearchProviderReference.h */,
+				2619A030202B5156002CF191 /* WRLDSearchWidgetSuggestionProvider.h */,
+				2619A033202B5156002CF191 /* WRLDSearchWidgetSuggestionProviderReference.h */,
+				2619A02D202B2FF2002CF191 /* WRLDSearchResultModel.h */,
+				2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */,
+			);
+			path = public;
+			sourceTree = "<group>";
+		};
+		2693DEA8202AFE5A000F91CF /* images */ = {
+			isa = PBXGroup;
+			children = (
+				2693DECB202AFFFB000F91CF /* Back_btn.png */,
+				2693DEBA202AFFFA000F91CF /* Back_btn@2x.png */,
+				2693DEC8202AFFFB000F91CF /* Back_btn@3x.png */,
+				2693DECD202AFFFB000F91CF /* DeleteSearch_btn.png */,
+				2693DEBE202AFFFA000F91CF /* DeleteSearch_btn@2x.png */,
+				2693DECA202AFFFB000F91CF /* DeleteSearch_btn@3x.png */,
+				2693DECF202AFFFB000F91CF /* Expander.png */,
+				2693DEC3202AFFFA000F91CF /* Expander@2x.png */,
+				2693DEBF202AFFFA000F91CF /* Expander@3x.png */,
+				2693DECE202AFFFB000F91CF /* GradientShadow.png */,
+				2693DEC0202AFFFA000F91CF /* GradientShadow@2x.png */,
+				2693DED0202AFFFB000F91CF /* GradientShadow@3x.png */,
+				2693DEB6202AFFF9000F91CF /* Menu_btn.png */,
+				2693DEB7202AFFF9000F91CF /* Menu_btn@2x.png */,
+				2693DECC202AFFFB000F91CF /* Menu_btn@3x.png */,
+				2693DEB9202AFFFA000F91CF /* Microphone_Available.png */,
+				2693DEC9202AFFFB000F91CF /* Microphone_Available@2x.png */,
+				2693DEC1202AFFFA000F91CF /* Microphone_Available@3x.png */,
+				2693DEBD202AFFFA000F91CF /* MoreResults_butn.png */,
+				2693DEC2202AFFFA000F91CF /* MoreResults_butn@2x.png */,
+				2693DEBB202AFFFA000F91CF /* MoreResults_butn@3x.png */,
+				2693DEBC202AFFFA000F91CF /* Search_btn.png */,
+				2693DEB8202AFFF9000F91CF /* Search_btn@2x.png */,
+				2693DEC7202AFFFB000F91CF /* Search_btn@3x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		2693DEA9202AFE79000F91CF /* layouts */ = {
+			isa = PBXGroup;
+			children = (
+				2693DEAB202AFEA4000F91CF /* WRLDSearchWidget.xib */,
+			);
+			path = layouts;
+			sourceTree = "<group>";
+		};
+		2693DEFA202B0315000F91CF /* private */ = {
+			isa = PBXGroup;
+			children = (
+				2693DF0C202B0428000F91CF /* model */,
+				2693DF0B202B0423000F91CF /* view */,
+				2693DF15202B13BC000F91CF /* WRLDSearchWidgetViewController.m */,
+			);
+			path = private;
+			sourceTree = "<group>";
+		};
+		2693DF0B202B0423000F91CF /* view */ = {
+			isa = PBXGroup;
+			children = (
+				2693DF11202B1045000F91CF /* WRLDSearchWidgetView.h */,
+				2693DF12202B1045000F91CF /* WRLDSearchWidgetView.m */,
+				2693DF17202B1734000F91CF /* WRLDSearchWidgetSearchBar.h */,
+				2693DF19202B1745000F91CF /* WRLDSearchWidgetSearchBar.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		2693DF0C202B0428000F91CF /* model */ = {
+			isa = PBXGroup;
+			children = (
+				2619A02B202B2FE2002CF191 /* WRLDSearchResultModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		26F70EBED6F5A479EFCF6860 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +624,7 @@
 		2CB2C53F1EC1D76400C0B401 /* WrldWidgets */ = {
 			isa = PBXGroup;
 			children = (
+				2693DEA6202AFDC4000F91CF /* SearchWidget */,
 				2CB2C56B1EC1D93F00C0B401 /* IndoorControl */,
 				2CB2C5401EC1D76400C0B401 /* WrldWidgets.h */,
 				2CB2C5411EC1D76400C0B401 /* Info.plist */,
@@ -759,17 +929,26 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2619A038202B5157002CF191 /* WRLDSearchWidgetSuggestionProviderReference.h in Headers */,
 				2CB2C5B21EC1D93F00C0B401 /* UIColors.h in Headers */,
 				2CB2C5B61EC1D93F00C0B401 /* UIView+TouchExclusivity.h in Headers */,
+				2619A02E202B2FF2002CF191 /* WRLDSearchResultModel.h in Headers */,
 				2CB2C5AE1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.h in Headers */,
 				2CB2C5B81EC1D93F00C0B401 /* WRLDIndoorControlView.h in Headers */,
 				2CB2C5A91EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.h in Headers */,
+				2693DF13202B1045000F91CF /* WRLDSearchWidgetView.h in Headers */,
+				2619A036202B5157002CF191 /* WRLDSearchWidgetResultsReadyDelegate.h in Headers */,
 				2CB2C5B41EC1D93F00C0B401 /* UIHelpers.h in Headers */,
 				2CB2C5AB1EC1D93F00C0B401 /* IndoorControl.h in Headers */,
 				2CB2C5A71EC1D93F00C0B401 /* ImageHelpers.h in Headers */,
+				2619A035202B5157002CF191 /* WRLDSearchWidgetSuggestionProvider.h in Headers */,
+				2619A034202B5157002CF191 /* WRLDSearchWidgetSearchProviderReference.h in Headers */,
 				2CB2C5AD1EC1D93F00C0B401 /* IndoorControlDelegate.h in Headers */,
+				2693DEF7202B0007000F91CF /* WRLDSearchWidgetViewController.h in Headers */,
 				2CB2C5B01EC1D93F00C0B401 /* UIButton+DefaultStates.h in Headers */,
+				2619A037202B5157002CF191 /* WRLDSearchWidgetSearchProvider.h in Headers */,
 				2CB2C5421EC1D76400C0B401 /* WrldWidgets.h in Headers */,
+				2693DF18202B1734000F91CF /* WRLDSearchWidgetSearchBar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,7 +1145,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2693DED9202AFFFB000F91CF /* DeleteSearch_btn@2x.png in Resources */,
+				2693DEEB202AFFFB000F91CF /* GradientShadow@3x.png in Resources */,
+				2693DEE5202AFFFB000F91CF /* DeleteSearch_btn@3x.png in Resources */,
+				2693DED7202AFFFB000F91CF /* Search_btn.png in Resources */,
+				2693DEDB202AFFFB000F91CF /* GradientShadow@2x.png in Resources */,
+				2693DED5202AFFFB000F91CF /* Back_btn@2x.png in Resources */,
+				2693DED4202AFFFB000F91CF /* Microphone_Available.png in Resources */,
+				2693DED6202AFFFB000F91CF /* MoreResults_butn@3x.png in Resources */,
+				2693DEEA202AFFFB000F91CF /* Expander.png in Resources */,
+				2693DEE7202AFFFB000F91CF /* Menu_btn@3x.png in Resources */,
+				2693DEDA202AFFFB000F91CF /* Expander@3x.png in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,
+				2693DEE8202AFFFB000F91CF /* DeleteSearch_btn.png in Resources */,
+				2693DED8202AFFFB000F91CF /* MoreResults_butn.png in Resources */,
+				2693DEDE202AFFFB000F91CF /* Expander@2x.png in Resources */,
+				2693DEDC202AFFFB000F91CF /* Microphone_Available@3x.png in Resources */,
+				2693DEB1202AFEA4000F91CF /* WRLDSearchWidget.xib in Resources */,
+				2693DEE3202AFFFB000F91CF /* Back_btn@3x.png in Resources */,
+				2693DEDD202AFFFB000F91CF /* MoreResults_butn@2x.png in Resources */,
+				2693DED2202AFFFB000F91CF /* Menu_btn@2x.png in Resources */,
+				2693DEE9202AFFFB000F91CF /* GradientShadow.png in Resources */,
+				2693DEE6202AFFFB000F91CF /* Back_btn.png in Resources */,
+				2693DED3202AFFFB000F91CF /* Search_btn@2x.png in Resources */,
+				2693DEE4202AFFFB000F91CF /* Microphone_Available@2x.png in Resources */,
+				2693DEE2202AFFFB000F91CF /* Search_btn@3x.png in Resources */,
+				2693DED1202AFFFB000F91CF /* Menu_btn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,10 +1255,11 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WrldSdk-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1065,12 +1270,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CB2C5AC1EC1D93F00C0B401 /* IndoorControl.mm in Sources */,
+				2693DF1A202B1745000F91CF /* WRLDSearchWidgetSearchBar.m in Sources */,
 				2CB2C5B91EC1D93F00C0B401 /* WRLDIndoorControlView.m in Sources */,
 				2CB2C5B31EC1D93F00C0B401 /* UIColors.mm in Sources */,
 				2CB2C5B11EC1D93F00C0B401 /* UIButton+DefaultStates.mm in Sources */,
+				2693DF14202B1045000F91CF /* WRLDSearchWidgetView.m in Sources */,
 				2CB2C5AA1EC1D93F00C0B401 /* ImmediatePanGestureRecognizer.mm in Sources */,
 				2CB2C5B71EC1D93F00C0B401 /* UIView+TouchExclusivity.m in Sources */,
+				2619A02C202B2FE2002CF191 /* WRLDSearchResultModel.m in Sources */,
 				2CB2C5A81EC1D93F00C0B401 /* ImageHelpers.mm in Sources */,
+				2693DF16202B13BC000F91CF /* WRLDSearchWidgetViewController.m in Sources */,
 				2CB2C5AF1EC1D93F00C0B401 /* InteriorsExplorerFloorItemView.mm in Sources */,
 				2CB2C5B51EC1D93F00C0B401 /* UIHelpers.mm in Sources */,
 			);
