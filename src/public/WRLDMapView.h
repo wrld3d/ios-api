@@ -17,6 +17,9 @@
 #import "WRLDPoiService.h"
 #import "WRLDMapsceneService.h"
 #import "WRLDRoutingService.h"
+#import "WRLDBuildingHighlight.h"
+#import "WRLDBuildingHighlightOptions.h"
+#import "WRLDPickResult.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -236,6 +239,46 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 - (void)removePolygons:(NSArray <WRLDPolygon *> *)polygons;
 
 
+#pragma mark - building highlights -
+
+/*! @name Building highlights */
+
+/*!
+ Add a building highlight to the map.
+ @param buildingHighlight The <WRLDBuildingHighlight> object to add to the map.
+ */
+- (void)addBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
+
+/*!
+ Remove a WRLDBuildingHighlight from the map and destroy it.
+ @param buildingHighlight The <WRLDBuildingHighlight> object to remove from the map.
+ */
+- (void)removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight;
+
+#pragma mark - Feature Picking -
+
+/*! @name Feature Picking */
+
+/*!
+ Attempts to find a map feature at the given screen point. A ray is constructed from the
+ camera location and passing through the screen point. The first intersection of the ray with
+ any of the currently streamed map features is found, if any.
+ See WRLDPickResult for details of information returned.
+
+ @param screenPoint A screen space point, in units of pixels with the origin at the top left
+ *                  corner of the screen.
+ @return Information about the map feature intersected with, if any.
+ */
+- (WRLDPickResult*) pickFeatureAtScreenPoint:(CGPoint)screenPoint;
+
+/*!
+ Attempts to find a map feature at the given CLLocationCoordinate2D location.
+ See WRLDPickResult for details of information returned.
+
+ @param location A CLLocationCoordinate2D coordinate.
+ @return Information about the map feature intersected with, if any.
+ */
+- (WRLDPickResult*) pickFeatureAtLocation:(CLLocationCoordinate2D)location;
 
 #pragma mark - overlays -
 
