@@ -44,7 +44,6 @@ std::vector<CLLocationCoordinate2D> CreateWRLDBuildingContourPoints (const std::
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(selectionLocation.latitude, selectionLocation.longitude);
 
     CGPoint selectionScreenPoint = buildingHighlightOptions.selectionScreenPoint;
-    WRLDScreenProperties screenProperties = buildingHighlightOptions.screenProperties;
 
     Eegeo::BuildingHighlights::BuildingHighlightSelectionMode::Type type = [WRLDBuildingApiHelpers ToBuildingHighlightSelectionMode:buildingHighlightOptions.selectionMode];
 
@@ -52,7 +51,7 @@ std::vector<CLLocationCoordinate2D> CreateWRLDBuildingContourPoints (const std::
     {
         type,
         {latLng.GetLatitude(), latLng.GetLongitude()},
-        {static_cast<float>(selectionScreenPoint.x * screenProperties.pixelScale),static_cast<float>(selectionScreenPoint.y * screenProperties.pixelScale)},
+        {static_cast<float>(selectionScreenPoint.x),static_cast<float>(selectionScreenPoint.y)},
         [WRLDMathApiHelpers getEegeoColor:buildingHighlightOptions.color],
         static_cast<bool>(buildingHighlightOptions.shouldCreateView)
     };

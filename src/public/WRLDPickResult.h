@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) WRLDCoordinateWithAltitude intersectionPoint;
 
 /*!
- The surface normal of the map feature intersected with, if any, in ECEF coordinates.
+ The surface normal of the map feature intersected with, if any, in ECEF space.
  */
 @property (nonatomic, readonly) WRLDVector3 intersectionSurfaceNormal;
 

@@ -12,7 +12,6 @@
     UIColor* m_color;
     WRLDBuildingHighlightSelectionMode m_selectionMode;
     Boolean m_shouldCreateView;
-    WRLDScreenProperties m_screenProperties;
 }
 
 + (instancetype) highlightOptionsWithLocation:(CLLocationCoordinate2D)location
@@ -21,10 +20,8 @@
 }
 
 + (instancetype) highlightOptionsWithScreenPoint:(CGPoint)screenPoint
-                                screenProperties:(WRLDScreenProperties)screenProperties;
 {
-    return [[self alloc] initWithScreenPoint:screenPoint
-                            screenProperties:screenProperties];
+    return [[self alloc] initWithScreenPoint:screenPoint];
 }
 
 - (instancetype) initWithLocation:(CLLocationCoordinate2D)location
@@ -41,13 +38,11 @@
 }
 
 - (instancetype) initWithScreenPoint:(CGPoint)screenPoint
-                    screenProperties:(WRLDScreenProperties)screenProperties
 {
     self = [super init];
     if (self)
     {
         m_selectionScreenPoint = screenPoint;
-        m_screenProperties = screenProperties;
         m_selectionMode = WRLDBuildingHighlightSelectAtScreenPoint;
         m_color = [[UIColor blackColor] colorWithAlphaComponent:1.0];
         m_shouldCreateView = true;
@@ -88,11 +83,6 @@
 - (Boolean) shouldCreateView
 {
     return m_shouldCreateView;
-}
-
-- (WRLDScreenProperties) screenProperties
-{
-    return m_screenProperties;
 }
 
 @end

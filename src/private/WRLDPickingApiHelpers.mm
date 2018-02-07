@@ -1,6 +1,7 @@
 #include "WRLDPickingApiHelpers.h"
 
 #import "WRLDPickResult+Private.h"
+#import "WRLDVector3+Private.h"
 
 @interface WRLDPickingApiHelpers ()
 
@@ -59,7 +60,9 @@
     WRLDPickResult* pickResult = [[WRLDPickResult alloc] initWithFeatureFound:(Boolean)withPickResult.Found()
                                                                mapFeatureType:[WRLDPickingApiHelpers ToWRLDMapFeatureType:withPickResult.MapFeatureType()]
                                                             intersectionPoint:WRLDCoordinateWithAltitudeMake(coordinate, latLongAlt.GetAltitude())
-                                                    intersectionSurfaceNormal:WRLDVector3Make(surfaceNormal.GetX(), surfaceNormal.GetY(), surfaceNormal.GetZ())];
+                                                    intersectionSurfaceNormal:WRLDVector3Make(surfaceNormal.GetX(),
+                                                                                              surfaceNormal.GetY(),
+                                                                                              surfaceNormal.GetZ())];
 
     return pickResult;
 }

@@ -20,7 +20,6 @@
 #import "WRLDBuildingHighlight.h"
 #import "WRLDBuildingHighlightOptions.h"
 #import "WRLDPickResult.h"
-#import "WRLDScreenProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -82,9 +81,6 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 
 /// The <WRLDMapCamera> represents the current view of the map.
 @property (nonatomic, copy) WRLDMapCamera *camera;
-
-/// The screen properties
-@property (nonatomic, readonly) WRLDScreenProperties screenProperties;
 
 
 /*! @name View methods */

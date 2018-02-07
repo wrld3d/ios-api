@@ -3,6 +3,8 @@
 
 #import "WRLDApi.h"
 #import "WRLDCoordinateWithAltitude.h"
+#import "WRLDTouchTapInfo.h"
+#import "WRLDTouchTapInfo+Private.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDIndoorMap+Private.h"
 #import "WRLDNativeMapView.h"
@@ -259,10 +261,6 @@ const double defaultStartZoomLevel = 8;
     [_apiGestureDelegate bind:self];
 
     _nativeMapView = Eegeo_NEW(WRLDNativeMapView)(self, *m_pApiRunner);
-
-    _screenProperties = WRLDScreenPropertiesMake(screenProperties.GetScreenWidth(),
-                                                 screenProperties.GetScreenHeight(),
-                                                 screenProperties.GetPixelScale());
 }
 
 - (Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions)getPlatformConfigOptions
@@ -774,8 +772,8 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 -(WRLDPickResult*)pickFeatureAtScreenPoint:(CGPoint)screenPoint
 {
     Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
-    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtScreenPoint(Eegeo::v2(static_cast<float>(screenPoint.x * _screenProperties.pixelScale),
-                                                                                      static_cast<float>(screenPoint.y * _screenProperties.pixelScale)));
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtScreenPoint(Eegeo::v2(static_cast<float>(screenPoint.x),
+                                                                                      static_cast<float>(screenPoint.y)));
 
     return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
 }
@@ -1001,7 +999,10 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 
 -(void)notifyTouchTapped:(CGPoint)point
 {
-    if ([self.delegate respondsToSelector:@selector(mapView:didTapMap:)])
+    Boolean respondsToDidTapMap = [self.delegate respondsToSelector:@selector(mapView:didTapMap:)];
+    Boolean respondsToDidTapView = [self.delegate respondsToSelector:@selector(mapView:didTapView:)];
+
+    if (respondsToDidTapMap || respondsToDidTapView)
     {
         Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
         
@@ -1013,8 +1014,18 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         if (success)
         {
             WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
-            
-            [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+
+            if (respondsToDidTapMap)
+            {
+                [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+            }
+
+            if (respondsToDidTapView)
+            {
+                WRLDTouchTapInfo tapInfo = WRLDTouchTapInfoMake(point, coordinateWithAltitude);
+
+                [self.delegate mapView:self didTapView:tapInfo];
+            }
         }
     }
 }

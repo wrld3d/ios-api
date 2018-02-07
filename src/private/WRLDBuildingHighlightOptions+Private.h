@@ -2,7 +2,6 @@
 
 #import "WRLDBuildingHighlightOptions.h"
 #import "WRLDBuildingHighlightSelectionMode.h"
-#import "WRLDScreenProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -12,8 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype) initWithLocation:(CLLocationCoordinate2D)location;
 
-- (instancetype) initWithScreenPoint:(CGPoint)screenPoint
-                    screenProperties:(WRLDScreenProperties)screenProperties;
+- (instancetype) initWithScreenPoint:(CGPoint)screenPoint;
 
 - (WRLDBuildingHighlightSelectionMode) selectionMode;
 
@@ -24,8 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIColor*) color;
 
 - (Boolean) shouldCreateView;
-
-- (WRLDScreenProperties) screenProperties;
 
 @end
 

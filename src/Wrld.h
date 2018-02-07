@@ -59,4 +59,4 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDMapFeatureType.h"
 #import "WRLDVector3.h"
 #import "WRLDPickResult.h"
-#import "WRLDScreenProperties.h"
+#import "WRLDTouchTapInfo.h"

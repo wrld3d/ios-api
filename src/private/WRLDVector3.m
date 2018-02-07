@@ -1,6 +1,7 @@
 #import "WRLDVector3.h"
+#import "WRLDVector3+Private.h"
 
-WRLDVector3 WRLDVector3Make(float x, float y, float z)
+WRLDVector3 WRLDVector3Make(CGFloat x, CGFloat y, CGFloat z)
 {
     WRLDVector3 vector3;
     vector3.x = x;
