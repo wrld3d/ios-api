@@ -24,6 +24,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_poiSearchCompletedHandler(this, &WRLDNativeMapView::OnPoiSearchCompleted)
 , m_mapsceneCompletedHandler(this, &WRLDNativeMapView::OnMapsceneLoadCompleted)
 , m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
+, m_buildingInformationReceivedHandler(this, &WRLDNativeMapView::OnBuildingInformationReceived)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -36,12 +37,14 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetPoiApi().RegisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetMapsceneApi().RegisterMapsceneRequestCompletedCallback(m_mapsceneCompletedHandler);
     mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
+    mapApi.GetBuildingsApi().RegisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
+    mapApi.GetBuildingsApi().UnregisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
     mapApi.GetRoutingApi().UnregisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetPoiApi().UnregisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
@@ -117,6 +120,11 @@ void WRLDNativeMapView::OnMapsceneLoadCompleted(const Eegeo::Mapscenes::Mapscene
 void WRLDNativeMapView::OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse)
 {
     [m_mapView notifyRoutingQueryCompleted:routingQueryResponse];
+}
+
+void WRLDNativeMapView::OnBuildingInformationReceived(const Eegeo::BuildingHighlights::BuildingHighlightId& buildingHighlightId)
+{
+    [m_mapView notifyBuildingInformationReceived:buildingHighlightId];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()

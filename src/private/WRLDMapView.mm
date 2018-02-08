@@ -3,6 +3,8 @@
 
 #import "WRLDApi.h"
 #import "WRLDCoordinateWithAltitude.h"
+#import "WRLDTouchTapInfo.h"
+#import "WRLDTouchTapInfo+Private.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDIndoorMap+Private.h"
 #import "WRLDNativeMapView.h"
@@ -21,6 +23,9 @@
 #import "WRLDRoutingQueryResponse.h"
 #import "RoutingQueryResponse.h"
 #import "WRLDRoutingServiceHelpers.h"
+#import "WRLDBuildingHighlight+Private.h"
+#import "WRLDPickResult.h"
+#import "WRLDPickingApiHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -43,6 +48,8 @@
 #include "WRLDMapView+Private.h"
 #include "EegeoMapsceneApi.h"
 #include "MapsceneRequestResponse.h"
+#include "EegeoBuildingsApi.h"
+#include "EegeoPickingApi.h"
 
 #include <string>
 
@@ -748,6 +755,37 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     }
 }
 
+#pragma mark - building highlights -
+
+- (void)addBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
+{
+    [self addOverlay:buildingHighlight];
+}
+
+- (void)removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
+{
+    [self removeOverlay: buildingHighlight];
+}
+
+#pragma mark - Feature Picking -
+
+-(WRLDPickResult*)pickFeatureAtScreenPoint:(CGPoint)screenPoint
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtScreenPoint(Eegeo::v2(static_cast<float>(screenPoint.x),
+                                                                                      static_cast<float>(screenPoint.y)));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
+}
+
+-(WRLDPickResult*)pickFeatureAtLocation:(CLLocationCoordinate2D)location
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtLatLong(Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
+}
+
 #pragma mark - overlays -
 
 - (void) addOverlay:(NSObject<WRLDOverlay>*) overlay
@@ -961,7 +999,10 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 
 -(void)notifyTouchTapped:(CGPoint)point
 {
-    if ([self.delegate respondsToSelector:@selector(mapView:didTapMap:)])
+    Boolean respondsToDidTapMap = [self.delegate respondsToSelector:@selector(mapView:didTapMap:)];
+    Boolean respondsToDidTapView = [self.delegate respondsToSelector:@selector(mapView:didTapView:)];
+
+    if (respondsToDidTapMap || respondsToDidTapView)
     {
         Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
         
@@ -973,8 +1014,18 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         if (success)
         {
             WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
-            
-            [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+
+            if (respondsToDidTapMap)
+            {
+                [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+            }
+
+            if (respondsToDidTapView)
+            {
+                WRLDTouchTapInfo tapInfo = WRLDTouchTapInfoMake(point, coordinateWithAltitude);
+
+                [self.delegate mapView:self didTapView:tapInfo];
+            }
         }
     }
 }
@@ -1109,6 +1160,34 @@ template<typename T> inline T* safe_cast(id instance)
     WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
     [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
+}
+
+- (void)notifyBuildingInformationReceived:(int)buildingHighlightId
+{
+    WRLDOverlayId overlayId;
+    overlayId.overlayType = WRLDOverlayBuildingHighlight;
+    overlayId.nativeHandle = buildingHighlightId;
+
+    if (m_overlays.find(overlayId) == m_overlays.end())
+    {
+        return;
+    }
+
+    id<WRLDOverlay> overlay = m_overlays.at(overlayId);
+
+    WRLDBuildingHighlight* buildingHighlight = safe_cast<WRLDBuildingHighlight>(overlay);
+
+    if (buildingHighlight == nil)
+    {
+        return;
+    }
+
+    [buildingHighlight loadBuildingInformationFromNative];
+
+    if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
+    {
+        [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+    }
 }
 
 @end
