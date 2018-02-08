@@ -1,8 +1,10 @@
 #import "WRLDSearchWidgetViewController.h"
-#import "WRLDSearchWidgetSearchBar.h"
+#import "WRLDSearchBar.h"
+#import "WRLDSearchProviderReference.h"
+#import "WRLDSuggestionProviderReference.h"
 
 @interface WRLDSearchWidgetViewController()
-@property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchWidgetSearchBar *searchBar;
+@property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *wrldSearchWidgetResultsTableView;
@@ -12,11 +14,18 @@
 @end
 
 @implementation WRLDSearchWidgetViewController
+{
+    WRLDSearchModel * m_searchModel;
+}
 
--(instancetype) init
+-(instancetype) initWithSearchModel : (WRLDSearchModel *) searchModel
 {
     NSBundle* bundle = [NSBundle bundleForClass:[WRLDSearchWidgetViewController class]];
     self = [super initWithNibName: @"WRLDSearchWidget" bundle:bundle];
+    if(self)
+    {
+        m_searchModel = searchModel;
+    }
     return self;
 }
 
@@ -30,19 +39,19 @@
     [self.searchBar setActive: false];
 }
 
-//-(void) addSearchProvider :(id<WRLDSearchProvider>) searchProvider
-//{
-//    
-//}
-//
-//-(void) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider
-//{
-//    
-//}
-//
-//-(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
-//{
-//
-//}
+-(void) displaySearchProvider :(WRLDSearchProviderReference*) searchProvider
+{
+    
+}
+
+-(void) displaySuggestionProvider :(WRLDSuggestionProviderReference*) suggestionProvider
+{
+    
+}
+
+-(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
+{
+
+}
 @end
 

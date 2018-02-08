@@ -19,4 +19,8 @@ target 'WrldSdk' do
     
 end
 
+target 'WRLDSearchWidgetTests' do
+	inherit! :search_paths
+	pod 'OCMockito', '~> 5.0'
+  end
 

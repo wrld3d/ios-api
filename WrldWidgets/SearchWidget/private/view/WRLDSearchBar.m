@@ -1,6 +1,6 @@
-#import "WRLDSearchWidgetSearchBar.h"
+#import "WRLDSearchBar.h"
 
-@implementation WRLDSearchWidgetSearchBar
+@implementation WRLDSearchBar
 {
     CGFloat m_searchBarIconWidth;
     UIColor *m_searchBarActiveColor;

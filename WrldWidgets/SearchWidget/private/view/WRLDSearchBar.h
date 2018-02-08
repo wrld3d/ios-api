@@ -2,7 +2,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WRLDSearchWidgetSearchBar : UISearchBar
+@interface WRLDSearchBar : UISearchBar
 -(void) setActive:(BOOL) isActive;
 @end
 
