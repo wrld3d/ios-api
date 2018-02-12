@@ -128,7 +128,6 @@
     [model addSearchProvider:mockProvider];
     WRLDSearchQuery *query = [model getSearchResultsForString:testString withResultsDelegate:mockResponseDelegate];
     OCMVerify([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchQuery * providerQuery){
-        NSLog(@"QUERY STRING IS %@", providerQuery.queryString);
         return providerQuery.queryString == query.queryString;
     }]]);
 }

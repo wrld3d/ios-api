@@ -77,10 +77,7 @@
 
 - (void) searchFor: (WRLDSearchQuery*) query
 {
-    if(!m_currentQuery.hasCompleted)
-    {
-        [m_currentQuery cancel];
-    }
+    [self cancelInFlightQuery];
     m_currentQuery = query;
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
     [textSearchOptions setQuery: query.queryString];
@@ -88,13 +85,22 @@
     m_poiSearchId = [[m_poiService searchText: textSearchOptions] poiSearchId];
 }
 
-- (void) searchSuggestions: (WRLDSearchQuery*) query
+- (void) getSuggestions: (WRLDSearchQuery*) query
 {
+    [self cancelInFlightQuery];
     m_currentQuery = query;
     WRLDAutocompleteOptions* autocompleteOptions = [[WRLDAutocompleteOptions alloc] init];
     [autocompleteOptions setQuery: query.queryString];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchAutocomplete: autocompleteOptions] poiSearchId];
+}
+
+- (void) cancelInFlightQuery
+{
+    if(m_currentQuery && !m_currentQuery.hasCompleted)
+    {
+        [m_currentQuery cancel];
+    }
 }
 
 @end

@@ -39,7 +39,7 @@
     [self.searchBar setActive: false];
 }
 
--(void) displaySearchProvider :(WRLDSearchProviderReference*) searchProvider
+-(void) displaySearchProvider :(WRLDSearchProviderHandle*) searchProvider
 {
     
 }
