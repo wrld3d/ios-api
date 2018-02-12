@@ -132,6 +132,7 @@
         return providerQuery.queryString == query.queryString;
     }]]);
 }
+
 - (void)testRunningASearchQueryDoesNotDispatchesToRemovedSearchProviders {
     id<WRLDSearchProvider> mockProvider1 = OCMProtocolMock(@protocol(WRLDSearchProvider));
     id<WRLDSearchProvider> mockProvider2 = OCMProtocolMock(@protocol(WRLDSearchProvider));

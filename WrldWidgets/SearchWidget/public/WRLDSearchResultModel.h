@@ -1,6 +1,6 @@
 #pragma once
 
-#import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
 @protocol WRLDSearchResultModel
 @property (nonatomic, copy) NSString* title;
