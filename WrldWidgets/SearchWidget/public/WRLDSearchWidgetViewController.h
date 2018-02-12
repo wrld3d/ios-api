@@ -2,15 +2,13 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol WRLDSearchProvider;
-@protocol WRLDSuggestionProvider;
 @class WRLDSearchModel;
 @class WRLDSearchProviderReference;
-@class WRLDSuggestionProviderReference;
+@class WRLDSuggestionProviderHandle;
 
 @interface WRLDSearchWidgetViewController : UIViewController <UISearchBarDelegate>
 -(instancetype) initWithSearchModel: (WRLDSearchModel *) model;
 -(void) displaySearchProvider :(WRLDSearchProviderReference*) searchProvider;
--(void) displaySuggestionProvider :(WRLDSuggestionProviderReference*) suggestionProvider;
+-(void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib;
 @end

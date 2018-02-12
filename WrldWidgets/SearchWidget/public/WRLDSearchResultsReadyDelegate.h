@@ -2,9 +2,11 @@
 
 #include <UIKit/UIKit.h>
 
+#include "WRLDSearchTypes.h"
+
 @class WRLDSearchResultModel;
 
 @protocol WRLDSearchResultsReadyDelegate
--(void) searchDidComplete:(BOOL) success
-              withResults:(NSArray<WRLDSearchResultModel *>*) results;
+-(void) didComplete:(BOOL) success
+        withResults:(WRLDSearchResultsCollection*) results;
 @end

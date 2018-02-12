@@ -21,6 +21,6 @@ end
 
 target 'WRLDSearchWidgetTests' do
 	inherit! :search_paths
-	pod 'OCMockito', '~> 5.0'
+	pod 'OCMock', '~> 3.4'
   end
 

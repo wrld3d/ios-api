@@ -5,7 +5,7 @@
 @implementation WRLDSearchQuery
 {
     id<WRLDSearchResultsReadyDelegate> m_completionDelegate;
-    NSArray<WRLDSearchResultModel *>* m_results;
+    WRLDSearchResultsCollection* m_results;
 }
 
 -(instancetype) initWithQueryString:(NSString *)queryString
@@ -33,15 +33,16 @@
     return (self.progress == Cancelled || self.progress == Completed);
 }
 
--(void) didCompleteSuccessfully:(BOOL) success withResults:(NSMutableArray<WRLDSearchResultModel*>*) results
+-(void) didComplete:(BOOL) success withResults:(WRLDSearchResultsCollection*) results
 {
     _progress = Completed;
     _hasCompleted = YES;
     _hasSucceeded = success;
     m_results = results;
+    [m_completionDelegate didComplete:success withResults: m_results];
 }
 
--(NSArray<WRLDSearchResultModel *>*) getResults
+-(WRLDSearchResultsCollection*) getResults
 {
     return m_results;
 }

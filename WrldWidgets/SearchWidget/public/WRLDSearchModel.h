@@ -5,13 +5,16 @@
 @protocol WRLDSearchProvider;
 @protocol WRLDSuggestionProvider;
 @protocol WRLDSearchResultsReadyDelegate;
-@class WRLDSearchProviderReference;
-@class WRLDSuggestionProviderReference;
+@class WRLDSearchProviderHandle;
+@class WRLDSuggestionProviderHandle;
 @class WRLDSearchQuery;
 
 @interface WRLDSearchModel : NSObject
--(WRLDSearchProviderReference *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
--(WRLDSuggestionProviderReference *) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider;
+-(WRLDSearchProviderHandle *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
+-(WRLDSuggestionProviderHandle *) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider;
+
+-(void) removeSearchProvider :(WRLDSearchProviderHandle *) searchProviderHandle;
+-(void) removeSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProviderHandle;
 
 -(WRLDSearchQuery *) getSearchResultsForString:(NSString *) queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>) resultsDelegate;
 -(WRLDSearchQuery *) getSuggestionsForString:(NSString *) queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>) resultsDelegate;

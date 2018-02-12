@@ -1,10 +1,13 @@
-#import "WRLDSuggestionProviderReference.h"
+#import "WRLDSuggestionProviderHandle.h"
 #import "WRLDSuggestionProvider.h"
 
-@implementation WRLDSuggestionProviderReference
+@implementation WRLDSuggestionProviderHandle
 {
     id<WRLDSuggestionProvider> m_suggestionProvider;
 }
+
+@synthesize identifier;
+
 -(instancetype) initWithProvider: (id<WRLDSuggestionProvider>) suggestionProvider
 {
     self = [super init];
@@ -14,9 +17,6 @@
     }
     return self;
 }
--(void) addSuggestionsCompletedDelegate:(id<WRLDSearchResultsReadyDelegate>)delegate
-{
-    
-}
+
 @end
 

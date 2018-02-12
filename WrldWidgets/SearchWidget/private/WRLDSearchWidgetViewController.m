@@ -1,7 +1,7 @@
 #import "WRLDSearchWidgetViewController.h"
 #import "WRLDSearchBar.h"
-#import "WRLDSearchProviderReference.h"
-#import "WRLDSuggestionProviderReference.h"
+#import "WRLDSearchProviderHandle.h"
+#import "WRLDSuggestionProviderHandle.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -44,7 +44,7 @@
     
 }
 
--(void) displaySuggestionProvider :(WRLDSuggestionProviderReference*) suggestionProvider
+-(void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider
 {
     
 }

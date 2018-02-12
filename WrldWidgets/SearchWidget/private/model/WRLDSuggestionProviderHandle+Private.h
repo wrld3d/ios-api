@@ -1,10 +1,10 @@
 #pragma once
 
-#include "WRLDSuggestionProviderReference.h"
+#include "WRLDSuggestionProviderHandle.h"
 
 @protocol WRLDSuggestionProvider;
 
-@interface WRLDSuggestionProviderReference (Private)
+@interface WRLDSuggestionProviderHandle (Private)
 
 -(instancetype) initWithProvider: (id<WRLDSuggestionProvider>) suggestionProvider;
 

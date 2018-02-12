@@ -3,14 +3,9 @@
 #import "MockSearchProvider.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchResultModel.h"
+#import "WRLDBasicSearchResultModel.h"
 
 @implementation MockSearchProvider
-{
-    WRLDPoiService* m_poiService;
-    WRLDMapView* m_mapView;
-    
-    int m_poiSearchId;
-}
 
 @synthesize title;
 @synthesize cellIdentifier;
@@ -26,7 +21,7 @@
     return self;
 }
 
-- (void) search: (WRLDSearchQuery*) query
+- (void) searchFor: (WRLDSearchQuery*) query
 {
     NSDictionary * userInfo = @{ @"Query" : query };
     [NSTimer scheduledTimerWithTimeInterval:3
@@ -49,7 +44,7 @@
 - (void)completeQuery:(NSTimer*)theTimer {
     WRLDSearchQuery *query = [[theTimer userInfo] objectForKey:@"Query"];
     
-    NSMutableArray<WRLDSearchResultModel *> * searchResults = [[NSMutableArray<WRLDSearchResultModel *> alloc] init];
+    NSMutableArray<id<WRLDSearchResultModel>> * searchResults = [[NSMutableArray<id<WRLDSearchResultModel>> alloc] init];
     
     for(int i = 0; i < 20; ++i){
         [searchResults addObject: [self createSearchResult:
@@ -57,12 +52,12 @@
                                                   subTitle: [NSString stringWithFormat:@"Mock Result Description %d", i]]];
     }
     
-    [query didCompleteSuccessfully:YES withResults: searchResults];
+    [query didComplete:YES withResults: searchResults];
 }
 
-- (WRLDSearchResultModel*) createSearchResult: (NSString*) title subTitle: (NSString*)subTitle
+- (id<WRLDSearchResultModel>) createSearchResult: (NSString*) title subTitle: (NSString*)subTitle
 {
-    WRLDSearchResultModel* searchResult = [[WRLDSearchResultModel alloc] init];
+    id<WRLDSearchResultModel> searchResult = [[WRLDBasicSearchResultModel alloc] init];
     [searchResult setTitle: title];
     [searchResult setSubTitle: subTitle];
     return searchResult;

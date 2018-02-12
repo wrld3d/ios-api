@@ -1,8 +1,10 @@
 #pragma once
 #import <Foundation/Foundation.h>
 
+#import "WRLDSearchTypes.h"
+
 // This type goes out to individual providers
-@class WRLDSearchResultModel;
+@protocol WRLDSearchResultModel;
 
 @interface WRLDSearchQuery : NSObject
 
@@ -19,7 +21,7 @@ typedef NS_ENUM(NSInteger, ProgressStatus) {
 @property (readonly) BOOL hasCompleted;
 
 -(BOOL) isFinished;
--(void) didCompleteSuccessfully:(BOOL) success withResults:(NSArray<WRLDSearchResultModel*>*) results;
+-(void) didComplete:(BOOL) success withResults:(WRLDSearchResultsCollection *) results;
 -(void) cancel;
--(NSArray<WRLDSearchResultModel*>*) getResults;
+-(WRLDSearchResultsCollection *) getResults;
 @end

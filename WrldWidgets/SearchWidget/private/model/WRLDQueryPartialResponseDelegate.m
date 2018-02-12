@@ -1,9 +1,27 @@
-//
-//  WRLDQueryPartialResponseDelegate.m
-//  WrldWidgets
-//
-//  Created by Michael O'Donnell on 07/02/2018.
-//  Copyright © 2018 eeGeo. All rights reserved.
-//
+#import "WRLDQueryPartialResponseDelegate.h"
+#import "WRLDMultipleProviderQuery.h"
+#import "WRLDQueryFulfillerHandle.h"
 
-#import <Foundation/Foundation.h>
+@implementation WRLDQueryPartialResponseDelegate
+{
+    id<WRLDQueryFulfillerHandle> m_fulfillerHandle;
+    WRLDMultipleProviderQuery *m_fullQuery;
+}
+
+-(instancetype) initWithFulfillerHandle: (id<WRLDQueryFulfillerHandle>) fulfillerHandle forFullQuery:(WRLDMultipleProviderQuery *) query
+{
+    self = [super init];
+    if(self)
+    {
+        m_fulfillerHandle = fulfillerHandle;
+        m_fullQuery = query;
+    }
+    return self;
+}
+
+- (void)didComplete:(BOOL)success withResults:(WRLDSearchResultsCollection *)results {
+    [m_fullQuery addResults: results fromFulfiller: m_fulfillerHandle withSuccess: success];
+}
+
+@end
+

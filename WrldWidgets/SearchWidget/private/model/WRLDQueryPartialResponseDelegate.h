@@ -1,11 +1,10 @@
 #pragma once
 
-#include "WRLDSearchPartialResponseDelegate.h"
 #include "WRLDSearchResultsReadyDelegate.h"
 
-@interface WRLDSearchPartialResponseDelegate : NSObject<WRLDSearchResultsReadyDelegate>
--(instancetype) initWithProvider: (WRLDSearchProviderReference *) provider forFullQuery:(WRLDSearchQueryAcrossMultipleProviders *) query;
+@protocol WRLDQueryFulfillerHandle;
+@class WRLDMultipleProviderQuery;
+
+@interface WRLDQueryPartialResponseDelegate : NSObject<WRLDSearchResultsReadyDelegate>
+-(instancetype) initWithFulfillerHandle: (id<WRLDQueryFulfillerHandle>) fulfillerHandle forFullQuery:(WRLDMultipleProviderQuery *) query;
 @end
-
-
-

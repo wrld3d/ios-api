@@ -1,10 +1,10 @@
 #pragma once
 
-#include "WRLDSearchProviderReference.h"
+#include "WRLDSearchProviderHandle.h"
 
 @protocol WRLDSearchProvider;
 
-@interface WRLDSearchProviderReference (Private)
+@interface WRLDSearchProviderHandle (Private)
 
 -(instancetype) initWithProvider: (id<WRLDSearchProvider>) searchProvider;
 
