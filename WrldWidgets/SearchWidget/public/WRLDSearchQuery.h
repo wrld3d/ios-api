@@ -3,8 +3,8 @@
 
 #import "WRLDSearchTypes.h"
 
-// This type goes out to individual providers
 @protocol WRLDSearchResultModel;
+@protocol WRLDQueryFulfillerHandle;
 
 @interface WRLDSearchQuery : NSObject
 
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, ProgressStatus) {
 @property (readonly) BOOL hasCompleted;
 
 -(BOOL) isFinished;
--(void) didComplete:(BOOL) success withResults:(WRLDSearchResultsCollection *) results;
 -(void) cancel;
--(WRLDSearchResultsCollection *) getResults;
+
+-(WRLDSearchResultsCollection *) getResultsForFulfiller:(id<WRLDQueryFulfillerHandle>) fulfillerHandle;
 @end

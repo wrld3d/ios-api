@@ -11,7 +11,7 @@
 #import <OCMock/OCMock.h>
 
 #import "WRLDPoiServiceSearchProvider.h"
-#import "WRLDSearchQuery.h"
+#import "WRLDSearchRequest.h"
 
 @interface WRLDPoiSearchCrossProviderQueryTests : XCTestCase
 
@@ -23,11 +23,11 @@
     WRLDPoiService* m_mockPoiService;
     WRLDPoiServiceSearchProvider* m_searchProvider;
     
-    NSString * m_cancelledQueryText;
-    NSString * m_completedQueryText;
+    NSString * m_cancelledRequestText;
+    NSString * m_completedRequestText;
     
-    WRLDPoiSearch * m_mockPoiSearchFirstQuery;
-    WRLDPoiSearch * m_mockPoiSearchSecondQuery;
+    WRLDPoiSearch * m_mockPoiSearchFirstRequest;
+    WRLDPoiSearch * m_mockPoiSearchSecondRequest;
     int m_cancelledPoiSearchId;
     int m_completedPoiSearchId;
 }
@@ -39,8 +39,8 @@
     m_cancelledPoiSearchId = 1;
     m_completedPoiSearchId = 2;
     
-    m_cancelledQueryText = @"Cancelled";
-    m_completedQueryText = @"Completed";
+    m_cancelledRequestText = @"Cancelled";
+    m_completedRequestText = @"Completed";
     
     [self createMocks];
     
@@ -50,11 +50,11 @@
 - (void)createMocks {
     m_mockMapView = OCMClassMock([WRLDMapView class]);
     m_mockPoiService = OCMClassMock([WRLDPoiService class]);
-    m_mockPoiSearchFirstQuery = OCMClassMock([WRLDPoiSearch class]);
-    m_mockPoiSearchSecondQuery = OCMClassMock([WRLDPoiSearch class]);
+    m_mockPoiSearchFirstRequest = OCMClassMock([WRLDPoiSearch class]);
+    m_mockPoiSearchSecondRequest = OCMClassMock([WRLDPoiSearch class]);
     
-    OCMStub([m_mockPoiSearchFirstQuery poiSearchId]).andReturn(m_cancelledPoiSearchId);
-    OCMStub([m_mockPoiSearchSecondQuery poiSearchId]).andReturn(m_completedPoiSearchId);
+    OCMStub([m_mockPoiSearchFirstRequest poiSearchId]).andReturn(m_cancelledPoiSearchId);
+    OCMStub([m_mockPoiSearchSecondRequest poiSearchId]).andReturn(m_completedPoiSearchId);
 }
 
 - (void)tearDown {
@@ -67,64 +67,64 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
-- (void)testSuggestionsQueryCancelsInFlightSearchQuery {
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchFirstQuery);
-    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+- (void)testSuggestionsRequestCancelsInFlightSearchRequest {
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchFirstRequest);
+    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * firstQuery = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([firstQuery hasCompleted]).andReturn(NO);
-    [m_searchProvider searchFor:firstQuery];
+    WRLDSearchRequest * firstRequest = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([firstRequest hasCompleted]).andReturn(NO);
+    [m_searchProvider searchFor:firstRequest];
     
-    WRLDSearchQuery * secondQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:secondQuery];
+    WRLDSearchRequest * secondRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:secondRequest];
     
-    OCMVerify([firstQuery cancel]);
+    OCMVerify([firstRequest cancel]);
 }
 
-- (void)testSearchQueryCancelsInFlightSuggestionQuery {
-    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchFirstQuery);
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+- (void)testSearchRequestCancelsInFlightSuggestionRequest {
+    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchFirstRequest);
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * firstQuery = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([firstQuery hasCompleted]).andReturn(NO);
-    [m_searchProvider getSuggestions:firstQuery];
+    WRLDSearchRequest * firstRequest = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([firstRequest hasCompleted]).andReturn(NO);
+    [m_searchProvider getSuggestions:firstRequest];
     
-    WRLDSearchQuery * secondQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider searchFor:secondQuery];
+    WRLDSearchRequest * secondRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider searchFor:secondRequest];
     
-    OCMVerify([firstQuery cancel]);
+    OCMVerify([firstRequest cancel]);
 }
 
-- (void)testSuggestionsQueryDoesNotCancelCompletedSearchQuery {
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchFirstQuery);
-    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+- (void)testSuggestionsRequestDoesNotCancelCompletedSearchRequest {
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchFirstRequest);
+    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * firstQuery = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([firstQuery hasCompleted]).andReturn(YES);
-    [m_searchProvider searchFor:firstQuery];
+    WRLDSearchRequest * firstRequest = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([firstRequest hasCompleted]).andReturn(YES);
+    [m_searchProvider searchFor:firstRequest];
     
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * secondQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:secondQuery];
+    WRLDSearchRequest * secondRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:secondRequest];
     
-    OCMReject([firstQuery cancel]);
+    OCMReject([firstRequest cancel]);
 }
 
-- (void)testSearchQueryDoesNotCancelCompletedSuggestionQuery {
-    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchFirstQuery);
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+- (void)testSearchRequestDoesNotCancelCompletedSuggestionRequest {
+    OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockPoiSearchFirstRequest);
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * firstQuery = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([firstQuery hasCompleted]).andReturn(YES);
-    [m_searchProvider getSuggestions:firstQuery];
+    WRLDSearchRequest * firstRequest = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([firstRequest hasCompleted]).andReturn(YES);
+    [m_searchProvider getSuggestions:firstRequest];
     
-    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondQuery);
+    OCMStub([m_mockPoiService searchText:[OCMArg any]]).andReturn(m_mockPoiSearchSecondRequest);
     
-    WRLDSearchQuery * secondQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider searchFor:secondQuery];
+    WRLDSearchRequest * secondRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider searchFor:secondRequest];
     
-    OCMReject([firstQuery cancel]);
+    OCMReject([firstRequest cancel]);
 }
 
 - (void)testPerformanceExample {

@@ -11,7 +11,7 @@
 #import <OCMock/OCMock.h>
 
 #import "WRLDPoiServiceSearchProvider.h"
-#import "WRLDSearchQuery.h"
+#import "WRLDSearchRequest.h"
 
 @interface WRLDPoiServiceSuggestionProviderTests : XCTestCase
 
@@ -34,8 +34,8 @@
     NSString * m_mockResultIconKeyStub;
     CLLocationCoordinate2D m_mockResultPosition;
     
-    NSString * m_cancelledQueryText;
-    NSString * m_completedQueryText;
+    NSString * m_cancelledRequestText;
+    NSString * m_completedRequestText;
 }
 
 - (void)setUp {
@@ -45,8 +45,8 @@
     m_mockResultTitleStub = @"Title";
     m_mockResultSubTitleStub = @"SubTitle";
     
-    m_cancelledQueryText = @"Cancelled";
-    m_completedQueryText = @"Completed";
+    m_cancelledRequestText = @"Cancelled";
+    m_completedRequestText = @"Completed";
     
     [self createMocks];
     
@@ -99,45 +99,45 @@
     [super tearDown];
 }
 
--(void)testGetSuggestionsCallsQueryCompletionDelegateOnCompletion
+-(void)testGetSuggestionsCallsRequestCompletionDelegateOnCompletion
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * mockQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:mockQuery];
+    WRLDSearchRequest * mockRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:mockRequest];
     
     WRLDPoiSearchResponse * mockPoiSearchResponse = [self createSuccessResponse];
     [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockPoiSearchResponse];
     
-    OCMVerify([mockQuery didComplete:[OCMArg any] withResults:[OCMArg any]]);
+    OCMVerify([mockRequest didComplete:[OCMArg any] withResults:[OCMArg any]]);
 }
 
 -(void)testGetSuggestionsCallsCompletionDelegateWithSuccessOnSuccessfulCompletion
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * mockQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:mockQuery];
+    WRLDSearchRequest * mockRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:mockRequest];
     
     WRLDPoiSearchResponse * mockPoiSearchResponse = [self createSuccessResponse];
     [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockPoiSearchResponse];
     
-    OCMVerify([mockQuery didComplete:YES withResults:[OCMArg any]]);
+    OCMVerify([mockRequest didComplete:YES withResults:[OCMArg any]]);
 }
 
 -(void)testGetSuggestionsCallsCompletionDelegateWithAllResultsOnSuccess
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * mockQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:mockQuery];
+    WRLDSearchRequest * mockRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:mockRequest];
     
     NSInteger numMockResults = 10;
     
     WRLDPoiSearchResponse * mockPoiSearchResponse = [self createMockPoiSearchResponseWithSuccess:YES numResults: numMockResults];
     [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockPoiSearchResponse];
     
-    OCMVerify([mockQuery didComplete:[OCMArg any] withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection* resultsArray){
+    OCMVerify([mockRequest didComplete:[OCMArg any] withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection* resultsArray){
         return [resultsArray count] == numMockResults;
     }]]);
 }
@@ -146,92 +146,92 @@
 {
     WRLDPoiSearchResponse * mockPoiSearchResponse = [self createFailedResponse];
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
-    WRLDSearchQuery * mockQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:mockQuery];
+    WRLDSearchRequest * mockRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:mockRequest];
     [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockPoiSearchResponse];
     
-    OCMVerify([mockQuery didComplete:NO withResults:[OCMArg any]]);
+    OCMVerify([mockRequest didComplete:NO withResults:[OCMArg any]]);
 }
 
 -(void)testGetSuggestionsCallsCompletionDelegateWithEmptyResultsOnFailure
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * mockQuery = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:mockQuery];
+    WRLDSearchRequest * mockRequest = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:mockRequest];
     
     NSInteger numMockResults = 10;
     
     WRLDPoiSearchResponse * mockPoiSearchResponse = [self createMockPoiSearchResponseWithSuccess: NO numResults: numMockResults];
     [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockPoiSearchResponse];
     
-    OCMVerify([mockQuery didComplete:NO withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection * resultsArray){
+    OCMVerify([mockRequest didComplete:NO withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection * resultsArray){
         return [resultsArray count] == 0;
     }]]);
 }
 
--(void)testGetSuggestionsCancelsPreviousQueryIfUnfulfilled
+-(void)testGetSuggestionsCancelsPreviousRequestIfUnfulfilled
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockSecondPoiSearch);
     
-    WRLDSearchQuery * queryToCancel = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([queryToCancel hasCompleted]).andReturn(NO);
-    [m_searchProvider getSuggestions:queryToCancel];
+    WRLDSearchRequest * requestToCancel = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([requestToCancel hasCompleted]).andReturn(NO);
+    [m_searchProvider getSuggestions:requestToCancel];
     
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * queryToComplete = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:queryToComplete];
+    WRLDSearchRequest * requestToComplete = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:requestToComplete];
     
-    OCMVerify([queryToCancel cancel]);
+    OCMVerify([requestToCancel cancel]);
 }
 
--(void)testGetSuggestionsDoesNotCancelPreviousQueryIfAlreadyFulfilled
+-(void)testGetSuggestionsDoesNotCancelPreviousRequestIfAlreadyFulfilled
 {
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockSecondPoiSearch);
     
-    WRLDSearchQuery * queryToCancel = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([queryToCancel hasCompleted]).andReturn(YES);
-    [m_searchProvider getSuggestions:queryToCancel];
+    WRLDSearchRequest * requestToCancel = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([requestToCancel hasCompleted]).andReturn(YES);
+    [m_searchProvider getSuggestions:requestToCancel];
     
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg any]]).andReturn(m_mockFirstPoiSearch);
     
-    WRLDSearchQuery * queryToComplete = OCMClassMock([WRLDSearchQuery class]);
-    [m_searchProvider getSuggestions:queryToComplete];
+    WRLDSearchRequest * requestToComplete = OCMClassMock([WRLDSearchRequest class]);
+    [m_searchProvider getSuggestions:requestToComplete];
     
-    OCMReject([queryToCancel cancel]);
+    OCMReject([requestToCancel cancel]);
 }
 
--(void)testCancelledQueryResponsesNotReturnedToLaterQueries
+-(void)testCancelledRequestResponsesNotReturnedToLaterQueries
 {
-    WRLDSearchQuery * queryToCancel = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([queryToCancel queryString]).andReturn(m_cancelledQueryText);
-    WRLDSearchQuery * queryToComplete = OCMClassMock([WRLDSearchQuery class]);
-    OCMStub([queryToComplete queryString]).andReturn(m_completedQueryText);
-    NSInteger numCancelledQueryResults = 10;
-    NSInteger numCompletedQueryResults = 20;
+    WRLDSearchRequest * requestToCancel = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([requestToCancel queryString]).andReturn(m_cancelledRequestText);
+    WRLDSearchRequest * requestToComplete = OCMClassMock([WRLDSearchRequest class]);
+    OCMStub([requestToComplete queryString]).andReturn(m_completedRequestText);
+    NSInteger numCancelledRequestResults = 10;
+    NSInteger numCompletedRequestResults = 20;
     
-    WRLDPoiSearchResponse * mockCancelledQueryResponse = [self createMockPoiSearchResponseWithSuccess:YES numResults: numCancelledQueryResults];
-    WRLDPoiSearchResponse * mockCompletedQueryResponse = [self createMockPoiSearchResponseWithSuccess:YES numResults: numCompletedQueryResults];
+    WRLDPoiSearchResponse * mockCancelledRequestResponse = [self createMockPoiSearchResponseWithSuccess:YES numResults: numCancelledRequestResults];
+    WRLDPoiSearchResponse * mockCompletedRequestResponse = [self createMockPoiSearchResponseWithSuccess:YES numResults: numCompletedRequestResults];
     
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg checkWithBlock:^BOOL(WRLDTextSearchOptions* textSearchOptions){
-        return [textSearchOptions.getQuery isEqualToString:m_cancelledQueryText];
+        return [textSearchOptions.getQuery isEqualToString:m_cancelledRequestText];
     }]]).andReturn(m_mockFirstPoiSearch);
     OCMStub([m_mockPoiService searchAutocomplete:[OCMArg checkWithBlock:^BOOL(WRLDTextSearchOptions* textSearchOptions){
-        return [textSearchOptions.getQuery isEqualToString:m_completedQueryText];
+        return [textSearchOptions.getQuery isEqualToString:m_completedRequestText];
     }]]).andReturn(m_mockSecondPoiSearch);
     
-    [m_searchProvider getSuggestions:queryToCancel];
-    [m_searchProvider getSuggestions:queryToComplete];
-    [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockCancelledQueryResponse];
-    [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:2 poiSearchResponse:mockCompletedQueryResponse];
+    [m_searchProvider getSuggestions:requestToCancel];
+    [m_searchProvider getSuggestions:requestToComplete];
+    [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:1 poiSearchResponse:mockCancelledRequestResponse];
+    [m_searchProvider mapView:m_mockMapView poiSearchDidComplete:2 poiSearchResponse:mockCompletedRequestResponse];
     
-    OCMVerify([queryToComplete didComplete:YES withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection* resultsArray){
-        if([resultsArray count] == numCancelledQueryResults)
+    OCMVerify([requestToComplete didComplete:YES withResults:[OCMArg checkWithBlock:^BOOL(WRLDMutableSearchResultsCollection* resultsArray){
+        if([resultsArray count] == numCancelledRequestResults)
         {
             XCTFail();
         }
-        return [resultsArray count] == numCompletedQueryResults;
+        return [resultsArray count] == numCompletedRequestResults;
     }]]);
 }
 

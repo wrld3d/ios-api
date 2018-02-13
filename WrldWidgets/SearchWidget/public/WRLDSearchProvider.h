@@ -2,12 +2,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class WRLDSearchQuery;
-@protocol WRLDSearchResultsReadyDelegate;
+@class WRLDSearchRequest;
 
 @protocol WRLDSearchProvider
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic, readonly, copy) NSString *cellIdentifier;
-- (void) searchFor: (WRLDSearchQuery *) query;
+- (void) searchFor: (WRLDSearchRequest *) query;
 
 @end

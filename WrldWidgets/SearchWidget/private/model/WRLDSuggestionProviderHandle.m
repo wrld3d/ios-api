@@ -2,9 +2,6 @@
 #import "WRLDSuggestionProvider.h"
 
 @implementation WRLDSuggestionProviderHandle
-{
-    id<WRLDSuggestionProvider> m_suggestionProvider;
-}
 
 @synthesize identifier;
 
@@ -13,7 +10,7 @@
     self = [super init];
     if(self)
     {
-        m_suggestionProvider = suggestionProvider;
+        _provider = suggestionProvider;
     }
     return self;
 }

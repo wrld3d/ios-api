@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 #import "WRLDMockSearchProvider.h"
-#import "WRLDSearchQuery.h"
+#import "WRLDSearchRequest.h"
 #import "WRLDSearchResultModel.h"
 #import "WRLDBasicSearchResultModel.h"
 
@@ -42,11 +42,11 @@
     m_suggestionResultsDelayInSeconds = suggestionDelayInSeconds;
 }
 
-- (void) searchFor: (WRLDSearchQuery*) query
+- (void) searchFor: (WRLDSearchRequest*) request
 {
     if(m_suggestionResultsDelayInSeconds > 0)
     {
-        NSDictionary * userInfo = @{ @"Query" : query };
+        NSDictionary * userInfo = @{ @"Request" : request };
         [NSTimer scheduledTimerWithTimeInterval:m_searchResultsDelayInSeconds
                                          target:self
                                        selector:@selector(completeQuery:)
@@ -55,15 +55,15 @@
     }
     else
     {
-        [self fulfilQuery: query];
+        [self fulfilRequest: request];
     }
 }
 
-- (void) getSuggestions: (WRLDSearchQuery *) query
+- (void) getSuggestions: (WRLDSearchRequest*) request
 {
     if(m_suggestionResultsDelayInSeconds > 0)
     {
-        NSDictionary * userInfo = @{ @"Query" : query };
+        NSDictionary * userInfo = @{ @"Request" : request };
         [NSTimer scheduledTimerWithTimeInterval:m_suggestionResultsDelayInSeconds
                                          target:self
                                        selector:@selector(completeQuery:)
@@ -72,27 +72,27 @@
     }
     else
     {
-        [self fulfilQuery: query];
+        [self fulfilRequest: request];
     }
 }
 
 - (void)completeQuery:(NSTimer*)theTimer {
-    WRLDSearchQuery *query = [[theTimer userInfo] objectForKey:@"Query"];
+    WRLDSearchRequest *request = [[theTimer userInfo] objectForKey:@"Request"];
     
-    [self fulfilQuery: query];
+    [self fulfilRequest: request];
 }
 
--(void) fulfilQuery: (WRLDSearchQuery *) query
+-(void) fulfilRequest: (WRLDSearchRequest *) searchRequest
 {
     NSMutableArray<id<WRLDSearchResultModel>> * searchResults = [[NSMutableArray<id<WRLDSearchResultModel>> alloc] init];
     
     for(int i = 0; i < 20; ++i){
         [searchResults addObject: [self createSearchResult:
-                                   [NSString stringWithFormat:@"Mock Result %@ %d", query.queryString, i]
+                                   [NSString stringWithFormat:@"Mock Result %@ %d", searchRequest.queryString, i]
                                                   subTitle: [NSString stringWithFormat:@"Mock Result Description %d", i]]];
     }
     
-    [query didComplete:YES withResults: searchResults];
+    [searchRequest didComplete:YES withResults: searchResults];
 }
 
 - (id<WRLDSearchResultModel>) createSearchResult: (NSString*) title subTitle: (NSString*)subTitle

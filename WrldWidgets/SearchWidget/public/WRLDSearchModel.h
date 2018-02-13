@@ -4,19 +4,23 @@
 
 @protocol WRLDSearchProvider;
 @protocol WRLDSuggestionProvider;
-@protocol WRLDSearchResultsReadyDelegate;
+@protocol WRLDFinishedSearchDelegate;
 @class WRLDSearchProviderHandle;
 @class WRLDSuggestionProviderHandle;
 @class WRLDSearchQuery;
+@class WRLDSearchModelQueryDelegate;
 
 @interface WRLDSearchModel : NSObject
--(WRLDSearchProviderHandle *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
--(WRLDSuggestionProviderHandle *) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider;
+@property (readonly) WRLDSearchModelQueryDelegate * searchDelegate;
+@property (readonly) WRLDSearchModelQueryDelegate * suggestionDelegate;
 
+-(WRLDSearchProviderHandle *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
 -(void) removeSearchProvider :(WRLDSearchProviderHandle *) searchProviderHandle;
+
+-(WRLDSuggestionProviderHandle *) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider;
 -(void) removeSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProviderHandle;
 
--(WRLDSearchQuery *) getSearchResultsForString:(NSString *) queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>) resultsDelegate;
--(WRLDSearchQuery *) getSuggestionsForString:(NSString *) queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>) resultsDelegate;
+-(WRLDSearchQuery *) getSearchResultsForString:(NSString *) queryString;
+-(WRLDSearchQuery *) getSuggestionsForString:(NSString *) queryString;
 @end
 

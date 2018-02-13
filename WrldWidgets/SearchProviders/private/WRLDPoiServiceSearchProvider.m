@@ -4,7 +4,7 @@
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiServiceSearchProvider.h"
 
-#import "WRLDSearchQuery.h"
+#import "WRLDSearchRequest.h"
 #import "WRLDPositionedSearchResultModel.h"
 
 #import "WRLDSearchTypes.h"
@@ -16,7 +16,7 @@
     
     int m_poiSearchId;
     
-    WRLDSearchQuery *m_currentQuery;
+    WRLDSearchRequest *m_currentRequest;
 }
 
 @synthesize title;
@@ -61,7 +61,7 @@
         }
     }
     
-    [m_currentQuery didComplete:[poiSearchResponse succeeded] withResults:searchResults];
+    [m_currentRequest didComplete:[poiSearchResponse succeeded] withResults:searchResults];
 }
 
 - (id<WRLDSearchResultModel>) createSearchResult: (NSString*) title latLng: (CLLocationCoordinate2D) latLng subTitle: (NSString*)subTitle iconKey:(NSString*) iconKey
@@ -75,31 +75,31 @@
     return searchResult;
 }
 
-- (void) searchFor: (WRLDSearchQuery*) query
+- (void) searchFor: (WRLDSearchRequest*) request
 {
     [self cancelInFlightQuery];
-    m_currentQuery = query;
+    m_currentRequest = request;
     WRLDTextSearchOptions* textSearchOptions = [[WRLDTextSearchOptions alloc] init];
-    [textSearchOptions setQuery: query.queryString];
+    [textSearchOptions setQuery: request.queryString];
     [textSearchOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchText: textSearchOptions] poiSearchId];
 }
 
-- (void) getSuggestions: (WRLDSearchQuery*) query
+- (void) getSuggestions: (WRLDSearchRequest*) request
 {
     [self cancelInFlightQuery];
-    m_currentQuery = query;
+    m_currentRequest = request;
     WRLDAutocompleteOptions* autocompleteOptions = [[WRLDAutocompleteOptions alloc] init];
-    [autocompleteOptions setQuery: query.queryString];
+    [autocompleteOptions setQuery: request.queryString];
     [autocompleteOptions setCenter:  [m_mapView centerCoordinate]];
     m_poiSearchId = [[m_poiService searchAutocomplete: autocompleteOptions] poiSearchId];
 }
 
 - (void) cancelInFlightQuery
 {
-    if(m_currentQuery && !m_currentQuery.hasCompleted)
+    if(m_currentRequest && !m_currentRequest.hasCompleted)
     {
-        [m_currentQuery cancel];
+        [m_currentRequest cancel];
     }
 }
 

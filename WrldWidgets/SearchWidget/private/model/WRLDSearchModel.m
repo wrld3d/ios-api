@@ -1,9 +1,12 @@
-#import "WRLDSearchModel+Private.h"
+#import "WRLDSearchModel.h"
 #import "WRLDSearchProviderHandle+Private.h"
 #import "WRLDSearchProvider.h"
 #import "WRLDSuggestionProviderHandle+Private.h"
 #import "WRLDSuggestionProvider.h"
-#import "WRLDMultipleProviderQuery.h"
+#import "WRLDSearchQuery.h"
+#import "WRLDSearchQuery+Private.h"
+#import "WRLDQueryDelegate.h"
+#import "WRLDSearchModelQueryDelegate.h"
 
 @implementation WRLDSearchModel
 {
@@ -18,6 +21,8 @@
     {
         m_searchProviders = [[NSMutableArray<WRLDSearchProviderHandle*> alloc] init];
         m_suggestionProviders = [[NSMutableArray<WRLDSuggestionProviderHandle*> alloc] init];
+        _searchDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
+        _suggestionDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
     }
     
     return self;
@@ -47,20 +52,18 @@
     [m_suggestionProviders removeObject:suggestionProviderHandle];
 }
 
--(WRLDSearchQuery *) getSearchResultsForString:(NSString *)queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>)resultsDelegate
+-(WRLDSearchQuery *) getSearchResultsForString:(NSString *)queryString
 {
-    WRLDMultipleProviderQuery* fullQuery = [[WRLDMultipleProviderQuery alloc] initWithQuery: queryString
-                                                                         forSearchProviders: m_searchProviders
-                                                                        callingOnCompletion:resultsDelegate];
-    return fullQuery;
+    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryDelegate: self.searchDelegate];
+    [query dispatchRequestsToSearchProviders: m_searchProviders];
+    return query;
 }
 
--(WRLDSearchQuery *) getSuggestionsForString:(NSString *)queryString withResultsDelegate:(id<WRLDSearchResultsReadyDelegate>)resultsDelegate
+-(WRLDSearchQuery *) getSuggestionsForString:(NSString *)queryString
 {
-    WRLDMultipleProviderQuery* fullQuery = [[WRLDMultipleProviderQuery alloc] initWithQuery: queryString
-                                                                     forSuggestionProviders: m_suggestionProviders
-                                                                        callingOnCompletion:resultsDelegate];
-    return fullQuery;
+    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryDelegate: self.suggestionDelegate];
+    [query dispatchRequestsToSuggestionProviders: m_suggestionProviders];
+    return query;
 }
 
 @end
