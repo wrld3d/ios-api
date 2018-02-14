@@ -2,7 +2,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol WRLDQueryFulfillerHandle
+@protocol WRLDSearchRequestFulfillerHandle
 @property (readonly) NSInteger identifier;
 @end
 

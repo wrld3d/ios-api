@@ -2,15 +2,15 @@
 #import "WRLDSearchRequest+Private.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchQuery+Private.h"
-#import "WRLDQueryFulfillerHandle.h"
+#import "WRLDSearchRequestFulfillerHandle.h"
 
 @implementation WRLDSearchRequest
 {
-    id<WRLDQueryFulfillerHandle> m_fulfillerHandle;
+    id<WRLDSearchRequestFulfillerHandle> m_fulfillerHandle;
     WRLDSearchQuery *m_query;
 }
 
--(instancetype) initWithFulfillerHandle: (id<WRLDQueryFulfillerHandle>) fulfillerHandle forQuery: (WRLDSearchQuery *) query
+-(instancetype) initWithFulfillerHandle: (id<WRLDSearchRequestFulfillerHandle>) fulfillerHandle forQuery: (WRLDSearchQuery *) query
 {
     self = [super init];
     if(self)
@@ -31,7 +31,7 @@
 - (void) cancel
 {
     _hasCompleted = true;
-    [m_query cancel: m_fulfillerHandle];
+    [m_query cancelRequest: self];
 }
 
 @end

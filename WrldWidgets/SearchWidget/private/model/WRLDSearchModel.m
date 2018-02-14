@@ -5,13 +5,13 @@
 #import "WRLDSuggestionProvider.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchQuery+Private.h"
-#import "WRLDQueryDelegate.h"
 #import "WRLDSearchModelQueryDelegate.h"
 
 @implementation WRLDSearchModel
 {
-    NSMutableArray<WRLDSearchProviderHandle*> * m_searchProviders;
-    NSMutableArray<WRLDSuggestionProviderHandle*> * m_suggestionProviders;
+    WRLDSearchRequestFulfillerCollection * m_searchProviders;
+    WRLDSearchRequestFulfillerCollection * m_suggestionProviders;
+    NSInteger m_providerIdGeneration;
 }
 
 -(instancetype) init
@@ -19,10 +19,11 @@
     self = [super init];
     if(self)
     {
-        m_searchProviders = [[NSMutableArray<WRLDSearchProviderHandle*> alloc] init];
-        m_suggestionProviders = [[NSMutableArray<WRLDSuggestionProviderHandle*> alloc] init];
+        m_searchProviders = [[WRLDSearchRequestFulfillerCollection alloc] init];
+        m_suggestionProviders = [[WRLDSearchRequestFulfillerCollection alloc] init];
         _searchDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
         _suggestionDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
+        m_providerIdGeneration = 0;
     }
     
     return self;
@@ -30,14 +31,20 @@
 
 -(WRLDSearchProviderHandle *) addSearchProvider: (id<WRLDSearchProvider>) searchProvider
 {
-    WRLDSearchProviderHandle * reference = [[WRLDSearchProviderHandle alloc] initWithProvider: searchProvider];
+    WRLDSearchProviderHandle * reference = [[WRLDSearchProviderHandle alloc] initWithId:[self generateUniqueProviderId] forProvider: searchProvider];
     [m_searchProviders addObject:reference];
     return reference;
 }
 
+- (NSInteger) generateUniqueProviderId
+{
+    ++m_providerIdGeneration;
+    return m_providerIdGeneration;
+}
+
 -(WRLDSuggestionProviderHandle *) addSuggestionProvider: (id<WRLDSuggestionProvider>) suggestionProvider
 {
-    WRLDSuggestionProviderHandle * reference = [[WRLDSuggestionProviderHandle alloc] initWithProvider: suggestionProvider];
+    WRLDSuggestionProviderHandle * reference = [[WRLDSuggestionProviderHandle alloc] initWithId:[self generateUniqueProviderId] forProvider: suggestionProvider];
     [m_suggestionProviders addObject:reference];
     return reference;
 }

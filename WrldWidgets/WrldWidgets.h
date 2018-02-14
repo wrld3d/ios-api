@@ -18,7 +18,7 @@ FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 #import "WRLDQueryFinishedDelegate.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchRequest.h"
-#import "WRLDQueryDelegate.h"
 #import "WRLDMockSearchProvider.h"
 #import "WRLDPoiServiceSearchProvider.h"
 #import "WRLDSearchModelQueryDelegate.h"
+#import "WRLDBasicSearchResultModel.h"

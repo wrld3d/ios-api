@@ -4,18 +4,19 @@
 #include "WRLDSearchTypes.h"
 
 @class WRLDSearchModelQueryDelegate;
-@protocol WRLDQueryFulfillerHandle;
+@class WRLDSearchRequest;
+@protocol WRLDSearchRequestFulfillerHandle;
 
 @interface WRLDSearchQuery (Private)
 
 - (instancetype) initWithQueryString: (NSString*) queryString queryDelegate: (WRLDSearchModelQueryDelegate *) queryDelegate;
 
-- (void) dispatchRequestsToSearchProviders: (WRLDSearchProviderCollection *) providerHandles;
-- (void) dispatchRequestsToSuggestionProviders: (WRLDSuggestionProviderCollection *) providerHandles;
+- (void) dispatchRequestsToSearchProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;
+- (void) dispatchRequestsToSuggestionProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;
 
-- (void) addResults: (WRLDSearchResultsCollection *) results fromFulfiller: (id<WRLDQueryFulfillerHandle>) fulfillerHandle withSuccess: (BOOL) success;
+- (void) addResults: (WRLDSearchResultsCollection *) results fromFulfiller: (id<WRLDSearchRequestFulfillerHandle>) fulfillerHandle withSuccess: (BOOL) success;
 
-- (void) cancel: (id<WRLDQueryFulfillerHandle>) cancelledFulfiller;
+- (void) cancelRequest: (WRLDSearchRequest *) cancelledRequest;
 @end
 
 

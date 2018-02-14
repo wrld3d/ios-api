@@ -29,16 +29,17 @@
     return self;
 }
 
--(void) cancel
+- (void) cancel
 {
     _progress = Cancelled;
     _hasCompleted = YES;
     _hasSucceeded = NO;
 }
 
--(BOOL) isFinished
+- (void) cancelRequest: (WRLDSearchRequest *) cancelledRequest;
 {
-    return (self.progress == Cancelled || self.progress == Completed);
+    [m_requests removeObject: cancelledRequest];
+    [self checkForCompletion];
 }
 
 -(void) didComplete:(BOOL) success
@@ -53,22 +54,12 @@
     }
 }
 
--(WRLDSearchResultsCollection *) getResultsForFulfiller:(id<WRLDQueryFulfillerHandle>) fulfillerHandle
-{
-    return nil;
-}
-
--(void) completeWithNoProviders
-{
-    [self didComplete :YES];
-}
-
--(void) dispatchRequestsToSearchProviders:(WRLDSearchProviderCollection *) providerHandles
+-(void) dispatchRequestsToSearchProviders:(WRLDSearchRequestFulfillerCollection *) providerHandles
 {
     [m_queryDelegate willSearchFor: self];
     if([providerHandles count] == 0)
     {
-        [self completeWithNoProviders];
+        [self didComplete :YES];
         return;
     }
     for(WRLDSearchProviderHandle* handle in providerHandles)
@@ -79,12 +70,12 @@
     }
 }
 
--(void) dispatchRequestsToSuggestionProviders:(WRLDSuggestionProviderCollection *) providerHandles
+-(void) dispatchRequestsToSuggestionProviders:(WRLDSearchRequestFulfillerCollection *) providerHandles
 {
     [m_queryDelegate willSearchFor: self];
     if([providerHandles count] == 0)
     {
-        [self completeWithNoProviders];
+        [self didComplete :YES];
         return;
     }
     
@@ -96,13 +87,13 @@
     }
 }
 
--(WRLDSearchRequest *) createRequestForFulfiller: (id<WRLDQueryFulfillerHandle>) handle
+-(WRLDSearchRequest *) createRequestForFulfiller: (id<WRLDSearchRequestFulfillerHandle>) handle
 {
     return [[WRLDSearchRequest alloc] initWithFulfillerHandle: handle
-                                                                                        forQuery:self];
+                                                     forQuery:self];
 }
 
--(void) addResults: (WRLDSearchResultsCollection *) results fromFulfiller:(id<WRLDQueryFulfillerHandle>) fulfillerHandle withSuccess:(BOOL) success
+-(void) addResults: (WRLDSearchResultsCollection *) results fromFulfiller:(id<WRLDSearchRequestFulfillerHandle>) fulfillerHandle withSuccess:(BOOL) success
 {
     NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandle.identifier];
     //TODO Find import spell for EEGEO_ASSERT
@@ -124,7 +115,7 @@
     [self didComplete:YES];
 }
 
-- (WRLDSearchResultsCollection *) getResultsFromFulfiller:(id<WRLDQueryFulfillerHandle>)fulfillerHandle
+- (WRLDSearchResultsCollection *) getResultsForFulfiller:(id<WRLDSearchRequestFulfillerHandle>)fulfillerHandle
 {
     NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandle.identifier];
     return [m_fulfillerResultsDictionary objectForKey:key];

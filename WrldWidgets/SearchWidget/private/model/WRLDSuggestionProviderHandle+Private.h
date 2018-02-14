@@ -6,6 +6,6 @@
 
 @interface WRLDSuggestionProviderHandle (Private)
 
--(instancetype) initWithProvider: (id<WRLDSuggestionProvider>) suggestionProvider;
+- (instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSuggestionProvider>) suggestionProvider;
 
 @end

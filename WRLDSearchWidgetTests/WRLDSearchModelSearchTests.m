@@ -18,7 +18,6 @@
 #include "WRLDQueryFinishedDelegate.h"
 #include "WRLDSearchQuery.h"
 #include "WRLDSearchRequest.h"
-#include "WRLDQueryDelegate.h"
 #include "WRLDSearchTypes.h"
 #include "WRLDSearchModelQueryDelegate.h"
 

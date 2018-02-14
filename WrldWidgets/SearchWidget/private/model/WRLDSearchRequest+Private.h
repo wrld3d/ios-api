@@ -2,9 +2,9 @@
 
 #include "WRLDSearchRequest.h"
 
-@protocol WRLDQueryFulfillerHandle;
+@protocol WRLDSearchRequestFulfillerHandle;
 @class WRLDSearchQuery;
 
 @interface WRLDSearchRequest (Private)
--(instancetype) initWithFulfillerHandle: (id<WRLDQueryFulfillerHandle>) fulfillerHandle forQuery:(WRLDSearchQuery *) query;
+-(instancetype) initWithFulfillerHandle: (id<WRLDSearchRequestFulfillerHandle>) fulfillerHandle forQuery:(WRLDSearchQuery *) query;
 @end

@@ -6,7 +6,7 @@
 
 @interface WRLDSearchProviderHandle (Private)
 
--(instancetype) initWithProvider: (id<WRLDSearchProvider>) searchProvider;
+-(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSearchProvider>) searchProvider;
 
 @end
 
