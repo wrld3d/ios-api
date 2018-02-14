@@ -14,11 +14,11 @@
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="resultsHeightConstraint" destination="Ch0-Pu-hmk" id="ugs-bP-EiR"/>
                 <outlet property="resultsTableContainerView" destination="fS6-Uh-JhU" id="jMj-F5-vIi"/>
+                <outlet property="resultsTableView" destination="URT-uZ-0JQ" id="WwU-4o-USZ"/>
                 <outlet property="searchBar" destination="nwq-hq-zts" id="3X3-RJ-bFn"/>
                 <outlet property="suggestionsHeightConstraint" destination="5Bv-Sr-MfB" id="kfw-bs-usa"/>
+                <outlet property="suggestionsTableView" destination="0kP-eT-3ph" id="df6-oc-qgf"/>
                 <outlet property="view" destination="q5F-mI-7jP" id="QkN-3a-GsU"/>
-                <outlet property="wrldSearchWidgetResultsTableView" destination="URT-uZ-0JQ" id="Lww-La-7ar"/>
-                <outlet property="wrldSearchWidgetSuggestionsTableView" destination="0kP-eT-3ph" id="c4O-DM-OZM"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,7 +40,7 @@
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                         </button>
-                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar" customClass="WRLDSearchWidgetSearchBar">
+                        <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar" customClass="WRLDSearchBar">
                             <rect key="frame" x="48" y="10" width="317" height="36"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                             <color key="tintColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>

@@ -115,9 +115,9 @@
     [self didComplete:YES];
 }
 
-- (WRLDSearchResultsCollection *) getResultsForFulfiller:(id<WRLDSearchRequestFulfillerHandle>)fulfillerHandle
+- (WRLDSearchResultsCollection *) getResultsForFulfiller: (NSInteger) fulfillerHandleId
 {
-    NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandle.identifier];
+    NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandleId];
     return [m_fulfillerResultsDictionary objectForKey:key];
 }
 

@@ -185,7 +185,7 @@
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     WRLDSearchProviderHandle * providerHandle = [model addSearchProvider:mockProvider];
     WRLDSearchQuery *query = [model getSearchResultsForString:testString];
-    XCTAssertNil([query getResultsForFulfiller: providerHandle]);
+    XCTAssertNil([query getResultsForFulfiller: providerHandle.identifier]);
 }
 
 - (void)testSearchProviderHandleNotNil {

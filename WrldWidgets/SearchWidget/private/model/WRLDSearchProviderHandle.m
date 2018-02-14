@@ -5,11 +5,12 @@
 
 @synthesize identifier;
 
--(instancetype) initWithProvider: (id<WRLDSearchProvider>) searchProvider
+-(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSearchProvider>) searchProvider
 {
     self = [super init];
     if(self)
     {
+        identifier = uniqueId;
         _provider = searchProvider;
     }
     return self;

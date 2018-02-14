@@ -5,12 +5,13 @@
 
 @synthesize identifier;
 
--(instancetype) initWithProvider: (id<WRLDSuggestionProvider>) suggestionProvider
+-(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSuggestionProvider>) provider
 {
     self = [super init];
     if(self)
     {
-        _provider = suggestionProvider;
+        identifier = uniqueId;
+        _provider = provider;
     }
     return self;
 }

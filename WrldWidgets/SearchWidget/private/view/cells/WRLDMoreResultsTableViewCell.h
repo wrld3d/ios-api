@@ -2,7 +2,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WRLDSearchResultFooterTableViewCell : UITableViewCell
+@interface WRLDMoreResultsTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @end

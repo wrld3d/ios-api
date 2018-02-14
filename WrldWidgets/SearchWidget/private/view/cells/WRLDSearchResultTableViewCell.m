@@ -10,19 +10,25 @@
     NSDictionary *m_descriptionLabelBoldAttrs;
 }
 
--(void) populate : (WRLDSearchResultModel*) searchResult : (NSString*) queryString
+-(void) populateWith: (id<WRLDSearchResultModel>) searchResult highlighting : (NSString*) boldedText
 {
-    [self applyAttributedTextTo:self.titleLabel
-                            text:searchResult.title
-                            boldText:queryString
-                            regularAttributes:m_titleLabelRegularAttrs
-                            boldAttributes:m_titleLabelBoldAttrs];
+    if(self.titleLabel)
+    {
+        [self applyAttributedTextTo:self.titleLabel
+                               text: searchResult.title
+                           boldText: boldedText
+                  regularAttributes: m_titleLabelRegularAttrs
+                     boldAttributes: m_titleLabelBoldAttrs];
+    }
     
-    [self applyAttributedTextTo:self.descriptionLabel
-                           text:searchResult.subTitle
-                       boldText:queryString
-              regularAttributes:m_descriptionLabelRegularAttrs
-                 boldAttributes:m_descriptionLabelBoldAttrs];
+    if(self.descriptionLabel)
+    {
+        [self applyAttributedTextTo:self.descriptionLabel
+                               text: searchResult.subTitle
+                           boldText: boldedText
+                  regularAttributes: m_descriptionLabelRegularAttrs
+                     boldAttributes: m_descriptionLabelBoldAttrs];
+    }
 }
 
 -(void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
@@ -45,14 +51,20 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    UIFont * titleLabelFont = [self.titleLabel font];
-    UIFont *titleLabelBoldFont = [UIFont fontWithDescriptor:[[titleLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:titleLabelFont.pointSize];
-    m_titleLabelRegularAttrs = @{NSFontAttributeName:titleLabelFont};
-    m_titleLabelBoldAttrs = @{NSFontAttributeName:titleLabelBoldFont};
+    if(self.titleLabel)
+    {
+        UIFont * titleLabelFont = [self.titleLabel font];
+        UIFont *titleLabelBoldFont = [UIFont fontWithDescriptor:[[titleLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:titleLabelFont.pointSize];
+        m_titleLabelRegularAttrs = @{NSFontAttributeName:titleLabelFont};
+        m_titleLabelBoldAttrs = @{NSFontAttributeName:titleLabelBoldFont};
+    }
     
-    UIFont * descriptionLabelFont = [self.descriptionLabel font];
-    UIFont *descriptionLabelBoldFont = [UIFont fontWithDescriptor:[[descriptionLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:descriptionLabelFont.pointSize];
-    m_descriptionLabelRegularAttrs = @{NSFontAttributeName:descriptionLabelFont};
-    m_descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
+    if(self.descriptionLabel)
+    {
+        UIFont * descriptionLabelFont = [self.descriptionLabel font];
+        UIFont *descriptionLabelBoldFont = [UIFont fontWithDescriptor:[[descriptionLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:descriptionLabelFont.pointSize];
+        m_descriptionLabelRegularAttrs = @{NSFontAttributeName:descriptionLabelFont};
+        m_descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
+    }
 }
 @end

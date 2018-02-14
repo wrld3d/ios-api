@@ -2,9 +2,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class WRLDSearchResult;
+@protocol WRLDSearchResultModel;
+
 @interface WRLDSearchResultTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
--(void) populate : (WRLDSearchResult*) searchResult : (NSString*) queryString;
+
+-(void) populateWith: (id<WRLDSearchResultModel>) searchResult highlighting : (NSString*) queryString;
+
 @end
