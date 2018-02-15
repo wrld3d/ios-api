@@ -21,6 +21,7 @@
 
 @synthesize title;
 @synthesize cellIdentifier;
+@synthesize cellHeight;
 
 - (instancetype)initWithMapViewAndPoiService:(WRLDMapView*)mapView poiService:(WRLDPoiService*)poiService
 {
@@ -31,6 +32,7 @@
         m_poiSearchId = 0;
         cellIdentifier = @"WRLDSearchResultTableViewCell";
         title = @"WRLD";
+        cellHeight = 64;
         
         m_mapView.delegate = self;
     }

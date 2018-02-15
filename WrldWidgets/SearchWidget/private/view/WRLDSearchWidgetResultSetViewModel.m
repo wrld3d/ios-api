@@ -1,6 +1,7 @@
 #import "WRLDSearchWidgetResultSetViewModel.h"
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchTypes.h"
+#import "WRLDSearchRequestFulfillerHandle.h"
 
 @implementation WRLDSearchWidgetResultSetViewModel
 {
@@ -8,13 +9,14 @@
     NSInteger m_visibleResultsWhenCollapsed;
 }
 
-- (instancetype) initForRequestFulfiller: (NSInteger) requestFulfillerId;
+- (instancetype) initForRequestFulfiller: (id<WRLDSearchRequestFulfillerHandle>) requestFulfillerHandle
 {
     self = [super init];
     if(self)
     {
-        _fulfillerId = requestFulfillerId;
+        _fulfillerId = requestFulfillerHandle.identifier;
         _expandedState = Collapsed;
+        _expectedCellHeight = requestFulfillerHandle.cellHeight;
         m_visibleResultsWhenCollapsed = 3;
     }
     return self;

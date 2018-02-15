@@ -15,11 +15,10 @@
 #include "WRLDSearchProviderHandle.h"
 #include "WRLDSuggestionProvider.h"
 #include "WRLDSuggestionProviderHandle.h"
-#include "WRLDQueryFinishedDelegate.h"
 #include "WRLDSearchQuery.h"
 #include "WRLDSearchRequest.h"
 #include "WRLDSearchTypes.h"
-#include "WRLDSearchModelQueryDelegate.h"
+#include "WRLDSearchQueryObserver.h"
 
 @interface WRLDSearchModelSearchTests : XCTestCase
 
@@ -65,10 +64,10 @@
 
 - (void)testSearchDelegateStartingMethodInvokedOnGetSearchResultsForString
 {
-    id<WRLDQueryStartingDelegate> mockDelegate = OCMProtocolMock(@protocol(WRLDQueryStartingDelegate));
-    [model.searchDelegate addQueryStartingDelegate:mockDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.searchObserver addQueryStartingEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     [model getSearchResultsForString:testString];
-    OCMVerify([mockDelegate willSearchFor:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testSearchQueryCompleteFlagInCorrectStateDuringProviderCompletions {
@@ -99,10 +98,10 @@
 
 - (void)testSearchDelegateCompletionMethodInvokedOnGetSearchForStringWithNoProviders
 {
-    id<WRLDQueryFinishedDelegate> mockDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.searchDelegate addQueryCompletedDelegate:mockDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     [model getSearchResultsForString: testString];
-    OCMVerify([mockDelegate didComplete:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testSearchInvokesCompletionDelegateWhenProvidersComplete {
@@ -117,12 +116,12 @@
     
     [model addSearchProvider:mockProvider];
     
-    id<WRLDQueryFinishedDelegate> mockQueryDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.searchDelegate addQueryCompletedDelegate: mockQueryDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     
     [model getSearchResultsForString:testString];
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
-    OCMVerify([mockQueryDelegate didComplete:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testSearchOnlyInvokesQueryCompletionDelegateWhenAllProvidersComplete {
@@ -144,12 +143,11 @@
     [model addSearchProvider:mockProvider1];
     [model addSearchProvider:mockProvider2];
     
-    id<WRLDQueryFinishedDelegate> mockFinishedDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.searchDelegate addQueryCompletedDelegate: mockFinishedDelegate];
-    
     __block NSInteger numberOfCalls = 0;
-    OCMStub([mockFinishedDelegate didComplete:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                                         { ++numberOfCalls; });
+    
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        ++numberOfCalls;
+    }];
     
     [model getSearchResultsForString:testString];
     [requestCapture1 didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
@@ -159,21 +157,22 @@
 
 - (void)testSearchStartingDelegateInvokedBeforeCompletionDelegateOnGetSearchResultsForStringWithNoProviders
 {
-    id<WRLDQueryStartingDelegate> mockStartDelegate = OCMProtocolMock(@protocol(WRLDQueryStartingDelegate));
-    id<WRLDQueryFinishedDelegate> mockFinishDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
+    __block BOOL didRunStartBlock = NO;
+    __block BOOL didRunCompletedBlock = NO;
     
-    __block BOOL didComplete = NO;
-    OCMStub([mockStartDelegate willSearchFor:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                  { XCTAssertFalse(didComplete); });
+    [model.searchObserver addQueryStartingEvent:^(WRLDSearchQuery *query) {
+        didRunStartBlock = YES;
+        XCTAssertFalse(didRunCompletedBlock);
+    }];
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        didRunCompletedBlock = YES;
+        XCTAssertTrue(didRunStartBlock);
+    }];
     
-    OCMStub([mockFinishDelegate didComplete:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                 { didComplete = YES; });
-    
-    [model.searchDelegate addQueryStartingDelegate:mockStartDelegate];
-    [model.searchDelegate addQueryCompletedDelegate:mockFinishDelegate];
     [model getSearchResultsForString:testString];
-    OCMVerify([mockStartDelegate willSearchFor:[OCMArg any]]);
-    OCMVerify([mockFinishDelegate didComplete:[OCMArg any]]);
+    
+    XCTAssertTrue(didRunStartBlock);
+    XCTAssertTrue(didRunCompletedBlock);
 }
 
 - (void)testASearchQueryWithZeroProvidersIsComplete {

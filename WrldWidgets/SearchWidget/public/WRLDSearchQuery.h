@@ -21,4 +21,5 @@ typedef NS_ENUM(NSInteger, ProgressStatus) {
 @property (readonly) BOOL hasCompleted;
 
 - (WRLDSearchResultsCollection *) getResultsForFulfiller: (NSInteger) fulfillerHandleId;
+- (void) cancel;
 @end

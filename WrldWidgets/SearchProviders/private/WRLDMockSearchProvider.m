@@ -13,6 +13,7 @@
 
 @synthesize title;
 @synthesize cellIdentifier;
+@synthesize cellHeight;
 
 - (instancetype)init
 {
@@ -38,6 +39,7 @@
 {
     cellIdentifier = nil;
     title = @"Mock";
+    cellHeight = 64;
     m_searchResultsDelayInSeconds = searchDelayInSeconds;
     m_suggestionResultsDelayInSeconds = suggestionDelayInSeconds;
 }

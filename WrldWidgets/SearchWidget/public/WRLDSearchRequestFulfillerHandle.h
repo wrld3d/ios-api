@@ -4,5 +4,6 @@
 
 @protocol WRLDSearchRequestFulfillerHandle
 @property (readonly) NSInteger identifier;
+@property (nonatomic, readonly) CGFloat cellHeight;
 @end
 

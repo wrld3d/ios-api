@@ -8,11 +8,11 @@
 @class WRLDSearchProviderHandle;
 @class WRLDSuggestionProviderHandle;
 @class WRLDSearchQuery;
-@class WRLDSearchModelQueryDelegate;
+@class WRLDSearchQueryObserver;
 
 @interface WRLDSearchModel : NSObject
-@property (readonly) WRLDSearchModelQueryDelegate * searchDelegate;
-@property (readonly) WRLDSearchModelQueryDelegate * suggestionDelegate;
+@property (readonly) WRLDSearchQueryObserver * searchObserver;
+@property (readonly) WRLDSearchQueryObserver * suggestionObserver;
 
 -(WRLDSearchProviderHandle *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
 -(void) removeSearchProvider :(WRLDSearchProviderHandle *) searchProviderHandle;

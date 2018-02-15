@@ -5,7 +5,7 @@
 #import "WRLDSuggestionProvider.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchQuery+Private.h"
-#import "WRLDSearchModelQueryDelegate.h"
+#import "WRLDSearchQueryObserver.h"
 
 @implementation WRLDSearchModel
 {
@@ -21,8 +21,8 @@
     {
         m_searchProviders = [[WRLDSearchRequestFulfillerCollection alloc] init];
         m_suggestionProviders = [[WRLDSearchRequestFulfillerCollection alloc] init];
-        _searchDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
-        _suggestionDelegate = [[WRLDSearchModelQueryDelegate alloc] init];
+        _searchObserver = [[WRLDSearchQueryObserver alloc] init];
+        _suggestionObserver = [[WRLDSearchQueryObserver alloc] init];
         m_providerIdGeneration = 0;
     }
     
@@ -61,14 +61,14 @@
 
 -(WRLDSearchQuery *) getSearchResultsForString:(NSString *)queryString
 {
-    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryDelegate: self.searchDelegate];
+    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryObserver: self.searchObserver];
     [query dispatchRequestsToSearchProviders: m_searchProviders];
     return query;
 }
 
 -(WRLDSearchQuery *) getSuggestionsForString:(NSString *)queryString
 {
-    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryDelegate: self.suggestionDelegate];
+    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryObserver: self.suggestionObserver];
     [query dispatchRequestsToSuggestionProviders: m_suggestionProviders];
     return query;
 }

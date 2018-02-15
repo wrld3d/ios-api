@@ -15,11 +15,10 @@
 #include "WRLDSuggestionProvider.h"
 #include "WRLDSuggestionProvider.h"
 #include "WRLDSuggestionProviderHandle.h"
-#include "WRLDQueryFinishedDelegate.h"
 #include "WRLDSearchQuery.h"
 #include "WRLDSearchRequest.h"
 #include "WRLDSearchTypes.h"
-#include "WRLDSearchModelQueryDelegate.h"
+#include "WRLDSearchQueryObserver.h"
 
 @interface WRLDSearchModelSuggestionTests : XCTestCase
 
@@ -65,10 +64,10 @@
 
 - (void)testSuggestionDelegateStartingMethodInvokedOnGetSuggestionsForString
 {
-    id<WRLDQueryStartingDelegate> mockDelegate = OCMProtocolMock(@protocol(WRLDQueryStartingDelegate));
-    [model.suggestionDelegate addQueryStartingDelegate:mockDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.suggestionObserver addQueryStartingEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     [model getSuggestionsForString:testString];
-    OCMVerify([mockDelegate willSearchFor:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testQueryCompleteFlagInCorrectStateDuringProviderCompletions {
@@ -99,10 +98,10 @@
 
 - (void)testSearchDelegateCompletionMethodInvokedOnGetSuggestionsForStringWithNoProviders
 {
-    id<WRLDQueryFinishedDelegate> mockDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.suggestionDelegate addQueryCompletedDelegate:mockDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.suggestionObserver addQueryCompletedEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     [model getSuggestionsForString: testString];
-    OCMVerify([mockDelegate didComplete:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testSearchInvokesCompletionDelegateWhenProvidersComplete {
@@ -117,12 +116,12 @@
     
     [model addSuggestionProvider:mockProvider];
     
-    id<WRLDQueryFinishedDelegate> mockQueryDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.suggestionDelegate addQueryCompletedDelegate: mockQueryDelegate];
+    __block BOOL didRunBlock = NO;
+    [model.suggestionObserver addQueryCompletedEvent:^(WRLDSearchQuery * query){didRunBlock = YES;}];
     
     [model getSuggestionsForString:testString];
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
-    OCMVerify([mockQueryDelegate didComplete:[OCMArg any]]);
+    XCTAssertTrue(didRunBlock);
 }
 
 - (void)testSuggestionsOnlyInvokesCompletionDelegateWhenAllProvidersComplete {
@@ -144,12 +143,11 @@
     [model addSuggestionProvider:mockProvider1];
     [model addSuggestionProvider:mockProvider2];
     
-    id<WRLDQueryFinishedDelegate> mockFinishedDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
-    [model.suggestionDelegate addQueryCompletedDelegate: mockFinishedDelegate];
-    
     __block NSInteger numberOfCalls = 0;
-    OCMStub([mockFinishedDelegate didComplete:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                   { ++numberOfCalls; });
+    
+    [model.suggestionObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        ++numberOfCalls;
+    }];
     
     [model getSuggestionsForString:testString];
     [requestCapture1 didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
@@ -159,21 +157,20 @@
 
 - (void)testSuggestionsStartingDelegateInvokedBeforeCompletionDelegateOnGetSearchResultsForStringWithNoProviders
 {
-    id<WRLDQueryStartingDelegate> mockStartDelegate = OCMProtocolMock(@protocol(WRLDQueryStartingDelegate));
-    id<WRLDQueryFinishedDelegate> mockFinishDelegate = OCMProtocolMock(@protocol(WRLDQueryFinishedDelegate));
+    __block BOOL didRunStartBlock = NO;
+    __block BOOL didRunCompletedBlock = NO;
     
-    __block BOOL didComplete = NO;
-    OCMStub([mockStartDelegate willSearchFor:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                  { XCTAssertFalse(didComplete); });
-    
-    OCMStub([mockFinishDelegate didComplete:[OCMArg any]]).andDo(^(NSInvocation *invocation)
-                                                                 { didComplete = YES; });
-    
-    [model.suggestionDelegate addQueryStartingDelegate:mockStartDelegate];
-    [model.suggestionDelegate addQueryCompletedDelegate:mockFinishDelegate];
+    [model.suggestionObserver addQueryStartingEvent:^(WRLDSearchQuery *query) {
+        didRunStartBlock = YES;
+        XCTAssertFalse(didRunCompletedBlock);
+    }];
+    [model.suggestionObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        didRunCompletedBlock = YES;
+        XCTAssertTrue(didRunStartBlock);
+    }];
     [model getSuggestionsForString:testString];
-    OCMVerify([mockStartDelegate willSearchFor:[OCMArg any]]);
-    OCMVerify([mockFinishDelegate didComplete:[OCMArg any]]);
+    XCTAssertTrue(didRunStartBlock);
+    XCTAssertTrue(didRunCompletedBlock);
 }
 
 - (void)testASuggestionQueryWithZeroProvidersIsComplete {

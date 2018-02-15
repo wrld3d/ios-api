@@ -5,8 +5,8 @@
 #import "WRLDSearchWidgetTableViewController.h"
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDSearchModel.h"
-#import "WRLDSearchModelQueryDelegate.h"
-#import "WRLDQueryFinishedViewUpdateDelegate.h"
+#import "WRLDSearchQueryObserver.h"
+#import "WRLDSearchQuery.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -30,6 +30,8 @@
     NSString * m_searchResultsTableViewDefaultCellStyleIdentifier;
     NSString * m_moreResultsCellStyleIdentifier;
     NSString * m_searchInProgressCellStyleIdentifier;
+    
+    WRLDSearchQuery * m_mostRecentQuery;
 }
 
 - (instancetype) initWithSearchModel : (WRLDSearchModel *) searchModel
@@ -53,6 +55,25 @@
     NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
     [self initialiseSearchResultsTableViewWithResourcesFrom: widgetsBundle];
     [self initialiseSuggestionTableViewWithResourcesFrom: widgetsBundle];
+    
+    [m_searchModel.searchObserver addQueryStartingEvent: ^(WRLDSearchQuery * query)
+     {
+         [m_searchResultsViewController showQuery: query];
+         [m_searchResultsViewController show];
+         [m_suggestionsViewController hide];
+     }];
+    
+    [m_searchModel.searchObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
+     {
+         [m_searchResultsViewController showQuery: query];
+     }];
+    
+    [m_searchModel.suggestionObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
+     {
+         [m_suggestionsViewController showQuery: query];
+         [m_searchResultsViewController hide];
+         [m_suggestionsViewController show];
+     }];
 }
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
@@ -67,19 +88,51 @@
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [m_searchModel getSuggestionsForString: searchText];
+    NSString *trimmedSearchText = [searchText stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]];
+
+    if(m_mostRecentQuery && [trimmedSearchText isEqualToString: m_mostRecentQuery.queryString])
+    {
+        return;
+    }
+    
+    [m_searchResultsViewController hide];
+    
+    [self cancelMostRecentQueryIfNotComplete];
+    
+    if([trimmedSearchText length] > 0)
+    {
+        m_mostRecentQuery = [m_searchModel getSuggestionsForString: trimmedSearchText];
+    }
+    else
+    {
+        [m_suggestionsViewController hide];
+    }
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [m_searchModel getSearchResultsForString: searchBar.text];
+    [self cancelMostRecentQueryIfNotComplete];
+    [m_suggestionsViewController hide];
+    m_mostRecentQuery = [m_searchModel getSearchResultsForString: searchBar.text];
+    [self.searchBar resignFirstResponder];
+}
+
+- (void) cancelMostRecentQueryIfNotComplete
+{
+    if(!m_mostRecentQuery.hasCompleted)
+    {
+        [m_mostRecentQuery cancel];
+        m_mostRecentQuery = nil;
+    }
 }
 
 - (void) initialiseSearchResultsTableViewWithResourcesFrom :(NSBundle*) resourceBundle
 {
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
-                                                                             defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier
-                                                                                  heightConstraint:self.resultsHeightConstraint];
+                                                                                    visibilityView: self.resultsTableContainerView
+                                                                                  heightConstraint:self.resultsHeightConstraint
+                                                                             defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
 
     [self.resultsTableView registerNib:[UINib nibWithNibName: m_searchResultsTableViewDefaultCellStyleIdentifier bundle:resourceBundle]
                 forCellReuseIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
@@ -87,25 +140,20 @@
                 forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
     [self.resultsTableView registerNib:[UINib nibWithNibName:m_searchInProgressCellStyleIdentifier bundle: resourceBundle]
                 forCellReuseIdentifier: m_searchInProgressCellStyleIdentifier];
-    
-    WRLDQueryFinishedViewUpdateDelegate * showSearchResults = [[WRLDQueryFinishedViewUpdateDelegate alloc] initWithDisplayer: m_searchResultsViewController];
-    [m_searchModel.searchDelegate addQueryCompletedDelegate: showSearchResults];
 }
 
 - (void) initialiseSuggestionTableViewWithResourcesFrom :(NSBundle*) resourceBundle
 {
     m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
-                                                                           defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier
-                                                                                heightConstraint:self.suggestionsHeightConstraint];
+                                                                                  visibilityView: self.suggestionsTableView
+                                                                                heightConstraint:self.suggestionsHeightConstraint
+                                                                           defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
     
     self.suggestionsTableView.sectionHeaderHeight = 0;
     self.suggestionsTableView.sectionFooterHeight = 0;
     
     UINib * nib = [UINib nibWithNibName: m_suggestionsTableViewCellStyleIdentifier bundle: resourceBundle];
     [self.suggestionsTableView registerNib:nib forCellReuseIdentifier: m_suggestionsTableViewCellStyleIdentifier];
-    
-    WRLDQueryFinishedViewUpdateDelegate * showSuggestions = [[WRLDQueryFinishedViewUpdateDelegate alloc] initWithDisplayer: m_suggestionsViewController];
-    [m_searchModel.suggestionDelegate addQueryCompletedDelegate: showSuggestions];
 }
 
 - (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider

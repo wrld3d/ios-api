@@ -4,6 +4,7 @@
 @implementation WRLDSuggestionProviderHandle
 
 @synthesize identifier;
+@synthesize cellHeight;
 
 -(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSuggestionProvider>) provider
 {
@@ -12,6 +13,7 @@
     {
         identifier = uniqueId;
         _provider = provider;
+        cellHeight = 32;
     }
     return self;
 }

@@ -10,16 +10,24 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 @implementation WRLDSearchWidgetTableViewController
 {
     UITableView * m_tableView;
+    UIView * m_visibilityView;
     NSLayoutConstraint * m_heightConstraint;
     ResultSetViewModelCollection * m_providerViewModels;
     NSString * m_defaultCellIdentifier;
     WRLDSearchQuery *m_displayedQuery;
-    CGFloat m_fadeInDuration;
+    CGFloat m_fadeDuration;
+    
+    CGFloat m_searchInProgressCellHeight;
+    CGFloat m_footerCellHeight;
+    CGFloat m_maxTableHeight;
     
     bool m_isAnimatingOut;
 }
 
-- (instancetype) initWithTableView: (UITableView *) tableView defaultCellIdentifier: (NSString *) defaultCellIdentifier heightConstraint: (NSLayoutConstraint *) heightConstraint
+- (instancetype) initWithTableView: (UITableView *) tableView
+                    visibilityView: (UIView*) visibilityView
+                  heightConstraint: (NSLayoutConstraint *) heightConstraint
+             defaultCellIdentifier: (NSString *) defaultCellIdentifier
 {
     self = [super init];
     if(self)
@@ -27,11 +35,16 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_tableView = tableView;
         m_tableView.dataSource = self;
         m_tableView.delegate = self;
+        m_visibilityView = visibilityView;
         m_heightConstraint = heightConstraint;
         m_providerViewModels = [[ResultSetViewModelCollection alloc] init];
         m_isAnimatingOut = false;
         m_defaultCellIdentifier = defaultCellIdentifier;
-        m_fadeInDuration = 1.0f;
+        m_fadeDuration = 1.0f;
+        
+        m_searchInProgressCellHeight = 48;
+        m_footerCellHeight = 32;
+        m_maxTableHeight = 400;
     }
     
     return self;
@@ -44,13 +57,13 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     {
         [set updateResultData:[sourceQuery getResultsForFulfiller: set.fulfillerId]];
     }
-    [self fadeIn];
+    [self resizeTable];
     [m_tableView reloadData];
 }
 
 - (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
 {
-    WRLDSearchWidgetResultSetViewModel * newProviderViewModel = [[WRLDSearchWidgetResultSetViewModel alloc] initForRequestFulfiller:provider.identifier];
+    WRLDSearchWidgetResultSetViewModel * newProviderViewModel = [[WRLDSearchWidgetResultSetViewModel alloc] initForRequestFulfiller: provider];
     [m_providerViewModels addObject: newProviderViewModel];
     [m_tableView reloadData];
 }
@@ -88,12 +101,12 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [cell populateWith: resultModel highlighting: m_displayedQuery.queryString];
 }
 
--(void) fadeIn
+- (void) resizeTable
 {
     CGFloat height = 0;
     if([m_displayedQuery progress] == InFlight)
     {
-        height = 48;
+        height = m_searchInProgressCellHeight;
     }
     else
     {
@@ -101,21 +114,54 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         {
             height += [self getHeightForSet: i];
         }
-        height = MIN(400, height);
+        height = MIN(m_maxTableHeight, height);
     }
     
-    [UIView animateWithDuration: m_fadeInDuration animations:^{
+    [UIView animateWithDuration: m_fadeDuration animations:^{
         m_heightConstraint.constant = height;
-        [m_tableView layoutIfNeeded];
-        m_tableView.alpha = 1.0;
+        [m_visibilityView layoutIfNeeded];
     }];
-    m_tableView.hidden = NO;
+}
+
+- (void) show
+{
+    [UIView animateWithDuration: m_fadeDuration animations:^{
+        m_visibilityView.alpha = 1.0;
+    }];
+    m_visibilityView.hidden = NO;
+}
+
+- (void) hide
+{
+    if(!m_isAnimatingOut)
+    {
+        m_isAnimatingOut = true;
+        [UIView animateWithDuration: m_fadeDuration animations:^{
+            m_visibilityView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if(finished){
+                m_visibilityView.hidden =  YES;
+                m_isAnimatingOut = false;
+            }
+        }];
+    }
 }
 
 -(CGFloat) getHeightForSet : (NSInteger) setIndex
 {
-    WRLDSearchWidgetResultSetViewModel *set = [m_providerViewModels objectAtIndex: setIndex];
-    return 32 * [set getVisibleResultCount];
+    CGFloat height = 0;
+    
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: setIndex];
+    height += [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
+    
+    return height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
+    return setViewModel.expectedCellHeight;
 }
 
 @end

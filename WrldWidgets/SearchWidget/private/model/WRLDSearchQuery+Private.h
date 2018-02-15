@@ -3,13 +3,13 @@
 #include "WRLDSearchQuery.h"
 #include "WRLDSearchTypes.h"
 
-@class WRLDSearchModelQueryDelegate;
+@class WRLDSearchQueryObserver;
 @class WRLDSearchRequest;
 @protocol WRLDSearchRequestFulfillerHandle;
 
 @interface WRLDSearchQuery (Private)
 
-- (instancetype) initWithQueryString: (NSString*) queryString queryDelegate: (WRLDSearchModelQueryDelegate *) queryDelegate;
+- (instancetype) initWithQueryString: (NSString*) queryString queryObserver: (WRLDSearchQueryObserver *) queryObserver;
 
 - (void) dispatchRequestsToSearchProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;
 - (void) dispatchRequestsToSuggestionProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;

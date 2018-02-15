@@ -7,23 +7,23 @@
 #import "WRLDSuggestionProviderHandle.h"
 #import "WRLDSearchProvider.h"
 #import "WRLDSuggestionProvider.h"
-#import "WRLDSearchModelQueryDelegate.h"
+#import "WRLDSearchQueryObserver.h"
 
 @implementation WRLDSearchQuery
 {
     WRLDFulfillerResultsDictionary* m_fulfillerResultsDictionary;
     NSMutableArray<WRLDSearchRequest *>* m_requests;
-    WRLDSearchModelQueryDelegate* m_queryDelegate;
+    WRLDSearchQueryObserver* m_queryObserver;
 }
 
--(instancetype) initWithQueryString:(NSString*) queryString queryDelegate:(WRLDSearchModelQueryDelegate *) queryDelegate
+-(instancetype) initWithQueryString:(NSString*) queryString queryObserver:(WRLDSearchQueryObserver *) queryObserver
 {
     self = [super init];
     if(self)
     {
         _queryString = queryString;
         m_requests =[[NSMutableArray<WRLDSearchRequest *> alloc ]  init];
-        m_queryDelegate = queryDelegate;
+        m_queryObserver = queryObserver;
         m_fulfillerResultsDictionary = [[WRLDFulfillerResultsDictionary alloc] init];
     }
     return self;
@@ -31,9 +31,12 @@
 
 - (void) cancel
 {
-    _progress = Cancelled;
-    _hasCompleted = YES;
-    _hasSucceeded = NO;
+    if(!self.hasCompleted)
+    {
+        _progress = Cancelled;
+        _hasCompleted = YES;
+        _hasSucceeded = NO;
+    }
 }
 
 - (void) cancelRequest: (WRLDSearchRequest *) cancelledRequest;
@@ -48,15 +51,15 @@
     _hasCompleted = YES;
     _hasSucceeded = success;
     
-    if(m_queryDelegate)
+    if(m_queryObserver)
     {
-        [m_queryDelegate didComplete:self];
+        [m_queryObserver didComplete:self];
     }
 }
 
 -(void) dispatchRequestsToSearchProviders:(WRLDSearchRequestFulfillerCollection *) providerHandles
 {
-    [m_queryDelegate willSearchFor: self];
+    [m_queryObserver willSearchFor: self];
     if([providerHandles count] == 0)
     {
         [self didComplete :YES];
@@ -72,7 +75,7 @@
 
 -(void) dispatchRequestsToSuggestionProviders:(WRLDSearchRequestFulfillerCollection *) providerHandles
 {
-    [m_queryDelegate willSearchFor: self];
+    [m_queryObserver willSearchFor: self];
     if([providerHandles count] == 0)
     {
         [self didComplete :YES];
@@ -95,9 +98,12 @@
 
 -(void) addResults: (WRLDSearchResultsCollection *) results fromFulfiller:(id<WRLDSearchRequestFulfillerHandle>) fulfillerHandle withSuccess:(BOOL) success
 {
+    if(self.progress == Cancelled)
+    {
+        return;
+    }
+    
     NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandle.identifier];
-    //TODO Find import spell for EEGEO_ASSERT
-    //EEGEO_ASSERT([m_fulfillerResultsDictionary objectForKey:key] == nil, @"Cannot add multiple result sets from the same provider to a combined query");
     
     [m_fulfillerResultsDictionary setObject: results forKey: key];
     [self checkForCompletion];
