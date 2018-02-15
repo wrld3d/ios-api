@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyBuildingInformationReceived:(int)buildingHighlightId;
 
+- (void)notifyIndoorEntitySelected:(const std::vector<std::string>&)indoorEntityIds;
+
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
 const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode);

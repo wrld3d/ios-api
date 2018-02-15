@@ -26,6 +26,8 @@
 #import "WRLDBuildingHighlight+Private.h"
 #import "WRLDPickResult.h"
 #import "WRLDPickingApiHelpers.h"
+#import "WRLDMathApiHelpers.h"
+#import "WRLDEntityHighlightsApiHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -50,6 +52,7 @@
 #include "MapsceneRequestResponse.h"
 #include "EegeoBuildingsApi.h"
 #include "EegeoPickingApi.h"
+#include "EegeoIndoorEntityApi.h"
 
 #include <string>
 
@@ -935,6 +938,27 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     }
 }
 
+- (void)setEntityHighlights:(NSString*)indoorId highlightIds:(NSArray<NSString*>*)highlightIds color:(UIColor*) color
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.SetHighlights(std::string([indoorId UTF8String]),
+                               [WRLDEntityHighlightsApiHelpers createNativeEntityHighlightIds:highlightIds],
+                               [WRLDMathApiHelpers getEegeoColor:color]);
+}
+
+- (void)clearEntityHighlights:(NSString*)indoorId highlightIds:(NSArray<NSString*>*)highlightIds
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.ClearHighlights(std::string([indoorId UTF8String]),
+                                 [WRLDEntityHighlightsApiHelpers createNativeEntityHighlightIds:highlightIds]);
+}
+
+- (void)clearAllEntityHighlights
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.ClearAllHighlights();
+}
+
 - (void)setMapCollapsed:(BOOL)isMapCollapsed
 {
     [self getMapApi].GetRenderingApi().SetMapCollapsed(isMapCollapsed);
@@ -1187,6 +1211,14 @@ template<typename T> inline T* safe_cast(id instance)
     if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
     {
         [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+    }
+}
+
+- (void)notifyIndoorEntitySelected:(const std::vector<std::string>&)indoorEntityIds
+{
+    if ([self.delegate respondsToSelector:@selector(mapView:didPickIndoorEntities:)])
+    {
+        [self.delegate mapView:self didPickIndoorEntities:[WRLDEntityHighlightsApiHelpers createEntityHighlightIds:indoorEntityIds]];
     }
 }
 

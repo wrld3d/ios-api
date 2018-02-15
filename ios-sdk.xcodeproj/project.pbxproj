@@ -105,6 +105,8 @@
 		BB3CEC13202B1CA000AF5235 /* WRLDTouchTapInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3CEC12202B1CA000AF5235 /* WRLDTouchTapInfo.m */; };
 		BB3CEC19202B335600AF5235 /* WRLDVector3+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB3CEC18202B31F700AF5235 /* WRLDVector3+Private.h */; };
 		BB3CEC1A202B335800AF5235 /* WRLDTouchTapInfo+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB3CEC17202B31E000AF5235 /* WRLDTouchTapInfo+Private.h */; };
+		BB3CEC292032B06100AF5235 /* WRLDEntityHighlightsApiHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB3CEC282032B06100AF5235 /* WRLDEntityHighlightsApiHelpers.mm */; };
+		BB3CEC2B2032B06C00AF5235 /* WRLDEntityHighlightsApiHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB3CEC2A2032B06C00AF5235 /* WRLDEntityHighlightsApiHelpers.h */; };
 		BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */; };
 		BB6B6D631FD566EF0070E78F /* WRLDRoutingService+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BBB719DC1FD551E00046A455 /* WRLDRoutingService+Private.h */; };
 		BB6B6D641FD5670C0070E78F /* WRLDRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -360,6 +362,8 @@
 		BB3CEC12202B1CA000AF5235 /* WRLDTouchTapInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDTouchTapInfo.m; sourceTree = "<group>"; };
 		BB3CEC17202B31E000AF5235 /* WRLDTouchTapInfo+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDTouchTapInfo+Private.h"; sourceTree = "<group>"; };
 		BB3CEC18202B31F700AF5235 /* WRLDVector3+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDVector3+Private.h"; sourceTree = "<group>"; };
+		BB3CEC282032B06100AF5235 /* WRLDEntityHighlightsApiHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDEntityHighlightsApiHelpers.mm; sourceTree = "<group>"; };
+		BB3CEC2A2032B06C00AF5235 /* WRLDEntityHighlightsApiHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDEntityHighlightsApiHelpers.h; sourceTree = "<group>"; };
 		BB5B77651FCEE78F00299970 /* WRLDRouteTransportationMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteTransportationMode.h; sourceTree = "<group>"; };
 		BB5B77661FCEEDCD00299970 /* WRLDRoutingQueryResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingQueryResponse.h; sourceTree = "<group>"; };
 		BB5B77671FCEEF6500299970 /* WRLDRoutingQueryResponse.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingQueryResponse.mm; sourceTree = "<group>"; };
@@ -793,6 +797,8 @@
 				BBFA4A2B2021ED6000124AF1 /* WRLDPickingApiHelpers.h */,
 				BB3CEC12202B1CA000AF5235 /* WRLDTouchTapInfo.m */,
 				BB3CEC17202B31E000AF5235 /* WRLDTouchTapInfo+Private.h */,
+				BB3CEC282032B06100AF5235 /* WRLDEntityHighlightsApiHelpers.mm */,
+				BB3CEC2A2032B06C00AF5235 /* WRLDEntityHighlightsApiHelpers.h */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -934,6 +940,7 @@
 				BB6B6DB51FEB8A890070E78F /* WRLDBuildingHighlightOptions.h in Headers */,
 				D01C9D7C1F20DF0100714D7F /* WRLDBlueSphere.h in Headers */,
 				E0F4E1731EB347FB00949ACE /* WRLDApi+Private.h in Headers */,
+				BB3CEC2B2032B06C00AF5235 /* WRLDEntityHighlightsApiHelpers.h in Headers */,
 				6F96F3411FE02B4000A560FF /* WRLDMapsceneSearchConfig+Private.h in Headers */,
 				521807AF1EB8F9ED0070ACDD /* WRLDMapCamera.h in Headers */,
 				D09B2CE12005199200162BCC /* WRLDRouteViewOptions+Private.h in Headers */,
@@ -1235,6 +1242,7 @@
 				D01C9D7E1F20E01600714D7F /* WRLDBlueSphere.mm in Sources */,
 				BB8448282018A1DB00F86EFC /* WRLDMathApiHelpers.mm in Sources */,
 				D0AAB65B1EBB8E8000384605 /* WRLDMarker.mm in Sources */,
+				BB3CEC292032B06100AF5235 /* WRLDEntityHighlightsApiHelpers.mm in Sources */,
 				6F96F33F1FE0207C00A560FF /* WRLDMapsceneSearchMenuItem.m in Sources */,
 				A8E5997B1FB5F8ED00695193 /* WRLDPoiSearchResult.mm in Sources */,
 				A8E599771FB5EDCF00695193 /* WRLDPoiSearchResponse.mm in Sources */,

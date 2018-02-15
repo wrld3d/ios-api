@@ -14,6 +14,7 @@
 #include "MapsceneRequestResponse.h"
 #include "RoutingQueryResponse.h"
 #include "EegeoBuildingsApi.h"
+#include "EegeoIndoorEntityApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -34,7 +35,8 @@ private:
     void OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneRequestResponse);
     void OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse);
     void OnBuildingInformationReceived(const Eegeo::BuildingHighlights::BuildingHighlightId& buildingHighlightId);
-    
+    void OnIndoorEntityPicked(const Eegeo::Api::IndoorEntityPickedMessage& indoorEntityPickedMessage);
+
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
     __weak WRLDMapView* m_mapView;
@@ -60,6 +62,8 @@ private:
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Routes::Webservice::RoutingQueryResponse> m_routingQueryCompletedHandler;
 
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::BuildingHighlights::BuildingHighlightId> m_buildingInformationReceivedHandler;
+
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::IndoorEntityPickedMessage> m_indoorEntityPickedHandler;
 };
 
 

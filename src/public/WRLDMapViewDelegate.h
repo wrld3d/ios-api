@@ -106,4 +106,12 @@ routingQueryResponse: (WRLDRoutingQueryResponse*) routingQueryResponse;
  */
 - (void)mapView:(WRLDMapView *)mapView didReceiveBuildingInformationForHighlight: (WRLDBuildingHighlight*) buildingHighlight;
 
+
+/*!
+ A message sent when indoor entities are picked.
+ @param mapView The WRLDMapView that is being observed.
+ @param indoorEntityIds The ID(s) of indoor entities that were picked.
+ */
+- (void)mapView:(WRLDMapView *)mapView didPickIndoorEntities: (NSArray<NSString*>*) indoorEntityIds;
+
 @end
