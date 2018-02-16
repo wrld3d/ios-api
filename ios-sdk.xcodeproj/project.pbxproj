@@ -34,7 +34,7 @@
 		2619A05F202C6039002CF191 /* WRLDMockSearchProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619A05D202C6039002CF191 /* WRLDMockSearchProvider.m */; };
 		2619A060202C6039002CF191 /* WRLDMockSearchProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2619A05E202C6039002CF191 /* WRLDMockSearchProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2619A07E202C6A95002CF191 /* WRLDSearchModelSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619A067202C67CD002CF191 /* WRLDSearchModelSearchTests.m */; };
-		2619A083202C78A5002CF191 /* WRLDMoreSearchResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2619A07F202C78A4002CF191 /* WRLDMoreSearchResultsTableViewCell.xib */; };
+		2619A083202C78A5002CF191 /* WRLDMoreResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2619A07F202C78A4002CF191 /* WRLDMoreResultsTableViewCell.xib */; };
 		2619A084202C78A5002CF191 /* WRLDSearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2619A080202C78A5002CF191 /* WRLDSearchResultTableViewCell.xib */; };
 		2619A085202C78A5002CF191 /* WRLDSearchInProgressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2619A081202C78A5002CF191 /* WRLDSearchInProgressTableViewCell.xib */; };
 		2619A086202C78A5002CF191 /* WRLDSuggestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2619A082202C78A5002CF191 /* WRLDSuggestionTableViewCell.xib */; };
@@ -335,7 +335,7 @@
 		2619A067202C67CD002CF191 /* WRLDSearchModelSearchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchModelSearchTests.m; sourceTree = "<group>"; };
 		2619A074202C6A83002CF191 /* WRLDSearchWidgetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WRLDSearchWidgetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2619A078202C6A83002CF191 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2619A07F202C78A4002CF191 /* WRLDMoreSearchResultsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDMoreSearchResultsTableViewCell.xib; sourceTree = "<group>"; };
+		2619A07F202C78A4002CF191 /* WRLDMoreResultsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDMoreResultsTableViewCell.xib; sourceTree = "<group>"; };
 		2619A080202C78A5002CF191 /* WRLDSearchResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchResultTableViewCell.xib; sourceTree = "<group>"; };
 		2619A081202C78A5002CF191 /* WRLDSearchInProgressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchInProgressTableViewCell.xib; sourceTree = "<group>"; };
 		2619A082202C78A5002CF191 /* WRLDSuggestionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSuggestionTableViewCell.xib; sourceTree = "<group>"; };
@@ -738,7 +738,7 @@
 			isa = PBXGroup;
 			children = (
 				2619A081202C78A5002CF191 /* WRLDSearchInProgressTableViewCell.xib */,
-				2619A07F202C78A4002CF191 /* WRLDMoreSearchResultsTableViewCell.xib */,
+				2619A07F202C78A4002CF191 /* WRLDMoreResultsTableViewCell.xib */,
 				2619A080202C78A5002CF191 /* WRLDSearchResultTableViewCell.xib */,
 				2619A082202C78A5002CF191 /* WRLDSuggestionTableViewCell.xib */,
 				2693DEAB202AFEA4000F91CF /* WRLDSearchWidget.xib */,
@@ -1405,7 +1405,7 @@
 				2693DED4202AFFFB000F91CF /* Microphone_Available.png in Resources */,
 				2693DED6202AFFFB000F91CF /* MoreResults_butn@3x.png in Resources */,
 				2693DEEA202AFFFB000F91CF /* Expander.png in Resources */,
-				2619A083202C78A5002CF191 /* WRLDMoreSearchResultsTableViewCell.xib in Resources */,
+				2619A083202C78A5002CF191 /* WRLDMoreResultsTableViewCell.xib in Resources */,
 				2693DEE7202AFFFB000F91CF /* Menu_btn@3x.png in Resources */,
 				2693DEDA202AFFFB000F91CF /* Expander@3x.png in Resources */,
 				2CB2C5E01EC1D95500C0B401 /* images in Resources */,

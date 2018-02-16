@@ -28,13 +28,13 @@
     WRLDSearchWidgetTableViewController* m_suggestionsViewController;
     NSString * m_suggestionsTableViewCellStyleIdentifier;
     NSString * m_searchResultsTableViewDefaultCellStyleIdentifier;
-    NSString * m_moreResultsCellStyleIdentifier;
-    NSString * m_searchInProgressCellStyleIdentifier;
-    
-    CGFloat m_headerCellHeight;
-    CGFloat m_moreResultsCellStyleIdentifierHeight;
     
     WRLDSearchQuery * m_mostRecentQuery;
+    
+    NSInteger maxVisibleCollapsedResults;
+    NSInteger maxVisibleExpandedResults;
+    
+    NSInteger maxVisibleSuggestions;
 }
 
 - (instancetype) initWithSearchModel : (WRLDSearchModel *) searchModel
@@ -46,8 +46,11 @@
         m_searchModel = searchModel;
         m_suggestionsTableViewCellStyleIdentifier = @"WRLDSuggestionTableViewCell";
         m_searchResultsTableViewDefaultCellStyleIdentifier = @"WRLDSearchResultTableViewCell";
-        m_moreResultsCellStyleIdentifier = @"WRLDMoreResultsTableViewCell";
-        m_searchInProgressCellStyleIdentifier = @"WRLDSearchInProgressTableViewCell";
+        
+        maxVisibleCollapsedResults = 3;
+        maxVisibleExpandedResults = 100;
+        
+        maxVisibleSuggestions = 3;
     }
     return self;
 }
@@ -55,9 +58,16 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    NSBundle* widgetsBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
-    [self initialiseSearchResultsTableViewWithResourcesFrom: widgetsBundle];
-    [self initialiseSuggestionTableViewWithResourcesFrom: widgetsBundle];
+
+    m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
+                                                                                    visibilityView: self.resultsTableContainerView
+                                                                                  heightConstraint:self.resultsHeightConstraint
+                                                                             defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
+    
+    m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
+                                                                                  visibilityView: self.suggestionsTableView
+                                                                                heightConstraint:self.suggestionsHeightConstraint
+                                                                           defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
     
     [m_searchModel.searchObserver addQueryStartingEvent: ^(WRLDSearchQuery * query)
      {
@@ -130,42 +140,11 @@
     }
 }
 
-- (void) initialiseSearchResultsTableViewWithResourcesFrom :(NSBundle*) resourceBundle
-{
-    m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
-                                                                                    visibilityView: self.resultsTableContainerView
-                                                                                  heightConstraint:self.resultsHeightConstraint
-                                                                             defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
-    
-    // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
-    [m_searchResultsViewController setHeaderHeight:CGFLOAT_MIN];
-    [m_searchResultsViewController setFooterHeight:m_moreResultsCellStyleIdentifierHeight];
-
-    [self.resultsTableView registerNib:[UINib nibWithNibName: m_searchResultsTableViewDefaultCellStyleIdentifier bundle:resourceBundle]
-                forCellReuseIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
-    [self.resultsTableView registerNib:[UINib nibWithNibName:m_moreResultsCellStyleIdentifier bundle: resourceBundle]
-                forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
-    [self.resultsTableView registerNib:[UINib nibWithNibName:m_searchInProgressCellStyleIdentifier bundle: resourceBundle]
-                forCellReuseIdentifier: m_searchInProgressCellStyleIdentifier];
-}
-
-- (void) initialiseSuggestionTableViewWithResourcesFrom :(NSBundle*) resourceBundle
-{
-    m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
-                                                                                  visibilityView: self.suggestionsTableView
-                                                                                heightConstraint:self.suggestionsHeightConstraint
-                                                                           defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
-    // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
-    [m_suggestionsViewController setHeaderHeight:CGFLOAT_MIN];
-    [m_suggestionsViewController setFooterHeight:CGFLOAT_MIN];
-    
-    UINib * nib = [UINib nibWithNibName: m_suggestionsTableViewCellStyleIdentifier bundle: resourceBundle];
-    [self.suggestionsTableView registerNib:nib forCellReuseIdentifier: m_suggestionsTableViewCellStyleIdentifier];
-}
-
 - (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
 {
-    [m_searchResultsViewController displayResultsFrom: searchProvider];
+    [m_searchResultsViewController displayResultsFrom: searchProvider
+                               maxToShowWhenCollapsed: maxVisibleCollapsedResults
+                                maxToShowWhenExpanded: maxVisibleExpandedResults];
 }
 
 - (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle *) searchProvider
@@ -175,7 +154,9 @@
 
 - (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
 {
-    [m_suggestionsViewController displayResultsFrom: suggestionProvider];
+    [m_suggestionsViewController displayResultsFrom: suggestionProvider
+                             maxToShowWhenCollapsed: maxVisibleSuggestions
+                              maxToShowWhenExpanded: maxVisibleSuggestions];
 }
 
 - (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider

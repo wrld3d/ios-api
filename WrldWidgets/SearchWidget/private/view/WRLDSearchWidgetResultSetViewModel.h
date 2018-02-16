@@ -17,16 +17,23 @@ typedef NS_ENUM(NSInteger, ExpandedStateType) {
 
 @property (nonatomic, readonly) NSInteger fulfillerId;
 @property (nonatomic, readonly) ExpandedStateType expandedState;
-@property (nonatomic, readonly) NSInteger totalResultCount;
 @property (nonatomic, readonly) CGFloat expectedCellHeight;
 @property (nonatomic, readonly) BOOL hasMoreToShow;
+@property (nonatomic, readonly, copy) NSString* cellIdentifier;
+@property (nonatomic, readonly, copy) NSString* moreResultsName;
 
-- (instancetype) initForRequestFulfiller: (id<WRLDSearchRequestFulfillerHandle>) requestFulfillerHandle;
+- (instancetype) initForRequestFulfiller: (id<WRLDSearchRequestFulfillerHandle>) requestFulfillerHandle
+                  maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
+                   maxToShowWhenExpanded: (NSInteger) maxToShoWhenExpanded;
+
 - (void) updateResultData: (WRLDSearchResultsCollection *) results;
+- (void) setExpandedState: (ExpandedStateType) state;
 
 - (id<WRLDSearchResultModel>) getResult: (NSInteger) index;
 
 - (NSInteger) getVisibleResultCount;
+- (NSInteger) getResultCount;
+- (BOOL) isMoreResultsCell: (NSInteger) row;
 
 @end
 

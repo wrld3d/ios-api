@@ -12,10 +12,12 @@
                   heightConstraint: (NSLayoutConstraint *) heightConstraint
              defaultCellIdentifier: (NSString *) defaultCellIdentifier;
 
-- (void) setHeaderHeight: (CGFloat) height;
-- (void) setFooterHeight: (CGFloat) height;
 - (void) showQuery: (WRLDSearchQuery *) query;
-- (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider;
+
+- (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
+     maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
+      maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded;
+
 - (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider;
 - (void) show;
 - (void) hide;

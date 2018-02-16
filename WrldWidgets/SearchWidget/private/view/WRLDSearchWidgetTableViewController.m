@@ -4,6 +4,8 @@
 #import "WRLDSearchWidgetResultSetViewModel.h"
 #import "WRLDSearchRequestFulfillerHandle.h"
 #import "WRLDSearchResultTableViewCell.h"
+#import "WRLDMoreResultsTableViewCell.h"
+#import "WRLDSearchInProgressTableViewCell.h"
 
 typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelCollection;
 
@@ -18,9 +20,11 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     CGFloat m_fadeDuration;
     
     CGFloat m_searchInProgressCellHeight;
-    CGFloat m_headerCellHeight;
-    CGFloat m_footerCellHeight;
+    CGFloat m_moreResultsCellHeight;
     CGFloat m_maxTableHeight;
+    
+    NSString * m_moreResultsCellStyleIdentifier;
+    NSString * m_searchInProgressCellStyleIdentifier;
     
     bool m_isAnimatingOut;
 }
@@ -43,26 +47,30 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_defaultCellIdentifier = defaultCellIdentifier;
         m_fadeDuration = 1.0f;
         
+        m_moreResultsCellStyleIdentifier = @"WRLDMoreResultsTableViewCell";
+        m_searchInProgressCellStyleIdentifier = @"WRLDSearchInProgressTableViewCell";
+        
         m_searchInProgressCellHeight = 48;
-        // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
-        [self setHeaderHeight: CGFLOAT_MIN];
-        [self setFooterHeight: CGFLOAT_MIN];
+        m_moreResultsCellHeight = 32;
+        
         m_maxTableHeight = 400;
+        
+        [self assignCellResourcesTo: m_tableView];
     }
     
     return self;
 }
 
-- (void) setHeaderHeight: (CGFloat) height
+- (void) assignCellResourcesTo: (UITableView *) tableView
 {
-    m_headerCellHeight = height;
-    m_tableView.sectionHeaderHeight = height;
-}
-
-- (void) setFooterHeight: (CGFloat) height
-{
-    m_footerCellHeight = height;
-    m_tableView.sectionFooterHeight = height;
+    NSBundle* resourceBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
+    
+    [tableView registerNib:[UINib nibWithNibName: m_defaultCellIdentifier bundle:resourceBundle]
+                forCellReuseIdentifier: m_defaultCellIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:m_searchInProgressCellStyleIdentifier bundle: resourceBundle]
+                          forCellReuseIdentifier: m_searchInProgressCellStyleIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:m_moreResultsCellStyleIdentifier bundle: resourceBundle]
+                forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
 }
 
 - (void) showQuery: (WRLDSearchQuery *) sourceQuery
@@ -77,8 +85,13 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 }
 
 - (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
+     maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
+      maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded
 {
-    WRLDSearchWidgetResultSetViewModel * newProviderViewModel = [[WRLDSearchWidgetResultSetViewModel alloc] initForRequestFulfiller: provider];
+    WRLDSearchWidgetResultSetViewModel * newProviderViewModel = [[WRLDSearchWidgetResultSetViewModel alloc]
+                                                                 initForRequestFulfiller: provider
+                                                                 maxToShowWhenCollapsed: maxToShowWhenCollapsed
+                                                                 maxToShowWhenExpanded: maxToShowWhenExpanded];
     [m_providerViewModels addObject: newProviderViewModel];
     [m_tableView reloadData];
 }
@@ -91,35 +104,78 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:m_defaultCellIdentifier];
+    NSString *expectedCellIdentifier =[self getIdentifierForCellAtPosition: indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: expectedCellIdentifier];
+    if(cell == nil)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier: m_defaultCellIdentifier];
+    }
     return cell;
+}
+
+-(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
+{
+    if(!m_displayedQuery.hasCompleted){
+        return m_searchInProgressCellStyleIdentifier;
+    }
+    
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [index section]];
+    
+    if([setViewModel isMoreResultsCell: [index row]]){
+        return m_moreResultsCellStyleIdentifier;
+    }
+    
+    return setViewModel.cellIdentifier == nil ? m_defaultCellIdentifier : setViewModel.cellIdentifier;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(!m_displayedQuery || ! m_displayedQuery.hasCompleted ){
-        return 0;
+    if(!m_displayedQuery.hasCompleted){
+        return 1;
     }
     
     return [m_providerViewModels count];
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if(!m_displayedQuery.hasCompleted){
+        return 1;
+    }
+    
     WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
-    return [providerViewModel getVisibleResultCount];
+    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCount];
+    if([providerViewModel hasMoreToShow])
+    {
+        ++cellsToDisplay;
+    }
+    return cellsToDisplay;
 }
 
-- (void) tableView:(UITableView *)tableView willDisplayCell:(WRLDSearchResultTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return;
+    }
+    
     WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_providerViewModels objectAtIndex:[indexPath section]];
+    if([sectionViewModel isMoreResultsCell: [indexPath row]])
+    {
+        WRLDMoreResultsTableViewCell * moreResultsCell = (WRLDMoreResultsTableViewCell *) cell;
+        [moreResultsCell populateWith: sectionViewModel];
+        return;
+    }
+    
     id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
-    [cell populateWith: resultModel highlighting: m_displayedQuery.queryString];
+    WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
+    [resultCell populateWith: resultModel highlighting: m_displayedQuery.queryString];
 }
 
 - (void) resizeTable
 {
     CGFloat height = 0;
-    if([m_displayedQuery progress] == InFlight)
+    if(!m_displayedQuery.hasCompleted)
     {
         height = m_searchInProgressCellHeight;
     }
@@ -148,59 +204,62 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (void) hide
 {
-    if(!m_isAnimatingOut)
+    if(m_isAnimatingOut)
     {
-        m_isAnimatingOut = true;
-        [UIView animateWithDuration: m_fadeDuration animations:^{
-            m_visibilityView.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            if(finished){
-                m_visibilityView.hidden =  YES;
-                m_isAnimatingOut = false;
-            }
-        }];
+        return;
     }
+    
+    m_isAnimatingOut = true;
+    [UIView animateWithDuration: m_fadeDuration animations:^{
+        m_visibilityView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if(finished){
+            m_visibilityView.hidden =  YES;
+            m_isAnimatingOut = false;
+        }
+    }];
 }
 
 -(CGFloat) getHeightForSet : (NSInteger) setIndex
 {
-    CGFloat headerHeight = [self tableView:m_tableView heightForHeaderInSection:setIndex];
-    CGFloat footerHeight = [self tableView:m_tableView heightForFooterInSection:setIndex];
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return m_searchInProgressCellHeight;
+    }
     
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: setIndex];
+    CGFloat visibleCellHeight = [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
+    CGFloat moreToShowCellHeight = setViewModel.hasMoreToShow ? m_moreResultsCellHeight : 0;
     
-    CGFloat contentHeight = [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
-    
-    return headerHeight + contentHeight + footerHeight;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: section];
-    if ([setViewModel getVisibleResultCount] > 0)
-    {
-        return m_headerCellHeight;
-    }
-    // returning 0 causes the table to use the default value (32)
-    return CGFLOAT_MIN;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: section];
-    if ([setViewModel hasMoreToShow])
-    {
-        return m_footerCellHeight;
-    }
-    // returning 0 causes the table to use the default value (8)
-    return CGFLOAT_MIN;
+    return visibleCellHeight + moreToShowCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return m_searchInProgressCellHeight;
+    }
+    
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
+    if([setViewModel isMoreResultsCell: [indexPath row]])
+    {
+        return m_moreResultsCellHeight;
+    }
     return setViewModel.expectedCellHeight;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection: (NSInteger)section
+{
+    // returning 0 causes the table to use the default value (32)
+    return CGFLOAT_MIN;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection: (NSInteger)section
+{
+    // returning 0 causes the table to use the default value (8)
+    return CGFLOAT_MIN;
 }
 
 @end

@@ -19,7 +19,7 @@
     WRLDSearchRequest *m_currentRequest;
 }
 
-@synthesize title;
+@synthesize moreResultsName;
 @synthesize cellIdentifier;
 @synthesize cellHeight;
 
@@ -31,7 +31,7 @@
         m_poiService = poiService;
         m_poiSearchId = 0;
         cellIdentifier = @"WRLDSearchResultTableViewCell";
-        title = @"WRLD";
+        moreResultsName = @"WRLD";
         cellHeight = 64;
         
         m_mapView.delegate = self;

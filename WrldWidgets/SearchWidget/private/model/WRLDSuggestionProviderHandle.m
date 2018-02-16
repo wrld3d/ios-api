@@ -5,6 +5,8 @@
 
 @synthesize identifier;
 @synthesize cellHeight;
+@synthesize cellIdentifier;
+@synthesize moreResultsName;
 
 -(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSuggestionProvider>) provider
 {
@@ -14,6 +16,8 @@
         identifier = uniqueId;
         _provider = provider;
         cellHeight = 32;
+        cellIdentifier = @"WRLDSuggestionTableViewCell";
+        moreResultsName = @"Suggestions";
     }
     return self;
 }

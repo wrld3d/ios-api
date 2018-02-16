@@ -107,8 +107,8 @@
 
 - (void)testInitAssignsExpectedTitle
 {
-    XCTAssertNotNil(m_searchProvider.title);
-    XCTAssertTrue([m_expectedPoiSearchServiceTitle isEqualToString: m_searchProvider.title]);
+    XCTAssertNotNil(m_searchProvider.moreResultsName);
+    XCTAssertTrue([m_expectedPoiSearchServiceTitle isEqualToString: m_searchProvider.moreResultsName]);
 }
 
 - (void)testInitAssignsExpectedCellIdentifier

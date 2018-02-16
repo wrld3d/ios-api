@@ -11,7 +11,7 @@
     CGFloat m_suggestionResultsDelayInSeconds;
 }
 
-@synthesize title;
+@synthesize moreResultsName;
 @synthesize cellIdentifier;
 @synthesize cellHeight;
 
@@ -38,7 +38,7 @@
 - (void) setupValues:(CGFloat) searchDelayInSeconds suggestionDelayInSeconds:(CGFloat) suggestionDelayInSeconds
 {
     cellIdentifier = nil;
-    title = @"Mock";
+    moreResultsName = @"Mock";
     cellHeight = 64;
     m_searchResultsDelayInSeconds = searchDelayInSeconds;
     m_suggestionResultsDelayInSeconds = suggestionDelayInSeconds;
