@@ -230,6 +230,46 @@
     OCMReject([mockProvider2 searchFor:[OCMArg any]]);
 }
 
+- (void)testCancelledSuggestionsDoNotCompleteWhenRequestCompletes {
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        XCTFail();
+    }];
+    
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [query cancel];
+    [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
+}
+
+- (void)testCancelledSuggestionsDoNotCompleteWhenRequestCancelled {
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        XCTFail();
+    }];
+    
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [query cancel];
+    [requestCapture cancel];
+}
+
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{

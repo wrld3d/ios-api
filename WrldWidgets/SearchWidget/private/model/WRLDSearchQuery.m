@@ -46,7 +46,7 @@
     [self checkForCompletion];
 }
 
--(void) didComplete:(BOOL) success
+-(void) didCompleteWithSuccess:(BOOL) success
 {
     _progress = Completed;
     _hasCompleted = YES;
@@ -63,7 +63,7 @@
     [m_queryObserver willSearchFor: self];
     if([providerHandles count] == 0)
     {
-        [self didComplete :YES];
+        [self didCompleteWithSuccess :YES];
         return;
     }
     for(WRLDSearchProviderHandle* handle in providerHandles)
@@ -79,7 +79,7 @@
     [m_queryObserver willSearchFor: self];
     if([providerHandles count] == 0)
     {
-        [self didComplete :YES];
+        [self didCompleteWithSuccess :YES];
         return;
     }
     
@@ -112,6 +112,10 @@
 
 - (void) checkForCompletion
 {
+    if(self.hasCompleted){
+        return;
+    }
+    
     for(WRLDSearchRequest * request in m_requests)
     {
         if(!request.hasCompleted)
@@ -119,7 +123,7 @@
             return;
         }
     }
-    [self didComplete:YES];
+    [self didCompleteWithSuccess:YES];
 }
 
 - (WRLDSearchResultsCollection *) getResultsForFulfiller: (NSInteger) fulfillerHandleId
