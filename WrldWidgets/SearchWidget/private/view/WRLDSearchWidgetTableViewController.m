@@ -18,6 +18,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     CGFloat m_fadeDuration;
     
     CGFloat m_searchInProgressCellHeight;
+    CGFloat m_headerCellHeight;
     CGFloat m_footerCellHeight;
     CGFloat m_maxTableHeight;
     
@@ -43,11 +44,25 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_fadeDuration = 1.0f;
         
         m_searchInProgressCellHeight = 48;
-        m_footerCellHeight = 32;
+        // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
+        [self setHeaderHeight: CGFLOAT_MIN];
+        [self setFooterHeight: CGFLOAT_MIN];
         m_maxTableHeight = 400;
     }
     
     return self;
+}
+
+- (void) setHeaderHeight: (CGFloat) height
+{
+    m_headerCellHeight = height;
+    m_tableView.sectionHeaderHeight = height;
+}
+
+- (void) setFooterHeight: (CGFloat) height
+{
+    m_footerCellHeight = height;
+    m_tableView.sectionFooterHeight = height;
 }
 
 - (void) showQuery: (WRLDSearchQuery *) sourceQuery
@@ -149,12 +164,36 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 -(CGFloat) getHeightForSet : (NSInteger) setIndex
 {
-    CGFloat height = 0;
+    CGFloat headerHeight = [self tableView:m_tableView heightForHeaderInSection:setIndex];
+    CGFloat footerHeight = [self tableView:m_tableView heightForFooterInSection:setIndex];
     
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: setIndex];
-    height += [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
     
-    return height;
+    CGFloat contentHeight = [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
+    
+    return headerHeight + contentHeight + footerHeight;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: section];
+    if ([setViewModel getVisibleResultCount] > 0)
+    {
+        return m_headerCellHeight;
+    }
+    // returning 0 causes the table to use the default value (32)
+    return CGFLOAT_MIN;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: section];
+    if ([setViewModel hasMoreToShow])
+    {
+        return m_footerCellHeight;
+    }
+    // returning 0 causes the table to use the default value (8)
+    return CGFLOAT_MIN;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -165,5 +204,3 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 @end
-
-

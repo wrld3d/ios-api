@@ -1,4 +1,5 @@
 #import "WRLDSearchQueryObserver.h"
+#import "WRLDSearchQueryObserver+Private.h"
 
 @implementation WRLDSearchQueryObserver
 {

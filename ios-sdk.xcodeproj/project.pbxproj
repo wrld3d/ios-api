@@ -354,6 +354,7 @@
 		262D3DA320344C7200B9FEA8 /* WRLDSearchWidgetResultSetViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetResultSetViewModel.h; sourceTree = "<group>"; };
 		262D3DA520344C8500B9FEA8 /* WRLDSearchWidgetResultSetViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetResultSetViewModel.m; sourceTree = "<group>"; };
 		262D3DB72035BE3600B9FEA8 /* WRLDViewVisibilityController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDViewVisibilityController.h; sourceTree = "<group>"; };
+		262D3DB92035F65E00B9FEA8 /* WRLDSearchQueryObserver+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDSearchQueryObserver+Private.h"; sourceTree = "<group>"; };
 		2693DEAB202AFEA4000F91CF /* WRLDSearchWidget.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDSearchWidget.xib; sourceTree = "<group>"; };
 		2693DEB6202AFFF9000F91CF /* Menu_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu_btn.png; sourceTree = "<group>"; };
 		2693DEB7202AFFF9000F91CF /* Menu_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_btn@2x.png"; sourceTree = "<group>"; };
@@ -777,11 +778,12 @@
 			children = (
 				2619A02B202B2FE2002CF191 /* WRLDBasicSearchResultModel.m */,
 				2619A039202B58B4002CF191 /* WRLDSearchModel.m */,
-				26A3B35E20332620004C4D99 /* WRLDSearchQueryObserver.m */,
 				2619A043202B612B002CF191 /* WRLDSearchProviderHandle.m */,
 				2619A049202B6AEE002CF191 /* WRLDSearchProviderHandle+Private.h */,
 				2619A041202B5D8F002CF191 /* WRLDSearchQuery.m */,
 				2619A04A202B6B28002CF191 /* WRLDSearchQuery+Private.h */,
+				26A3B35E20332620004C4D99 /* WRLDSearchQueryObserver.m */,
+				262D3DB92035F65E00B9FEA8 /* WRLDSearchQueryObserver+Private.h */,
 				2619A050202B6CC6002CF191 /* WRLDSearchRequest.m */,
 				26A3B36420332DCF004C4D99 /* WRLDSearchRequest+Private.h */,
 				2619A045202B61D8002CF191 /* WRLDSuggestionProviderHandle.m */,

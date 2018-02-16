@@ -8,6 +8,7 @@
 #import "WRLDSearchProvider.h"
 #import "WRLDSuggestionProvider.h"
 #import "WRLDSearchQueryObserver.h"
+#import "WRLDSearchQueryObserver+Private.h"
 
 @implementation WRLDSearchQuery
 {

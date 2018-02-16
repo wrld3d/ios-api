@@ -31,6 +31,9 @@
     NSString * m_moreResultsCellStyleIdentifier;
     NSString * m_searchInProgressCellStyleIdentifier;
     
+    CGFloat m_headerCellHeight;
+    CGFloat m_moreResultsCellStyleIdentifierHeight;
+    
     WRLDSearchQuery * m_mostRecentQuery;
 }
 
@@ -133,6 +136,10 @@
                                                                                     visibilityView: self.resultsTableContainerView
                                                                                   heightConstraint:self.resultsHeightConstraint
                                                                              defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
+    
+    // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
+    [m_searchResultsViewController setHeaderHeight:CGFLOAT_MIN];
+    [m_searchResultsViewController setFooterHeight:m_moreResultsCellStyleIdentifierHeight];
 
     [self.resultsTableView registerNib:[UINib nibWithNibName: m_searchResultsTableViewDefaultCellStyleIdentifier bundle:resourceBundle]
                 forCellReuseIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
@@ -148,9 +155,9 @@
                                                                                   visibilityView: self.suggestionsTableView
                                                                                 heightConstraint:self.suggestionsHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
-    
-    self.suggestionsTableView.sectionHeaderHeight = 0;
-    self.suggestionsTableView.sectionFooterHeight = 0;
+    // Assigning these values to 0 causes the table to use the default values for header(32) and footer(8)) so use CGFLOAT_MIN
+    [m_suggestionsViewController setHeaderHeight:CGFLOAT_MIN];
+    [m_suggestionsViewController setFooterHeight:CGFLOAT_MIN];
     
     UINib * nib = [UINib nibWithNibName: m_suggestionsTableViewCellStyleIdentifier bundle: resourceBundle];
     [self.suggestionsTableView registerNib:nib forCellReuseIdentifier: m_suggestionsTableViewCellStyleIdentifier];
@@ -176,11 +183,10 @@
     [m_suggestionsViewController stopDisplayingResultsFrom: suggestionProvider];
 }
 
-- (void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
+-(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
 {
-
+    [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
 }
-
 
 @end
 
