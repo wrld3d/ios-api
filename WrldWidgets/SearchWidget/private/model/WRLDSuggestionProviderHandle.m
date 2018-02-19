@@ -1,5 +1,6 @@
 #import "WRLDSuggestionProviderHandle.h"
 #import "WRLDSuggestionProvider.h"
+#import "WRLDSearchResultSelectedObserver.h"
 
 @implementation WRLDSuggestionProviderHandle
 
@@ -7,6 +8,7 @@
 @synthesize cellHeight;
 @synthesize cellIdentifier;
 @synthesize moreResultsName;
+@synthesize selectionObserver;
 
 -(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSuggestionProvider>) provider
 {
@@ -18,6 +20,7 @@
         cellHeight = 32;
         cellIdentifier = @"WRLDSuggestionTableViewCell";
         moreResultsName = @"Suggestions";
+        selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
     }
     return self;
 }

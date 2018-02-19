@@ -1,5 +1,6 @@
 #import "WRLDSearchProviderHandle.h"
 #import "WRLDSearchProvider.h"
+#import "WRLDSearchResultSelectedObserver.h"
 
 @implementation WRLDSearchProviderHandle
 
@@ -7,6 +8,7 @@
 @synthesize cellHeight;
 @synthesize cellIdentifier;
 @synthesize moreResultsName;
+@synthesize selectionObserver;
 
 -(instancetype) initWithId: (NSInteger) uniqueId forProvider: (id<WRLDSearchProvider>) searchProvider
 {
@@ -18,6 +20,7 @@
         cellHeight = searchProvider.cellHeight;
         cellIdentifier = searchProvider.cellIdentifier;
         moreResultsName = searchProvider.moreResultsName;
+        selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
     }
     return self;
 }

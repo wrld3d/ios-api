@@ -18,10 +18,7 @@
     self = [super init];
     if(self)
     {
-        _fulfillerId = requestFulfillerHandle.identifier;
-        _expectedCellHeight = requestFulfillerHandle.cellHeight;
-        _cellIdentifier = requestFulfillerHandle.cellIdentifier;
-        _moreResultsName = requestFulfillerHandle.moreResultsName;
+        _fulfiller = requestFulfillerHandle;
         
         _expandedState = Collapsed;
         m_maxToShowWhenCollapsed = maxToShowWhenCollapsed;
@@ -63,7 +60,7 @@
 
 -(CGFloat) getResultsCellHeightWhen : (ExpandedStateType) state
 {
-    CGFloat visibleCellHeight = [self getVisibleResultCountWhen : state] * self.expectedCellHeight;
+    CGFloat visibleCellHeight = [self getVisibleResultCountWhen : state] * self.fulfiller.cellHeight;
     
     return visibleCellHeight;
 }

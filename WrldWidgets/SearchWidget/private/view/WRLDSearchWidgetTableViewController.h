@@ -5,6 +5,7 @@
 
 @class WRLDSearchQuery;
 @protocol WRLDSearchRequestFulfillerHandle;
+@class WRLDSearchResultSelectedObserver;
 
 @interface WRLDSearchWidgetTableViewController : NSObject<UITableViewDataSource, UITableViewDelegate, WRLDViewVisibilityController>
 - (instancetype) initWithTableView: (UITableView *) tableView
@@ -12,6 +13,7 @@
                   heightConstraint: (NSLayoutConstraint *) heightConstraint
              defaultCellIdentifier: (NSString *) defaultCellIdentifier;
 
+@property (nonatomic, readonly) WRLDSearchResultSelectedObserver * selectionObserver;
 - (void) showQuery: (WRLDSearchQuery *) query;
 
 - (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider

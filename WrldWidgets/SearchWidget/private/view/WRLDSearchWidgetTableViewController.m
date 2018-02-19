@@ -6,6 +6,9 @@
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDMoreResultsTableViewCell.h"
 #import "WRLDSearchInProgressTableViewCell.h"
+#import "WRLDSearchResultModel.h"
+#import "WRLDSearchResultSelectedObserver.h"
+#import "WRLDSearchResultSelectedObserver+Private.h"
 
 typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelCollection;
 
@@ -60,6 +63,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_searchInProgressCellHeight = 48;
         m_moreResultsCellHeight = 32;
         
+        _selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
+        
         [self assignCellResourcesTo: m_tableView];
     }
     
@@ -86,7 +91,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     m_displayedQuery = sourceQuery;
     for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
     {
-        [set updateResultData:[sourceQuery getResultsForFulfiller: set.fulfillerId]];
+        [set updateResultData:[sourceQuery getResultsForFulfiller: set.fulfiller.identifier]];
     }
     [self resizeTable];
     [m_tableView reloadData];
@@ -121,7 +126,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         return m_moreResultsCellStyleIdentifier;
     }
     
-    return setViewModel.cellIdentifier == nil ? m_defaultCellIdentifier : setViewModel.cellIdentifier;
+    return setViewModel.fulfiller.cellIdentifier == nil ? m_defaultCellIdentifier : setViewModel.fulfiller.cellIdentifier;
 }
 
 - (void) resizeTable
@@ -194,7 +199,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     if(sectionViewModel.expandedState == Collapsed)
     {
-        NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCountWhen: Collapsed]), sectionViewModel.moreResultsName];
+        NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCountWhen: Collapsed]), sectionViewModel.fulfiller.moreResultsName];
         [moreResultsCell populateWith: textContent icon: m_imgMoreResultsIcon];
     }
     else if(sectionViewModel.expandedState == Expanded)
@@ -278,7 +283,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         return m_moreResultsCellHeight;
     }
-    return setViewModel.expectedCellHeight;
+    return setViewModel.fulfiller.cellHeight;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection: (NSInteger)section
@@ -328,7 +333,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     else
     {
-        // TODO clicked a result
+        id<WRLDSearchResultModel> selectedResultModel = [setViewModel getResult:[indexPath row]];
+        [_selectionObserver selected: selectedResultModel];
+        [setViewModel.fulfiller.selectionObserver selected: selectedResultModel];
     }
 }
 

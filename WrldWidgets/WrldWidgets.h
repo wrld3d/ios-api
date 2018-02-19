@@ -19,4 +19,5 @@ FOUNDATION_EXPORT const unsigned char WrldWidgetsVersionString[];
 #import "WRLDMockSearchProvider.h"
 #import "WRLDPoiServiceSearchProvider.h"
 #import "WRLDSearchQueryObserver.h"
+#import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDBasicSearchResultModel.h"

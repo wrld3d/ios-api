@@ -3,8 +3,8 @@
 
 @implementation WRLDSearchQueryObserver
 {
-    NSMutableArray< QueryEvent >* m_startingEvents;
-    NSMutableArray< QueryEvent >* m_completedEvent;
+    NSMutableArray<QueryEvent>* m_startingEvents;
+    NSMutableArray<QueryEvent>* m_completedEvent;
 }
 
 -(instancetype) init
@@ -12,8 +12,8 @@
     self = [super init];
     if (self)
     {
-        m_startingEvents = [[NSMutableArray< QueryEvent > alloc] init];
-        m_completedEvent = [[NSMutableArray< QueryEvent > alloc] init];
+        m_startingEvents = [[NSMutableArray<QueryEvent> alloc] init];
+        m_completedEvent = [[NSMutableArray<QueryEvent> alloc] init];
     }
     return self;
 }
@@ -53,7 +53,6 @@
         startingEvent(query);
     }
 }
-
 
 - (void) didComplete: (WRLDSearchQuery *) query
 {

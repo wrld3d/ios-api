@@ -4,9 +4,12 @@
 #import "WRLDSuggestionProviderHandle.h"
 #import "WRLDSearchWidgetTableViewController.h"
 #import "WRLDSearchResultTableViewCell.h"
+#import "WRLDSearchResultModel.h"
 #import "WRLDSearchModel.h"
 #import "WRLDSearchQueryObserver.h"
 #import "WRLDSearchQuery.h"
+#import "WRLDSearchResultSelectedObserver.h"
+#import "WRLDSearchResultSelectedObserver+Private.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -35,6 +38,14 @@
     NSInteger maxVisibleExpandedResults;
     
     NSInteger maxVisibleSuggestions;
+}
+
+- (WRLDSearchResultSelectedObserver *)searchSelectionObserver {
+    return m_searchResultsViewController.selectionObserver;
+}
+
+- (WRLDSearchResultSelectedObserver *)suggestionSelectionObserver {
+    return m_suggestionsViewController.selectionObserver;
 }
 
 - (instancetype) initWithSearchModel : (WRLDSearchModel *) searchModel
@@ -68,6 +79,11 @@
                                                                                   visibilityView: self.suggestionsTableView
                                                                                 heightConstraint:self.suggestionsHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
+    
+    [m_suggestionsViewController.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
+        self.searchBar.text = selectedResultModel.title;
+        [self triggerSearch : selectedResultModel.title];
+    }];
     
     [m_searchModel.searchObserver addQueryStartingEvent: ^(WRLDSearchQuery * query)
      {
@@ -125,9 +141,14 @@
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [self triggerSearch: searchBar.text];
+}
+
+- (void) triggerSearch : (NSString *) queryString
+{
     [self cancelMostRecentQueryIfNotComplete];
     [m_suggestionsViewController hide];
-    m_mostRecentQuery = [m_searchModel getSearchResultsForString: searchBar.text];
+    m_mostRecentQuery = [m_searchModel getSearchResultsForString: queryString];
     [self.searchBar resignFirstResponder];
 }
 

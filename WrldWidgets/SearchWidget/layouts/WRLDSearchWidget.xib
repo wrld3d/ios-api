@@ -79,7 +79,7 @@
                     <color key="backgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
-                        <constraint firstAttribute="height" constant="400" identifier="Height" id="Ch0-Pu-hmk"/>
+                        <constraint firstAttribute="height" priority="999" constant="400" identifier="Height" id="Ch0-Pu-hmk"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="Kxf-Ks-4jz"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="fS6-Uh-JhU" secondAttribute="top" id="Y0B-iS-tCL"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
@@ -89,7 +89,7 @@
                     <rect key="frame" x="0.0" y="56" width="375" height="256"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="256" id="5Bv-Sr-MfB"/>
+                        <constraint firstAttribute="height" priority="999" constant="256" id="5Bv-Sr-MfB"/>
                     </constraints>
                 </tableView>
             </subviews>

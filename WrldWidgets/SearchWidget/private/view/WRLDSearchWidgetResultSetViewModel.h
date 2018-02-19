@@ -15,11 +15,8 @@ typedef NS_ENUM(NSInteger, ExpandedStateType) {
     Expanded
 };
 
-@property (nonatomic, readonly) NSInteger fulfillerId;
+@property (nonatomic, readonly) id<WRLDSearchRequestFulfillerHandle> fulfiller;
 @property (nonatomic, readonly) ExpandedStateType expandedState;
-@property (nonatomic, readonly) CGFloat expectedCellHeight;
-@property (nonatomic, readonly, copy) NSString* cellIdentifier;
-@property (nonatomic, readonly, copy) NSString* moreResultsName;
 
 - (instancetype) initForRequestFulfiller: (id<WRLDSearchRequestFulfillerHandle>) requestFulfillerHandle
                   maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
