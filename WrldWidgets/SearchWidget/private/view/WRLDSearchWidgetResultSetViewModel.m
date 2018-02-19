@@ -43,31 +43,37 @@
 
 - (void) setExpandedState: (ExpandedStateType) state {
     _expandedState = state;
-    [self setHasMoreToShowFlag];
 }
 
-- (void) setHasMoreToShowFlag
+- (BOOL) hasMoreResultsCellWhen: (ExpandedStateType) state
 {
-    if( self.expandedState == Collapsed )
+    if( state == Collapsed )
     {
-        _hasMoreResultsCell = [self getVisibleResultCount] < [self getResultCount];
+        return [self getVisibleResultCountWhen: Collapsed] < [self getResultCount];
     }
-    else if (self.expandedState == Expanded)
+    else if (state == Expanded)
     {
-        _hasMoreResultsCell = true;
+        return true;
     }
     else
     {
-        _hasMoreResultsCell = false;
+        return false;
     }
 }
 
-- (NSInteger) getVisibleResultCount
+-(CGFloat) getResultsCellHeightWhen : (ExpandedStateType) state
 {
-    if(self.expandedState == Hidden){
+    CGFloat visibleCellHeight = [self getVisibleResultCountWhen : state] * self.expectedCellHeight;
+    
+    return visibleCellHeight;
+}
+
+- (NSInteger) getVisibleResultCountWhen : (ExpandedStateType) state
+{
+    if(state == Hidden){
         return 0;
     }
-    else if(self.expandedState == Collapsed){
+    else if(state == Collapsed){
         return MIN(m_maxToShowWhenCollapsed, [self getResultCount]);
     }
     else{
@@ -82,7 +88,7 @@
 
 - (BOOL) isMoreResultsCell: (NSInteger)row
 {
-    return _hasMoreResultsCell && row == [self getVisibleResultCount];
+    return [self hasMoreResultsCellWhen: self.expandedState] && row == [self getVisibleResultCountWhen: self.expandedState];
 }
 
 @end

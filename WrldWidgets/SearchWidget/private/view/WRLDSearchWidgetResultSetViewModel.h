@@ -18,7 +18,6 @@ typedef NS_ENUM(NSInteger, ExpandedStateType) {
 @property (nonatomic, readonly) NSInteger fulfillerId;
 @property (nonatomic, readonly) ExpandedStateType expandedState;
 @property (nonatomic, readonly) CGFloat expectedCellHeight;
-@property (nonatomic, readonly) BOOL hasMoreResultsCell;
 @property (nonatomic, readonly, copy) NSString* cellIdentifier;
 @property (nonatomic, readonly, copy) NSString* moreResultsName;
 
@@ -29,9 +28,11 @@ typedef NS_ENUM(NSInteger, ExpandedStateType) {
 - (void) updateResultData: (WRLDSearchResultsCollection *) results;
 - (void) setExpandedState: (ExpandedStateType) state;
 
-- (id<WRLDSearchResultModel>) getResult: (NSInteger) index;
+- (CGFloat) getResultsCellHeightWhen: (ExpandedStateType) expandedState;
+- (NSInteger) getVisibleResultCountWhen: (ExpandedStateType) expandedState;
+- (BOOL) hasMoreResultsCellWhen: (ExpandedStateType) expandedState;
 
-- (NSInteger) getVisibleResultCount;
+- (id<WRLDSearchResultModel>) getResult: (NSInteger) index;
 - (NSInteger) getResultCount;
 - (BOOL) isMoreResultsCell: (NSInteger) row;
 

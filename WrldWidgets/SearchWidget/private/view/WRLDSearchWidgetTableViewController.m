@@ -133,9 +133,10 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }
     else
     {
-        for(int i = 0; i < [m_providerViewModels count]; ++i)
+        for(WRLDSearchWidgetResultSetViewModel * setViewModel in m_providerViewModels)
         {
-            height += [self getHeightForSet: i];
+            height += [setViewModel getResultsCellHeightWhen: setViewModel.expandedState];
+            height += [setViewModel hasMoreResultsCellWhen: setViewModel.expandedState] ? m_moreResultsCellHeight : 0;
         }
     }
     
@@ -172,20 +173,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }];
 }
 
--(CGFloat) getHeightForSet : (NSInteger) setIndex
-{
-    if(!m_displayedQuery.hasCompleted)
-    {
-        return m_searchInProgressCellHeight;
-    }
-    
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: setIndex];
-    CGFloat visibleCellHeight = [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
-    CGFloat moreToShowCellHeight = setViewModel.hasMoreResultsCell ? m_moreResultsCellHeight : 0;
-    
-    return visibleCellHeight + moreToShowCellHeight;
-}
-
 - (void) expandSection: (NSInteger) expandedSectionPosition
 {
     for(NSInteger i = 0; i < [m_providerViewModels count]; ++i)
@@ -207,7 +194,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     if(sectionViewModel.expandedState == Collapsed)
     {
-        NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCount]), sectionViewModel.moreResultsName];
+        NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCountWhen: Collapsed]), sectionViewModel.moreResultsName];
         [moreResultsCell populateWith: textContent icon: m_imgMoreResultsIcon];
     }
     else if(sectionViewModel.expandedState == Expanded)
@@ -248,8 +235,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }
     
     WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
-    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCount];
-    if([providerViewModel hasMoreResultsCell])
+    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCountWhen: providerViewModel.expandedState];
+    if([providerViewModel hasMoreResultsCellWhen: providerViewModel.expandedState])
     {
         ++cellsToDisplay;
     }
@@ -319,13 +306,25 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         if(setViewModel.expandedState == Collapsed)
         {
             [self expandSection: [indexPath section]];
+            CGFloat onlySetHeight = [setViewModel getResultsCellHeightWhen: Collapsed] + m_moreResultsCellHeight;
+            [UIView animateWithDuration: m_fadeDuration animations:^{
+                m_heightConstraint.constant = onlySetHeight;
+                [m_visibilityView layoutIfNeeded];
+                
+            } completion:^(BOOL finished) {
+                if(finished)
+                {
+                    [m_tableView reloadData];
+                    [self resizeTable];
+                }
+            }];
         }
         else
         {
             [self collapseAllSections];
+            [m_tableView reloadData];
+            [self resizeTable];
         }
-        [self resizeTable];
-        [m_tableView reloadData];
     }
     else
     {
