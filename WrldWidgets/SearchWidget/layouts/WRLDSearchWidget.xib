@@ -98,11 +98,13 @@
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="DHc-jF-m2C"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="EIa-QG-6cw"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="q5F-mI-7jP" secondAttribute="top" id="Jl8-kl-jNr"/>
+                <constraint firstItem="0kP-eT-3ph" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="KbJ-Lr-MXE"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="Kcg-e4-fWr"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="dPX-51-niE"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="naq-EV-9wh"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="sP7-kg-2Jl"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="ySO-R5-Gb6"/>
+                <constraint firstItem="fS6-Uh-JhU" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="zdR-85-uWB"/>
             </constraints>
             <connections>
                 <outlet property="menuSubView" destination="Gsy-aj-hKu" id="bLp-0R-4ex"/>

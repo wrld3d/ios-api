@@ -58,7 +58,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
                                                                                     visibilityView: self.resultsTableContainerView
                                                                                   heightConstraint:self.resultsHeightConstraint

@@ -21,10 +21,11 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     
     CGFloat m_searchInProgressCellHeight;
     CGFloat m_moreResultsCellHeight;
-    CGFloat m_maxTableHeight;
     
     NSString * m_moreResultsCellStyleIdentifier;
     NSString * m_searchInProgressCellStyleIdentifier;
+    NSString * m_showMoreResultsText;
+    NSString * m_backToResultsText;
     
     UIImage *m_imgMoreResultsIcon;
     UIImage *m_imgBackIcon;
@@ -53,10 +54,11 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_moreResultsCellStyleIdentifier = @"WRLDMoreResultsTableViewCell";
         m_searchInProgressCellStyleIdentifier = @"WRLDSearchInProgressTableViewCell";
         
+        m_showMoreResultsText = @"Show More (%d) %@ results";
+        m_backToResultsText = @"Back";
+        
         m_searchInProgressCellHeight = 48;
         m_moreResultsCellHeight = 32;
-        
-        m_maxTableHeight = 400;
         
         [self assignCellResourcesTo: m_tableView];
     }
@@ -135,7 +137,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         {
             height += [self getHeightForSet: i];
         }
-        height = MIN(m_maxTableHeight, height);
     }
     
     [UIView animateWithDuration: m_fadeDuration animations:^{
@@ -202,6 +203,19 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }
 }
 
+- (void) populateMoreResultsCell: (WRLDMoreResultsTableViewCell *) moreResultsCell fromViewModel: (WRLDSearchWidgetResultSetViewModel *) sectionViewModel
+{
+    if(sectionViewModel.expandedState == Collapsed)
+    {
+        NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCount]), sectionViewModel.moreResultsName];
+        [moreResultsCell populateWith: textContent icon: m_imgMoreResultsIcon];
+    }
+    else if(sectionViewModel.expandedState == Expanded)
+    {
+        [moreResultsCell populateWith: m_backToResultsText icon: m_imgBackIcon];
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -240,19 +254,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         ++cellsToDisplay;
     }
     return cellsToDisplay;
-}
-
-- (void) populateMoreResultsCell: (WRLDMoreResultsTableViewCell *) moreResultsCell fromViewModel: (WRLDSearchWidgetResultSetViewModel *) sectionViewModel
-{
-    if(sectionViewModel.expandedState == Collapsed)
-    {
-        NSString * textContent = [NSString stringWithFormat:@"Show More (%d) %@ results", ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCount]), sectionViewModel.moreResultsName];
-        [moreResultsCell populateWith: textContent icon: m_imgMoreResultsIcon];
-    }
-    else if(sectionViewModel.expandedState == Expanded)
-    {
-        [moreResultsCell populateWith: @"Back" icon: m_imgBackIcon];
-    }
 }
 
 #pragma mark - UITableViewDelegate
