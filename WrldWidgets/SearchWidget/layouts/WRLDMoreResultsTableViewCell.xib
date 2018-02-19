@@ -30,7 +30,8 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="moreResultsLabel" destination="9sJ-WP-fZl" id="aTO-vm-kHW"/>
+                <outlet property="icon" destination="Cp0-ED-igY" id="HmR-10-2fO"/>
+                <outlet property="label" destination="9sJ-WP-fZl" id="GsI-Gm-pNL"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="74"/>
         </view>

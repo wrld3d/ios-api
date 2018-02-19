@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "WRLDMoreResultsTableViewCell.h"
-#import "WRLDSearchWidgetResultSetViewModel.h"
 
 @implementation WRLDMoreResultsTableViewCell
 
-- (void) populateWith: (WRLDSearchWidgetResultSetViewModel*) resultsViewModel
+- (void) populateWith: (NSString*) text icon: (UIImage *) icon
 {
-    self.moreResultsLabel.text = [NSString stringWithFormat:@"Show More (%d) %@ results", ([resultsViewModel getResultCount] - [resultsViewModel getVisibleResultCount]), resultsViewModel.moreResultsName];
+    self.label.text = text;
+    [self.icon setImage:icon];
 }
 
 @end

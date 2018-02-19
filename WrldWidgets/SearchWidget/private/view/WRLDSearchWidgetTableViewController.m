@@ -26,6 +26,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     NSString * m_moreResultsCellStyleIdentifier;
     NSString * m_searchInProgressCellStyleIdentifier;
     
+    UIImage *m_imgMoreResultsIcon;
+    UIImage *m_imgBackIcon;
+    
     bool m_isAnimatingOut;
 }
 
@@ -71,6 +74,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
                           forCellReuseIdentifier: m_searchInProgressCellStyleIdentifier];
     [tableView registerNib:[UINib nibWithNibName:m_moreResultsCellStyleIdentifier bundle: resourceBundle]
                 forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
+    
+    m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_butn.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
+    m_imgBackIcon = [UIImage imageNamed:@"Back_btn.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
 }
 
 - (void) showQuery: (WRLDSearchQuery *) sourceQuery
@@ -101,18 +107,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [m_tableView reloadData];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *expectedCellIdentifier =[self getIdentifierForCellAtPosition: indexPath];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: expectedCellIdentifier];
-    if(cell == nil)
-    {
-        cell = [tableView dequeueReusableCellWithIdentifier: m_defaultCellIdentifier];
-    }
-    return cell;
-}
-
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
 {
     if(!m_displayedQuery.hasCompleted){
@@ -126,50 +120,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }
     
     return setViewModel.cellIdentifier == nil ? m_defaultCellIdentifier : setViewModel.cellIdentifier;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if(!m_displayedQuery.hasCompleted){
-        return 1;
-    }
-    
-    return [m_providerViewModels count];
-}
-
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if(!m_displayedQuery.hasCompleted){
-        return 1;
-    }
-    
-    WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
-    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCount];
-    if([providerViewModel hasMoreToShow])
-    {
-        ++cellsToDisplay;
-    }
-    return cellsToDisplay;
-}
-
-- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(!m_displayedQuery.hasCompleted)
-    {
-        return;
-    }
-    
-    WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_providerViewModels objectAtIndex:[indexPath section]];
-    if([sectionViewModel isMoreResultsCell: [indexPath row]])
-    {
-        WRLDMoreResultsTableViewCell * moreResultsCell = (WRLDMoreResultsTableViewCell *) cell;
-        [moreResultsCell populateWith: sectionViewModel];
-        return;
-    }
-    
-    id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
-    WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
-    [resultCell populateWith: resultModel highlighting: m_displayedQuery.queryString];
 }
 
 - (void) resizeTable
@@ -213,7 +163,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [UIView animateWithDuration: m_fadeDuration animations:^{
         m_visibilityView.alpha = 0.0;
     } completion:^(BOOL finished) {
-        if(finished){
+        if(finished)
+        {
             m_visibilityView.hidden =  YES;
             m_isAnimatingOut = false;
         }
@@ -229,9 +180,101 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: setIndex];
     CGFloat visibleCellHeight = [setViewModel getVisibleResultCount] * setViewModel.expectedCellHeight;
-    CGFloat moreToShowCellHeight = setViewModel.hasMoreToShow ? m_moreResultsCellHeight : 0;
+    CGFloat moreToShowCellHeight = setViewModel.hasMoreResultsCell ? m_moreResultsCellHeight : 0;
     
     return visibleCellHeight + moreToShowCellHeight;
+}
+
+- (void) expandSection: (NSInteger) expandedSectionPosition
+{
+    for(NSInteger i = 0; i < [m_providerViewModels count]; ++i)
+    {
+        ExpandedStateType stateForProvider = (i == expandedSectionPosition) ? Expanded : Hidden;
+        [[m_providerViewModels objectAtIndex: i] setExpandedState: stateForProvider];
+    }
+}
+
+- (void) collapseAllSections
+{
+    for(WRLDSearchWidgetResultSetViewModel * setViewModel in m_providerViewModels)
+    {
+        [setViewModel setExpandedState: Collapsed];
+    }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *expectedCellIdentifier =[self getIdentifierForCellAtPosition: indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: expectedCellIdentifier];
+    if(cell == nil)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier: m_defaultCellIdentifier];
+    }
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return 1;
+    }
+    
+    return [m_providerViewModels count];
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return 1;
+    }
+    
+    WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
+    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCount];
+    if([providerViewModel hasMoreResultsCell])
+    {
+        ++cellsToDisplay;
+    }
+    return cellsToDisplay;
+}
+
+- (void) populateMoreResultsCell: (WRLDMoreResultsTableViewCell *) moreResultsCell fromViewModel: (WRLDSearchWidgetResultSetViewModel *) sectionViewModel
+{
+    if(sectionViewModel.expandedState == Collapsed)
+    {
+        NSString * textContent = [NSString stringWithFormat:@"Show More (%d) %@ results", ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCount]), sectionViewModel.moreResultsName];
+        [moreResultsCell populateWith: textContent icon: m_imgMoreResultsIcon];
+    }
+    else if(sectionViewModel.expandedState == Expanded)
+    {
+        [moreResultsCell populateWith: @"Back" icon: m_imgBackIcon];
+    }
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return;
+    }
+    
+    WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_providerViewModels objectAtIndex:[indexPath section]];
+    if([sectionViewModel isMoreResultsCell: [indexPath row]])
+    {
+        WRLDMoreResultsTableViewCell * moreResultsCell = (WRLDMoreResultsTableViewCell *) cell;
+        [self populateMoreResultsCell: moreResultsCell fromViewModel: sectionViewModel];
+        return;
+    }
+    
+    id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
+    WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
+    [resultCell populateWith: resultModel highlighting: m_displayedQuery.queryString];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -260,6 +303,33 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // returning 0 causes the table to use the default value (8)
     return CGFLOAT_MIN;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(!m_displayedQuery.hasCompleted)
+    {
+        return;
+    }
+    
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
+    if([setViewModel isMoreResultsCell: [indexPath row]])
+    {
+        if(setViewModel.expandedState == Collapsed)
+        {
+            [self expandSection: [indexPath section]];
+        }
+        else
+        {
+            [self collapseAllSections];
+        }
+        [self resizeTable];
+        [m_tableView reloadData];
+    }
+    else
+    {
+        // TODO clicked a result
+    }
 }
 
 @end

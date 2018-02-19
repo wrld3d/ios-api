@@ -50,11 +50,15 @@
 {
     if( self.expandedState == Collapsed )
     {
-        _hasMoreToShow = [self getVisibleResultCount] < [self getResultCount];
+        _hasMoreResultsCell = [self getVisibleResultCount] < [self getResultCount];
+    }
+    else if (self.expandedState == Expanded)
+    {
+        _hasMoreResultsCell = true;
     }
     else
     {
-        _hasMoreToShow = false;
+        _hasMoreResultsCell = false;
     }
 }
 
@@ -71,7 +75,6 @@
     }
 }
 
-
 - (NSInteger) getResultCount
 {
     return MIN(m_maxToShowWhenExpanded, [m_results count]);
@@ -79,7 +82,7 @@
 
 - (BOOL) isMoreResultsCell: (NSInteger)row
 {
-    return _hasMoreToShow && row == [self getVisibleResultCount];
+    return _hasMoreResultsCell && row == [self getVisibleResultCount];
 }
 
 @end

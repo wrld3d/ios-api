@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, ExpandedStateType) {
 @property (nonatomic, readonly) NSInteger fulfillerId;
 @property (nonatomic, readonly) ExpandedStateType expandedState;
 @property (nonatomic, readonly) CGFloat expectedCellHeight;
-@property (nonatomic, readonly) BOOL hasMoreToShow;
+@property (nonatomic, readonly) BOOL hasMoreResultsCell;
 @property (nonatomic, readonly, copy) NSString* cellIdentifier;
 @property (nonatomic, readonly, copy) NSString* moreResultsName;
 
