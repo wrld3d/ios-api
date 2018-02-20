@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsTableHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsView;
+
 @end
 
 @implementation WRLDSearchWidgetViewController
@@ -118,6 +120,10 @@
     [m_searchModel.searchObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
      {
          [m_searchResultsViewController showQuery: query];
+         if(m_searchResultsViewController.visibleResults == 0)
+         {
+             [self.noResultsView show];
+         }
      }];
     
     [m_searchModel.suggestionObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
@@ -149,6 +155,7 @@
     }
     
     [m_searchResultsViewController hide];
+    [self.noResultsView hide];
     
     [self cancelMostRecentQueryIfNotComplete];
     

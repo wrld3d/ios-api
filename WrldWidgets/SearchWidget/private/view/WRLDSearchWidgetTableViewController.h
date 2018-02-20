@@ -14,6 +14,7 @@
              defaultCellIdentifier: (NSString *) defaultCellIdentifier;
 
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * selectionObserver;
+@property (nonatomic, readonly) NSInteger * visibleResults;
 - (void) showQuery: (WRLDSearchQuery *) query;
 
 - (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider

@@ -91,8 +91,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     m_displayedQuery = sourceQuery;
     for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
     {
-        [set updateResultData:[sourceQuery getResultsForFulfiller: set.fulfiller.identifier]];
+        [set updateResultData: [sourceQuery getResultsForFulfiller: set.fulfiller.identifier]];
     }
+    [self collapseAllSections];
     [self resizeTable];
     [m_tableView reloadData];
 }
@@ -151,47 +152,25 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }];
 }
 
-- (void) show
-{
-    [UIView animateWithDuration: m_fadeDuration animations:^{
-        m_visibilityView.alpha = 1.0;
-    }];
-    m_visibilityView.hidden = NO;
-}
-
-- (void) hide
-{
-    if(m_isAnimatingOut)
-    {
-        return;
-    }
-    
-    m_isAnimatingOut = true;
-    [UIView animateWithDuration: m_fadeDuration animations:^{
-        m_visibilityView.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        if(finished)
-        {
-            m_visibilityView.hidden =  YES;
-            m_isAnimatingOut = false;
-        }
-    }];
-}
-
 - (void) expandSection: (NSInteger) expandedSectionPosition
 {
+    _visibleResults = 0;
     for(NSInteger i = 0; i < [m_providerViewModels count]; ++i)
     {
         ExpandedStateType stateForProvider = (i == expandedSectionPosition) ? Expanded : Hidden;
-        [[m_providerViewModels objectAtIndex: i] setExpandedState: stateForProvider];
+        WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: i];
+        [setViewModel setExpandedState: stateForProvider];
+        _visibleResults += [setViewModel getVisibleResultCountWhen: stateForProvider];
     }
 }
 
 - (void) collapseAllSections
 {
+    _visibleResults = 0;
     for(WRLDSearchWidgetResultSetViewModel * setViewModel in m_providerViewModels)
     {
         [setViewModel setExpandedState: Collapsed];
+        _visibleResults += [setViewModel getVisibleResultCountWhen: Collapsed];
     }
 }
 
@@ -206,6 +185,40 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     {
         [moreResultsCell populateWith: m_backToResultsText icon: m_imgBackIcon];
     }
+}
+
+#pragma mark - WRLDViewVisibilityController
+
+- (void) show
+{
+    if(!m_visibilityView.hidden)
+    {
+        return;
+    }
+    
+    [UIView animateWithDuration: m_fadeDuration animations:^{
+        m_visibilityView.alpha = 1.0;
+    }];
+    m_visibilityView.hidden = NO;
+}
+
+- (void) hide
+{
+    if(m_isAnimatingOut || m_visibilityView.hidden)
+    {
+        return;
+    }
+    
+    m_isAnimatingOut = true;
+    [UIView animateWithDuration: m_fadeDuration animations:^{
+        m_visibilityView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if(finished)
+        {
+            m_visibilityView.hidden =  YES;
+            m_isAnimatingOut = false;
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource

@@ -30,7 +30,6 @@
 - (void) updateResultData:(WRLDSearchResultsCollection *) results
 {
     m_results = results;
-    [self setExpandedState: Collapsed];
 }
 
 - (id<WRLDSearchResultModel>) getResult:(NSInteger)index
