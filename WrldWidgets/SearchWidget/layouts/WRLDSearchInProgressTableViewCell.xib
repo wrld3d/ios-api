@@ -12,15 +12,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchInProgressTableViewCell"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WRLDSearchInProgressTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DY1-Me-GTo">
-                    <rect key="frame" x="177" y="14" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DY1-Me-GTo">
+                    <rect key="frame" x="177" y="6" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="DY1-Me-GTo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IR4-4w-45C"/>
+                <constraint firstItem="DY1-Me-GTo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cWt-Bp-gb7"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="spinner" destination="DY1-Me-GTo" id="eMP-ZI-FF5"/>

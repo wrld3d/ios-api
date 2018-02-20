@@ -29,15 +29,14 @@
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
                     <rect key="frame" x="28" y="28" width="347" height="40"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button" customClass="WRLDHighlightableButton">
                             <rect key="frame" x="4" y="4" width="32" height="32"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="MJU-fm-ezz"/>
                             </constraints>
-                            <state key="normal" image="Menu_btn.png">
-                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
+                            <state key="normal" image="MenuIcon.png"/>
+                            <state key="highlighted" image="MenuIcon_Down.png"/>
                         </button>
                         <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar" customClass="WRLDSearchBar">
                             <rect key="frame" x="40" y="4" width="303" height="32"/>
@@ -116,6 +115,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Menu_btn.png" width="32" height="32"/>
+        <image name="MenuIcon.png" width="40" height="40"/>
+        <image name="MenuIcon_Down.png" width="40" height="40"/>
     </resources>
 </document>

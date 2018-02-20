@@ -52,7 +52,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_providerViewModels = [[ResultSetViewModelCollection alloc] init];
         m_isAnimatingOut = false;
         m_defaultCellIdentifier = defaultCellIdentifier;
-        m_fadeDuration = 1.0f;
+        m_fadeDuration = 0.2f;
         
         m_moreResultsCellStyleIdentifier = @"WRLDMoreResultsTableViewCell";
         m_searchInProgressCellStyleIdentifier = @"WRLDSearchInProgressTableViewCell";
@@ -60,7 +60,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         m_showMoreResultsText = @"Show More (%d) %@ results";
         m_backToResultsText = @"Back";
         
-        m_searchInProgressCellHeight = 48;
+        m_searchInProgressCellHeight = 32;
         m_moreResultsCellHeight = 32;
         
         _selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
@@ -83,7 +83,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
                 forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
     
     m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_butn.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
-    m_imgBackIcon = [UIImage imageNamed:@"Back_btn.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
+    m_imgBackIcon = [UIImage imageNamed:@"SearchBack.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
 }
 
 - (void) showQuery: (WRLDSearchQuery *) sourceQuery

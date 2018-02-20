@@ -10,10 +10,11 @@
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
+#import "WRLDHighlightableButton.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+@property (weak, nonatomic) IBOutlet WRLDHighlightableButton *menuButton;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -38,6 +39,13 @@
     NSInteger maxVisibleExpandedResults;
     
     NSInteger maxVisibleSuggestions;
+    
+    UIColor * m_primaryBackgroundColor;
+    UIColor * m_primaryForegroundColor;
+    UIColor * m_focusBackgroundColor;
+    UIColor * m_focusForegroundColor;
+    UIColor * m_disabledBackgroundColor;
+    UIColor * m_disabledForegroundColor;
 }
 
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver {
@@ -62,6 +70,15 @@
         maxVisibleExpandedResults = 100;
         
         maxVisibleSuggestions = 3;
+        
+        UIColor* wrldBlue = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
+        
+        m_primaryBackgroundColor = [UIColor whiteColor];
+        m_primaryForegroundColor = wrldBlue;
+        m_focusBackgroundColor = wrldBlue;
+        m_focusForegroundColor = [UIColor whiteColor];
+        m_disabledBackgroundColor = [UIColor whiteColor];
+        m_disabledForegroundColor = [UIColor grayColor];
     }
     return self;
 }
@@ -69,6 +86,12 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.searchBar setActiveBorderColor: m_primaryForegroundColor];
+    [self.searchBar setInactiveBorderColor: m_disabledForegroundColor];
+    
+    [self.menuButton setBackgroundColor:m_primaryBackgroundColor forState:UIControlStateNormal];
+    [self.menuButton setBackgroundColor:m_focusBackgroundColor forState:UIControlStateHighlighted];
     
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
                                                                                     visibilityView: self.resultsTableContainerView

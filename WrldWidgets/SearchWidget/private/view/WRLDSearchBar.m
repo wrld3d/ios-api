@@ -3,8 +3,8 @@
 @implementation WRLDSearchBar
 {
     CGFloat m_searchBarIconWidth;
-    UIColor *m_searchBarActiveColor;
-    UIColor *m_searchBarInactiveColor;
+    UIColor *m_activeBorderColor;
+    UIColor *m_inactiveBorderColor;
     CGFloat m_fontSize;
     UIFont *m_font;
 }
@@ -36,8 +36,6 @@
 
 -(void) defineConstants
 {
-    m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
-    m_searchBarInactiveColor = [UIColor grayColor];
     m_fontSize = 16;
     m_font = [UIFont  systemFontOfSize:m_fontSize];
     
@@ -61,10 +59,38 @@
         [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{NSFontAttributeName: m_font}];
     }
     
+    [self setActiveBorderColor:[UIColor blackColor]];
+    [self setInactiveBorderColor:[UIColor grayColor]];
+    
     self.layer.borderWidth = 1.0;
     self.layer.cornerRadius = 10;
-    self.layer.borderColor = [m_searchBarInactiveColor CGColor];
     [self setBackgroundImage:[UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])]];
+}
+
+- (void) setActiveBorderColor: (UIColor *) color
+{
+    if(color == nil)
+    {
+        return;
+    }
+    m_activeBorderColor = color;
+    if(self.isFirstResponder)
+    {
+        self.layer.borderColor = [m_activeBorderColor CGColor];
+    }
+}
+
+- (void) setInactiveBorderColor: (UIColor *) color
+{
+    if(color == nil)
+    {
+        return;
+    }
+    m_inactiveBorderColor = color;
+    if(!self.isFirstResponder)
+    {
+        self.layer.borderColor = [m_inactiveBorderColor CGColor];
+    }
 }
 
 -(void) setActive:(BOOL) isActive
@@ -74,14 +100,14 @@
         [UIView animateWithDuration:0.25 animations:^{
             [self setPositionAdjustment:UIOffsetMake(-m_searchBarIconWidth, 0) forSearchBarIcon:UISearchBarIconSearch];
         }];
-        self.layer.borderColor = [m_searchBarActiveColor CGColor];
+        self.layer.borderColor = [m_activeBorderColor CGColor];
     }
     else
     {
         [UIView animateWithDuration:0.25 animations:^{
             [self setPositionAdjustment:UIOffsetMake(0, 0) forSearchBarIcon:UISearchBarIconSearch];
         }];
-        self.layer.borderColor = [m_searchBarInactiveColor CGColor];
+        self.layer.borderColor = [m_inactiveBorderColor CGColor];
     }
 }
 
