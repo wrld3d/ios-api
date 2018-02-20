@@ -219,6 +219,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     {
         cell = [tableView dequeueReusableCellWithIdentifier: m_defaultCellIdentifier];
     }
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
     return cell;
 }
 

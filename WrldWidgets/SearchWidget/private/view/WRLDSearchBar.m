@@ -36,7 +36,7 @@
 
 -(void) defineConstants
 {
-    m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:158.0f/255.0f alpha:1.0f];
+    m_searchBarActiveColor = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
     m_searchBarInactiveColor = [UIColor grayColor];
     m_fontSize = 16;
     m_font = [UIFont  systemFontOfSize:m_fontSize];

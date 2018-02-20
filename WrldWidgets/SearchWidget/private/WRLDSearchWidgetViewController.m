@@ -17,10 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsTableHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsTableHeightConstraint;
 
 @end
 
@@ -72,12 +72,12 @@
     
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
                                                                                     visibilityView: self.resultsTableContainerView
-                                                                                  heightConstraint:self.resultsHeightConstraint
+                                                                                  heightConstraint:self.resultsTableHeightConstraint
                                                                              defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
     
     m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
                                                                                   visibilityView: self.suggestionsTableView
-                                                                                heightConstraint:self.suggestionsHeightConstraint
+                                                                                heightConstraint:self.suggestionsTableHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
     
     [m_suggestionsViewController.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
