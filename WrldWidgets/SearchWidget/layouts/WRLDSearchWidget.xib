@@ -75,7 +75,7 @@
                             <color key="sectionIndexBackgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
                         <constraint firstAttribute="height" priority="999" identifier="Height" id="Ch0-Pu-hmk"/>

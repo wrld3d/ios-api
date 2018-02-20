@@ -12,6 +12,13 @@
 
 typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelCollection;
 
+typedef NS_ENUM(NSInteger, GradientState) {
+    None,
+    Top,
+    Bottom,
+    TopAndBottom
+};
+
 @implementation WRLDSearchWidgetTableViewController
 {
     UITableView * m_tableView;
@@ -149,6 +156,11 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [UIView animateWithDuration: m_fadeDuration animations:^{
         m_heightConstraint.constant = height;
         [m_visibilityView layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if(finished)
+        {
+            [self applyGradient: [self getGradientState: m_tableView]];
+        }
     }];
 }
 
@@ -184,6 +196,55 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     else if(sectionViewModel.expandedState == Expanded)
     {
         [moreResultsCell populateWith: m_backToResultsText icon: m_imgBackIcon];
+    }
+}
+
+-(GradientState) getGradientState : (UIScrollView*) scrollView
+{
+    bool contentExtendsAboveTopOfView = (scrollView.contentOffset.y + scrollView.contentInset.top > 0);
+    bool contentExtendsBelowBottomOfView = (scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height);
+    
+    GradientState applyGradientTo = None;
+    
+    if(contentExtendsAboveTopOfView && contentExtendsBelowBottomOfView){
+        applyGradientTo = TopAndBottom;
+    }
+    else if(contentExtendsAboveTopOfView){
+        applyGradientTo = Top;
+    }
+    else if(contentExtendsBelowBottomOfView){
+        applyGradientTo = Bottom;
+    }
+    return applyGradientTo;
+}
+
+-(void) applyGradient: (GradientState) state
+{
+    CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
+    gradient.frame = [m_tableView bounds];
+    
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    
+    switch (state) {
+        case None:
+            m_tableView.layer.mask = nil;
+            break;
+        case Top:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.2]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case Bottom:
+            gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case TopAndBottom:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor, (__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
     }
 }
 
@@ -352,6 +413,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [_selectionObserver selected: selectedResultModel];
         [setViewModel.fulfiller.selectionObserver selected: selectedResultModel];
     }
+}
+
+-(void) scrollViewDidScroll: (UIScrollView *)scrollView
+{
+    [self applyGradient: [self getGradientState:scrollView]];
 }
 
 @end
