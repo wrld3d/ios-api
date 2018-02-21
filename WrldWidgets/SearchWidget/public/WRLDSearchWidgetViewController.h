@@ -16,4 +16,7 @@
 -(void) displaySearchProvider :(WRLDSearchProviderHandle*) searchProvider;
 -(void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib;
+
+- (void) resignFocus;
+
 @end

@@ -1,10 +1,12 @@
 #import "WRLDSearchWidgetView.h"
+#import "WRLDSearchWidgetViewController.h"
 
 @interface WRLDSearchWidgetView()
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *menuSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *searchBarSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *resultsSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *suggestionsSubView;
+@property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchWidgetViewController *owner;
 @end
 
 @implementation WRLDSearchWidgetView
@@ -28,9 +30,7 @@
         return YES;
     }
     
-    if([self.searchBarSubView isFirstResponder]){
-        [self.searchBarSubView resignFirstResponder];
-    }
+    [self.owner resignFocus];
     
     return NO;
 }

@@ -104,14 +104,15 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="saG-f9-NhU" userLabel="Icon Space">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="64"/>
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="64"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoResultsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="mE9-dl-3CS">
-                                    <rect key="frame" x="9" y="16" width="32" height="32"/>
+                                    <rect key="frame" x="4" y="16" width="32" height="32"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstAttribute="width" constant="40" id="CAx-c0-6hd"/>
                                 <constraint firstItem="mE9-dl-3CS" firstAttribute="centerY" secondItem="saG-f9-NhU" secondAttribute="centerY" id="Q8x-cV-XZc"/>
                                 <constraint firstItem="mE9-dl-3CS" firstAttribute="centerX" secondItem="saG-f9-NhU" secondAttribute="centerX" id="mBz-7Y-1Zk"/>
                             </constraints>
@@ -131,7 +132,6 @@
                         <constraint firstItem="JnP-MS-C41" firstAttribute="top" secondItem="7ub-Ja-lSU" secondAttribute="top" id="ZR1-t0-gjS"/>
                         <constraint firstItem="5Es-nk-XX5" firstAttribute="bottom" secondItem="7ub-Ja-lSU" secondAttribute="bottom" id="aQK-gS-w30"/>
                         <constraint firstItem="5Es-nk-XX5" firstAttribute="leading" secondItem="7ub-Ja-lSU" secondAttribute="leading" constant="50" id="eqe-1E-uew"/>
-                        <constraint firstItem="saG-f9-NhU" firstAttribute="trailing" secondItem="5Es-nk-XX5" secondAttribute="leading" id="p91-2i-n9h"/>
                         <constraint firstItem="saG-f9-NhU" firstAttribute="leading" secondItem="7ub-Ja-lSU" secondAttribute="leading" id="sKj-xr-GEW"/>
                         <constraint firstItem="saG-f9-NhU" firstAttribute="top" secondItem="7ub-Ja-lSU" secondAttribute="top" id="t7j-Sq-oVY"/>
                         <constraint firstItem="5Es-nk-XX5" firstAttribute="top" secondItem="7ub-Ja-lSU" secondAttribute="top" id="uCx-a9-8ah"/>
@@ -158,7 +158,8 @@
             </constraints>
             <connections>
                 <outlet property="menuSubView" destination="Gsy-aj-hKu" id="bLp-0R-4ex"/>
-                <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="P9o-Ru-bCM"/>
+                <outlet property="owner" destination="-1" id="iam-dy-t5d"/>
+                <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="x0f-zS-dg3"/>
                 <outlet property="searchBarSubView" destination="nwq-hq-zts" id="Tgg-aV-HbC"/>
                 <outlet property="suggestionsSubView" destination="0kP-eT-3ph" id="ADr-2a-DFF"/>
             </connections>

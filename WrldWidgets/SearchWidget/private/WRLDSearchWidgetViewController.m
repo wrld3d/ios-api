@@ -48,6 +48,10 @@
     UIColor * m_focusForegroundColor;
     UIColor * m_disabledBackgroundColor;
     UIColor * m_disabledForegroundColor;
+    
+    id<WRLDViewVisibilityController> m_activeResultsView;
+    
+    BOOL m_hasFocus;
 }
 
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver {
@@ -81,6 +85,8 @@
         m_focusForegroundColor = [UIColor whiteColor];
         m_disabledBackgroundColor = [UIColor whiteColor];
         m_disabledForegroundColor = [UIColor grayColor];
+        
+        m_hasFocus = NO;
     }
     return self;
 }
@@ -113,8 +119,12 @@
     [m_searchModel.searchObserver addQueryStartingEvent: ^(WRLDSearchQuery * query)
      {
          [m_searchResultsViewController showQuery: query];
-         [m_searchResultsViewController show];
-         [m_suggestionsViewController hide];
+         m_activeResultsView = m_searchResultsViewController;
+         if(m_hasFocus)
+         {
+             [m_suggestionsViewController hide];
+             [m_searchResultsViewController show];
+         }
      }];
     
     [m_searchModel.searchObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
@@ -122,7 +132,16 @@
          [m_searchResultsViewController showQuery: query];
          if(m_searchResultsViewController.visibleResults == 0)
          {
-             [self.noResultsView show];
+             m_activeResultsView = self.noResultsView;
+             if(m_hasFocus)
+             {
+                 [m_searchResultsViewController hide];
+                 [self.noResultsView show];
+             }
+         }
+         else
+         {
+             m_activeResultsView = m_searchResultsViewController;
          }
      }];
     
@@ -130,18 +149,41 @@
      {
          [m_suggestionsViewController showQuery: query];
          [m_searchResultsViewController hide];
-         [m_suggestionsViewController show];
+         if(m_hasFocus)
+         {
+             [m_suggestionsViewController show];
+         }
+         m_activeResultsView = m_suggestionsViewController;
      }];
 }
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
 {
     [searchBar setActive: true];
+    if(m_activeResultsView != nil)
+    {
+        [m_activeResultsView show];
+    }
+    m_hasFocus = YES;
 }
 
 - (void) searchBarTextDidEndEditing:(WRLDSearchBar *)searchBar
 {
     [searchBar setActive: false];
+}
+
+- (void) resignFocus
+{
+    if(self.searchBar.isFirstResponder)
+    {
+        [self.searchBar resignFirstResponder];
+    }
+    
+    if(m_activeResultsView != nil)
+    {
+        [m_activeResultsView hide];
+    }
+    m_hasFocus = NO;
 }
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -166,6 +208,7 @@
     else
     {
         [m_suggestionsViewController hide];
+        m_activeResultsView = nil;
     }
 }
 
