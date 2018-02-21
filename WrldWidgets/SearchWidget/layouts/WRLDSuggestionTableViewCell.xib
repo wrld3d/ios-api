@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,21 +20,45 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                     <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-t6-Qze">
-                    <rect key="frame" x="52" y="0.0" width="325" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-t6-Qze">
+                    <rect key="frame" x="50" y="0.0" width="325" height="32"/>
                     <color key="tintColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1j-Ff-BKW" userLabel="Icon Space">
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="32"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GoToIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-dz-b9d">
+                            <rect key="frame" x="13" y="4" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="RSc-dz-b9d" secondAttribute="height" multiplier="1:1" id="bNa-Lc-ni1"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="RSc-dz-b9d" firstAttribute="centerX" secondItem="H1j-Ff-BKW" secondAttribute="centerX" id="ORz-iG-fZt"/>
+                        <constraint firstItem="RSc-dz-b9d" firstAttribute="bottom" secondItem="H1j-Ff-BKW" secondAttribute="bottom" constant="-4" id="TGe-Pp-X3E"/>
+                        <constraint firstItem="RSc-dz-b9d" firstAttribute="top" secondItem="H1j-Ff-BKW" secondAttribute="top" constant="4" id="mF3-C2-6vz"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="H1j-Ff-BKW" firstAttribute="trailing" secondItem="XAk-t6-Qze" secondAttribute="leading" id="8fm-63-4i5"/>
+                <constraint firstItem="XAk-t6-Qze" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Abl-X5-HwQ"/>
+                <constraint firstItem="XAk-t6-Qze" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="FsY-AM-anw"/>
+                <constraint firstItem="H1j-Ff-BKW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Izu-YP-X65"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Rs3-1y-voV"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bXq-I0-tyM"/>
+                <constraint firstItem="H1j-Ff-BKW" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="e7Z-ad-DXC"/>
+                <constraint firstItem="XAk-t6-Qze" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="gBz-Tr-Ukw"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gpK-Zc-gC7"/>
+                <constraint firstItem="H1j-Ff-BKW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="l6j-K9-gUn"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="top" constant="1" id="qWH-WL-FTX"/>
+                <constraint firstItem="XAk-t6-Qze" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="yRk-EQ-B1t"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -42,4 +67,7 @@
             <point key="canvasLocation" x="35.5" y="54"/>
         </view>
     </objects>
+    <resources>
+        <image name="GoToIcon.png" width="40" height="40"/>
+    </resources>
 </document>
