@@ -16,5 +16,15 @@ target 'WrldSdk' do
 	else
   		pod 'wrld_cpp_sdk', :podspec => './wrld_cpp_sdk.podspec'
     end
-    
+	
+	target 'WrldWidgetsTests' do
+		inherit! :search_paths
+		pod 'OCMock', '~> 3.4'
+	  end
+
+	target 'WrldSearchWidgetTests' do
+		inherit! :search_paths
+		pod 'OCMock', '~> 3.4'
+	end
+
 end
