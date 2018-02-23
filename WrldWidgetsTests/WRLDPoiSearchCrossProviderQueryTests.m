@@ -11,7 +11,6 @@
 #import <OCMock/OCMock.h>
 
 #import "WRLDPoiServiceSearchProvider.h"
-#import "WRLDSearchRequest.h"
 
 @interface WRLDPoiSearchCrossProviderQueryTests : XCTestCase
 

@@ -1,8 +1,6 @@
 #pragma once
 @import Wrld;
-
-#import "WRLDSearchProvider.h"
-#import "WRLDSuggestionProvider.h"
+@import WrldSearchWidget;
 
 @interface WRLDPoiServiceSearchProvider : NSObject <WRLDSearchProvider, WRLDSuggestionProvider, WRLDMapViewDelegate>
 

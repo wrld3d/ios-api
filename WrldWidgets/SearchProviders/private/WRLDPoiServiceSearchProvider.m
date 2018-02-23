@@ -1,13 +1,10 @@
 #import <Foundation/Foundation.h>
 
+@import WrldSearchWidget;
+
 #import "WRLDPoiSearchResult.h"
 #import "WRLDPoiSearchResponse.h"
 #import "WRLDPoiServiceSearchProvider.h"
-
-#import "WRLDSearchRequest.h"
-#import "WRLDPositionedSearchResultModel.h"
-
-#import "WRLDSearchTypes.h"
 
 @implementation WRLDPoiServiceSearchProvider
 {

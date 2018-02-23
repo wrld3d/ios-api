@@ -18,9 +18,3 @@ target 'WrldSdk' do
     end
     
 end
-
-target 'WRLDSearchWidgetTests' do
-	inherit! :search_paths
-	pod 'OCMock', '~> 3.4'
-  end
-

@@ -3,8 +3,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "WRLDBasicSearchResultModel.h"
 
-@import Wrld;
-
 @interface WRLDPositionedSearchResultModel : WRLDBasicSearchResultModel
 
 -(instancetype) initWithTitle:(NSString*) title subTitle:(NSString *)subTitle iconKey:(NSString *) iconKey latLng:(CLLocationCoordinate2D) latLng;
