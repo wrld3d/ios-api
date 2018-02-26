@@ -23,3 +23,7 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDBasicSearchResultModel.h"
 #import "WRLDPositionedSearchResultModel.h"
+#import "WRLDSearchMenuModel.h"
+#import "WRLDMenuGroup.h"
+#import "WRLDMenuOption.h"
+#import "WRLDMenuChild.h"
