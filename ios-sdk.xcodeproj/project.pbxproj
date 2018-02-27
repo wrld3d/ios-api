@@ -190,6 +190,17 @@
 		6FA013B01FD80FC600D51364 /* WRLDMapsceneStartLocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FA013AF1FD80FC600D51364 /* WRLDMapsceneStartLocation.mm */; };
 		6FA013B41FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */; };
 		6FA013B61FDADFA200D51364 /* WRLDMapscene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */; };
+		A001E29420407ADF0086A7EA /* WRLDSearchMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A001E29320407ADF0086A7EA /* WRLDSearchMenuModel.m */; };
+		A001E29520407AF50086A7EA /* WRLDSearchMenuModel.h in Headers */ = {isa = PBXBuildFile; fileRef = A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00E33FE2045BDCA0066B058 /* WRLDMenuChangedListener.h in Headers */ = {isa = PBXBuildFile; fileRef = A00E33FD2045BDCA0066B058 /* WRLDMenuChangedListener.h */; };
+		A00F1D9020442CDD00A42ECF /* WRLDMenuGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */; };
+		A00F1D942044311100A42ECF /* WRLDMenuOption.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D932044311100A42ECF /* WRLDMenuOption.m */; };
+		A00F1D962044314800A42ECF /* WRLDMenuOption.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D952044314800A42ECF /* WRLDMenuOption.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00F1D982044369800A42ECF /* WRLDMenuChild.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D972044369700A42ECF /* WRLDMenuChild.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00F1D9A2044384F00A42ECF /* WRLDMenuChild.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D992044384F00A42ECF /* WRLDMenuChild.m */; };
+		A00F1D9C2044491100A42ECF /* WRLDSearchMenuViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */; };
+		A00F1D9E20444C4C00A42ECF /* WRLDSearchMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */; };
 		A82B34781FB4B966009B21D3 /* WRLDPoiService.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34771FB4B966009B21D3 /* WRLDPoiService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347A1FB4BC10009B21D3 /* WRLDPoiSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A82B347C1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -533,6 +544,17 @@
 		6FA013B31FDAB26F00D51364 /* WRLDMapsceneRequestResponse+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapsceneRequestResponse+Private.h"; sourceTree = "<group>"; };
 		6FA013B51FDADFA200D51364 /* WRLDMapscene+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMapscene+Private.h"; sourceTree = "<group>"; };
 		76275E8E6F31FFA3AC50AD07 /* Pods-WrldSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WrldSdk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk.release.xcconfig"; sourceTree = "<group>"; };
+		A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchMenuModel.h; sourceTree = "<group>"; };
+		A001E29320407ADF0086A7EA /* WRLDSearchMenuModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchMenuModel.m; sourceTree = "<group>"; };
+		A00E33FD2045BDCA0066B058 /* WRLDMenuChangedListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuChangedListener.h; sourceTree = "<group>"; };
+		A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuGroup.h; sourceTree = "<group>"; };
+		A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuGroup.m; sourceTree = "<group>"; };
+		A00F1D932044311100A42ECF /* WRLDMenuOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOption.m; sourceTree = "<group>"; };
+		A00F1D952044314800A42ECF /* WRLDMenuOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuOption.h; sourceTree = "<group>"; };
+		A00F1D972044369700A42ECF /* WRLDMenuChild.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuChild.h; sourceTree = "<group>"; };
+		A00F1D992044384F00A42ECF /* WRLDMenuChild.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuChild.m; sourceTree = "<group>"; };
+		A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchMenuViewController.h; sourceTree = "<group>"; };
+		A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchMenuViewController.m; sourceTree = "<group>"; };
 		A82B34771FB4B966009B21D3 /* WRLDPoiService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiService.h; sourceTree = "<group>"; };
 		A82B34791FB4BC10009B21D3 /* WRLDPoiSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDPoiSearch.h; sourceTree = "<group>"; };
 		A82B347B1FB4BEB0009B21D3 /* WRLDTextSearchOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDTextSearchOptions.h; sourceTree = "<group>"; };
@@ -793,6 +815,10 @@
 				2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */,
 				2619A030202B5156002CF191 /* WRLDSuggestionProvider.h */,
 				2619A033202B5156002CF191 /* WRLDSuggestionProviderHandle.h */,
+				A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */,
+				A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */,
+				A00F1D952044314800A42ECF /* WRLDMenuOption.h */,
+				A00F1D972044369700A42ECF /* WRLDMenuChild.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -880,6 +906,8 @@
 				2693DF11202B1045000F91CF /* WRLDSearchWidgetView.h */,
 				2693DF12202B1045000F91CF /* WRLDSearchWidgetView.m */,
 				262D3DB72035BE3600B9FEA8 /* WRLDViewVisibilityController.h */,
+				A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */,
+				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -901,6 +929,11 @@
 				26A5AC5B20445182001881A9 /* WRLDSearchWidgetStyle.m */,
 				2619A045202B61D8002CF191 /* WRLDSuggestionProviderHandle.m */,
 				2619A047202B699E002CF191 /* WRLDSuggestionProviderHandle+Private.h */,
+				A001E29320407ADF0086A7EA /* WRLDSearchMenuModel.m */,
+				A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */,
+				A00F1D932044311100A42ECF /* WRLDMenuOption.m */,
+				A00F1D992044384F00A42ECF /* WRLDMenuChild.m */,
+				A00E33FD2045BDCA0066B058 /* WRLDMenuChangedListener.h */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1245,6 +1278,7 @@
 				264B92C2203F2E5C00F6DAE0 /* WrldSearchWidget.h in Headers */,
 				264B92D9203F303900F6DAE0 /* WRLDSearchProviderHandle+Private.h in Headers */,
 				264B92DA203F303900F6DAE0 /* WRLDSearchQuery+Private.h in Headers */,
+				A00E33FE2045BDCA0066B058 /* WRLDMenuChangedListener.h in Headers */,
 				264B92DB203F303900F6DAE0 /* WRLDSearchQueryObserver+Private.h in Headers */,
 				264B92DC203F303900F6DAE0 /* WRLDSearchRequest+Private.h in Headers */,
 				26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */,
@@ -1260,10 +1294,12 @@
 				264B92E5203F303900F6DAE0 /* WRLDSearchWidgetResultSetViewModel.h in Headers */,
 				264B92E6203F303900F6DAE0 /* WRLDSearchWidgetTableViewController.h in Headers */,
 				264B92E7203F303900F6DAE0 /* WRLDSearchWidgetView.h in Headers */,
+				A00F1D962044314800A42ECF /* WRLDMenuOption.h in Headers */,
 				264B92E8203F303900F6DAE0 /* WRLDViewVisibilityController.h in Headers */,
 				264B92E9203F303900F6DAE0 /* WRLDBasicSearchResultModel.h in Headers */,
 				264B933A2040194700F6DAE0 /* WRLDMockSearchProvider.h in Headers */,
 				264B92EA203F303900F6DAE0 /* WRLDSearchModel.h in Headers */,
+				A00F1D9020442CDD00A42ECF /* WRLDMenuGroup.h in Headers */,
 				264B92EB203F303900F6DAE0 /* WRLDSearchProvider.h in Headers */,
 				264B92EC203F303900F6DAE0 /* WRLDSearchProviderHandle.h in Headers */,
 				264B92ED203F303900F6DAE0 /* WRLDSearchQuery.h in Headers */,
@@ -1271,11 +1307,14 @@
 				264B92EF203F303900F6DAE0 /* WRLDSearchRequest.h in Headers */,
 				264B92F0203F303900F6DAE0 /* WRLDSearchRequestFulfillerHandle.h in Headers */,
 				264B92F1203F303900F6DAE0 /* WRLDSearchResultModel.h in Headers */,
+				A00F1D982044369800A42ECF /* WRLDMenuChild.h in Headers */,
+				A00F1D9C2044491100A42ECF /* WRLDSearchMenuViewController.h in Headers */,
 				264B92F2203F303900F6DAE0 /* WRLDSearchResultSelectedObserver.h in Headers */,
 				26A5AC6A2045C2A7001881A9 /* WRLDSuggestionTableViewCell.h in Headers */,
 				264B92F3203F303900F6DAE0 /* WRLDSearchTypes.h in Headers */,
 				264B92F4203F303900F6DAE0 /* WRLDSearchWidgetViewController.h in Headers */,
 				264B92F5203F303900F6DAE0 /* WRLDSuggestionProvider.h in Headers */,
+				A001E29520407AF50086A7EA /* WRLDSearchMenuModel.h in Headers */,
 				264B92F6203F303900F6DAE0 /* WRLDSuggestionProviderHandle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1828,6 +1867,7 @@
 				264B92F8203F306E00F6DAE0 /* WRLDSearchModel.m in Sources */,
 				264B92F9203F306E00F6DAE0 /* WRLDSearchProviderHandle.m in Sources */,
 				264B92FA203F306E00F6DAE0 /* WRLDSearchQuery.m in Sources */,
+				A00F1D9A2044384F00A42ECF /* WRLDMenuChild.m in Sources */,
 				264B92FB203F306E00F6DAE0 /* WRLDSearchQueryObserver.m in Sources */,
 				264B92FC203F306E00F6DAE0 /* WRLDSearchRequest.m in Sources */,
 				26A5AC6C2045C2BA001881A9 /* WRLDSuggestionTableViewCell.m in Sources */,
@@ -1835,17 +1875,21 @@
 				264B9339204016F500F6DAE0 /* WRLDPositionedSearchResultModel.m in Sources */,
 				264B92FE203F306E00F6DAE0 /* WRLDMoreResultsTableViewCell.m in Sources */,
 				264B92FF203F306E00F6DAE0 /* WRLDSearchInProgressTableViewCell.m in Sources */,
+				A001E29420407ADF0086A7EA /* WRLDSearchMenuModel.m in Sources */,
 				264B9300203F306E00F6DAE0 /* WRLDSearchResultTableViewCell.m in Sources */,
 				264B9301203F306E00F6DAE0 /* WRLDFadeableView.m in Sources */,
 				264B9302203F306E00F6DAE0 /* WRLDHighlightableButton.m in Sources */,
 				264B9303203F306E00F6DAE0 /* WRLDSearchBar.m in Sources */,
 				26A5AC5C20445182001881A9 /* WRLDSearchWidgetStyle.m in Sources */,
+				A00F1D942044311100A42ECF /* WRLDMenuOption.m in Sources */,
 				264B9304203F306E00F6DAE0 /* WRLDSearchResultSelectedObserver.m in Sources */,
 				264B9305203F306E00F6DAE0 /* WRLDSearchWidgetResultSetViewModel.m in Sources */,
+				A00F1D9E20444C4C00A42ECF /* WRLDSearchMenuViewController.m in Sources */,
 				264B9306203F306E00F6DAE0 /* WRLDSearchWidgetTableViewController.m in Sources */,
 				264B9338204016F500F6DAE0 /* WRLDMockSearchProvider.m in Sources */,
 				264B9307203F306E00F6DAE0 /* WRLDSearchWidgetView.m in Sources */,
 				264B9308203F306E00F6DAE0 /* WRLDSearchWidgetViewController.m in Sources */,
+				A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

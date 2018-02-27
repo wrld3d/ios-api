@@ -12,6 +12,8 @@
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDHighlightableButton.h"
 #import "WRLDSearchWidgetStyle.h"
+#import "WRLDSearchMenuModel.h"
+#import "WRLDSearchMenuViewController.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -28,13 +30,18 @@
 @property (weak, nonatomic) IBOutlet UILabel* noResultsLabel;
 @property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsVisibilityController;
 
+@property (weak, nonatomic) IBOutlet UIView *menuContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
+
 @end
 
 @implementation WRLDSearchWidgetViewController
 {
     WRLDSearchModel* m_searchModel;
+    WRLDSearchMenuModel* m_menuModel;
     WRLDSearchWidgetTableViewController* m_searchResultsViewController;
     WRLDSearchWidgetTableViewController* m_suggestionsViewController;
+    WRLDSearchMenuViewController* m_searchMenuViewController;
     NSString * m_suggestionsTableViewCellStyleIdentifier;
     NSString * m_searchResultsTableViewDefaultCellStyleIdentifier;
     
@@ -65,13 +72,21 @@
     return m_suggestionsViewController.selectionObserver;
 }
 
-- (instancetype) initWithSearchModel : (WRLDSearchModel *) searchModel
+- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
+{
+    return [self initWithSearchModel:searchModel
+                           menuModel:nil];
+}
+
+- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
+                          menuModel:(WRLDSearchMenuModel *)menuModel
 {
     NSBundle* bundle = [NSBundle bundleForClass:[WRLDSearchWidgetViewController class]];
     self = [super initWithNibName: @"WRLDSearchWidget" bundle:bundle];
     if(self)
     {
         m_searchModel = searchModel;
+        m_menuModel = menuModel;
         m_suggestionsTableViewCellStyleIdentifier = @"WRLDSuggestionTableViewCell";
         m_searchResultsTableViewDefaultCellStyleIdentifier = @"WRLDSearchResultTableViewCell";
         
@@ -105,6 +120,10 @@
                                                                                            style: self.style
                                                                                 heightConstraint:self.suggestionsTableHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
+
+    m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithMenuModel:m_menuModel
+                                                                          visibilityView:self.menuContainerView
+                                                                              titleLabel:self.menuTitleLabel];
     [self setupStyle];
     [self observeModel];
 }
@@ -279,6 +298,16 @@
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
 {
     [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
+}
+
+- (IBAction)menuButtonClicked:(id)menuButton
+{
+    [m_searchMenuViewController show];
+}
+
+- (IBAction)menuBackButtonClicked:(id)backButton
+{
+    [m_searchMenuViewController hide];
 }
 
 @end

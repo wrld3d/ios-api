@@ -13,6 +13,8 @@
             <connections>
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="noResultsLabel" destination="5Es-nk-XX5" id="ibB-9R-Qdq"/>
+                <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="a43-of-iUn"/>
+                <outlet property="menuTitleLabel" destination="umw-7B-avj" id="lgG-BU-M1q"/>
                 <outlet property="noResultsView" destination="7ub-Ja-lSU" id="lHn-Dx-9QV"/>
                 <outlet property="noResultsVisibilityController" destination="7ub-Ja-lSU" id="o8f-wX-N0J"/>
                 <outlet property="resultsTableContainerView" destination="fS6-Uh-JhU" id="jMj-F5-vIi"/>
@@ -39,6 +41,9 @@
                             </constraints>
                             <state key="normal" image="MenuIcon.png"/>
                             <state key="highlighted" image="MenuIcon_Down.png"/>
+                            <connections>
+                                <action selector="menuButtonClicked:" destination="-1" eventType="touchUpInside" id="BnU-1U-IrA"/>
+                            </connections>
                         </button>
                         <searchBar contentMode="redraw" placeholder="Search the WRLD" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwq-hq-zts" userLabel="Wrld Search Widget Search Bar" customClass="WRLDSearchBar">
                             <rect key="frame" x="40" y="4" width="331" height="32"/>
@@ -141,6 +146,35 @@
                         <constraint firstAttribute="height" constant="64" id="xEn-ID-l5g"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ooa-S7-mFc" userLabel="Menu Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXk-kO-Zlf" userLabel="Wrld Search Widget Back Button">
+                            <rect key="frame" x="4" y="4" width="32" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="MenuBack.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="menuBackButtonClicked:" destination="-1" eventType="touchUpInside" id="6nh-IA-SRG"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umw-7B-avj">
+                            <rect key="frame" x="44" y="6" width="323" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EIc-t9-bk5">
+                            <rect key="frame" x="0.0" y="40" width="375" height="4"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.16862745098039217" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <constraints>
                 <constraint firstItem="7ub-Ja-lSU" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="3xT-42-n4I"/>
@@ -165,9 +199,11 @@
                 <outlet property="searchBarSubView" destination="nwq-hq-zts" id="Tgg-aV-HbC"/>
                 <outlet property="suggestionsSubView" destination="0kP-eT-3ph" id="ADr-2a-DFF"/>
             </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
         </view>
     </objects>
     <resources>
+        <image name="MenuBack.png" width="40" height="40"/>
         <image name="MenuIcon.png" width="40" height="40"/>
         <image name="MenuIcon_Down.png" width="40" height="40"/>
         <image name="NoResultsIcon.png" width="32" height="32"/>
