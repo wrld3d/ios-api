@@ -111,6 +111,11 @@
 		2664D2A12040625F006FA154 /* WRLDSearchModelSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664D29E2040625F006FA154 /* WRLDSearchModelSearchTests.m */; };
 		2664D2A22040625F006FA154 /* WRLDSearchModelSuggestionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664D29F2040625F006FA154 /* WRLDSearchModelSuggestionTests.m */; };
 		2664D2A32040625F006FA154 /* WRLDPositionedSearchResultModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664D2A02040625F006FA154 /* WRLDPositionedSearchResultModelTests.m */; };
+		2664D2A620407827006FA154 /* WrldSearchWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264B92B2203F2E5C00F6DAE0 /* WrldSearchWidget.framework */; };
+		2664D2A72040783A006FA154 /* WrldSearchWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 264B92B2203F2E5C00F6DAE0 /* WrldSearchWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 26A5AC5920445169001881A9 /* WRLDSearchWidgetStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26A5AC5C20445182001881A9 /* WRLDSearchWidgetStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5AC5B20445182001881A9 /* WRLDSearchWidgetStyle.m */; };
+		26A5AC6020447005001881A9 /* WRLDSearchWidgetStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5AC5F20447005001881A9 /* WRLDSearchWidgetStyleTests.m */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -323,6 +328,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2664D2A72040783A006FA154 /* WrldSearchWidget.framework in Embed Frameworks */,
 				E03110041EB0E08B00002E88 /* Wrld.framework in Embed Frameworks */,
 				2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */,
 			);
@@ -440,6 +446,9 @@
 		26A3B35E20332620004C4D99 /* WRLDSearchQueryObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchQueryObserver.m; sourceTree = "<group>"; };
 		26A3B36220332C26004C4D99 /* WRLDSearchRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchRequest.h; sourceTree = "<group>"; };
 		26A3B36420332DCF004C4D99 /* WRLDSearchRequest+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDSearchRequest+Private.h"; sourceTree = "<group>"; };
+		26A5AC5920445169001881A9 /* WRLDSearchWidgetStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetStyle.h; sourceTree = "<group>"; };
+		26A5AC5B20445182001881A9 /* WRLDSearchWidgetStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetStyle.m; sourceTree = "<group>"; };
+		26A5AC5F20447005001881A9 /* WRLDSearchWidgetStyleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WRLDSearchWidgetStyleTests.m; path = WRLDSearchWidgetTests/WRLDSearchWidgetStyleTests.m; sourceTree = SOURCE_ROOT; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -675,6 +684,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2664D2A620407827006FA154 /* WrldSearchWidget.framework in Frameworks */,
 				E03110031EB0E08B00002E88 /* Wrld.framework in Frameworks */,
 				2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */,
 			);
@@ -748,6 +758,7 @@
 		2664D29420406237006FA154 /* WrldSearchWidgetTests */ = {
 			isa = PBXGroup;
 			children = (
+				26A5AC5F20447005001881A9 /* WRLDSearchWidgetStyleTests.m */,
 				2664D2A02040625F006FA154 /* WRLDPositionedSearchResultModelTests.m */,
 				2664D29E2040625F006FA154 /* WRLDSearchModelSearchTests.m */,
 				2664D29F2040625F006FA154 /* WRLDSearchModelSuggestionTests.m */,
@@ -772,6 +783,7 @@
 				2619A02D202B2FF2002CF191 /* WRLDSearchResultModel.h */,
 				26178255203B102100DB29A1 /* WRLDSearchResultSelectedObserver.h */,
 				2619A089202DAADC002CF191 /* WRLDSearchTypes.h */,
+				26A5AC5920445169001881A9 /* WRLDSearchWidgetStyle.h */,
 				2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */,
 				2619A030202B5156002CF191 /* WRLDSuggestionProvider.h */,
 				2619A033202B5156002CF191 /* WRLDSuggestionProviderHandle.h */,
@@ -880,6 +892,7 @@
 				262D3DB92035F65E00B9FEA8 /* WRLDSearchQueryObserver+Private.h */,
 				2619A050202B6CC6002CF191 /* WRLDSearchRequest.m */,
 				26A3B36420332DCF004C4D99 /* WRLDSearchRequest+Private.h */,
+				26A5AC5B20445182001881A9 /* WRLDSearchWidgetStyle.m */,
 				2619A045202B61D8002CF191 /* WRLDSuggestionProviderHandle.m */,
 				2619A047202B699E002CF191 /* WRLDSuggestionProviderHandle+Private.h */,
 			);
@@ -1228,6 +1241,7 @@
 				264B92DA203F303900F6DAE0 /* WRLDSearchQuery+Private.h in Headers */,
 				264B92DB203F303900F6DAE0 /* WRLDSearchQueryObserver+Private.h in Headers */,
 				264B92DC203F303900F6DAE0 /* WRLDSearchRequest+Private.h in Headers */,
+				26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */,
 				264B92DD203F303900F6DAE0 /* WRLDSuggestionProviderHandle+Private.h in Headers */,
 				264B92DE203F303900F6DAE0 /* WRLDMoreResultsTableViewCell.h in Headers */,
 				264B92DF203F303900F6DAE0 /* WRLDSearchInProgressTableViewCell.h in Headers */,
@@ -1817,6 +1831,7 @@
 				264B9301203F306E00F6DAE0 /* WRLDFadeableView.m in Sources */,
 				264B9302203F306E00F6DAE0 /* WRLDHighlightableButton.m in Sources */,
 				264B9303203F306E00F6DAE0 /* WRLDSearchBar.m in Sources */,
+				26A5AC5C20445182001881A9 /* WRLDSearchWidgetStyle.m in Sources */,
 				264B9304203F306E00F6DAE0 /* WRLDSearchResultSelectedObserver.m in Sources */,
 				264B9305203F306E00F6DAE0 /* WRLDSearchWidgetResultSetViewModel.m in Sources */,
 				264B9306203F306E00F6DAE0 /* WRLDSearchWidgetTableViewController.m in Sources */,
@@ -1842,6 +1857,7 @@
 			files = (
 				2664D2A22040625F006FA154 /* WRLDSearchModelSuggestionTests.m in Sources */,
 				2664D2A12040625F006FA154 /* WRLDSearchModelSearchTests.m in Sources */,
+				26A5AC6020447005001881A9 /* WRLDSearchWidgetStyleTests.m in Sources */,
 				2664D2A32040625F006FA154 /* WRLDPositionedSearchResultModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1981,6 +1997,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = WrldSearchWidget/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1988,7 +2005,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.WrldSearchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2014,6 +2031,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = WrldSearchWidget/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2021,7 +2039,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.WrldSearchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
