@@ -2,6 +2,7 @@
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchQuery.h"
+#import "WRLDSearchWidgetStyle.h"
 
 @implementation WRLDSearchResultTableViewCell
 {
@@ -32,6 +33,21 @@
     }
 }
 
+- (void) applyStyle: (WRLDSearchWidgetStyle *) style
+{
+    self.backgroundColor = [style colorForStyle: WRLDSearchWidgetStylePrimaryColor];
+    
+    if(self.titleLabel)
+    {
+        self.titleLabel.textColor = [style colorForStyle: WRLDSearchWidgetStyleTextPrimaryColor];
+    }
+    
+    if(self.descriptionLabel)
+    {
+        self.descriptionLabel.textColor = [style colorForStyle: WRLDSearchWidgetStyleTextSecondaryColor];
+    }
+}
+
 - (void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
 {
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:regularAttributes];
@@ -49,7 +65,7 @@
     [label setAttributedText: attributedText];
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
     [super awakeFromNib];
     if(self.titleLabel)
@@ -68,4 +84,5 @@
         m_descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
     }
 }
+
 @end

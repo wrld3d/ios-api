@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WRLDSearchResultTableViewCell">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WRLDSuggestionTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -62,6 +62,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="spacer" destination="ecs-gN-pwx" id="uPz-vy-dHd"/>
                 <outlet property="titleLabel" destination="XAk-t6-Qze" id="Kf1-xK-mgx"/>
             </connections>
             <point key="canvasLocation" x="35.5" y="54"/>

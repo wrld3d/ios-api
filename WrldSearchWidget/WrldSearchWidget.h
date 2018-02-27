@@ -24,3 +24,4 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 #import "WRLDBasicSearchResultModel.h"
 #import "WRLDPositionedSearchResultModel.h"
 #import "WRLDSearchWidgetStyle.h"
+#import "WRLDSearchResultTableViewCell.h"

@@ -25,6 +25,8 @@ typedef void (^ApplyColorEvent) (UIColor * color);
 
 - (void) usesColor: (UIColor *) color forStyle: (WRLDSearchWidgetStyleType) style;
 
+- (UIColor *) colorForStyle: (WRLDSearchWidgetStyleType) style;
+
 - (void) call: (ApplyColorEvent) event toApply: (WRLDSearchWidgetStyleType) style;
 
 - (void) apply;

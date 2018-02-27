@@ -96,11 +96,13 @@
     
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
                                                                                     visibilityView: self.resultsTableContainerView
+                                                                                             style: self.style
                                                                                   heightConstraint:self.resultsTableHeightConstraint
                                                                              defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
     
     m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
                                                                                   visibilityView: self.suggestionsTableView
+                                                                                           style: self.style
                                                                                 heightConstraint:self.suggestionsTableHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
     [self setupStyle];

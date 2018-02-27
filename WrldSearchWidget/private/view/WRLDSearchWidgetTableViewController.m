@@ -9,6 +9,7 @@
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
+#import "WRLDSearchWidgetStyle.h"
 
 typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelCollection;
 
@@ -41,10 +42,13 @@ typedef NS_ENUM(NSInteger, GradientState) {
     UIImage *m_imgBackIcon;
     
     bool m_isAnimatingOut;
+    
+    WRLDSearchWidgetStyle * m_style;
 }
 
 - (instancetype) initWithTableView: (UITableView *) tableView
                     visibilityView: (UIView*) visibilityView
+                             style: (WRLDSearchWidgetStyle *) style
                   heightConstraint: (NSLayoutConstraint *) heightConstraint
              defaultCellIdentifier: (NSString *) defaultCellIdentifier
 {
@@ -73,6 +77,12 @@ typedef NS_ENUM(NSInteger, GradientState) {
         _selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
         
         [self assignCellResourcesTo: m_tableView];
+        
+        m_style = style;
+        
+        [m_style call:^(UIColor *color) {
+            [m_tableView setSeparatorColor: color];
+        } toApply:WRLDSearchWidgetStyleDividerMinorColor];
     }
     
     return self;
@@ -330,6 +340,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
 {
     if(!m_displayedQuery.hasCompleted)
     {
+        WRLDSearchInProgressTableViewCell * inProgressCell = (WRLDSearchInProgressTableViewCell *) cell;
+        [inProgressCell applyStyle: m_style];
         return;
     }
     
@@ -343,6 +355,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
     WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
+    [resultCell applyStyle: m_style];
     [resultCell populateWith: resultModel fromQuery: m_displayedQuery];
 }
 
