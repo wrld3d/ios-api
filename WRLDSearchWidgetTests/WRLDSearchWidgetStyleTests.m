@@ -40,36 +40,80 @@
 }
 
 - (void)testStyleCallbacksTriggeredByApply {
-    __block BOOL callbackInvoked = NO;
+    __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        callbackInvoked = YES;
+        callbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertTrue(callbackInvoked);
+    XCTAssertEqual(2, callbackInvokedCount);
 }
 
 - (void)testStyleCallbacksNotTriggeredBeforeApply {
-    __block BOOL callbackInvoked = NO;
+    __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        callbackInvoked = YES;
+        callbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
-    XCTAssertFalse(callbackInvoked);
+    XCTAssertEqual(1, callbackInvokedCount);
+}
+
+- (void)testStyleUpdateInvokedOnAssignment {
+    __block int callbackInvokedCount = 0;
+    [m_style call:^(UIColor *color) {
+        callbackInvokedCount++;
+    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    
+    [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
+    XCTAssertEqual(1, callbackInvokedCount);
+}
+
+- (void)testStyleUpdateInvokedOnAssignmentReceivesCorrectColor {
+    
+    __block int callbackInvokedCount = 0;
+    
+    [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
+    [m_style apply];
+    
+    [m_style call:^(UIColor *color) {
+        XCTAssertEqual(color, testColor1);
+        callbackInvokedCount++;
+    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    
+    XCTAssertEqual(1, callbackInvokedCount);
+}
+
+- (void)testStyleUpdateInvokedOnAssignmentDoesNotReceiveUnappliedColor {
+    
+    __block int callbackInvokedCount = 0;
+    
+    [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
+    [m_style apply];
+    [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStylePrimaryColor];
+    
+    [m_style call:^(UIColor *color) {
+        XCTAssertEqual(color, testColor1);
+        callbackInvokedCount++;
+    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    
+    XCTAssertEqual(1, callbackInvokedCount);
 }
 
 - (void)testStyleUpdatesReceivesCorrectColor {
-    __block BOOL callbackInvoked = NO;
+    __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        XCTAssertEqual(color, testColor1);
-        callbackInvoked = YES;
+        if(callbackInvokedCount == 1)
+        {
+            XCTAssertEqual(color, testColor1);
+        }
+        callbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertTrue(callbackInvoked);
+    XCTAssertEqual(2, callbackInvokedCount);
 }
 
 - (void)testStyleUpdatesOnlyAppliedWhenColorChanges
@@ -77,14 +121,15 @@
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
     
-    __block BOOL callbackInvoked = NO;
+    __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        callbackInvoked = YES;
+        callbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertFalse(callbackInvoked);
+    
+    XCTAssertEqual(1, callbackInvokedCount);
 }
 
 - (void)testStyleUpdatesOnlyAppliedOnceWhenColorChangesMultipleTimesBetweenApplies {
@@ -97,74 +142,88 @@
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertEqual(1, callbackInvokedCount);
+    XCTAssertEqual(2, callbackInvokedCount);
 }
 
 - (void)testStyleUpdatesUsesCorrectColorWhenColorChangesMultipleTimesBetweenApplies {
     
-    __block BOOL callbackInvoked = NO;
+    __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        XCTAssertEqual(color, testColor2);
-        callbackInvoked = YES;
+        if(callbackInvokedCount == 1)
+        {
+            XCTAssertEqual(color, testColor2);
+        }
+        callbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertTrue(callbackInvoked);
+    XCTAssertEqual(2, callbackInvokedCount);
 }
 
 - (void)testStyleUpdatesOnlyCalledForChangedStyles {
     
-    __block BOOL primaryColorCallbackInvoked = NO;
+    __block int primaryColorCallbackInvokedCount = 0;
+    __block int secondaryColorCallbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        primaryColorCallbackInvoked = YES;
+        primaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
-        XCTFail();
+        if(secondaryColorCallbackInvokedCount > 0)
+        {
+            XCTFail();
+        }
+        secondaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
-    XCTAssertTrue(primaryColorCallbackInvoked);
+    XCTAssertEqual(2, primaryColorCallbackInvokedCount);
 }
 
 - (void)testStyleCallbackCalledForAllChangedStyles {
     
-    __block BOOL primaryColorCallbackInvoked = NO;
-    __block BOOL secondaryColorCallbackInvoked = NO;
+    __block int primaryColorCallbackInvokedCount = 0;
+    __block int secondaryColorCallbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        primaryColorCallbackInvoked = YES;
+        primaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
-        secondaryColorCallbackInvoked = YES;
+        secondaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStyleSecondaryColor];
     [m_style apply];
-    XCTAssertTrue(primaryColorCallbackInvoked);
-    XCTAssertTrue(secondaryColorCallbackInvoked);
+    XCTAssertEqual(2, primaryColorCallbackInvokedCount);
+    XCTAssertEqual(2, secondaryColorCallbackInvokedCount);
 }
 
 - (void)testStyleCallbacksForChangedStylesUseAssignedColors {
 
-    __block BOOL primaryColorCallbackInvoked = NO;
-    __block BOOL secondaryColorCallbackInvoked = NO;
+    __block int primaryColorCallbackInvokedCount = 0;
+    __block int secondaryColorCallbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
-        XCTAssertEqual(color, testColor1);
-        primaryColorCallbackInvoked = YES;
+        if(primaryColorCallbackInvokedCount > 0)
+        {
+            XCTAssertEqual(color, testColor1);
+        }
+        primaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
-        XCTAssertEqual(color, testColor2);
-        secondaryColorCallbackInvoked = YES;
+        if(secondaryColorCallbackInvokedCount > 0)
+        {
+            XCTAssertEqual(color, testColor2);
+        }
+        secondaryColorCallbackInvokedCount++;
     } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStyleSecondaryColor];
     [m_style apply];
-    XCTAssertTrue(primaryColorCallbackInvoked);
-    XCTAssertTrue(secondaryColorCallbackInvoked);
+    XCTAssertEqual(2, primaryColorCallbackInvokedCount++);
+    XCTAssertEqual(2, secondaryColorCallbackInvokedCount++);
 }
 
 - (void)testPerformanceExample {

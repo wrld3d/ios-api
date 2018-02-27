@@ -16,6 +16,7 @@ typedef NSMutableArray<ApplyColorEvent> ColorUpdateEventCollection;
 {
     BOOL m_needsApplied;
     ColorUpdateEventCollection * m_updateEvents;
+    UIColor * m_colorToApply;
 }
 
 - (instancetype) init
@@ -33,6 +34,7 @@ typedef NSMutableArray<ApplyColorEvent> ColorUpdateEventCollection;
 {
     if(m_needsApplied)
     {
+        _color = m_colorToApply;
         for(ApplyColorEvent event in m_updateEvents){
             event(self.color);
         }
@@ -42,8 +44,8 @@ typedef NSMutableArray<ApplyColorEvent> ColorUpdateEventCollection;
 
 - (void) setColor: (UIColor *) newColor
 {
-    m_needsApplied = m_needsApplied || newColor != self.color;
-    _color = newColor;
+    m_needsApplied = m_colorToApply != self.color;
+    m_colorToApply = newColor;
 }
 
 - (void) setColorFromInt: (NSInteger) colorHex
@@ -59,6 +61,7 @@ typedef NSMutableArray<ApplyColorEvent> ColorUpdateEventCollection;
 - (void) addApplication: (ApplyColorEvent) event
 {
     [m_updateEvents addObject: event];
+    event(self.color);
 }
 
 @end
