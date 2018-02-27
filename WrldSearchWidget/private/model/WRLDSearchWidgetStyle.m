@@ -98,7 +98,7 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
 {
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStylePrimaryColor]             setColorFromInt: 0xFF0000];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSecondaryColor]           setColorFromInt: 0xF00000];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSearchboxColor]           setColorFromInt: 0xFFFFFF];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSearchBarColor]           setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleResultBackgroundColor]    setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextPrimaryColor]         setColorFromInt: 0x202020];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextSecondaryColor]       setColorFromInt: 0x606060];
