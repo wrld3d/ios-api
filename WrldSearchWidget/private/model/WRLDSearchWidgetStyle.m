@@ -44,7 +44,7 @@ typedef NSMutableArray<ApplyColorEvent> ColorUpdateEventCollection;
 
 - (void) setColor: (UIColor *) newColor
 {
-    m_needsApplied = m_colorToApply != self.color;
+    m_needsApplied = newColor != self.color;
     m_colorToApply = newColor;
 }
 
@@ -82,7 +82,7 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
     if(self)
     {
         m_styleAppliers = [[StyleCollection alloc] init];
-        for(NSInteger i = 0; i < WrldSearchWidgetOfStyles; ++i)
+        for(NSInteger i = 0; i < WrldSearchWidgetNumberOfStyles; ++i)
         {
             [m_styleAppliers addObject:[[WRLDSearchWidgetStyleApplier alloc] init]];
         }
@@ -96,8 +96,8 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
 
 - (void) assignDefaultColors
 {
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStylePrimaryColor]             setColorFromInt: 0xFFFFFF];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSecondaryColor]           setColorFromInt: 0xF0F0F0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStylePrimaryColor]             setColorFromInt: 0xFF0000];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSecondaryColor]           setColorFromInt: 0xF00000];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSearchboxColor]           setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleResultBackgroundColor]    setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextPrimaryColor]         setColorFromInt: 0x202020];
@@ -111,7 +111,7 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupCollapsedColor]  setColorFromInt: 0x1256B0];
 }
 
-- (void) call:(ApplyColorEvent)event whenUpdated:(WRLDSearchWidgetStyleType) style
+- (void) call:(ApplyColorEvent)event toApply:(WRLDSearchWidgetStyleType) style
 {
     [[m_styleAppliers objectAtIndex: style] addApplication: event];
 }

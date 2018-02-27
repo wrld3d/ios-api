@@ -19,14 +19,14 @@ typedef NS_ENUM(NSInteger, WRLDSearchWidgetStyleType)
     WRLDSearchWidgetStyleScrollbarColor,
     WRLDSearchWidgetStyleMenuGroupCollapsedColor,
     WRLDSearchWidgetStyleMenuGroupExpandedColor,
-    WrldSearchWidgetOfStyles
+    WrldSearchWidgetNumberOfStyles
 };
 
 typedef void (^ApplyColorEvent) (UIColor * color);
 
-- (void) usesColor: (UIColor *) color forStyle: (WRLDSearchWidgetStyleType) style ;
+- (void) usesColor: (UIColor *) color forStyle: (WRLDSearchWidgetStyleType) style;
 
-- (void) call: (ApplyColorEvent) event whenUpdated: (WRLDSearchWidgetStyleType) style;
+- (void) call: (ApplyColorEvent) event toApply: (WRLDSearchWidgetStyleType) style;
 
 - (void) apply;
 

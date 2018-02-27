@@ -43,18 +43,32 @@
     __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
     XCTAssertEqual(2, callbackInvokedCount);
 }
 
+- (void)testDefaultColorsNotNil {
+    __block int callbackInvokedCount = 0;
+    
+    for(int i = 0; i < WrldSearchWidgetNumberOfStyles; ++i)
+    {
+        [m_style call:^(UIColor *color) {
+            callbackInvokedCount++;
+            XCTAssertNotNil(color);
+        } toApply:i];
+    }
+    
+    XCTAssertEqual(WrldSearchWidgetNumberOfStyles, callbackInvokedCount);
+}
+
 - (void)testStyleCallbacksNotTriggeredBeforeApply {
     __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     XCTAssertEqual(1, callbackInvokedCount);
@@ -64,7 +78,7 @@
     __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     XCTAssertEqual(1, callbackInvokedCount);
@@ -80,7 +94,7 @@
     [m_style call:^(UIColor *color) {
         XCTAssertEqual(color, testColor1);
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     XCTAssertEqual(1, callbackInvokedCount);
 }
@@ -96,7 +110,7 @@
     [m_style call:^(UIColor *color) {
         XCTAssertEqual(color, testColor1);
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     XCTAssertEqual(1, callbackInvokedCount);
 }
@@ -109,7 +123,7 @@
             XCTAssertEqual(color, testColor1);
         }
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
@@ -124,7 +138,7 @@
     __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
@@ -137,7 +151,7 @@
     __block int callbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         ++callbackInvokedCount;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStylePrimaryColor];
@@ -154,7 +168,7 @@
             XCTAssertEqual(color, testColor2);
         }
         callbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStylePrimaryColor];
@@ -168,14 +182,14 @@
     __block int secondaryColorCallbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         primaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
         if(secondaryColorCallbackInvokedCount > 0)
         {
             XCTFail();
         }
         secondaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style apply];
@@ -188,10 +202,10 @@
     __block int secondaryColorCallbackInvokedCount = 0;
     [m_style call:^(UIColor *color) {
         primaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
         secondaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStyleSecondaryColor];
@@ -210,14 +224,14 @@
             XCTAssertEqual(color, testColor1);
         }
         primaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStylePrimaryColor];
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
     [m_style call:^(UIColor *color) {
         if(secondaryColorCallbackInvokedCount > 0)
         {
             XCTAssertEqual(color, testColor2);
         }
         secondaryColorCallbackInvokedCount++;
-    } whenUpdated:WRLDSearchWidgetStyleSecondaryColor];
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
     
     [m_style usesColor:testColor1 forStyle:WRLDSearchWidgetStylePrimaryColor];
     [m_style usesColor:testColor2 forStyle:WRLDSearchWidgetStyleSecondaryColor];
