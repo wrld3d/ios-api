@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDSearchResultModel.h"
+#import "WRLDSearchQuery.h"
 
 @implementation WRLDSearchResultTableViewCell
 {
@@ -10,13 +11,13 @@
     NSDictionary *m_descriptionLabelBoldAttrs;
 }
 
--(void) populateWith: (id<WRLDSearchResultModel>) searchResult highlighting : (NSString*) boldedText
+- (void) populateWith: (id<WRLDSearchResultModel>) searchResult fromQuery: (WRLDSearchQuery *) query
 {
     if(self.titleLabel)
     {
         [self applyAttributedTextTo:self.titleLabel
                                text: searchResult.title
-                           boldText: boldedText
+                           boldText: query.queryString
                   regularAttributes: m_titleLabelRegularAttrs
                      boldAttributes: m_titleLabelBoldAttrs];
     }
@@ -25,13 +26,13 @@
     {
         [self applyAttributedTextTo:self.descriptionLabel
                                text: searchResult.subTitle
-                           boldText: boldedText
+                           boldText: query.queryString
                   regularAttributes: m_descriptionLabelRegularAttrs
                      boldAttributes: m_descriptionLabelBoldAttrs];
     }
 }
 
--(void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
+- (void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
 {
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:regularAttributes];
     NSRange remainingString = NSMakeRange(0, [text length]);

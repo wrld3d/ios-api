@@ -343,7 +343,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
     WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
-    [resultCell populateWith: resultModel highlighting: m_displayedQuery.queryString];
+    [resultCell populateWith: resultModel fromQuery: m_displayedQuery];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
