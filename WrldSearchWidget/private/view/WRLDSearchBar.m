@@ -1,4 +1,9 @@
 #import "WRLDSearchBar.h"
+#import "WRLDSearchWidgetStyle.h"
+
+@interface WRLDSearchBar()
+@property (weak, nonatomic) IBOutlet UIView* searchBarBackground;
+@end
 
 @implementation WRLDSearchBar
 {
@@ -48,6 +53,53 @@
     }
 }
 
+- (void) applyStyle: (WRLDSearchWidgetStyle *) style
+{
+    [style call:^(UIColor *color) {
+        if(@available(iOS 9.0, *))
+        {
+            [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:color];
+        }
+        else
+        {
+            [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:color];
+        }
+        self.searchBarBackground.backgroundColor = color;
+        self.backgroundColor = color;
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
+    
+    [style call:^(UIColor *color) {
+        if(@available(iOS 9.0, *))
+        {
+            [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTextColor: color];
+        }
+        else
+        {
+            [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor: color];
+        }
+    } toApply:WRLDSearchWidgetStyleTextPrimaryColor];
+    
+    [style call:^(UIColor *color) {
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: self.placeholder attributes:@{NSForegroundColorAttributeName: color}];
+        if(@available(iOS 9.0, *))
+        {
+            [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setAttributedPlaceholder:attributedString];
+        }
+        else
+        {
+            [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setAttributedPlaceholder:attributedString];
+        }
+    } toApply:WRLDSearchWidgetStyleTextSecondaryColor];
+    
+    [style call:^(UIColor *color) {
+        [self setActiveBorderColor:color];
+    } toApply:WRLDSearchWidgetStyleLinkColor];
+    
+    [style call:^(UIColor *color) {
+        [self setInactiveBorderColor:color];
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
+}
+
 -(void) customiseStyle
 {
     if(@available(iOS 9.0, *))
@@ -64,7 +116,8 @@
     
     self.layer.borderWidth = 1.0;
     self.layer.cornerRadius = 10;
-    [self setBackgroundImage:[UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])]];
+    UIImage * clearImage = [UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])];
+    [self setBackgroundImage:clearImage];
 }
 
 - (void) setActiveBorderColor: (UIColor *) color

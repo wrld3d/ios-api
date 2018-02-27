@@ -11,6 +11,7 @@
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDHighlightableButton.h"
+#import "WRLDSearchWidgetStyle.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -23,7 +24,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsTableHeightConstraint;
 
-@property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsView;
+@property (weak, nonatomic) IBOutlet UIView* noResultsView;
+@property (weak, nonatomic) IBOutlet UILabel* noResultsLabel;
+@property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsVisibilityController;
 
 @end
 
@@ -77,14 +80,7 @@
         
         maxVisibleSuggestions = 3;
         
-        UIColor* wrldBlue = [UIColor colorWithRed:0.0f/255.0f green:113.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
-        
-        m_primaryBackgroundColor = [UIColor whiteColor];
-        m_primaryForegroundColor = wrldBlue;
-        m_focusBackgroundColor = wrldBlue;
-        m_focusForegroundColor = [UIColor whiteColor];
-        m_disabledBackgroundColor = [UIColor whiteColor];
-        m_disabledForegroundColor = [UIColor grayColor];
+        _style = [[WRLDSearchWidgetStyle alloc] init];
         
         m_hasFocus = NO;
     }
@@ -94,9 +90,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.searchBar setActiveBorderColor: m_primaryForegroundColor];
-    [self.searchBar setInactiveBorderColor: m_disabledForegroundColor];
     
     [self.menuButton setBackgroundColor:m_primaryBackgroundColor forState:UIControlStateNormal];
     [self.menuButton setBackgroundColor:m_focusBackgroundColor forState:UIControlStateHighlighted];
@@ -110,7 +103,12 @@
                                                                                   visibilityView: self.suggestionsTableView
                                                                                 heightConstraint:self.suggestionsTableHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
+    [self setupStyle];
+    [self observeModel];
+}
     
+- (void) observeModel
+{
     [m_suggestionsViewController.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
         self.searchBar.text = selectedResultModel.title;
         [self triggerSearch : selectedResultModel.title];
@@ -132,11 +130,11 @@
          [m_searchResultsViewController showQuery: query];
          if(m_searchResultsViewController.visibleResults == 0)
          {
-             m_activeResultsView = self.noResultsView;
+             m_activeResultsView = self.noResultsVisibilityController;
              if(m_hasFocus)
              {
                  [m_searchResultsViewController hide];
-                 [self.noResultsView show];
+                 [self.noResultsVisibilityController show];
              }
          }
          else
@@ -155,6 +153,24 @@
          }
          m_activeResultsView = m_suggestionsViewController;
      }];
+}
+
+- (void) setupStyle
+{
+    [self.style call:^(UIColor *color) {
+        self.resultsTableContainerView.backgroundColor = color;
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
+    
+    [self.style call:^(UIColor *color) {
+        self.suggestionsTableView.backgroundColor = color;
+        self.noResultsView.backgroundColor = color;
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
+    
+    [self.searchBar applyStyle: self.style];
+    
+    [self.style call:^(UIColor *color) {
+        self.noResultsLabel.textColor = color;
+    } toApply:WRLDSearchWidgetStyleWarningColor];
 }
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
@@ -197,7 +213,7 @@
     }
     
     [m_searchResultsViewController hide];
-    [self.noResultsView hide];
+    [self.noResultsVisibilityController hide];
     
     [self cancelMostRecentQueryIfNotComplete];
     

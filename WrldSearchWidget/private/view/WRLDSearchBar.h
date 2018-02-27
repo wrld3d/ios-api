@@ -3,11 +3,11 @@
 #import <UIKit/UIKit.h>
 
 @class WRLDControlStateColorMap;
+@class WRLDSearchWidgetStyle;
 
 @interface WRLDSearchBar : UISearchBar
 -(void) setActive:(BOOL) isActive;
-- (void) setActiveBorderColor: (UIColor *) color;
-- (void) setInactiveBorderColor: (UIColor *) color;
+- (void) applyStyle: (WRLDSearchWidgetStyle *) style;
 @end
 
 
