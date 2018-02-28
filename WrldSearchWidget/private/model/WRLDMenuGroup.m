@@ -23,6 +23,11 @@
     return self;
 }
 
+- (bool)hasTitle
+{
+    return _title != nil;
+}
+
 - (NSMutableArray *)getOptions
 {
     return m_options;
@@ -34,7 +39,7 @@
 }
 
 - (void)addOption:(NSString *)text
-          context:(NSObject *)context
+          context:(nullable NSObject *)context
 {
     [self addOption:[[WRLDMenuOption alloc] initWithText:text
                                                  context:context]];

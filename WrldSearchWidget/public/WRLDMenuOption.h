@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSObject* context;
 
 - (instancetype)initWithText:(NSString *)text
-                     context:(NSObject *)context;
+                     context:(nullable NSObject *)context;
 
 - (bool)hasChildren;
 

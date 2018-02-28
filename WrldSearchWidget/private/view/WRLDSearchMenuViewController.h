@@ -8,11 +8,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WRLDSearchMenuViewController : NSObject <WRLDViewVisibilityController, WRLDMenuChangedListener>
+@interface WRLDSearchMenuViewController : NSObject <WRLDViewVisibilityController, WRLDMenuChangedListener, UITableViewDataSource, UITableViewDelegate>
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView
-                       titleLabel:(UILabel *)titleLabel;
+                       titleLabel:(UILabel *)titleLabel
+                        tableView:(UITableView *)tableView
+                 heightConstraint:(NSLayoutConstraint *)heightConstraint;
 
 - (void)show;
 

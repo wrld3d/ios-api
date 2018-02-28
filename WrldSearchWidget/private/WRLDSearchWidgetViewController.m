@@ -32,6 +32,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *menuContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
+@property (weak, nonatomic) IBOutlet UITableView *menuTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuTableHeightConstraint;
 
 @end
 
@@ -123,7 +125,10 @@
 
     m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithMenuModel:m_menuModel
                                                                           visibilityView:self.menuContainerView
-                                                                              titleLabel:self.menuTitleLabel];
+                                                                              titleLabel:self.menuTitleLabel
+                                                                               tableView:self.menuTableView
+                                                                        heightConstraint:self.menuTableHeightConstraint];
+    
     [self setupStyle];
     [self observeModel];
 }

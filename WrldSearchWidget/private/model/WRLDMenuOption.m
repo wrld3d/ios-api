@@ -7,7 +7,7 @@
 }
 
 - (instancetype)initWithText:(NSString *)text
-                     context:(NSObject *)context
+                     context:(nullable NSObject *)context
 {
     self = [super init];
     if (self)

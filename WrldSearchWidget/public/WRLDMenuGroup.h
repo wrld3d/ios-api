@@ -14,10 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSMutableArray *)getOptions;
 
+- (bool)hasTitle;
+
 - (void)addOption:(WRLDMenuOption *)option;
 
 - (void)addOption:(NSString *)text
-          context:(NSObject *)context;
+          context:(nullable NSObject *)context;
 
 @end
 
