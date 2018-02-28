@@ -17,27 +17,26 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sJ-WP-fZl">
-                    <rect key="frame" x="66" y="0.0" width="309" height="32"/>
+                    <rect key="frame" x="50" y="0.0" width="325" height="32"/>
                     <color key="tintColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6v2-ol-P5F" userLabel="Icon Space">
-                    <rect key="frame" x="0.0" y="0.0" width="40" height="32"/>
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="32"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MoreResults_butn.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cp0-ED-igY">
-                            <rect key="frame" x="8" y="4" width="24" height="24"/>
+                            <rect key="frame" x="19" y="10" width="12" height="12"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Cp0-ED-igY" secondAttribute="height" multiplier="1:1" id="TFj-QU-ADm"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="Cp0-ED-igY" firstAttribute="centerY" secondItem="6v2-ol-P5F" secondAttribute="centerY" id="56i-bn-czo"/>
                         <constraint firstItem="Cp0-ED-igY" firstAttribute="centerX" secondItem="6v2-ol-P5F" secondAttribute="centerX" id="6oe-uy-n0O"/>
-                        <constraint firstAttribute="width" constant="40" id="fa1-zn-m0W"/>
-                        <constraint firstItem="Cp0-ED-igY" firstAttribute="top" secondItem="6v2-ol-P5F" secondAttribute="top" constant="4" id="gC2-NK-4DC"/>
-                        <constraint firstItem="Cp0-ED-igY" firstAttribute="bottom" secondItem="6v2-ol-P5F" secondAttribute="bottom" constant="-4" id="gNL-fM-nH3"/>
+                        <constraint firstAttribute="width" constant="50" id="fa1-zn-m0W"/>
                     </constraints>
                 </view>
             </subviews>
@@ -45,7 +44,7 @@
             <constraints>
                 <constraint firstItem="6v2-ol-P5F" firstAttribute="top" secondItem="9Zw-au-2N6" secondAttribute="top" id="VX4-dA-yKN"/>
                 <constraint firstItem="9sJ-WP-fZl" firstAttribute="top" secondItem="9Zw-au-2N6" secondAttribute="top" id="aaD-a2-vM7"/>
-                <constraint firstItem="9sJ-WP-fZl" firstAttribute="leading" secondItem="9Zw-au-2N6" secondAttribute="leading" constant="66" id="e5V-e8-ufz"/>
+                <constraint firstItem="9sJ-WP-fZl" firstAttribute="leading" secondItem="6v2-ol-P5F" secondAttribute="trailing" id="e5V-e8-ufz"/>
                 <constraint firstItem="9sJ-WP-fZl" firstAttribute="trailing" secondItem="9Zw-au-2N6" secondAttribute="trailing" id="hCq-1x-I9F"/>
                 <constraint firstItem="9sJ-WP-fZl" firstAttribute="bottom" secondItem="9Zw-au-2N6" secondAttribute="bottom" id="qFF-5S-h6F"/>
                 <constraint firstItem="6v2-ol-P5F" firstAttribute="bottom" secondItem="9Zw-au-2N6" secondAttribute="bottom" id="tu0-9T-fTv"/>

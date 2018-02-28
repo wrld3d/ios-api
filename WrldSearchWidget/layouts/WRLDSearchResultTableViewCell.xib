@@ -18,20 +18,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp4-DC-QCd">
-                    <rect key="frame" x="50" y="8" width="325" height="24"/>
+                    <rect key="frame" x="50" y="14" width="325" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="Wgw-cY-TdA"/>
+                        <constraint firstAttribute="height" constant="18" id="Wgw-cY-TdA"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCm-Cd-22r">
-                    <rect key="frame" x="50" y="32" width="325" height="28"/>
+                    <rect key="frame" x="50" y="32" width="325" height="14"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="3kK-WB-wOR"/>
+                        <constraint firstAttribute="height" constant="14" id="3kK-WB-wOR"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -57,7 +57,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="NTX-HF-Zq7" secondAttribute="bottom" id="BfU-Fa-Rbp"/>
+                <constraint firstItem="NTX-HF-Zq7" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="BfU-Fa-Rbp"/>
                 <constraint firstItem="bp4-DC-QCd" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HNc-d3-gA5"/>
                 <constraint firstItem="DCm-Cd-22r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KT1-I0-MnQ"/>
                 <constraint firstItem="NTX-HF-Zq7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lso-Pf-hRU"/>
