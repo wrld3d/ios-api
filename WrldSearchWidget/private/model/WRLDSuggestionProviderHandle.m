@@ -17,7 +17,7 @@
     {
         identifier = uniqueId;
         _provider = provider;
-        cellHeight = 32;
+        cellHeight = 36;
         cellIdentifier = @"WRLDSuggestionTableViewCell";
         moreResultsName = @"Suggestions";
         selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];

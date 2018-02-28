@@ -114,6 +114,8 @@
     [self setActiveBorderColor:[UIColor blackColor]];
     [self setInactiveBorderColor:[UIColor grayColor]];
     
+    [self setPositionAdjustment:UIOffsetMake(6, 0) forSearchBarIcon:UISearchBarIconClear];
+    
     self.layer.borderWidth = 1.0;
     self.layer.cornerRadius = 10;
     UIImage * clearImage = [UIImage imageWithCGImage:(__bridge CGImageRef)([UIColor clearColor])];
@@ -157,9 +159,11 @@
     }
     else
     {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self setPositionAdjustment:UIOffsetMake(0, 0) forSearchBarIcon:UISearchBarIconSearch];
-        }];
+        if(self.text.length == 0){
+            [UIView animateWithDuration:0.25 animations:^{
+                [self setPositionAdjustment:UIOffsetMake(0, 0) forSearchBarIcon:UISearchBarIconSearch];
+            }];
+        }
         self.layer.borderColor = [m_inactiveBorderColor CGColor];
     }
 }

@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WRLDSuggestionTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecs-gN-pwx" userLabel="Separator">
@@ -21,17 +21,17 @@
                     <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-t6-Qze">
-                    <rect key="frame" x="50" y="0.0" width="325" height="32"/>
+                    <rect key="frame" x="50" y="1" width="325" height="35"/>
                     <color key="tintColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1j-Ff-BKW" userLabel="Icon Space">
-                    <rect key="frame" x="0.0" y="0.0" width="40" height="32"/>
+                    <rect key="frame" x="0.0" y="1" width="40" height="35"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GoToIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-dz-b9d">
-                            <rect key="frame" x="8" y="4" width="24" height="24"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchResultPin.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-dz-b9d">
+                            <rect key="frame" x="6.5" y="4" width="27" height="27"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="RSc-dz-b9d" secondAttribute="height" multiplier="1:1" id="bNa-Lc-ni1"/>
                             </constraints>
@@ -48,9 +48,9 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="XAk-t6-Qze" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Abl-X5-HwQ"/>
+                <constraint firstItem="XAk-t6-Qze" firstAttribute="top" secondItem="ecs-gN-pwx" secondAttribute="bottom" id="Abl-X5-HwQ"/>
                 <constraint firstItem="XAk-t6-Qze" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="FsY-AM-anw"/>
-                <constraint firstItem="H1j-Ff-BKW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Izu-YP-X65"/>
+                <constraint firstItem="H1j-Ff-BKW" firstAttribute="top" secondItem="ecs-gN-pwx" secondAttribute="bottom" id="Izu-YP-X65"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Rs3-1y-voV"/>
                 <constraint firstItem="ecs-gN-pwx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bXq-I0-tyM"/>
                 <constraint firstItem="H1j-Ff-BKW" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="e7Z-ad-DXC"/>
@@ -69,6 +69,6 @@
         </view>
     </objects>
     <resources>
-        <image name="GoToIcon.png" width="40" height="40"/>
+        <image name="SearchResultPin.png" width="44" height="44"/>
     </resources>
 </document>
