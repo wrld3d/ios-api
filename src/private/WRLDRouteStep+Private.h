@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
                         mode:(WRLDRouteTransportationMode)mode
                    isIndoors:(BOOL)isIndoors
                     indoorId:(NSString*)indoorId
+                isMultiFloor:(BOOL)isMultiFloor
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
                     distance:(CLLocationDistance)distance;

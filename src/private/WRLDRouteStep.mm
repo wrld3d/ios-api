@@ -14,6 +14,7 @@
     BOOL m_isIndoors;
     NSString* m_indoorId;
     int m_indoorFloorId;
+    BOOL m_isMultiFloor;
     NSTimeInterval m_duration;
     CLLocationDistance m_distance;
 }
@@ -24,6 +25,7 @@
                         mode:(WRLDRouteTransportationMode)mode
                    isIndoors:(BOOL)isIndoors
                     indoorId:(NSString*)indoorId
+                isMultiFloor:(BOOL)isMultiFloor
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
                     distance:(CLLocationDistance)distance
@@ -36,6 +38,7 @@
         m_mode = mode;
         m_isIndoors = isIndoors;
         m_indoorId = indoorId;
+        m_isMultiFloor = isMultiFloor;
         m_indoorFloorId = indoorFloorId;
         m_duration = duration;
         m_distance = distance;
@@ -72,6 +75,11 @@
 - (NSString*) indoorId
 {
     return m_indoorId;
+}
+
+- (BOOL) isMultiFloor
+{
+    return m_isMultiFloor;
 }
 
 - (int) indoorFloorId

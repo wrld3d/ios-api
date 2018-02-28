@@ -3,6 +3,8 @@
 
 #import "WRLDApi.h"
 #import "WRLDCoordinateWithAltitude.h"
+#import "WRLDTouchTapInfo.h"
+#import "WRLDTouchTapInfo+Private.h"
 #import "WRLDGestureDelegate.h"
 #import "WRLDIndoorMap+Private.h"
 #import "WRLDNativeMapView.h"
@@ -21,6 +23,9 @@
 #import "WRLDRoutingQueryResponse.h"
 #import "RoutingQueryResponse.h"
 #import "WRLDRoutingServiceHelpers.h"
+#import "WRLDBuildingHighlight+Private.h"
+#import "WRLDPickResult.h"
+#import "WRLDPickingApiHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -37,8 +42,14 @@
 #include "EegeoSpacesApi.h"
 #include "EegeoRenderingApi.h"
 #include "PoiSearchResults.h"
+#include "MapCameraUpdateBuilder.h"
+#include "MapCameraPositionBuilder.h"
+#include "MapCameraAnimationOptionsBuilder.h"
+#include "WRLDMapView+Private.h"
 #include "EegeoMapsceneApi.h"
 #include "MapsceneRequestResponse.h"
+#include "EegeoBuildingsApi.h"
+#include "EegeoPickingApi.h"
 
 #include <string>
 
@@ -211,13 +222,16 @@ const double defaultStartZoomLevel = 8;
     
     const double latitude = hasStartLocation ? [self startLatitude] : 0.0;
     const double longitude = hasStartLocation ? [self startLongitude] : 0.0;
-    const double distanceToInterest = cameraApi.GetDistanceFromZoomLevel(static_cast<float>([self startZoomLevel]));
+    const double startZoomLevel = [self startZoomLevel];
     const double heading = [self startDirection];
-    const double interestAltitude = 0.0;
-    const double pitch = 0.0;
-    const bool setPitch = false;
     
-    cameraApi.InitialiseView(latitude, longitude, interestAltitude, distanceToInterest, heading, pitch, setPitch);
+    const auto& cameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(latitude, longitude)
+        .SetZoomLevel(startZoomLevel)
+        .SetBearing(heading)
+        .Build();
+    
+    cameraApi.MoveCamera(cameraUpdate);
 }
 
 - (void)_initialiseBlueSphere
@@ -259,8 +273,8 @@ const double defaultStartZoomLevel = 8;
         coverageTreeManifest = [m_mapOptions.coverageTreeManifest UTF8String];
         environmentThemesManifest = [m_mapOptions.environmentThemesManifest UTF8String];
     }
-    
-    Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions configOptions(apiKey, coverageTreeManifest, environmentThemesManifest);
+    const std::vector<double> cameraZoomLevelDistances;
+    Eegeo::ApiHost::EegeoApiHostPlatformConfigOptions configOptions(apiKey, coverageTreeManifest, environmentThemesManifest, cameraZoomLevelDistances);
     
     return configOptions;
 }
@@ -477,8 +491,8 @@ const double defaultStartZoomLevel = 8;
 
 - (CLLocationCoordinate2D)centerCoordinate
 {
-    Eegeo::Space::LatLong latLong = [self getMapApi].GetCameraApi().GetInterestLatLong();
-    return CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees());
+    const auto& mapCameraPosition = [self getMapApi].GetCameraApi().GetMapCameraPosition();
+    return CLLocationCoordinate2DMake(mapCameraPosition.GetLatitudeDegrees(), mapCameraPosition.GetLongitudeDegrees());
 }
 
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate
@@ -548,7 +562,8 @@ const double defaultStartZoomLevel = 8;
 
 - (CLLocationDirection)direction
 {
-    return [self getMapApi].GetCameraApi().GetHeadingDegrees();
+    const auto& mapCameraPosition = [self getMapApi].GetCameraApi().GetMapCameraPosition();
+    return mapCameraPosition.GetBearingDegrees();
 }
 
 - (void)setDirection:(CLLocationDirection)direction
@@ -564,31 +579,61 @@ const double defaultStartZoomLevel = 8;
                       animated:animated];
 }
 
+- (void)_moveOrAnimateCamera:(BOOL)animated mapCameraUpdate:(Eegeo::Api::MapCameraUpdate)mapCameraUpdate
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    
+    if(animated)
+    {
+        cameraApi.AnimateCamera(mapCameraUpdate, Eegeo::Api::MapCameraAnimationOptionsBuilder().Build());
+    }
+    else
+    {
+        cameraApi.MoveCamera(mapCameraUpdate);
+    }
+}
+
 - (void)_setCenterCoordinate:(CLLocationCoordinate2D)coordinate
                    zoomLevel:(double)zoomLevel
                    direction:(CLLocationDirection)direction
                     animated:(BOOL)animated
 {
-    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-
-    const double distance = cameraApi.GetDistanceFromZoomLevel(static_cast<float>(zoomLevel));
-
-    [self _setView:coordinate distance:distance heading:direction pitch:-1 animated:animated];
+    const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(coordinate.latitude, coordinate.longitude)
+        .SetBearing(direction)
+        .SetZoomLevel(zoomLevel)
+        .Build();
+    
+    [self _moveOrAnimateCamera:animated mapCameraUpdate:mapCameraUpdate];
 }
 
 - (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated
 {
-    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    Eegeo::Space::LatLongAltitude northEast = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0);
-    Eegeo::Space::LatLongAltitude southWest = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0);
-    const bool allowInterruption = true;
-    cameraApi.SetViewToBounds(northEast, southWest, animated, allowInterruption);
+    const auto& northEast = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.ne.latitude, bounds.ne.longitude, 0.0);
+    const auto& southWest = Eegeo::Space::LatLongAltitude::FromDegrees(bounds.sw.latitude, bounds.sw.longitude, 0.0);
+    
+    const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .MakeForLatLongBounds(northEast.GetLatLong(), southWest.GetLatLong())
+        .Build();
+    
+    [self _moveOrAnimateCamera:animated mapCameraUpdate:mapCameraUpdate];
 }
 
 - (WRLDMapCamera *)camera
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-    return [WRLDMapCamera cameraLookingAtCenterCoordinate:self.centerCoordinate fromDistance:cameraApi.GetDistanceToInterest() pitch:cameraApi.GetPitchDegrees() heading:self.direction];
+    const auto& mapCameraPosition = cameraApi.GetMapCameraPosition();
+    const auto& centerCoord = CLLocationCoordinate2DMake(mapCameraPosition.GetLatitudeDegrees(), mapCameraPosition.GetLongitudeDegrees());
+
+    return [WRLDMapCamera cameraLookingAtCenterCoordinateIndoors:centerCoord
+                                                    fromDistance:mapCameraPosition.GetDistanceToInterest()
+                                                           pitch:static_cast<CGFloat>(mapCameraPosition.GetZenithAngleDegrees())
+                                                         heading:mapCameraPosition.GetBearingDegrees()
+                                                       elevation:mapCameraPosition.GetElevation()
+                                                   elevationMode:static_cast<WRLDElevationMode>(mapCameraPosition.GetElevationMode())
+                                                     indoorMapId:[NSString stringWithUTF8String:mapCameraPosition.GetIndoorMapId().c_str()]
+                                                indoorMapFloorId:mapCameraPosition.GetIndoorMapFloorId()
+            ];
 }
 
 - (void)setCamera:(WRLDMapCamera *)camera
@@ -596,37 +641,50 @@ const double defaultStartZoomLevel = 8;
     [self setCamera:camera animated:NO];
 }
 
+const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode)
+{
+    return (elevationMode == WRLDElevationMode::WRLDElevationModeHeightAboveGround)
+        ? Eegeo::Positioning::ElevationMode::HeightAboveGround
+        : Eegeo::Positioning::ElevationMode::HeightAboveSeaLevel;
+}
+
++ (Eegeo::Api::MapCameraUpdate)buildMapCameraUpdateFromCamera:(WRLDMapCamera*)camera
+{
+    const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+        .SetCoordinate(camera.centerCoordinate.latitude, camera.centerCoordinate.longitude)
+        .SetBearing(camera.heading)
+        .SetDistanceToInterest(camera.distance)
+        .SetZenithAngle(camera.pitch)
+        .SetElevation(camera.elevation)
+        .SetElevationMode(ToPositioningElevationMode(camera.elevationMode))
+        .SetIndoorMap([camera.indoorMapId UTF8String], static_cast<int>(camera.indoorMapFloorId))
+        .Build();
+    
+    return mapCameraUpdate;
+}
+
 - (void)setCamera:(WRLDMapCamera *)camera animated:(BOOL)animated
 {
-    [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch animated:animated];
+    const auto& mapCameraUpdate = [WRLDMapView buildMapCameraUpdateFromCamera:camera];
+    [self _moveOrAnimateCamera:animated mapCameraUpdate:mapCameraUpdate];
 }
 
 - (void)setCamera:(WRLDMapCamera *)camera duration:(NSTimeInterval)duration
 {
-    [self _setView:camera.centerCoordinate distance:camera.distance heading:camera.heading pitch:camera.pitch duration:duration];
-}
-
-- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance heading:(double)heading pitch:(double)pitch animated:(BOOL)animated
-{
-    [self _setView:coordinate distance:distance heading:heading pitch:pitch duration:animated ? 10 : 0];
-}
-
-- (void)_setView:(CLLocationCoordinate2D)coordinate distance:(CLLocationDistance)distance heading:(double)heading pitch:(double)pitch duration:(NSTimeInterval)duration
-{
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
-
+    const auto& mapCameraUpdate = [WRLDMapView buildMapCameraUpdateFromCamera:camera];
+    
     const bool animated = duration > 0;
-    const bool modifyPosition = true;
-    const bool modifyDistance = true;
-    const bool modifyHeading = true;
-    const bool modifyPitch = pitch != -1;
-    const bool hasTransitionDuration = animated;
-    const bool jumpIfFarAway = true;
-    const bool allowInterruption = true;
-
-    const double altitude = 0.0;
-
-    cameraApi.SetViewUsingZenithAngle(animated, coordinate.latitude, coordinate.longitude, altitude, modifyPosition, distance, modifyDistance, heading, modifyHeading, pitch, modifyPitch, duration, hasTransitionDuration, jumpIfFarAway, allowInterruption);
+    
+    if(animated)
+    {
+        cameraApi.AnimateCamera(mapCameraUpdate, Eegeo::Api::MapCameraAnimationOptionsBuilder().SetDuration(duration)
+                                                                                                .Build());
+    }
+    else
+    {
+        cameraApi.MoveCamera(mapCameraUpdate);
+    }
 }
 
 #pragma mark - markers -
@@ -695,6 +753,37 @@ const double defaultStartZoomLevel = 8;
     {
         [self removePolygon:polygon];
     }
+}
+
+#pragma mark - building highlights -
+
+- (void)addBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
+{
+    [self addOverlay:buildingHighlight];
+}
+
+- (void)removeBuildingHighlight:(WRLDBuildingHighlight*) buildingHighlight
+{
+    [self removeOverlay: buildingHighlight];
+}
+
+#pragma mark - Feature Picking -
+
+-(WRLDPickResult*)pickFeatureAtScreenPoint:(CGPoint)screenPoint
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtScreenPoint(Eegeo::v2(static_cast<float>(screenPoint.x),
+                                                                                      static_cast<float>(screenPoint.y)));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
+}
+
+-(WRLDPickResult*)pickFeatureAtLocation:(CLLocationCoordinate2D)location
+{
+    Eegeo::Api::EegeoPickingApi& pickingApi = [self getMapApi].GetPickingApi();
+    Eegeo::Api::PickResult pickResult = pickingApi.PickFeatureAtLatLong(Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude));
+
+    return [WRLDPickingApiHelpers createWRLDPickResult:pickResult];
 }
 
 #pragma mark - overlays -
@@ -910,7 +999,10 @@ const double defaultStartZoomLevel = 8;
 
 -(void)notifyTouchTapped:(CGPoint)point
 {
-    if ([self.delegate respondsToSelector:@selector(mapView:didTapMap:)])
+    Boolean respondsToDidTapMap = [self.delegate respondsToSelector:@selector(mapView:didTapMap:)];
+    Boolean respondsToDidTapView = [self.delegate respondsToSelector:@selector(mapView:didTapView:)];
+
+    if (respondsToDidTapMap || respondsToDidTapView)
     {
         Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
         
@@ -922,8 +1014,18 @@ const double defaultStartZoomLevel = 8;
         if (success)
         {
             WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
-            
-            [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+
+            if (respondsToDidTapMap)
+            {
+                [self.delegate mapView:self didTapMap:coordinateWithAltitude];
+            }
+
+            if (respondsToDidTapView)
+            {
+                WRLDTouchTapInfo tapInfo = WRLDTouchTapInfoMake(point, coordinateWithAltitude);
+
+                [self.delegate mapView:self didTapView:tapInfo];
+            }
         }
     }
 }
@@ -1032,14 +1134,22 @@ template<typename T> inline T* safe_cast(id instance)
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
 {
     WRLDMapsceneRequestResponse* response = [WRLDMapsceneServiceHelpers createWRLDMapsceneRequestResponse:result];
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
     
     // Application of starting position
     // TODO: Move to platform once camera API update is concluded.
     if(result.Success())
     {
         WRLDMapsceneStartLocation* startLocation = response.mapscene.startLocation;
-
-        [self _setView:startLocation.coordinate distance:startLocation.distance heading:startLocation.heading pitch:90 animated:false];
+        
+        const auto& mapCameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+            .SetCoordinate(startLocation.coordinate.latitude, startLocation.coordinate.longitude)
+            .SetBearing(startLocation.heading)
+            .SetDistanceToInterest(startLocation.distance)
+            .SetIndoorMap([startLocation.interiorId UTF8String], startLocation.interiorFloorIndex)
+            .Build();
+        
+        cameraApi.MoveCamera(mapCameraUpdate);
     }
     
     [self.delegate mapView:self mapsceneRequestDidComplete:result.GetRequestId() mapsceneResponse:response];
@@ -1050,6 +1160,34 @@ template<typename T> inline T* safe_cast(id instance)
     WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
     [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
+}
+
+- (void)notifyBuildingInformationReceived:(int)buildingHighlightId
+{
+    WRLDOverlayId overlayId;
+    overlayId.overlayType = WRLDOverlayBuildingHighlight;
+    overlayId.nativeHandle = buildingHighlightId;
+
+    if (m_overlays.find(overlayId) == m_overlays.end())
+    {
+        return;
+    }
+
+    id<WRLDOverlay> overlay = m_overlays.at(overlayId);
+
+    WRLDBuildingHighlight* buildingHighlight = safe_cast<WRLDBuildingHighlight>(overlay);
+
+    if (buildingHighlight == nil)
+    {
+        return;
+    }
+
+    [buildingHighlight loadBuildingInformationFromNative];
+
+    if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
+    {
+        [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+    }
 }
 
 @end
