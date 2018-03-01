@@ -384,23 +384,23 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 
 /*!
  Highlights the provided indoor entities in the given indoor map.
- @param indoorId The ID of the indoor map which contains the entity ID(s).
- @param highlightIds The ID(s) of the entities.
+ @param indoorMapId The ID of the indoor map which contains the entity ID(s).
+ @param indoorEntityIds The ID(s) of the entities.
  @param color The color of this highlight.
  */
-- (void)setEntityHighlights:(NSString*)indoorId highlightIds:(NSArray<NSString*>*)highlightIds color:(UIColor*) color;
+- (void)setIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds color:(UIColor*) color;
 
 /*!
  Clears the highlights from entities in the given indoor map.
- @param indoorId The ID of the indoor map which contains the entity ID(s).
- @param highlightIds The ID(s) of the entities.
+ @param indoorMapId The ID of the indoor map which contains the entity ID(s).
+ @param indoorEntityIds The ID(s) of the entities.
  */
-- (void)clearEntityHighlights:(NSString*)indoorId highlightIds:(NSArray<NSString*>*)highlightIds;
+- (void)clearIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds;
 
 /*!
  Clears highlights from all indoor entities.
  */
-- (void)clearAllEntityHighlights;
+- (void)clearAllIndoorEntityHighlights;
 
 /*!
  Sets whether the map view should display with vertical scaling applied so that terrain and other map features appear flattened.

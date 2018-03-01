@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "WRLDCoordinateWithAltitude.h"
 #import "WRLDTouchTapInfo.h"
+#import "WRLDIndoorEntityTapResult.h"
 
 @class WRLDMapView;
 @class WRLDMarker;
@@ -106,12 +107,11 @@ routingQueryResponse: (WRLDRoutingQueryResponse*) routingQueryResponse;
  */
 - (void)mapView:(WRLDMapView *)mapView didReceiveBuildingInformationForHighlight: (WRLDBuildingHighlight*) buildingHighlight;
 
-
 /*!
- A message sent when indoor entities are picked.
+ A message sent when indoor entities are tapped.
  @param mapView The WRLDMapView that is being observed.
- @param indoorEntityIds The ID(s) of indoor entities that were picked.
+ @param indoorEntityTapResult The WRLDIndoorEntityTapResult containing information about the tapped indoor entities.
  */
-- (void)mapView:(WRLDMapView *)mapView didPickIndoorEntities: (NSArray<NSString*>*) indoorEntityIds;
+- (void)mapView:(WRLDMapView *)mapView didTapIndoorEntities: (WRLDIndoorEntityTapResult*) indoorEntityTapResult;
 
 @end

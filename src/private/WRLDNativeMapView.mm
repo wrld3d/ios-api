@@ -132,7 +132,7 @@ void WRLDNativeMapView::OnBuildingInformationReceived(const Eegeo::BuildingHighl
 
 void WRLDNativeMapView::OnIndoorEntityPicked(const Eegeo::Api::IndoorEntityPickedMessage& indoorEntityPickedMessage)
 {
-    [m_mapView notifyIndoorEntitySelected:indoorEntityPickedMessage.EntityIds];
+    [m_mapView notifyIndoorEntityTapped:indoorEntityPickedMessage];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()
