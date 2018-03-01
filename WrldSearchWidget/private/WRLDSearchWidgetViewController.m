@@ -33,7 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIView *menuContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuTableHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuContainerViewHeightConstraint;
 
 @end
 
@@ -127,7 +127,7 @@
                                                                           visibilityView:self.menuContainerView
                                                                               titleLabel:self.menuTitleLabel
                                                                                tableView:self.menuTableView
-                                                                        heightConstraint:self.menuTableHeightConstraint];
+                                                                        heightConstraint:self.menuContainerViewHeightConstraint];
     
     [self setupStyle];
     [self observeModel];

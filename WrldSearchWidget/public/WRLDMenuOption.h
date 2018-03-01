@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addChild:(WRLDMenuChild *)child;
 
 - (void)addChild:(NSString *)text
-            icon:(NSString *)icon
-         context:(NSObject *)context;
+            icon:(nullable NSString *)icon
+         context:(nullable NSObject *)context;
 
 @end
 

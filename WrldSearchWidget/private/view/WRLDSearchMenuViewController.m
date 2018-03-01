@@ -2,8 +2,13 @@
 #import "WRLDSearchMenuModel.h"
 #import "WRLDMenuGroupTitleTableViewCell.h"
 #import "WRLDMenuOptionTableViewCell.h"
+#import "WRLDMenuChildTableViewCell.h"
 #import "WRLDMenuGroup.h"
 #import "WRLDMenuOption.h"
+#import "WRLDMenuChild.h"
+#import "WRLDMenuTableSectionViewModel.h"
+
+typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCollection;
 
 @implementation WRLDSearchMenuViewController
 {
@@ -12,9 +17,11 @@
     UILabel* m_titleLabel;
     UITableView * m_tableView;
     NSLayoutConstraint * m_heightConstraint;
+    TableSectionViewModelCollection* m_sectionViewModels;
     
     NSString* m_menuGroupTitleTableViewCellStyleIdentifier;
     NSString* m_menuOptionTableViewCellStyleIdentifier;
+    NSString* m_menuChildTableViewCellStyleIdentifier;
 }
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
@@ -34,11 +41,15 @@
         
         m_menuGroupTitleTableViewCellStyleIdentifier = @"WRLDMenuGroupTitleTableViewCell";
         m_menuOptionTableViewCellStyleIdentifier = @"WRLDMenuOptionTableViewCell";
+        m_menuChildTableViewCellStyleIdentifier = @"WRLDMenuChildTableViewCell";
         
         [m_menuModel setListener:self];
         
         m_tableView.dataSource = self;
         m_tableView.delegate = self;
+        
+        m_sectionViewModels = [[TableSectionViewModelCollection alloc] init];
+        [self updateSectionViewModels];
         
         [self assignCellResourcesTo:m_tableView];
         
@@ -58,6 +69,9 @@
     
     [tableView registerNib:[UINib nibWithNibName:m_menuOptionTableViewCellStyleIdentifier bundle:resourceBundle]
     forCellReuseIdentifier:m_menuOptionTableViewCellStyleIdentifier];
+    
+    [tableView registerNib:[UINib nibWithNibName:m_menuChildTableViewCellStyleIdentifier bundle:resourceBundle]
+    forCellReuseIdentifier:m_menuChildTableViewCellStyleIdentifier];
 }
 
 - (void)updateTitleLabelText
@@ -65,23 +79,75 @@
     m_titleLabel.text = m_menuModel.title;
 }
 
-- (void)resizeMenuTable
+- (void)updateSectionViewModels
 {
-    CGFloat height = 0;
+    [m_sectionViewModels removeAllObjects];
     
     for (WRLDMenuGroup* menuGroup in [m_menuModel getGroups])
     {
-        const int cellHeight = 32;
-        height += [[menuGroup getOptions] count] * cellHeight;
-        
         if ([menuGroup hasTitle])
         {
-            height += cellHeight;
+            [m_sectionViewModels addObject:[[WRLDMenuTableSectionViewModel alloc] initWithMenuGroup:menuGroup]];
+        }
+        
+        NSUInteger optionCount = [[menuGroup getOptions] count];
+        for (NSUInteger optionIndex = 0; optionIndex < optionCount; ++optionIndex)
+        {
+            [m_sectionViewModels addObject:[[WRLDMenuTableSectionViewModel alloc] initWithMenuGroup:menuGroup
+                                                                                        optionIndex:optionIndex]];
+        }
+    }
+}
+
+- (void)resizeMenuTable
+{
+    const CGFloat menuHeaderHeight = 44;
+    CGFloat height = menuHeaderHeight;
+    
+    const int cellHeight = 32;
+    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
+    {
+        height += cellHeight;
+        if (sectionViewModel.expandedState == Expanded)
+        {
+            height += ([sectionViewModel getChildCount]) * cellHeight;
         }
     }
     
+    // Account for group separator height
+    NSUInteger menuGroupCount = [[m_menuModel getGroups] count];
+    if (menuGroupCount > 0)
+    {
+        height += (menuGroupCount - 1) * 4;
+    }
+    
     m_heightConstraint.constant = height;
-    [m_tableView layoutIfNeeded];
+    [m_visibilityView layoutIfNeeded];
+}
+
+- (NSString *)getIdentifierForCellAtPosition:(NSIndexPath *)indexPath
+{
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+    
+    if ([sectionViewModel isTitleSection])
+    {
+        return m_menuGroupTitleTableViewCellStyleIdentifier;
+    }
+    
+    if ([indexPath row] == 0)
+    {
+        return m_menuOptionTableViewCellStyleIdentifier;
+    }
+    
+    return m_menuChildTableViewCellStyleIdentifier;
+}
+
+- (void)collapseAllSections
+{
+    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
+    {
+        [sectionViewModel setExpandedState:Collapsed];
+    }
 }
 
 #pragma mark - WRLDViewVisibilityController
@@ -115,6 +181,7 @@
 
 - (void)onMenuChanged
 {
+    [self updateSectionViewModels];
     [self resizeMenuTable];
 }
 
@@ -123,14 +190,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WRLDMenuGroup* menuGroup = [[m_menuModel getGroups] objectAtIndex:[indexPath section]];
-    
-    NSString* cellIdentifier = m_menuOptionTableViewCellStyleIdentifier;
-    NSInteger row = [indexPath row];
-    if ([menuGroup hasTitle] && row == 0)
-    {
-        cellIdentifier = m_menuGroupTitleTableViewCellStyleIdentifier;
-    }
+    NSString* cellIdentifier = [self getIdentifierForCellAtPosition:indexPath];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: cellIdentifier];
     cell.separatorInset = UIEdgeInsetsZero;
@@ -140,17 +200,17 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[m_menuModel getGroups] count];
+    return [m_sectionViewModels count];
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    WRLDMenuGroup* menuGroup = [[m_menuModel getGroups] objectAtIndex:section];
-    NSInteger count = [[menuGroup getOptions] count];
-    if ([menuGroup hasTitle])
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:section];
+    NSInteger count = 1;
+    if (sectionViewModel.expandedState == Expanded)
     {
-        ++count;
+        count += [sectionViewModel getChildCount];
     }
     return count;
 }
@@ -161,35 +221,63 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WRLDMenuGroup* menuGroup = [[m_menuModel getGroups] objectAtIndex:[indexPath section]];
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
     
     NSInteger row = [indexPath row];
-    if ([menuGroup hasTitle])
+    if (row == 0)
     {
-        --row;
+        bool isFirstTableSection = [indexPath section] == 0;
+        if ([sectionViewModel isTitleSection])
+        {
+            WRLDMenuGroupTitleTableViewCell* groupTitleCell = (WRLDMenuGroupTitleTableViewCell *)cell;
+            
+            [groupTitleCell populateWith:[sectionViewModel getText]
+                     isFirstTableSection:isFirstTableSection
+                     isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
+            return;
+        }
+        
+        WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *)cell;
+        if ([sectionViewModel isExpandable])
+        {
+            BOOL isExpanded = sectionViewModel.expandedState == Expanded;
+            [optionCell populateWith:[sectionViewModel getText]
+                         andExpander:isExpanded
+                isFirstOptionInGroup:[sectionViewModel isFirstOptionInGroup]
+             isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
+        }
+        else
+        {
+            [optionCell populateWith:[sectionViewModel getText]
+                isFirstOptionInGroup:[sectionViewModel isFirstOptionInGroup]
+                 isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
+        }
+        return;
     }
     
-    NSString* text;
-    if (row < 0)
-    {
-        text = menuGroup.title;
-        
-        WRLDMenuGroupTitleTableViewCell* optionCell = (WRLDMenuGroupTitleTableViewCell *) cell;
-        [optionCell populateWith: text];
-    }
-    else
-    {
-        WRLDMenuOption* menuOption = [[menuGroup getOptions] objectAtIndex:row];
-        text = menuOption.text;
-        
-        WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *) cell;
-        [optionCell populateWith: text];
-    }
+    NSUInteger childIndex = row - 1;
+    WRLDMenuChild* menuChild = [sectionViewModel getChildAtIndex:childIndex];
+    WRLDMenuChildTableViewCell* childCell = (WRLDMenuChildTableViewCell *)cell;
+    BOOL isFirstChild = childIndex == 0;
+    BOOL isLastChild = childIndex == [sectionViewModel getChildCount] - 1;
+    [childCell populateWith:menuChild.text
+                       icon:nil
+               isFirstChild:isFirstChild
+                isLastchild:isLastChild];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO
+    bool isFirstTableSection = [indexPath section] == 0;
+    if (!isFirstTableSection && [indexPath row] == 0)
+    {
+        WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+        if ([sectionViewModel isFirstOptionInGroup])
+        {
+            return 36;
+        }
+    }
+    
     return 32;
 }
 
@@ -205,9 +293,35 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     return CGFLOAT_MIN;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+    
+    if ([sectionViewModel isTitleSection])
+    {
+        return nil;
+    }
+    
+    return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+    
+    if ([indexPath row] == 0 && [sectionViewModel isExpandable])
+    {
+        ExpandedStateType currentExpandedState = sectionViewModel.expandedState;
+        
+        [self collapseAllSections];
+        if (currentExpandedState == Collapsed)
+        {
+            [sectionViewModel setExpandedState:Expanded];
+        }
+        
+        [m_tableView reloadData];
+        [self resizeMenuTable];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

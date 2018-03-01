@@ -201,6 +201,11 @@
 		A00F1D9A2044384F00A42ECF /* WRLDMenuChild.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D992044384F00A42ECF /* WRLDMenuChild.m */; };
 		A00F1D9C2044491100A42ECF /* WRLDSearchMenuViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */; };
 		A00F1D9E20444C4C00A42ECF /* WRLDSearchMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */; };
+		A01455EF20475A9F002268AE /* WRLDMenuTableSectionViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */; };
+		A01455F120475F68002268AE /* WRLDMenuTableSectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */; };
+		A01455F32047836B002268AE /* WRLDMenuChildTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01455F22047836B002268AE /* WRLDMenuChildTableViewCell.xib */; };
+		A01455F6204783BD002268AE /* WRLDMenuChildTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A01455F4204783BD002268AE /* WRLDMenuChildTableViewCell.m */; };
+		A01455F7204783BD002268AE /* WRLDMenuChildTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A01455F5204783BD002268AE /* WRLDMenuChildTableViewCell.h */; };
 		A080DA182045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A080DA172045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib */; };
 		A080DA1A2045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */; };
 		A080DA1C2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */; };
@@ -600,6 +605,11 @@
 		A00F1D992044384F00A42ECF /* WRLDMenuChild.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuChild.m; sourceTree = "<group>"; };
 		A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchMenuViewController.h; sourceTree = "<group>"; };
 		A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchMenuViewController.m; sourceTree = "<group>"; };
+		A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuTableSectionViewModel.h; sourceTree = "<group>"; };
+		A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuTableSectionViewModel.m; sourceTree = "<group>"; };
+		A01455F22047836B002268AE /* WRLDMenuChildTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDMenuChildTableViewCell.xib; sourceTree = "<group>"; };
+		A01455F4204783BD002268AE /* WRLDMenuChildTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuChildTableViewCell.m; sourceTree = "<group>"; };
+		A01455F5204783BD002268AE /* WRLDMenuChildTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMenuChildTableViewCell.h; sourceTree = "<group>"; };
 		A080DA172045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDMenuOptionTableViewCell.xib; sourceTree = "<group>"; };
 		A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuOptionTableViewCell.h; sourceTree = "<group>"; };
 		A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOptionTableViewCell.m; sourceTree = "<group>"; };
@@ -844,10 +854,12 @@
 				262D3D9A20344A5A00B9FEA8 /* WRLDSearchResultTableViewCell.m */,
 				26A5AC692045C2A7001881A9 /* WRLDSuggestionTableViewCell.h */,
 				26A5AC6B2045C2BA001881A9 /* WRLDSuggestionTableViewCell.m */,
-				A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */,
-				A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */,
 				A080DA1F2046383100C5FBB3 /* WRLDMenuGroupTitleTableViewCell.h */,
 				A080DA212046388F00C5FBB3 /* WRLDMenuGroupTitleTableViewCell.m */,
+				A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */,
+				A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */,
+				A01455F5204783BD002268AE /* WRLDMenuChildTableViewCell.h */,
+				A01455F4204783BD002268AE /* WRLDMenuChildTableViewCell.m */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -968,6 +980,7 @@
 				2619A082202C78A5002CF191 /* WRLDSuggestionTableViewCell.xib */,
 				A080DA1D204637DC00C5FBB3 /* WRLDMenuGroupTitleTableViewCell.xib */,
 				A080DA172045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib */,
+				A01455F22047836B002268AE /* WRLDMenuChildTableViewCell.xib */,
 			);
 			path = layouts;
 			sourceTree = "<group>";
@@ -1004,6 +1017,8 @@
 				262D3DB72035BE3600B9FEA8 /* WRLDViewVisibilityController.h */,
 				A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */,
 				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
+				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
+				A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1447,11 +1462,13 @@
 				A00F1D9C2044491100A42ECF /* WRLDSearchMenuViewController.h in Headers */,
 				264B92F2203F303900F6DAE0 /* WRLDSearchResultSelectedObserver.h in Headers */,
 				26A5AC6A2045C2A7001881A9 /* WRLDSuggestionTableViewCell.h in Headers */,
+				A01455F7204783BD002268AE /* WRLDMenuChildTableViewCell.h in Headers */,
 				264B92F3203F303900F6DAE0 /* WRLDSearchTypes.h in Headers */,
 				264B92F4203F303900F6DAE0 /* WRLDSearchWidgetViewController.h in Headers */,
 				264B92F5203F303900F6DAE0 /* WRLDSuggestionProvider.h in Headers */,
 				A001E29520407AF50086A7EA /* WRLDSearchMenuModel.h in Headers */,
 				264B92F6203F303900F6DAE0 /* WRLDSuggestionProviderHandle.h in Headers */,
+				A01455EF20475A9F002268AE /* WRLDMenuTableSectionViewModel.h in Headers */,
 				A080DA1A2045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1804,6 +1821,7 @@
 				26A5AC702046D0F4001881A9 /* SearchResultPin@3x.png in Resources */,
 				264B9328203F317200F6DAE0 /* SearchBack@2x.png in Resources */,
 				264B9329203F317200F6DAE0 /* SearchBack@3x.png in Resources */,
+				A01455F32047836B002268AE /* WRLDMenuChildTableViewCell.xib in Resources */,
 				264B932B203F317200F6DAE0 /* WRLDMoreResultsTableViewCell.xib in Resources */,
 				26A5AC712046D0F4001881A9 /* SearchResultPin@2x.png in Resources */,
 				264B932C203F317200F6DAE0 /* WRLDSearchInProgressTableViewCell.xib in Resources */,
@@ -2037,6 +2055,7 @@
 				264B92FC203F306E00F6DAE0 /* WRLDSearchRequest.m in Sources */,
 				26A5AC6C2045C2BA001881A9 /* WRLDSuggestionTableViewCell.m in Sources */,
 				264B92FD203F306E00F6DAE0 /* WRLDSuggestionProviderHandle.m in Sources */,
+				A01455F6204783BD002268AE /* WRLDMenuChildTableViewCell.m in Sources */,
 				264B9339204016F500F6DAE0 /* WRLDPositionedSearchResultModel.m in Sources */,
 				A080DA1C2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m in Sources */,
 				264B92FE203F306E00F6DAE0 /* WRLDMoreResultsTableViewCell.m in Sources */,
@@ -2056,6 +2075,7 @@
 				264B9307203F306E00F6DAE0 /* WRLDSearchWidgetView.m in Sources */,
 				264B9308203F306E00F6DAE0 /* WRLDSearchWidgetViewController.m in Sources */,
 				A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */,
+				A01455F120475F68002268AE /* WRLDMenuTableSectionViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

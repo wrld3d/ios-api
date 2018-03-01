@@ -36,8 +36,8 @@
 }
 
 - (void)addChild:(NSString *)text
-            icon:(NSString *)icon
-         context:(NSObject *)context
+            icon:(nullable NSString *)icon
+         context:(nullable NSObject *)context
 {
     [self addChild:[[WRLDMenuChild alloc] initWithText:text
                                                   icon:icon

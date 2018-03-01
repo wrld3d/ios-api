@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WRLDMenuChildTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-Vx-3zE">
+                    <rect key="frame" x="6" y="0.0" width="363" height="32"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Search_btn.png" translatesAutoresizingMaskIntoConstraints="NO" id="93F-wy-7hH" userLabel="Icon">
+                            <rect key="frame" x="6" y="4" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="eVn-GU-0cL"/>
+                                <constraint firstAttribute="width" constant="24" id="hHi-Ye-bbW"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxS-7W-LSk">
+                            <rect key="frame" x="36" y="6" width="321" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="hQt-dS-zhC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oG-uu-C2d" userLabel="Separator">
+                            <rect key="frame" x="0.0" y="31" width="363" height="1"/>
+                            <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="qup-ZM-tSe"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="TxS-7W-LSk" firstAttribute="centerY" secondItem="EQ9-Vx-3zE" secondAttribute="centerY" id="1Jj-j6-Qdh"/>
+                        <constraint firstAttribute="bottom" secondItem="3oG-uu-C2d" secondAttribute="bottom" id="32D-ua-tyM"/>
+                        <constraint firstItem="3oG-uu-C2d" firstAttribute="leading" secondItem="EQ9-Vx-3zE" secondAttribute="leading" id="3FC-R3-a01"/>
+                        <constraint firstItem="93F-wy-7hH" firstAttribute="centerY" secondItem="EQ9-Vx-3zE" secondAttribute="centerY" id="QDy-3u-091"/>
+                        <constraint firstItem="93F-wy-7hH" firstAttribute="leading" secondItem="EQ9-Vx-3zE" secondAttribute="leading" constant="6" id="cMW-Gu-cal"/>
+                        <constraint firstItem="TxS-7W-LSk" firstAttribute="leading" secondItem="93F-wy-7hH" secondAttribute="trailing" constant="6" id="onp-Qy-UXV"/>
+                        <constraint firstAttribute="trailing" secondItem="3oG-uu-C2d" secondAttribute="trailing" id="vsH-pI-SLE"/>
+                        <constraint firstAttribute="trailing" secondItem="TxS-7W-LSk" secondAttribute="trailing" constant="6" id="yTP-1w-Itd"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADc-Z9-d4i" userLabel="Top Shadow">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="6"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="6" id="zjy-O7-L3b"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BZ7-zP-81A" userLabel="Bottom Shadow">
+                    <rect key="frame" x="0.0" y="26" width="375" height="6"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="6" id="8eL-0R-Msf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="EQ9-Vx-3zE" secondAttribute="trailing" constant="6" id="0hz-UV-hUk"/>
+                <constraint firstItem="ADc-Z9-d4i" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0w3-JC-7HF"/>
+                <constraint firstItem="EQ9-Vx-3zE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="1E5-oK-Wgi"/>
+                <constraint firstAttribute="trailing" secondItem="ADc-Z9-d4i" secondAttribute="trailing" id="Idi-Hi-7L2"/>
+                <constraint firstItem="ADc-Z9-d4i" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KcM-T7-BuY"/>
+                <constraint firstAttribute="bottom" secondItem="EQ9-Vx-3zE" secondAttribute="bottom" id="TRP-RB-E6c"/>
+                <constraint firstItem="EQ9-Vx-3zE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VFV-u9-hBd"/>
+                <constraint firstAttribute="bottom" secondItem="BZ7-zP-81A" secondAttribute="bottom" id="ju4-pl-b2W"/>
+                <constraint firstAttribute="trailing" secondItem="BZ7-zP-81A" secondAttribute="trailing" id="puw-ca-Loa"/>
+                <constraint firstItem="BZ7-zP-81A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wss-HK-t9V"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bottomShadow" destination="BZ7-zP-81A" id="5lL-yP-MFA"/>
+                <outlet property="icon" destination="93F-wy-7hH" id="eg1-KW-nIG"/>
+                <outlet property="label" destination="TxS-7W-LSk" id="0B0-eI-RMt"/>
+                <outlet property="separator" destination="3oG-uu-C2d" id="05e-7k-FiC"/>
+                <outlet property="topShadow" destination="ADc-Z9-d4i" id="oXe-l2-ZHz"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="52"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Search_btn.png" width="32" height="32"/>
+    </resources>
+</document>

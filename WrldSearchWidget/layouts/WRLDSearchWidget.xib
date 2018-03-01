@@ -14,7 +14,7 @@
             <connections>
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
-                <outlet property="menuTableHeightConstraint" destination="B6r-5i-EHi" id="2Lj-Rl-jQd"/>
+                <outlet property="menuContainerViewHeightConstraint" destination="Mhq-ZP-IKm" id="9C5-th-e5V"/>
                 <outlet property="menuTableView" destination="NHL-HB-zTc" id="sN2-Uj-En8"/>
                 <outlet property="menuTitleLabel" destination="umw-7B-avj" id="nFk-ad-a1Q"/>
                 <outlet property="noResultsLabel" destination="5Es-nk-XX5" id="ibB-9R-Qdq"/>
@@ -194,19 +194,18 @@
                                 <constraint firstItem="VXk-kO-Zlf" firstAttribute="top" secondItem="RbP-72-JER" secondAttribute="top" constant="4" id="wEt-yV-wad"/>
                             </constraints>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-HB-zTc">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-HB-zTc">
                             <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" id="B6r-5i-EHi"/>
-                            </constraints>
                             <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="NHL-HB-zTc" firstAttribute="bottom" secondItem="Ooa-S7-mFc" secondAttribute="bottom" id="E8d-vX-sTy"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="leading" secondItem="RbP-72-JER" secondAttribute="leading" id="KsK-Xw-KGS"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="top" secondItem="RbP-72-JER" secondAttribute="bottom" id="Ktb-hu-bLA"/>
+                        <constraint firstAttribute="height" priority="999" constant="44" id="Mhq-ZP-IKm"/>
                         <constraint firstAttribute="trailing" secondItem="RbP-72-JER" secondAttribute="trailing" id="Rrv-1n-9eW"/>
                         <constraint firstItem="RbP-72-JER" firstAttribute="top" secondItem="Ooa-S7-mFc" secondAttribute="top" id="lya-fs-y6u"/>
                         <constraint firstItem="RbP-72-JER" firstAttribute="leading" secondItem="Ooa-S7-mFc" secondAttribute="leading" id="tif-0S-rlN"/>
@@ -215,10 +214,10 @@
                 </view>
             </subviews>
             <constraints>
-                <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="Ooa-S7-mFc" secondAttribute="bottom" constant="-44" id="2lS-wR-sNd"/>
                 <constraint firstItem="7ub-Ja-lSU" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="3xT-42-n4I"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="8Up-he-zih"/>
                 <constraint firstItem="7ub-Ja-lSU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="945-Hx-sjW"/>
+                <constraint firstItem="Ooa-S7-mFc" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="AeS-Z0-cnW"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="DHc-jF-m2C"/>
                 <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="EIa-QG-6cw"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="q5F-mI-7jP" secondAttribute="top" id="Jl8-kl-jNr"/>
@@ -235,6 +234,7 @@
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="zdR-85-uWB"/>
             </constraints>
             <connections>
+                <outlet property="menuContainerSubView" destination="Ooa-S7-mFc" id="aa0-w6-tgj"/>
                 <outlet property="menuSubView" destination="Gsy-aj-hKu" id="bLp-0R-4ex"/>
                 <outlet property="owner" destination="-1" id="iam-dy-t5d"/>
                 <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="x0f-zS-dg3"/>

@@ -5,8 +5,8 @@
 }
 
 - (instancetype)initWithText:(NSString *)text
-                        icon:(NSString *)icon
-                     context:(NSObject *)context
+                        icon:(nullable NSString *)icon
+                     context:(nullable NSObject *)context
 {
     self = [super init];
     if (self)

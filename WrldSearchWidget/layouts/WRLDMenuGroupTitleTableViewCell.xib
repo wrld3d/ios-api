@@ -16,22 +16,44 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nfy-RK-0fl" userLabel="Group Separator">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="4"/>
+                    <color key="backgroundColor" red="0.0" green="0.16862745100000001" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="hcM-NG-MNX"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTh-rz-Nwc">
-                    <rect key="frame" x="16" y="7.5" width="343" height="17"/>
+                    <rect key="frame" x="16" y="7" width="343" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rj-ZM-8B8" userLabel="Separator">
+                    <rect key="frame" x="6" y="31" width="363" height="1"/>
+                    <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="wSw-Ag-Wzy"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="2Rj-ZM-8B8" secondAttribute="trailing" constant="6" id="0rt-bt-hyk"/>
+                <constraint firstAttribute="bottom" secondItem="UTh-rz-Nwc" secondAttribute="bottom" constant="8" id="1qX-td-T11"/>
                 <constraint firstItem="UTh-rz-Nwc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="8H8-15-N1P"/>
+                <constraint firstAttribute="trailing" secondItem="Nfy-RK-0fl" secondAttribute="trailing" id="Jt3-w4-EPZ"/>
                 <constraint firstItem="UTh-rz-Nwc" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="K2Y-x4-zMT"/>
-                <constraint firstItem="UTh-rz-Nwc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Uy6-49-C1V"/>
+                <constraint firstItem="2Rj-ZM-8B8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="S1T-Eh-duB"/>
+                <constraint firstAttribute="bottom" secondItem="2Rj-ZM-8B8" secondAttribute="bottom" id="Sgi-Ga-Uaj"/>
+                <constraint firstItem="Nfy-RK-0fl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="peQ-MA-3F7"/>
+                <constraint firstItem="Nfy-RK-0fl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="y4l-7s-vFD"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="groupSeparator" destination="Nfy-RK-0fl" id="xZk-TJ-BBG"/>
                 <outlet property="label" destination="UTh-rz-Nwc" id="317-eC-hf8"/>
+                <outlet property="separator" destination="2Rj-ZM-8B8" id="HiA-h2-tFB"/>
             </connections>
             <point key="canvasLocation" x="26.5" y="52"/>
         </view>

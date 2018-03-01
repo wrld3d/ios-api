@@ -6,6 +6,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *searchBarSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *resultsSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *suggestionsSubView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *menuContainerSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchWidgetViewController *owner;
 @end
 
@@ -26,6 +27,10 @@
         return YES;
     }
     if([self subviewContainsEvent: self.suggestionsSubView point: point event: event])
+    {
+        return YES;
+    }
+    if([self subviewContainsEvent: self.menuContainerSubView point: point event: event])
     {
         return YES;
     }
