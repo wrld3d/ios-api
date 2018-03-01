@@ -54,41 +54,28 @@
                         <constraint firstAttribute="trailing" secondItem="TxS-7W-LSk" secondAttribute="trailing" constant="6" id="yTP-1w-Itd"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADc-Z9-d4i" userLabel="Top Shadow">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="6"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="6" id="zjy-O7-L3b"/>
-                    </constraints>
-                </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BZ7-zP-81A" userLabel="Bottom Shadow">
-                    <rect key="frame" x="0.0" y="26" width="375" height="6"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="6" id="8eL-0R-Msf"/>
-                    </constraints>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIk-xY-c3S" userLabel="Shadow Gradient">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EQ9-Vx-3zE" secondAttribute="trailing" constant="6" id="0hz-UV-hUk"/>
-                <constraint firstItem="ADc-Z9-d4i" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0w3-JC-7HF"/>
                 <constraint firstItem="EQ9-Vx-3zE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="1E5-oK-Wgi"/>
-                <constraint firstAttribute="trailing" secondItem="ADc-Z9-d4i" secondAttribute="trailing" id="Idi-Hi-7L2"/>
-                <constraint firstItem="ADc-Z9-d4i" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KcM-T7-BuY"/>
+                <constraint firstAttribute="trailing" secondItem="sIk-xY-c3S" secondAttribute="trailing" id="8YV-oj-ItX"/>
                 <constraint firstAttribute="bottom" secondItem="EQ9-Vx-3zE" secondAttribute="bottom" id="TRP-RB-E6c"/>
                 <constraint firstItem="EQ9-Vx-3zE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VFV-u9-hBd"/>
-                <constraint firstAttribute="bottom" secondItem="BZ7-zP-81A" secondAttribute="bottom" id="ju4-pl-b2W"/>
-                <constraint firstAttribute="trailing" secondItem="BZ7-zP-81A" secondAttribute="trailing" id="puw-ca-Loa"/>
-                <constraint firstItem="BZ7-zP-81A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wss-HK-t9V"/>
+                <constraint firstItem="sIk-xY-c3S" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aCT-L4-apY"/>
+                <constraint firstAttribute="bottom" secondItem="sIk-xY-c3S" secondAttribute="bottom" id="aEq-oM-ikB"/>
+                <constraint firstItem="sIk-xY-c3S" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="szf-KJ-6IF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bottomShadow" destination="BZ7-zP-81A" id="5lL-yP-MFA"/>
                 <outlet property="icon" destination="93F-wy-7hH" id="eg1-KW-nIG"/>
                 <outlet property="label" destination="TxS-7W-LSk" id="0B0-eI-RMt"/>
                 <outlet property="separator" destination="3oG-uu-C2d" id="05e-7k-FiC"/>
-                <outlet property="topShadow" destination="ADc-Z9-d4i" id="oXe-l2-ZHz"/>
+                <outlet property="shadowGradient" destination="sIk-xY-c3S" id="A5F-A8-bgN"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="52"/>
         </view>

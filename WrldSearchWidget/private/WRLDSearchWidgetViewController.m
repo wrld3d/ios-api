@@ -127,7 +127,8 @@
                                                                           visibilityView:self.menuContainerView
                                                                               titleLabel:self.menuTitleLabel
                                                                                tableView:self.menuTableView
-                                                                        heightConstraint:self.menuContainerViewHeightConstraint];
+                                                                        heightConstraint:self.menuContainerViewHeightConstraint
+                                                                                   style:self.style];
     
     [self setupStyle];
     [self observeModel];

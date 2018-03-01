@@ -5,6 +5,7 @@
 #import "WRLDMenuChangedListener.h"
 
 @class WRLDSearchMenuModel;
+@class WRLDSearchWidgetStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
                    visibilityView:(UIView *)visibilityView
                        titleLabel:(UILabel *)titleLabel
                         tableView:(UITableView *)tableView
-                 heightConstraint:(NSLayoutConstraint *)heightConstraint;
+                 heightConstraint:(NSLayoutConstraint *)heightConstraint
+                            style:(WRLDSearchWidgetStyle *)style;
 
 - (void)show;
 

@@ -2,6 +2,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class WRLDMenuTableSectionViewModel;
+@class WRLDSearchWidgetStyle;
+
 @interface WRLDMenuOptionTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
@@ -12,13 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
-- (void)populateWith:(NSString *)text
-isFirstOptionInGroup:(BOOL)isfirstOptionInGroup
- isLastOptionInGroup:(BOOL)isLastoptionInGroup;
-
-- (void)populateWith:(NSString *)text
-         andExpander:(BOOL)expanded
-isFirstOptionInGroup:(BOOL)isfirstOptionInGroup
- isLastOptionInGroup:(BOOL)isLastoptionInGroup;
+- (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+               style:(WRLDSearchWidgetStyle *)style;
 
 @end

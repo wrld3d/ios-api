@@ -1,34 +1,57 @@
 #import "WRLDMenuChildTableViewCell.h"
+#import "WRLDMenuTableSectionViewModel.h"
+#import "WRLDSearchWidgetStyle.h"
+#import "WRLDMenuChild.h"
 
 @implementation WRLDMenuChildTableViewCell
 
-- (void)populateWith:(NSString *)text
-                icon:(nullable UIImage *)icon
-        isFirstChild:(BOOL)isFirstChild
-         isLastchild:(BOOL)isLastChild
+- (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+          childIndex:(NSUInteger)childIndex
+               style:(WRLDSearchWidgetStyle *)style
 {
-    self.backgroundColor = [UIColor colorWithWhite:0.94f alpha:1.0f];
-    self.label.text = text;
+    WRLDMenuChild* menuChild = [viewModel getChildAtIndex:childIndex];
+    
+    self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleSecondaryColor];
+    
+    self.label.text = menuChild != nil ? menuChild.text : @"";
+    self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
+    
     // TODO: set icon
     //[self.icon setImage:icon];
+    
+    bool isFirstChild = childIndex == 0;
+    bool isLastChild = childIndex == [viewModel getChildCount] - 1;
+    
     [self.separator setHidden:isLastChild];
-    [self.topShadow setHidden:!isFirstChild];
-    [self.bottomShadow setHidden:!isLastChild];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
     
-    if (isLastChild)
+    CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
+    gradient.frame = self.shadowGradient.bounds;
+    
+    [self.shadowGradient setHidden:NO];
+    self.shadowGradient.layer.mask = gradient;
+    
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:0.1].CGColor;
+    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    
+    if (isFirstChild && isLastChild)
     {
-        CAGradientLayer* gradient = [CAGradientLayer layer];
-        gradient.frame = self.bottomShadow.bounds;
-        gradient.colors = @[(id)[UIColor colorWithWhite:0.0f alpha:0.0f].CGColor, (id)[UIColor colorWithWhite:0.0f alpha:0.1f].CGColor];
-        [self.bottomShadow.layer insertSublayer:gradient atIndex:0];
+        gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor, (__bridge id)innerColor, (__bridge id)outerColor];
+        gradient.locations = @[@0.0, @0.2, @0.8, @1.0];
     }
-    
-    if (isFirstChild)
+    else if (isFirstChild)
     {
-        CAGradientLayer* gradient = [CAGradientLayer layer];
-        gradient.frame = self.topShadow.bounds;
-        gradient.colors = @[(id)[UIColor colorWithWhite:0.0f alpha:0.1f].CGColor, (id)[UIColor colorWithWhite:0.0f alpha:0.0f].CGColor];
-        [self.topShadow.layer insertSublayer:gradient atIndex:0];
+        gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
+        gradient.locations = @[@0.0, @0.2];
+    }
+    else if (isLastChild)
+    {
+        gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
+        gradient.locations = @[@0.8, @1.0];
+    }
+    else
+    {
+        [self.shadowGradient setHidden:YES];
     }
 }
 

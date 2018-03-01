@@ -1,38 +1,42 @@
 #import "WRLDMenuOptionTableViewCell.h"
+#import "WRLDMenuTableSectionViewModel.h"
+#import "WRLDSearchWidgetStyle.h"
 
 @implementation WRLDMenuOptionTableViewCell
 
-- (void)populateWith:(NSString *)text
-isFirstOptionInGroup:(BOOL)isFirstOptionInGroup
- isLastOptionInGroup:(BOOL)isLastoptionInGroup
+- (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+               style:(WRLDSearchWidgetStyle *)style
 {
-    self.backgroundColor = [UIColor colorWithWhite:0.94f alpha:1.0f];
-    self.label.text = text;
+    self.label.text = [viewModel getText];
     
-    [self.expanderImage setHidden:YES];
+    bool needsExpander = [viewModel isExpandable];
+    [self.expanderImage setHidden:!needsExpander];
     
-    [self.groupSeparator setHidden:!isFirstOptionInGroup];
-    [self.separator setHidden:isLastoptionInGroup];
-}
-
-- (void)populateWith:(NSString *)text
-         andExpander:(BOOL)expanded
-isFirstOptionInGroup:(BOOL)isFirstOptionInGroup
- isLastOptionInGroup:(BOOL)isLastoptionInGroup
-{
-    self.backgroundColor = [UIColor colorWithWhite:0.94f alpha:1.0f];
-    self.label.text = text;
+    bool needsGroupSeparator = [viewModel isFirstOptionInGroup];
+    [self.groupSeparator setHidden:!needsGroupSeparator];
+    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMajorColor];
     
-    [self.expanderImage setHidden:NO];
-    
-    [self.groupSeparator setHidden:!isFirstOptionInGroup];
-    [self.separator setHidden:(expanded || isLastoptionInGroup)];
+    bool isExpanded = viewModel.expandedState == Expanded;
+    bool needsBottomSeparator = ![viewModel isLastOptionInGroup] && !isExpanded;
+    [self.separator setHidden:!needsBottomSeparator];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
     
     [UIView animateWithDuration: 0.2f animations:^{
-        CGFloat degrees = expanded ? 270.0f : 0.0f;
+        CGFloat degrees = isExpanded ? 270.0f : 0.0f;
         CGFloat radians = degrees * M_PI/180;
         self.expanderImage.transform = CGAffineTransformMakeRotation(radians);
     }];
+    
+    if (isExpanded)
+    {
+        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupExpandedColor];
+        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextExpandedColor];
+    }
+    else
+    {
+        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupCollapsedColor];
+        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
+    }
 }
 
 @end

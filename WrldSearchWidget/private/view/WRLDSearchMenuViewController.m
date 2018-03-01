@@ -6,17 +6,26 @@
 #import "WRLDMenuGroup.h"
 #import "WRLDMenuOption.h"
 #import "WRLDMenuChild.h"
+#import "WRLDSearchWidgetStyle.h"
 #import "WRLDMenuTableSectionViewModel.h"
 
 typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCollection;
+
+typedef NS_ENUM(NSInteger, GradientState) {
+    None,
+    Top,
+    Bottom,
+    TopAndBottom
+};
 
 @implementation WRLDSearchMenuViewController
 {
     WRLDSearchMenuModel* m_menuModel;
     UIView* m_visibilityView;
     UILabel* m_titleLabel;
-    UITableView * m_tableView;
-    NSLayoutConstraint * m_heightConstraint;
+    UITableView* m_tableView;
+    NSLayoutConstraint* m_heightConstraint;
+    WRLDSearchWidgetStyle* m_style;
     TableSectionViewModelCollection* m_sectionViewModels;
     
     NSString* m_menuGroupTitleTableViewCellStyleIdentifier;
@@ -29,6 +38,7 @@ typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCol
                        titleLabel:(UILabel *)titleLabel
                         tableView:(UITableView *)tableView
                  heightConstraint:(NSLayoutConstraint *)heightConstraint
+                            style:(WRLDSearchWidgetStyle *)style
 {
     self = [super init];
     if (self)
@@ -38,6 +48,7 @@ typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCol
         m_titleLabel = titleLabel;
         m_tableView = tableView;
         m_heightConstraint = heightConstraint;
+        m_style = style;
         
         m_menuGroupTitleTableViewCellStyleIdentifier = @"WRLDMenuGroupTitleTableViewCell";
         m_menuOptionTableViewCellStyleIdentifier = @"WRLDMenuOptionTableViewCell";
@@ -150,6 +161,58 @@ typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCol
     }
 }
 
+- (GradientState)getGradientState:(UIScrollView *)scrollView
+{
+    bool contentExtendsAboveTopOfView = (scrollView.contentOffset.y + scrollView.contentInset.top > 0);
+    bool contentExtendsBelowBottomOfView = (scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height);
+    
+    GradientState applyGradientTo = None;
+    
+    if (contentExtendsAboveTopOfView && contentExtendsBelowBottomOfView)
+    {
+        applyGradientTo = TopAndBottom;
+    }
+    else if(contentExtendsAboveTopOfView)
+    {
+        applyGradientTo = Top;
+    }
+    else if(contentExtendsBelowBottomOfView)
+    {
+        applyGradientTo = Bottom;
+    }
+    return applyGradientTo;
+}
+
+- (void)applyGradient:(GradientState)state
+{
+    CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
+    gradient.frame = [m_tableView bounds];
+    
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    
+    switch (state) {
+        case None:
+            m_tableView.layer.mask = nil;
+            break;
+        case Top:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.2]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case Bottom:
+            gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case TopAndBottom:
+            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor, (__bridge id)outerColor, (__bridge id)innerColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+    }
+}
+
 #pragma mark - WRLDViewVisibilityController
 
 - (void)show
@@ -191,11 +254,7 @@ typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCol
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString* cellIdentifier = [self getIdentifierForCellAtPosition:indexPath];
-    
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: cellIdentifier];
-    cell.separatorInset = UIEdgeInsetsZero;
-    cell.layoutMargins = UIEdgeInsetsZero;
-    return cell;
+    return [tableView dequeueReusableCellWithIdentifier: cellIdentifier];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -226,44 +285,29 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     NSInteger row = [indexPath row];
     if (row == 0)
     {
-        bool isFirstTableSection = [indexPath section] == 0;
         if ([sectionViewModel isTitleSection])
         {
             WRLDMenuGroupTitleTableViewCell* groupTitleCell = (WRLDMenuGroupTitleTableViewCell *)cell;
-            
-            [groupTitleCell populateWith:[sectionViewModel getText]
+            bool isFirstTableSection = [indexPath section] == 0;
+            [groupTitleCell populateWith:sectionViewModel
                      isFirstTableSection:isFirstTableSection
-                     isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
-            return;
-        }
-        
-        WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *)cell;
-        if ([sectionViewModel isExpandable])
-        {
-            BOOL isExpanded = sectionViewModel.expandedState == Expanded;
-            [optionCell populateWith:[sectionViewModel getText]
-                         andExpander:isExpanded
-                isFirstOptionInGroup:[sectionViewModel isFirstOptionInGroup]
-             isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
+                                   style:m_style];
         }
         else
         {
-            [optionCell populateWith:[sectionViewModel getText]
-                isFirstOptionInGroup:[sectionViewModel isFirstOptionInGroup]
-                 isLastOptionInGroup:[sectionViewModel isLastOptionInGroup]];
+            WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *)cell;
+            [optionCell populateWith:sectionViewModel
+                               style:m_style];
         }
+        
         return;
     }
     
-    NSUInteger childIndex = row - 1;
-    WRLDMenuChild* menuChild = [sectionViewModel getChildAtIndex:childIndex];
     WRLDMenuChildTableViewCell* childCell = (WRLDMenuChildTableViewCell *)cell;
-    BOOL isFirstChild = childIndex == 0;
-    BOOL isLastChild = childIndex == [sectionViewModel getChildCount] - 1;
-    [childCell populateWith:menuChild.text
-                       icon:nil
-               isFirstChild:isFirstChild
-                isLastchild:isLastChild];
+    NSUInteger childIndex = row - 1;
+    [childCell populateWith:sectionViewModel
+                 childIndex:childIndex
+                      style:m_style];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -326,8 +370,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // TODO
-    //[self applyGradient: [self getGradientState:scrollView]];
+    [self applyGradient:[self getGradientState:scrollView]];
 }
 
 @end
