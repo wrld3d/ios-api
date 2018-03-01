@@ -24,8 +24,8 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxS-7W-LSk">
-                    <rect key="frame" x="16" y="6" width="311" height="20"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="16" y="4.5" width="311" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -60,7 +60,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="expanderImage" destination="93F-wy-7hH" id="8Sq-aa-hOG"/>
+                <outlet property="expander" destination="93F-wy-7hH" id="Pbh-8x-cNh"/>
                 <outlet property="groupSeparator" destination="S1P-s6-1Z7" id="5Je-L6-1n0"/>
                 <outlet property="label" destination="TxS-7W-LSk" id="JhU-Ez-VKb"/>
                 <outlet property="separator" destination="TqL-2j-xJc" id="qHu-eB-yhu"/>

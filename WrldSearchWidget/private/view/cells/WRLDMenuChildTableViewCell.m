@@ -31,7 +31,7 @@
     [self.shadowGradient setHidden:NO];
     self.shadowGradient.layer.mask = gradient;
     
-    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:0.1].CGColor;
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
     CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
     
     if (isFirstChild && isLastChild)

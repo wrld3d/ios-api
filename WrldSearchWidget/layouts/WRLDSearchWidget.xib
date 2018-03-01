@@ -15,6 +15,8 @@
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
                 <outlet property="menuContainerViewHeightConstraint" destination="Mhq-ZP-IKm" id="9C5-th-e5V"/>
+                <outlet property="menuTableFadeBottom" destination="aYQ-5X-QJb" id="Qc8-c2-gPh"/>
+                <outlet property="menuTableFadeTop" destination="QZi-MM-P1G" id="DBr-By-2oJ"/>
                 <outlet property="menuTableView" destination="NHL-HB-zTc" id="sN2-Uj-En8"/>
                 <outlet property="menuTitleLabel" destination="umw-7B-avj" id="nFk-ad-a1Q"/>
                 <outlet property="noResultsLabel" destination="5Es-nk-XX5" id="ibB-9R-Qdq"/>
@@ -169,7 +171,7 @@
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umw-7B-avj">
                                     <rect key="frame" x="44" y="6" width="323" height="28"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -199,15 +201,35 @@
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </tableView>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QZi-MM-P1G" userLabel="Table Fade Top">
+                            <rect key="frame" x="0.0" y="44" width="375" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="wcy-D8-Gbj"/>
+                            </constraints>
+                        </view>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYQ-5X-QJb" userLabel="Table Fade Bottom">
+                            <rect key="frame" x="0.0" y="12" width="375" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="6ln-yB-JoO"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="QZi-MM-P1G" secondAttribute="trailing" id="BcG-oM-bJD"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="bottom" secondItem="Ooa-S7-mFc" secondAttribute="bottom" id="E8d-vX-sTy"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="leading" secondItem="RbP-72-JER" secondAttribute="leading" id="KsK-Xw-KGS"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="top" secondItem="RbP-72-JER" secondAttribute="bottom" id="Ktb-hu-bLA"/>
                         <constraint firstAttribute="height" priority="999" constant="44" id="Mhq-ZP-IKm"/>
                         <constraint firstAttribute="trailing" secondItem="RbP-72-JER" secondAttribute="trailing" id="Rrv-1n-9eW"/>
+                        <constraint firstItem="QZi-MM-P1G" firstAttribute="leading" secondItem="Ooa-S7-mFc" secondAttribute="leading" id="Zaj-dK-Tsf"/>
+                        <constraint firstItem="QZi-MM-P1G" firstAttribute="top" secondItem="NHL-HB-zTc" secondAttribute="top" id="dKU-5A-45T"/>
+                        <constraint firstItem="aYQ-5X-QJb" firstAttribute="leading" secondItem="Ooa-S7-mFc" secondAttribute="leading" id="kkO-11-MQ0"/>
+                        <constraint firstAttribute="trailing" secondItem="aYQ-5X-QJb" secondAttribute="trailing" id="lKu-XE-7K4"/>
                         <constraint firstItem="RbP-72-JER" firstAttribute="top" secondItem="Ooa-S7-mFc" secondAttribute="top" id="lya-fs-y6u"/>
+                        <constraint firstItem="NHL-HB-zTc" firstAttribute="bottom" secondItem="aYQ-5X-QJb" secondAttribute="bottom" id="p4R-bT-RiT"/>
                         <constraint firstItem="RbP-72-JER" firstAttribute="leading" secondItem="Ooa-S7-mFc" secondAttribute="leading" id="tif-0S-rlN"/>
                         <constraint firstItem="NHL-HB-zTc" firstAttribute="trailing" secondItem="RbP-72-JER" secondAttribute="trailing" id="vXG-BW-7a2"/>
                     </constraints>

@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
     UIView* m_visibilityView;
     UILabel* m_titleLabel;
     UITableView* m_tableView;
+    UIView* m_tableFadeTopView;
+    UIView* m_tableFadeBottomView;
     NSLayoutConstraint* m_heightConstraint;
     WRLDSearchWidgetStyle* m_style;
     TableSectionViewModelCollection* m_sectionViewModels;
@@ -31,12 +33,17 @@ typedef NS_ENUM(NSInteger, GradientState) {
     NSString* m_menuGroupTitleTableViewCellStyleIdentifier;
     NSString* m_menuOptionTableViewCellStyleIdentifier;
     NSString* m_menuChildTableViewCellStyleIdentifier;
+    
+    UIImage* m_imgExpanderBlueIcon;
+    UIImage* m_imgExpanderWhiteIcon;
 }
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView
                        titleLabel:(UILabel *)titleLabel
                         tableView:(UITableView *)tableView
+                 tableFadeTopView:(UIView *)tableFadeTopView
+              tableFadeBottomView:(UIView *)tableFadeBottomView
                  heightConstraint:(NSLayoutConstraint *)heightConstraint
                             style:(WRLDSearchWidgetStyle *)style
 {
@@ -47,6 +54,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_visibilityView = visibilityView;
         m_titleLabel = titleLabel;
         m_tableView = tableView;
+        m_tableFadeTopView = tableFadeTopView;
+        m_tableFadeBottomView = tableFadeBottomView;
         m_heightConstraint = heightConstraint;
         m_style = style;
         
@@ -63,6 +72,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         [self updateSectionViewModels];
         
         [self assignCellResourcesTo:m_tableView];
+        [self initTableFadeViews];
         
         [self updateTitleLabelText];
         [self resizeMenuTable];
@@ -83,6 +93,27 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     [tableView registerNib:[UINib nibWithNibName:m_menuChildTableViewCellStyleIdentifier bundle:resourceBundle]
     forCellReuseIdentifier:m_menuChildTableViewCellStyleIdentifier];
+    
+    m_imgExpanderBlueIcon = [UIImage imageNamed:@"Expander.png" inBundle:resourceBundle compatibleWithTraitCollection:nil];
+    m_imgExpanderWhiteIcon = [UIImage imageNamed:@"ExpanderWhite_Icon.png" inBundle:resourceBundle compatibleWithTraitCollection:nil];
+}
+
+- (void)initTableFadeViews
+{
+    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    
+    CAGradientLayer* topGradient = [[CAGradientLayer alloc] init];
+    topGradient.frame = [m_tableFadeTopView bounds];
+    topGradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
+    topGradient.locations = @[@0.0,@1.0];
+    m_tableFadeTopView.layer.mask = topGradient;
+
+    CAGradientLayer* bottomGradient = [[CAGradientLayer alloc] init];
+    bottomGradient.frame = [m_tableFadeBottomView bounds];
+    bottomGradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
+    bottomGradient.locations = @[@0.0,@1.0];
+    m_tableFadeBottomView.layer.mask = bottomGradient;
 }
 
 - (void)updateTitleLabelText
@@ -134,6 +165,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     m_heightConstraint.constant = height;
     [m_visibilityView layoutIfNeeded];
+    
+    [self updateTableFadeViews:NO];
 }
 
 - (NSString *)getIdentifierForCellAtPosition:(NSIndexPath *)indexPath
@@ -161,56 +194,36 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }
 }
 
-- (GradientState)getGradientState:(UIScrollView *)scrollView
+- (void)updateTableFadeViews:(BOOL)animate
 {
-    bool contentExtendsAboveTopOfView = (scrollView.contentOffset.y + scrollView.contentInset.top > 0);
-    bool contentExtendsBelowBottomOfView = (scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height);
+    bool contentExtendsAboveTopOfView = (m_tableView.contentOffset.y + m_tableView.contentInset.top > 0);
+    bool contentExtendsBelowBottomOfView = (m_tableView.contentOffset.y + m_tableView.frame.size.height < m_tableView.contentSize.height);
     
-    GradientState applyGradientTo = None;
+    bool shouldApplyTopGradient = false;
+    bool shouldApplyBottomGradient = false;
     
     if (contentExtendsAboveTopOfView && contentExtendsBelowBottomOfView)
     {
-        applyGradientTo = TopAndBottom;
+        shouldApplyTopGradient = true;
+        shouldApplyBottomGradient = true;
     }
-    else if(contentExtendsAboveTopOfView)
+    else if (contentExtendsAboveTopOfView)
     {
-        applyGradientTo = Top;
+        shouldApplyTopGradient = true;
     }
-    else if(contentExtendsBelowBottomOfView)
+    else if (contentExtendsBelowBottomOfView)
     {
-        applyGradientTo = Bottom;
+        shouldApplyBottomGradient = true;
     }
-    return applyGradientTo;
-}
-
-- (void)applyGradient:(GradientState)state
-{
-    CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
-    gradient.frame = [m_tableView bounds];
     
-    CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
-    CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    CGFloat fadeDuration = animate ? 0.2f : 0.0f;
     
-    switch (state) {
-        case None:
-            m_tableView.layer.mask = nil;
-            break;
-        case Top:
-            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor];
-            gradient.locations = @[[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.2]];
-            m_tableView.layer.mask = gradient;
-            break;
-        case Bottom:
-            gradient.colors = @[(__bridge id)outerColor, (__bridge id)innerColor];
-            gradient.locations = @[[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
-            m_tableView.layer.mask = gradient;
-            break;
-        case TopAndBottom:
-            gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor, (__bridge id)outerColor, (__bridge id)innerColor];
-            gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
-            m_tableView.layer.mask = gradient;
-            break;
-    }
+    [UIView animateWithDuration: fadeDuration animations:^{
+        CGFloat alpha = shouldApplyTopGradient ? 1.0 : 0.0;
+        [m_tableFadeTopView setAlpha:alpha];
+        alpha = shouldApplyBottomGradient ? 1.0 : 0.0;
+        [m_tableFadeBottomView setAlpha:alpha];
+    }];
 }
 
 #pragma mark - WRLDViewVisibilityController
@@ -297,6 +310,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         {
             WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *)cell;
             [optionCell populateWith:sectionViewModel
+                       collapsedIcon:m_imgExpanderBlueIcon
+                        expandedIcon:m_imgExpanderWhiteIcon
                                style:m_style];
         }
         
@@ -370,7 +385,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self applyGradient:[self getGradientState:scrollView]];
+    [self updateTableFadeViews:YES];
 }
 
 @end

@@ -9,13 +9,15 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
-@property (weak, nonatomic) IBOutlet UIImageView *expanderImage;
+@property (weak, nonatomic) IBOutlet UIImageView *expander;
 
 @property (weak, nonatomic) IBOutlet UIView *groupSeparator;
 
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
 - (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+       collapsedIcon:(UIImage *)collapsedIcon
+        expandedIcon:(UIImage *)expandedIcon
                style:(WRLDSearchWidgetStyle *)style;
 
 @end

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
                    visibilityView:(UIView *)visibilityView
                        titleLabel:(UILabel *)titleLabel
                         tableView:(UITableView *)tableView
+                 tableFadeTopView:(UIView *)tableFadeTop
+              tableFadeBottomView:(UIView *)tableFadeBottom
                  heightConstraint:(NSLayoutConstraint *)heightConstraint
                             style:(WRLDSearchWidgetStyle *)style;
 
