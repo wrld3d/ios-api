@@ -30,7 +30,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1j-Ff-BKW" userLabel="Icon Space">
                     <rect key="frame" x="0.0" y="1" width="40" height="35"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchResultPin.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-dz-b9d">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutosuggestIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="RSc-dz-b9d">
                             <rect key="frame" x="6.5" y="4" width="27" height="27"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="RSc-dz-b9d" secondAttribute="height" multiplier="1:1" id="bNa-Lc-ni1"/>
@@ -69,6 +69,6 @@
         </view>
     </objects>
     <resources>
-        <image name="SearchResultPin.png" width="44" height="44"/>
+        <image name="AutosuggestIcon.png" width="24" height="24"/>
     </resources>
 </document>

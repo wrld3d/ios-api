@@ -10,6 +10,8 @@
     NSDictionary *m_titleLabelBoldAttrs;
     NSDictionary *m_descriptionLabelRegularAttrs;
     NSDictionary *m_descriptionLabelBoldAttrs;
+    
+    UIView *m_selectedBackgroundView;
 }
 
 - (void) populateWith: (id<WRLDSearchResultModel>) searchResult fromQuery: (WRLDSearchQuery *) query
@@ -46,6 +48,8 @@
     {
         self.descriptionLabel.textColor = [style colorForStyle: WRLDSearchWidgetStyleTextSecondaryColor];
     }
+    
+    m_selectedBackgroundView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleMenuGroupExpandedColor];
 }
 
 - (void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
@@ -83,6 +87,9 @@
         m_descriptionLabelRegularAttrs = @{NSFontAttributeName:descriptionLabelFont};
         m_descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
     }
+    
+    m_selectedBackgroundView = [[UIView alloc] init];
+    [self setSelectedBackgroundView: m_selectedBackgroundView];
 }
 
 @end

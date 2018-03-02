@@ -99,8 +99,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
     [tableView registerNib:[UINib nibWithNibName:m_moreResultsCellStyleIdentifier bundle: resourceBundle]
                 forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
     
-    m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_butn.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
-    m_imgBackIcon = [UIImage imageNamed:@"SearchBack.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
+    m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
+    m_imgBackIcon = [UIImage imageNamed:@"SmallBackArrow_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
 }
 
 - (void) showQuery: (WRLDSearchQuery *) sourceQuery
@@ -165,10 +165,12 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     [UIView animateWithDuration: m_fadeDuration animations:^{
         m_heightConstraint.constant = height;
-        [m_visibilityView layoutIfNeeded];
+        [m_visibilityView.superview layoutIfNeeded];
+        [m_tableView setContentOffset:CGPointZero animated:YES];
     } completion:^(BOOL finished) {
         if(finished)
         {
+            [m_tableView setContentOffset:CGPointZero animated:NO];
             [self applyGradient: [self getGradientState: m_tableView]];
         }
     }];
@@ -198,6 +200,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 - (void) populateMoreResultsCell: (WRLDMoreResultsTableViewCell *) moreResultsCell fromViewModel: (WRLDSearchWidgetResultSetViewModel *) sectionViewModel
 {
+    [moreResultsCell applyStyle: m_style];
     if(sectionViewModel.expandedState == Collapsed)
     {
         NSString * textContent = [NSString stringWithFormat:m_showMoreResultsText, ([sectionViewModel getResultCount] - [sectionViewModel getVisibleResultCountWhen: Collapsed]), sectionViewModel.fulfiller.moreResultsName];
@@ -403,8 +406,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             CGFloat onlySetHeight = [setViewModel getResultsCellHeightWhen: Collapsed] + m_moreResultsCellHeight;
             [UIView animateWithDuration: m_fadeDuration animations:^{
                 m_heightConstraint.constant = onlySetHeight;
-                [m_visibilityView layoutIfNeeded];
-                
+                [m_visibilityView.superview layoutIfNeeded];
+                [m_tableView setContentOffset:CGPointZero animated:YES];
             } completion:^(BOOL finished) {
                 if(finished)
                 {

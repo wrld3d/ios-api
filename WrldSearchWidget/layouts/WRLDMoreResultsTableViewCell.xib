@@ -17,17 +17,17 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sJ-WP-fZl">
-                    <rect key="frame" x="50" y="0.0" width="325" height="32"/>
+                    <rect key="frame" x="30" y="0.0" width="345" height="32"/>
                     <color key="tintColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6v2-ol-P5F" userLabel="Icon Space">
-                    <rect key="frame" x="0.0" y="0.0" width="50" height="32"/>
+                    <rect key="frame" x="0.0" y="0.0" width="30" height="32"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MoreResults_butn.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cp0-ED-igY">
-                            <rect key="frame" x="19" y="10" width="12" height="12"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MoreResults_Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cp0-ED-igY">
+                            <rect key="frame" x="3" y="4" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Cp0-ED-igY" secondAttribute="height" multiplier="1:1" id="TFj-QU-ADm"/>
                             </constraints>
@@ -36,7 +36,7 @@
                     <constraints>
                         <constraint firstItem="Cp0-ED-igY" firstAttribute="centerY" secondItem="6v2-ol-P5F" secondAttribute="centerY" id="56i-bn-czo"/>
                         <constraint firstItem="Cp0-ED-igY" firstAttribute="centerX" secondItem="6v2-ol-P5F" secondAttribute="centerX" id="6oe-uy-n0O"/>
-                        <constraint firstAttribute="width" constant="50" id="fa1-zn-m0W"/>
+                        <constraint firstAttribute="width" constant="30" id="fa1-zn-m0W"/>
                     </constraints>
                 </view>
             </subviews>
@@ -59,6 +59,6 @@
         </view>
     </objects>
     <resources>
-        <image name="MoreResults_butn.png" width="12" height="12"/>
+        <image name="MoreResults_Icon.png" width="24" height="24"/>
     </resources>
 </document>

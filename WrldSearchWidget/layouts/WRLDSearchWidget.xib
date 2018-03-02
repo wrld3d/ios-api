@@ -36,6 +36,36 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
+                    <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="tintColor" red="0.0" green="0.44313725490196076" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="separatorColor" red="0.74901960784313726" green="0.85882352941176465" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <color key="sectionIndexBackgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
+                        <constraint firstAttribute="height" priority="999" identifier="Height" id="Ch0-Pu-hmk"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="Kxf-Ks-4jz"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="fS6-Uh-JhU" secondAttribute="top" id="Y0B-iS-tCL"/>
+                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
+                    </constraints>
+                </view>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                    <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="999" id="5Bv-Sr-MfB"/>
+                    </constraints>
+                    <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="separatorInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
+                </tableView>
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
@@ -75,36 +105,6 @@
                         <constraint firstAttribute="height" constant="44" id="ndG-A3-qxD"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-Uh-JhU" userLabel="Results Table View Container">
-                    <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
-                    <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="73" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="URT-uZ-0JQ">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            <color key="tintColor" red="0.0" green="0.44313725490196076" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="separatorColor" red="0.74901960784313726" green="0.85882352941176465" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <color key="sectionIndexBackgroundColor" white="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </tableView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
-                        <constraint firstAttribute="height" priority="999" identifier="Height" id="Ch0-Pu-hmk"/>
-                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="Kxf-Ks-4jz"/>
-                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="fS6-Uh-JhU" secondAttribute="top" id="Y0B-iS-tCL"/>
-                        <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
-                    </constraints>
-                </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
-                    <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="999" id="5Bv-Sr-MfB"/>
-                    </constraints>
-                    <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <inset key="separatorInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
-                </tableView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ub-Ja-lSU" userLabel="No Results View" customClass="WRLDFadeableView">
                     <rect key="frame" x="0.0" y="44" width="375" height="64"/>
                     <subviews>
@@ -162,7 +162,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="jlY-aE-MYe"/>
                                     </constraints>
-                                    <state key="normal" image="MenuBack.png">
+                                    <state key="normal" image="MenuIcon.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -267,7 +267,6 @@
         </view>
     </objects>
     <resources>
-        <image name="MenuBack.png" width="40" height="40"/>
         <image name="MenuIcon.png" width="40" height="40"/>
         <image name="MenuIcon_Down.png" width="40" height="40"/>
         <image name="NoResultsIcon.png" width="32" height="32"/>
