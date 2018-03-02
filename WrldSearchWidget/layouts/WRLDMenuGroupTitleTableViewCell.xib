@@ -23,7 +23,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nfy-RK-0fl" userLabel="Group Separator">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="4"/>
-                    <color key="backgroundColor" red="0.0" green="0.16862745100000001" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="hcM-NG-MNX"/>
                     </constraints>

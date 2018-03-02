@@ -26,12 +26,12 @@
     
     bool needsGroupSeparator = [viewModel isFirstOptionInGroup];
     [self.groupSeparator setHidden:!needsGroupSeparator];
-    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMajorColor];
+    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     
     bool isExpanded = viewModel.expandedState == Expanded;
     m_needsBottomSeparator = ![viewModel isLastOptionInGroup] && !isExpanded;
     [self.separator setHidden:!m_needsBottomSeparator];
-    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     
     [UIView animateWithDuration: 0.2f animations:^{
         CGFloat degrees = isExpanded ? 270.0f : 0.0f;

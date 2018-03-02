@@ -146,16 +146,18 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 - (void)resizeMenuTable
 {
-    const CGFloat menuHeaderHeight = 44;
+    // TODO: remove magic numbers!
+    const CGFloat menuHeaderHeight = 48;
     CGFloat height = menuHeaderHeight;
     
-    const int cellHeight = 32;
+    const int optionCellHeight = 40;
+    const int childCellHeight = 36;
     for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
     {
-        height += cellHeight;
+        height += optionCellHeight;
         if (sectionViewModel.expandedState == Expanded)
         {
-            height += ([sectionViewModel getChildCount]) * cellHeight;
+            height += ([sectionViewModel getChildCount]) * childCellHeight;
         }
     }
     
@@ -336,11 +338,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
         if ([sectionViewModel isFirstOptionInGroup])
         {
-            return 36;
+            return 44;
         }
     }
     
-    return 32;
+    // TODO: remove magic numbers!
+    return [indexPath row] == 0 ? 40 : 36;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

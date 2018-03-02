@@ -15,11 +15,11 @@
     
     bool needsGroupSeparator = !isFirstTableSection;
     [self.groupSeparator setHidden:!needsGroupSeparator];
-    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMajorColor];
+    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     
     bool needsBottomSeparator = ![viewModel isLastOptionInGroup];
     [self.separator setHidden:!needsBottomSeparator];
-    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }

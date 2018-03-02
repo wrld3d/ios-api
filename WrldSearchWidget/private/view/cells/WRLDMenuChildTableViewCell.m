@@ -23,7 +23,7 @@
     bool isLastChild = childIndex == [viewModel getChildCount] - 1;
     
     [self.separator setHidden:isLastChild];
-    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     
     CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
     gradient.frame = self.shadowGradient.bounds;

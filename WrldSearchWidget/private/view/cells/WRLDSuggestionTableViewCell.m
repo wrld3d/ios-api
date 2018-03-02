@@ -6,7 +6,7 @@
 - (void) applyStyle: (WRLDSearchWidgetStyle *) style
 {
     [super applyStyle: style];
-    self.spacer.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
+    self.spacer.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
 }
 
 @end
