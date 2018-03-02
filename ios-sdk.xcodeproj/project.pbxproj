@@ -193,6 +193,15 @@
 		A001E29420407ADF0086A7EA /* WRLDSearchMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A001E29320407ADF0086A7EA /* WRLDSearchMenuModel.m */; };
 		A001E29520407AF50086A7EA /* WRLDSearchMenuModel.h in Headers */ = {isa = PBXBuildFile; fileRef = A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A00E33FE2045BDCA0066B058 /* WRLDMenuChangedListener.h in Headers */ = {isa = PBXBuildFile; fileRef = A00E33FD2045BDCA0066B058 /* WRLDMenuChangedListener.h */; };
+		A00EA7672048724200B11046 /* ExpanderWhite_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7612048724000B11046 /* ExpanderWhite_Icon@2x.png */; };
+		A00EA7682048724200B11046 /* SearrchResultPlaceholder_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7622048724100B11046 /* SearrchResultPlaceholder_Icon.png */; };
+		A00EA7692048724200B11046 /* ExpanderWhite_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7632048724100B11046 /* ExpanderWhite_Icon.png */; };
+		A00EA76A2048724200B11046 /* SearrchResultPlaceholder_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7642048724200B11046 /* SearrchResultPlaceholder_Icon@2x.png */; };
+		A00EA76B2048724200B11046 /* ExpanderWhite_Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7652048724200B11046 /* ExpanderWhite_Icon@3x.png */; };
+		A00EA76C2048724200B11046 /* SearrchResultPlaceholder_Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7662048724200B11046 /* SearrchResultPlaceholder_Icon@3x.png */; };
+		A00EA76E20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00EA77020489F8600B11046 /* WRLDMenuOptionSelectedObserver+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */; };
+		A00EA77220489FF100B11046 /* WRLDMenuOptionSelectedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */; };
 		A00F1D9020442CDD00A42ECF /* WRLDMenuGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */; };
 		A00F1D942044311100A42ECF /* WRLDMenuOption.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D932044311100A42ECF /* WRLDMenuOption.m */; };
@@ -597,6 +606,15 @@
 		A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchMenuModel.h; sourceTree = "<group>"; };
 		A001E29320407ADF0086A7EA /* WRLDSearchMenuModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchMenuModel.m; sourceTree = "<group>"; };
 		A00E33FD2045BDCA0066B058 /* WRLDMenuChangedListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuChangedListener.h; sourceTree = "<group>"; };
+		A00EA7612048724000B11046 /* ExpanderWhite_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ExpanderWhite_Icon@2x.png"; sourceTree = "<group>"; };
+		A00EA7622048724100B11046 /* SearrchResultPlaceholder_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearrchResultPlaceholder_Icon.png; sourceTree = "<group>"; };
+		A00EA7632048724100B11046 /* ExpanderWhite_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExpanderWhite_Icon.png; sourceTree = "<group>"; };
+		A00EA7642048724200B11046 /* SearrchResultPlaceholder_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearrchResultPlaceholder_Icon@2x.png"; sourceTree = "<group>"; };
+		A00EA7652048724200B11046 /* ExpanderWhite_Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ExpanderWhite_Icon@3x.png"; sourceTree = "<group>"; };
+		A00EA7662048724200B11046 /* SearrchResultPlaceholder_Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SearrchResultPlaceholder_Icon@3x.png"; sourceTree = "<group>"; };
+		A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuOptionSelectedObserver.h; sourceTree = "<group>"; };
+		A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMenuOptionSelectedObserver+Private.h"; sourceTree = "<group>"; };
+		A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOptionSelectedObserver.m; sourceTree = "<group>"; };
 		A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuGroup.h; sourceTree = "<group>"; };
 		A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuGroup.m; sourceTree = "<group>"; };
 		A00F1D932044311100A42ECF /* WRLDMenuOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOption.m; sourceTree = "<group>"; };
@@ -925,6 +943,7 @@
 				A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */,
 				A00F1D952044314800A42ECF /* WRLDMenuOption.h */,
 				A00F1D972044369700A42ECF /* WRLDMenuChild.h */,
+				A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -932,6 +951,12 @@
 		2693DEA8202AFE5A000F91CF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A00EA7632048724100B11046 /* ExpanderWhite_Icon.png */,
+				A00EA7612048724000B11046 /* ExpanderWhite_Icon@2x.png */,
+				A00EA7652048724200B11046 /* ExpanderWhite_Icon@3x.png */,
+				A00EA7622048724100B11046 /* SearrchResultPlaceholder_Icon.png */,
+				A00EA7642048724200B11046 /* SearrchResultPlaceholder_Icon@2x.png */,
+				A00EA7662048724200B11046 /* SearrchResultPlaceholder_Icon@3x.png */,
 				2693DECF202AFFFB000F91CF /* Expander.png */,
 				2693DEC3202AFFFA000F91CF /* Expander@2x.png */,
 				2693DEBF202AFFFA000F91CF /* Expander@3x.png */,
@@ -1019,6 +1044,8 @@
 				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
 				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
 				A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */,
+				A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */,
+				A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1434,6 +1461,7 @@
 				26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */,
 				264B92DD203F303900F6DAE0 /* WRLDSuggestionProviderHandle+Private.h in Headers */,
 				264B92DE203F303900F6DAE0 /* WRLDMoreResultsTableViewCell.h in Headers */,
+				A00EA77020489F8600B11046 /* WRLDMenuOptionSelectedObserver+Private.h in Headers */,
 				264B92DF203F303900F6DAE0 /* WRLDSearchInProgressTableViewCell.h in Headers */,
 				264B92E0203F303900F6DAE0 /* WRLDSearchResultTableViewCell.h in Headers */,
 				264B92E1203F303900F6DAE0 /* WRLDFadeableView.h in Headers */,
@@ -1453,6 +1481,7 @@
 				264B92EB203F303900F6DAE0 /* WRLDSearchProvider.h in Headers */,
 				264B92EC203F303900F6DAE0 /* WRLDSearchProviderHandle.h in Headers */,
 				264B92ED203F303900F6DAE0 /* WRLDSearchQuery.h in Headers */,
+				A00EA76E20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h in Headers */,
 				264B92EE203F303900F6DAE0 /* WRLDSearchQueryObserver.h in Headers */,
 				264B92EF203F303900F6DAE0 /* WRLDSearchRequest.h in Headers */,
 				264B92F0203F303900F6DAE0 /* WRLDSearchRequestFulfillerHandle.h in Headers */,
@@ -1792,6 +1821,7 @@
 				264B9309203F317200F6DAE0 /* Expander.png in Resources */,
 				264B930A203F317200F6DAE0 /* Expander@2x.png in Resources */,
 				264B930B203F317200F6DAE0 /* Expander@3x.png in Resources */,
+				A00EA76C2048724200B11046 /* SearrchResultPlaceholder_Icon@3x.png in Resources */,
 				264B930F203F317200F6DAE0 /* MenuBack_Down.png in Resources */,
 				264B9310203F317200F6DAE0 /* MenuBack_Down@2x.png in Resources */,
 				264B9311203F317200F6DAE0 /* MenuBack_Down@3x.png in Resources */,
@@ -1800,11 +1830,13 @@
 				264B9313203F317200F6DAE0 /* MenuBack@2x.png in Resources */,
 				264B9314203F317200F6DAE0 /* MenuBack@3x.png in Resources */,
 				264B9315203F317200F6DAE0 /* MenuIcon_Down.png in Resources */,
+				A00EA76A2048724200B11046 /* SearrchResultPlaceholder_Icon@2x.png in Resources */,
 				264B9316203F317200F6DAE0 /* MenuIcon_Down@2x.png in Resources */,
 				264B9317203F317200F6DAE0 /* MenuIcon_Down@3x.png in Resources */,
 				264B9318203F317200F6DAE0 /* MenuIcon.png in Resources */,
 				264B931A203F317200F6DAE0 /* MenuIcon@3x.png in Resources */,
 				264B931B203F317200F6DAE0 /* MoreResults_butn.png in Resources */,
+				A00EA7692048724200B11046 /* ExpanderWhite_Icon.png in Resources */,
 				26A5AC722046D0F4001881A9 /* SearchResultPin.png in Resources */,
 				264B931C203F317200F6DAE0 /* MoreResults_butn@2x.png in Resources */,
 				264B931D203F317200F6DAE0 /* MoreResults_butn@3x.png in Resources */,
@@ -1812,6 +1844,7 @@
 				264B931F203F317200F6DAE0 /* NoResultsIcon@2x.png in Resources */,
 				264B9320203F317200F6DAE0 /* NoResultsIcon@3x.png in Resources */,
 				264B9321203F317200F6DAE0 /* Search_btn.png in Resources */,
+				A00EA7682048724200B11046 /* SearrchResultPlaceholder_Icon.png in Resources */,
 				264B9322203F317200F6DAE0 /* Search_btn@2x.png in Resources */,
 				264B9323203F317200F6DAE0 /* Search_btn@3x.png in Resources */,
 				264B9324203F317200F6DAE0 /* SearchBack_Down.png in Resources */,
@@ -1826,8 +1859,10 @@
 				26A5AC712046D0F4001881A9 /* SearchResultPin@2x.png in Resources */,
 				264B932C203F317200F6DAE0 /* WRLDSearchInProgressTableViewCell.xib in Resources */,
 				A080DA1E204637DC00C5FBB3 /* WRLDMenuGroupTitleTableViewCell.xib in Resources */,
+				A00EA76B2048724200B11046 /* ExpanderWhite_Icon@3x.png in Resources */,
 				264B932D203F317200F6DAE0 /* WRLDSearchResultTableViewCell.xib in Resources */,
 				264B932E203F317200F6DAE0 /* WRLDSearchWidget.xib in Resources */,
+				A00EA7672048724200B11046 /* ExpanderWhite_Icon@2x.png in Resources */,
 				264B932F203F317200F6DAE0 /* WRLDSuggestionTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2051,6 +2086,7 @@
 				264B92FA203F306E00F6DAE0 /* WRLDSearchQuery.m in Sources */,
 				A00F1D9A2044384F00A42ECF /* WRLDMenuChild.m in Sources */,
 				A080DA222046388F00C5FBB3 /* WRLDMenuGroupTitleTableViewCell.m in Sources */,
+				A00EA77220489FF100B11046 /* WRLDMenuOptionSelectedObserver.m in Sources */,
 				264B92FB203F306E00F6DAE0 /* WRLDSearchQueryObserver.m in Sources */,
 				264B92FC203F306E00F6DAE0 /* WRLDSearchRequest.m in Sources */,
 				26A5AC6C2045C2BA001881A9 /* WRLDSuggestionTableViewCell.m in Sources */,

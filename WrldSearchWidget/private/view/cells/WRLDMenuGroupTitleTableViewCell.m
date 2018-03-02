@@ -20,6 +20,8 @@
     bool needsBottomSeparator = ![viewModel isLastOptionInGroup];
     [self.separator setHidden:!needsBottomSeparator];
     self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerMinorColor];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 @end

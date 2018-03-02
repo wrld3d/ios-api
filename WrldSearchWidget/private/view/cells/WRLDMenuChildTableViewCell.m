@@ -53,6 +53,8 @@
     {
         [self.shadowGradient setHidden:YES];
     }
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 @end

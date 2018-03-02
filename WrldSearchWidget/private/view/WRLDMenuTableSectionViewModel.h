@@ -5,6 +5,8 @@
 @class WRLDMenuGroup;
 @class WRLDMenuChild;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface WRLDMenuTableSectionViewModel : NSObject
 
 typedef NS_ENUM(NSInteger, ExpandedStateType)
@@ -34,6 +36,12 @@ typedef NS_ENUM(NSInteger, ExpandedStateType)
 
 - (NSInteger)getChildCount;
 
-- (WRLDMenuChild *)getChildAtIndex:(NSUInteger)index;
+- (nullable WRLDMenuChild *)getChildAtIndex:(NSUInteger)index;
+
+- (nullable NSObject *)getContext;
+
+- (nullable NSObject *)getChildContextAtIndex:(NSUInteger)index;
+
+NS_ASSUME_NONNULL_END
 
 @end

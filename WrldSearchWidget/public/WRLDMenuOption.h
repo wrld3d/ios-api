@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString* text;
 
-@property (nonatomic, copy) NSObject* context;
+@property (nonatomic, copy) NSObject* _Nullable context;
 
 - (instancetype)initWithText:(NSString *)text
                      context:(nullable NSObject *)context;

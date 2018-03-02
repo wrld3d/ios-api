@@ -110,5 +110,26 @@
     return nil;
 }
 
+- (NSObject *)getContext
+{
+    if (m_menuOption != nil)
+    {
+        return m_menuOption.context;
+    }
+    return nil;
+}
+
+- (NSObject *)getChildContextAtIndex:(NSUInteger)index
+{
+    if (m_menuOption != nil)
+    {
+        if (index < [[m_menuOption getChildren] count])
+        {
+            return [[[m_menuOption getChildren] objectAtIndex:index] context];
+        }
+    }
+    return nil;
+}
+
 @end
 

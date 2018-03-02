@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
 - (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
-       collapsedIcon:(UIImage *)collapsedIcon
-        expandedIcon:(UIImage *)expandedIcon
+        expanderIcon:(UIImage *)expanderIcon
+     highlightedIcon:(UIImage *)highlightedIcon
                style:(WRLDSearchWidgetStyle *)style;
 
 @end

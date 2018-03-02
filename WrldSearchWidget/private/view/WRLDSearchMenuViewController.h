@@ -4,12 +4,15 @@
 #import "WRLDViewVisibilityController.h"
 #import "WRLDMenuChangedListener.h"
 
+@class WRLDMenuOptionSelectedObserver;
 @class WRLDSearchMenuModel;
 @class WRLDSearchWidgetStyle;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDSearchMenuViewController : NSObject <WRLDViewVisibilityController, WRLDMenuChangedListener, UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, readonly) WRLDMenuOptionSelectedObserver* selectionObserver;
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView

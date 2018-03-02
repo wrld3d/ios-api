@@ -19,8 +19,6 @@
     return self;
 }
 
-// TODO: onSelectCallback
-
 @end
 
 

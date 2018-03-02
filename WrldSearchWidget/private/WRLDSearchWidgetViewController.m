@@ -10,6 +10,7 @@
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
+#import "WRLDMenuOptionSelectedObserver.h"
 #import "WRLDHighlightableButton.h"
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDSearchMenuModel.h"
@@ -68,12 +69,19 @@
     BOOL m_hasFocus;
 }
 
-- (WRLDSearchResultSelectedObserver *)searchSelectionObserver {
+- (WRLDSearchResultSelectedObserver *)searchSelectionObserver
+{
     return m_searchResultsViewController.selectionObserver;
 }
 
-- (WRLDSearchResultSelectedObserver *)suggestionSelectionObserver {
+- (WRLDSearchResultSelectedObserver *)suggestionSelectionObserver
+{
     return m_suggestionsViewController.selectionObserver;
+}
+
+- (WRLDMenuOptionSelectedObserver *)menuOptionSelectionObserver
+{
+    return m_searchMenuViewController.selectionObserver;
 }
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel

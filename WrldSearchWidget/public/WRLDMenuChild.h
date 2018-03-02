@@ -8,9 +8,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString* text;
 
-@property (nonatomic, copy) NSString* icon;
+@property (nonatomic, copy) NSString* _Nullable icon;
 
-@property (nonatomic, copy) NSObject* context;
+@property (nonatomic, copy) NSObject* _Nullable context;
 
 - (instancetype)initWithText:(NSString *)text
                         icon:(nullable NSString *)icon

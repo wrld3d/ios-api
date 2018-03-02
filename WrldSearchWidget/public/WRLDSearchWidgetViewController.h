@@ -7,12 +7,14 @@
 @class WRLDSearchProviderHandle;
 @class WRLDSuggestionProviderHandle;
 @class WRLDSearchResultSelectedObserver;
+@class WRLDMenuOptionSelectedObserver;
 @class WRLDSearchWidgetStyle;
 
 @interface WRLDSearchWidgetViewController : UIViewController <UISearchBarDelegate>
 
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * searchSelectionObserver;
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * suggestionSelectionObserver;
+@property (nonatomic, readonly) WRLDMenuOptionSelectedObserver * menuOptionSelectionObserver;
 @property (nonatomic, readonly) WRLDSearchWidgetStyle * style;
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel;
