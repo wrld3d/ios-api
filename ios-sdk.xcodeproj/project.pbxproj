@@ -212,6 +212,7 @@
 		A01455F32047836B002268AE /* WRLDMenuChildTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01455F22047836B002268AE /* WRLDMenuChildTableViewCell.xib */; };
 		A01455F6204783BD002268AE /* WRLDMenuChildTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A01455F4204783BD002268AE /* WRLDMenuChildTableViewCell.m */; };
 		A01455F7204783BD002268AE /* WRLDMenuChildTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A01455F5204783BD002268AE /* WRLDMenuChildTableViewCell.h */; };
+		A05A916620499BCC00C96494 /* Assistant-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A05A916520499BCC00C96494 /* Assistant-Regular.ttf */; };
 		A080DA182045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A080DA172045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib */; };
 		A080DA1A2045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */; };
 		A080DA1C2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */; };
@@ -622,6 +623,7 @@
 		A01455F22047836B002268AE /* WRLDMenuChildTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WRLDMenuChildTableViewCell.xib; sourceTree = "<group>"; };
 		A01455F4204783BD002268AE /* WRLDMenuChildTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuChildTableViewCell.m; sourceTree = "<group>"; };
 		A01455F5204783BD002268AE /* WRLDMenuChildTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMenuChildTableViewCell.h; sourceTree = "<group>"; };
+		A05A916520499BCC00C96494 /* Assistant-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Assistant-Regular.ttf"; path = "fonts/Assistant/Assistant-Regular.ttf"; sourceTree = "<group>"; };
 		A080DA172045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WRLDMenuOptionTableViewCell.xib; sourceTree = "<group>"; };
 		A080DA192045E34F00C5FBB3 /* WRLDMenuOptionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuOptionTableViewCell.h; sourceTree = "<group>"; };
 		A080DA1B2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOptionTableViewCell.m; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 		264B92B3203F2E5C00F6DAE0 /* WrldSearchWidget */ = {
 			isa = PBXGroup;
 			children = (
+				A05A916420499BB700C96494 /* fonts */,
 				2693DEA8202AFE5A000F91CF /* images */,
 				2693DEA9202AFE79000F91CF /* layouts */,
 				2693DEFA202B0315000F91CF /* private */,
@@ -1150,6 +1153,14 @@
 				2CB2C5941EC1D93F00C0B401 /* WRLDIndoorControlView.m */,
 			);
 			path = public;
+			sourceTree = "<group>";
+		};
+		A05A916420499BB700C96494 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A05A916520499BCC00C96494 /* Assistant-Regular.ttf */,
+			);
+			name = fonts;
 			sourceTree = "<group>";
 		};
 		D39018B2402324986ABDDC69 /* Frameworks */ = {
@@ -1821,6 +1832,7 @@
 				26B312D9204996AC00EBDB1E /* SearchResultPlaceholder_Icon@3x.png in Resources */,
 				264B9312203F317200F6DAE0 /* MenuBack.png in Resources */,
 				A080DA182045E25900C5FBB3 /* WRLDMenuOptionTableViewCell.xib in Resources */,
+				A05A916620499BCC00C96494 /* Assistant-Regular.ttf in Resources */,
 				26B312CC204996AC00EBDB1E /* AutosuggestIcon@2x.png in Resources */,
 				264B9313203F317200F6DAE0 /* MenuBack@2x.png in Resources */,
 				26B312D4204996AC00EBDB1E /* AutosuggestIcon@3x.png in Resources */,

@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     [tableView registerNib:[UINib nibWithNibName:m_menuChildTableViewCellStyleIdentifier bundle:resourceBundle]
     forCellReuseIdentifier:m_menuChildTableViewCellStyleIdentifier];
     
-    m_imgExpanderBlueIcon = [UIImage imageNamed:@"Expander.png" inBundle:resourceBundle compatibleWithTraitCollection:nil];
+    m_imgExpanderBlueIcon = [UIImage imageNamed:@"Expander_Icon.png" inBundle:resourceBundle compatibleWithTraitCollection:nil];
     m_imgExpanderWhiteIcon = [UIImage imageNamed:@"ExpanderWhite_Icon.png" inBundle:resourceBundle compatibleWithTraitCollection:nil];
 }
 
