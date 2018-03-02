@@ -49,7 +49,7 @@
         self.descriptionLabel.textColor = [style colorForStyle: WRLDSearchWidgetStyleTextSecondaryColor];
     }
     
-    m_selectedBackgroundView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleMenuGroupExpandedColor];
+    m_selectedBackgroundView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleResultSelectedColor];
 }
 
 - (void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes

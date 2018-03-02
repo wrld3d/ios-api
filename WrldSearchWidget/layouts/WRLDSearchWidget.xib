@@ -26,7 +26,8 @@
                 <outlet property="resultsTableHeightConstraint" destination="Ch0-Pu-hmk" id="X93-NU-WXm"/>
                 <outlet property="resultsTableView" destination="URT-uZ-0JQ" id="WwU-4o-USZ"/>
                 <outlet property="searchBar" destination="nwq-hq-zts" id="3X3-RJ-bFn"/>
-                <outlet property="suggestionsTableHeightConstraint" destination="5Bv-Sr-MfB" id="UPA-2I-B4k"/>
+                <outlet property="suggestionsTableContainerView" destination="vWc-gR-AKq" id="eJq-pP-c1C"/>
+                <outlet property="suggestionsTableHeightConstraint" destination="E2e-1a-TmF" id="iIE-y0-PVK"/>
                 <outlet property="suggestionsTableView" destination="0kP-eT-3ph" id="df6-oc-qgf"/>
                 <outlet property="view" destination="q5F-mI-7jP" id="QkN-3a-GsU"/>
             </connections>
@@ -51,21 +52,32 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="BG2-4e-ybB"/>
-                        <constraint firstAttribute="height" priority="999" identifier="Height" id="Ch0-Pu-hmk"/>
+                        <constraint firstAttribute="height" priority="999" id="Ch0-Pu-hmk"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="Kxf-Ks-4jz"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="top" secondItem="fS6-Uh-JhU" secondAttribute="top" id="Y0B-iS-tCL"/>
                         <constraint firstItem="URT-uZ-0JQ" firstAttribute="bottom" secondItem="fS6-Uh-JhU" secondAttribute="bottom" id="whS-W5-wcu"/>
                     </constraints>
                 </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWc-gR-AKq" userLabel="Suggestions Table View Container">
                     <rect key="frame" x="0.0" y="44" width="375" height="0.0"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-eT-3ph">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="separatorInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
+                            <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="999" id="5Bv-Sr-MfB"/>
+                        <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="vWc-gR-AKq" secondAttribute="top" id="45I-U2-DFl"/>
+                        <constraint firstAttribute="height" priority="999" id="E2e-1a-TmF"/>
+                        <constraint firstItem="0kP-eT-3ph" firstAttribute="bottom" secondItem="vWc-gR-AKq" secondAttribute="bottom" id="Nqm-bM-Yox"/>
+                        <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="vWc-gR-AKq" secondAttribute="leading" id="QFv-Cz-0ZR"/>
+                        <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="vWc-gR-AKq" secondAttribute="trailing" id="dAN-fM-Bsy"/>
                     </constraints>
-                    <color key="separatorColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <inset key="separatorInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
-                </tableView>
+                </view>
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
@@ -240,19 +252,19 @@
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="8Up-he-zih"/>
                 <constraint firstItem="7ub-Ja-lSU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="945-Hx-sjW"/>
                 <constraint firstItem="Ooa-S7-mFc" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="AeS-Z0-cnW"/>
-                <constraint firstItem="0kP-eT-3ph" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="DHc-jF-m2C"/>
-                <constraint firstItem="0kP-eT-3ph" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="EIa-QG-6cw"/>
+                <constraint firstItem="vWc-gR-AKq" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="J9u-ZD-iGt"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="top" secondItem="q5F-mI-7jP" secondAttribute="top" id="Jl8-kl-jNr"/>
-                <constraint firstItem="0kP-eT-3ph" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="KbJ-Lr-MXE"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="Kcg-e4-fWr"/>
                 <constraint firstItem="Ooa-S7-mFc" firstAttribute="trailing" secondItem="fS6-Uh-JhU" secondAttribute="trailing" id="WVP-L5-XBX"/>
                 <constraint firstItem="Ooa-S7-mFc" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" id="Wdx-rR-kaO"/>
+                <constraint firstItem="vWc-gR-AKq" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="c08-v8-mXT"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="dPX-51-niE"/>
+                <constraint firstItem="vWc-gR-AKq" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="gj2-qC-5Se"/>
                 <constraint firstItem="Ooa-S7-mFc" firstAttribute="leading" secondItem="fS6-Uh-JhU" secondAttribute="leading" id="j2I-9c-fjP"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" id="naq-EV-9wh"/>
                 <constraint firstItem="7ub-Ja-lSU" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" id="oUS-Zx-bsP"/>
                 <constraint firstItem="gYl-rC-nwo" firstAttribute="trailing" secondItem="q5F-mI-7jP" secondAttribute="trailing" id="sP7-kg-2Jl"/>
-                <constraint firstItem="0kP-eT-3ph" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="bottom" id="ySO-R5-Gb6"/>
+                <constraint firstItem="vWc-gR-AKq" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="zBu-f7-WYW"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="zdR-85-uWB"/>
             </constraints>
             <connections>
@@ -261,7 +273,7 @@
                 <outlet property="owner" destination="-1" id="iam-dy-t5d"/>
                 <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="x0f-zS-dg3"/>
                 <outlet property="searchBarSubView" destination="nwq-hq-zts" id="Tgg-aV-HbC"/>
-                <outlet property="suggestionsSubView" destination="0kP-eT-3ph" id="ADr-2a-DFF"/>
+                <outlet property="suggestionsSubView" destination="vWc-gR-AKq" id="hLb-uU-GcF"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="51"/>
         </view>

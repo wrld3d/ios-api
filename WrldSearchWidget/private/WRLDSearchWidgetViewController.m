@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsTableHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet UIView *suggestionsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *suggestionsTableHeightConstraint;
 
@@ -128,7 +129,7 @@
                                                                              defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
     
     m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
-                                                                                  visibilityView: self.suggestionsTableView
+                                                                                  visibilityView: self.suggestionsTableContainerView
                                                                                            style: self.style
                                                                                 heightConstraint:self.suggestionsTableHeightConstraint
                                                                            defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
@@ -201,7 +202,7 @@
     } toApply:WRLDSearchWidgetStylePrimaryColor];
     
     [self.style call:^(UIColor *color) {
-        self.suggestionsTableView.backgroundColor = color;
+        self.suggestionsTableContainerView.backgroundColor = color;
         self.noResultsView.backgroundColor = color;
     } toApply:WRLDSearchWidgetStyleSecondaryColor];
     

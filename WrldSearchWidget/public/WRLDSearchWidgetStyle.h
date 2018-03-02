@@ -10,6 +10,7 @@ typedef NS_ENUM(NSInteger, WRLDSearchWidgetStyleType)
     WRLDSearchWidgetStyleSecondaryColor,
     WRLDSearchWidgetStyleSearchBarColor,
     WRLDSearchWidgetStyleResultBackgroundColor,
+    WRLDSearchWidgetStyleResultSelectedColor,
     WRLDSearchWidgetStyleTextPrimaryColor,
     WRLDSearchWidgetStyleTextSecondaryColor,
     WRLDSearchWidgetStyleLinkColor,
