@@ -2,6 +2,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class WRLDSearchWidgetStyle;
+
 @interface WRLDHighlightableButton : UIButton
-- (void) setBackgroundColor: (UIColor *) color forState: (UIControlState) controlState;
+
+- (void)applyStyle:(WRLDSearchWidgetStyle *)style;
+
 @end

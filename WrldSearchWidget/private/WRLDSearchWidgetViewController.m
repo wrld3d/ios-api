@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsVisibilityController;
 
 @property (weak, nonatomic) IBOutlet UIView *menuContainerView;
+@property (weak, nonatomic) IBOutlet WRLDHighlightableButton *menuBackButton;
 @property (weak, nonatomic) IBOutlet UIView *menuSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
@@ -119,9 +120,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.menuButton setBackgroundColor:m_primaryBackgroundColor forState:UIControlStateNormal];
-    [self.menuButton setBackgroundColor:m_focusBackgroundColor forState:UIControlStateHighlighted];
     
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
                                                                                     visibilityView: self.resultsTableContainerView
@@ -213,6 +211,9 @@
     [self.style call:^(UIColor *color) {
         self.noResultsLabel.textColor = color;
     } toApply:WRLDSearchWidgetStyleWarningColor];
+    
+    [self.menuButton applyStyle:self.style];
+    [self.menuBackButton applyStyle:self.style];
 }
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
