@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView
                        titleLabel:(UILabel *)titleLabel
+                    separatorView:(UIView *)separatorView
                         tableView:(UITableView *)tableView
                  tableFadeTopView:(UIView *)tableFadeTop
               tableFadeBottomView:(UIView *)tableFadeBottom

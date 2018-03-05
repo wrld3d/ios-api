@@ -105,11 +105,12 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextSecondaryColor]           setColorFromInt: 0x606060];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleLinkColor]                    setColorFromInt: 0x0071bc];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleWarningColor]                 setColorFromInt: 0xD1021A];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleDividerColor]            setColorFromInt: 0xB9C9E0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleDividerColor]                 setColorFromInt: 0xB9C9E0];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupExpandedColor]       setColorFromInt: 0x1256B0];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupCollapsedColor]      setColorFromInt: 0xF0F0F0];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupTextExpandedColor]   setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupTextCollapsedColor]  setColorFromInt: 0x1256B0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuHoverColor]               setColorFromInt: 0xD0DDEF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuIconColor]                setColorFromInt: 0x0071BC];
 }
 

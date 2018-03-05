@@ -7,6 +7,8 @@
 
 @interface WRLDMenuChildTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundPanel;
+
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
 @property (weak, nonatomic) IBOutlet UIImageView *icon;

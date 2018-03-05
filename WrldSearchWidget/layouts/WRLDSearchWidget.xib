@@ -15,6 +15,7 @@
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
                 <outlet property="menuContainerViewHeightConstraint" destination="Mhq-ZP-IKm" id="9C5-th-e5V"/>
+                <outlet property="menuSeparator" destination="EIc-t9-bk5" id="CBE-wW-dpc"/>
                 <outlet property="menuTableFadeBottom" destination="aYQ-5X-QJb" id="Qc8-c2-gPh"/>
                 <outlet property="menuTableFadeTop" destination="QZi-MM-P1G" id="DBr-By-2oJ"/>
                 <outlet property="menuTableView" destination="NHL-HB-zTc" id="sN2-Uj-En8"/>
@@ -163,18 +164,18 @@
                         <constraint firstAttribute="height" constant="64" id="xEn-ID-l5g"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ooa-S7-mFc" userLabel="Menu Container View">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ooa-S7-mFc" userLabel="Menu Container View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbP-72-JER" userLabel="Menu Header">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXk-kO-Zlf" userLabel="Wrld Search Widget Back Button">
-                                    <rect key="frame" x="4" y="6" width="32" height="34"/>
+                                    <rect key="frame" x="4" y="4" width="32" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="jlY-aE-MYe"/>
                                     </constraints>
-                                    <state key="normal" image="MenuIcon.png">
+                                    <state key="normal" image="MenuBack.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -182,7 +183,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Menu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umw-7B-avj">
-                                    <rect key="frame" x="44" y="10" width="323" height="28"/>
+                                    <rect key="frame" x="44" y="8" width="323" height="28"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -203,9 +204,9 @@
                                 <constraint firstItem="EIc-t9-bk5" firstAttribute="leading" secondItem="RbP-72-JER" secondAttribute="leading" id="QyJ-Ci-hKN"/>
                                 <constraint firstAttribute="bottom" secondItem="EIc-t9-bk5" secondAttribute="bottom" id="XiL-Li-HvK"/>
                                 <constraint firstItem="umw-7B-avj" firstAttribute="leading" secondItem="VXk-kO-Zlf" secondAttribute="trailing" constant="8" id="cAY-aH-xhU"/>
-                                <constraint firstItem="EIc-t9-bk5" firstAttribute="top" secondItem="umw-7B-avj" secondAttribute="bottom" constant="6" id="cCn-YA-0OP"/>
+                                <constraint firstItem="EIc-t9-bk5" firstAttribute="top" secondItem="umw-7B-avj" secondAttribute="bottom" constant="8" id="cCn-YA-0OP"/>
                                 <constraint firstItem="VXk-kO-Zlf" firstAttribute="leading" secondItem="RbP-72-JER" secondAttribute="leading" constant="4" id="pTn-t4-hZ7"/>
-                                <constraint firstItem="VXk-kO-Zlf" firstAttribute="top" secondItem="RbP-72-JER" secondAttribute="top" constant="6" id="wEt-yV-wad"/>
+                                <constraint firstItem="VXk-kO-Zlf" firstAttribute="top" secondItem="RbP-72-JER" secondAttribute="top" constant="4" id="wEt-yV-wad"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="32" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-HB-zTc">
@@ -279,6 +280,7 @@
         </view>
     </objects>
     <resources>
+        <image name="MenuBack.png" width="40" height="40"/>
         <image name="MenuIcon.png" width="40" height="40"/>
         <image name="MenuIcon_Down.png" width="40" height="40"/>
         <image name="NoResultsIcon.png" width="32" height="32"/>

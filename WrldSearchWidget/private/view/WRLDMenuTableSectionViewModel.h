@@ -42,6 +42,10 @@ typedef NS_ENUM(NSInteger, ExpandedStateType)
 
 - (nullable NSObject *)getChildContextAtIndex:(NSUInteger)index;
 
+- (CGFloat)getViewHeight;
+
+- (CGFloat)getChildViewHeight;
+
 NS_ASSUME_NONNULL_END
 
 @end

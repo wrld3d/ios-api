@@ -4,14 +4,20 @@
 #import "WRLDMenuChild.h"
 
 @implementation WRLDMenuChildTableViewCell
+{
+    WRLDSearchWidgetStyle* m_style;
+}
 
 - (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
           childIndex:(NSUInteger)childIndex
                style:(WRLDSearchWidgetStyle *)style
 {
+    m_style = style;
+    
     WRLDMenuChild* menuChild = [viewModel getChildAtIndex:childIndex];
     
     self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleSecondaryColor];
+    self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStylePrimaryColor];
     
     self.label.text = menuChild != nil ? menuChild.text : @"";
     self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
@@ -55,6 +61,24 @@
     }
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+              animated:(BOOL)animated
+{
+    if (m_style == nil)
+    {
+        return;
+    }
+    
+    if (highlighted)
+    {
+        self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuHoverColor];
+    }
+    else
+    {
+        self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStylePrimaryColor];
+    }
 }
 
 @end

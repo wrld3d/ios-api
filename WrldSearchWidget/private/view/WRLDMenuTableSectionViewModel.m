@@ -6,6 +6,8 @@
 {
     WRLDMenuOption* m_menuOption;
     NSString* m_displayText;
+    CGFloat m_viewHeight;
+    CGFloat m_childrenViewHeight;
     
     bool m_isTitleSection;
     bool m_isFirstOptionInGroup;
@@ -20,6 +22,8 @@
     m_displayText = menuGroup.title;
     m_isFirstOptionInGroup = true;
     m_isLastOptionInGroup = ([[menuGroup getOptions] count] == 0);
+    
+    m_viewHeight = 36.0f;
     
     return self;
 }
@@ -52,6 +56,9 @@
         m_isTitleSection = false;
         m_isFirstOptionInGroup = false;
         m_isLastOptionInGroup = false;
+        
+        m_viewHeight = 40.0f;
+        m_childrenViewHeight = 36.0f;
     }
     return self;
 }
@@ -129,6 +136,16 @@
         }
     }
     return nil;
+}
+
+- (CGFloat)getViewHeight
+{
+    return m_viewHeight;
+}
+
+- (CGFloat)getChildViewHeight
+{
+    return m_childrenViewHeight;
 }
 
 @end

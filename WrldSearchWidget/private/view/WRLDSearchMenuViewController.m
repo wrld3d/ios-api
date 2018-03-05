@@ -37,11 +37,15 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     UIImage* m_imgExpanderBlueIcon;
     UIImage* m_imgExpanderWhiteIcon;
+    
+    CGFloat m_menuHeaderHeightIncludingSeparator;
+    CGFloat m_groupSeparatorHeight;
 }
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView
                        titleLabel:(UILabel *)titleLabel
+                    separatorView:(UIView *)separatorView
                         tableView:(UITableView *)tableView
                  tableFadeTopView:(UIView *)tableFadeTopView
               tableFadeBottomView:(UIView *)tableFadeBottomView
@@ -64,6 +68,9 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_menuOptionTableViewCellStyleIdentifier = @"WRLDMenuOptionTableViewCell";
         m_menuChildTableViewCellStyleIdentifier = @"WRLDMenuChildTableViewCell";
         
+        m_menuHeaderHeightIncludingSeparator = 48.0f;
+        m_groupSeparatorHeight = 4.0f;
+        
         [m_menuModel setListener:self];
         
         m_tableView.dataSource = self;
@@ -73,6 +80,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
         
         m_sectionViewModels = [[TableSectionViewModelCollection alloc] init];
         [self updateSectionViewModels];
+        
+        separatorView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleDividerColor];
         
         [self assignCellResourcesTo:m_tableView];
         [self initTableFadeViews];
@@ -146,18 +155,14 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 - (void)resizeMenuTable
 {
-    // TODO: remove magic numbers!
-    const CGFloat menuHeaderHeight = 48;
-    CGFloat height = menuHeaderHeight;
+    CGFloat height = m_menuHeaderHeightIncludingSeparator;
     
-    const int optionCellHeight = 40;
-    const int childCellHeight = 36;
     for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
     {
-        height += optionCellHeight;
+        height += [sectionViewModel getViewHeight];
         if (sectionViewModel.expandedState == Expanded)
         {
-            height += ([sectionViewModel getChildCount]) * childCellHeight;
+            height += ([sectionViewModel getChildCount]) * [sectionViewModel getChildViewHeight];
         }
     }
     
@@ -165,7 +170,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     NSUInteger menuGroupCount = [[m_menuModel getGroups] count];
     if (menuGroupCount > 0)
     {
-        height += (menuGroupCount - 1) * 4;
+        height += (menuGroupCount - 1) * m_groupSeparatorHeight;
     }
     
     m_heightConstraint.constant = height;
@@ -332,18 +337,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    bool isFirstTableSection = [indexPath section] == 0;
-    if (!isFirstTableSection && [indexPath row] == 0)
+    WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+    
+    CGFloat height = 0.0f;
+    
+    if ([indexPath row] == 0)
     {
-        WRLDMenuTableSectionViewModel* sectionViewModel = [m_sectionViewModels objectAtIndex:[indexPath section]];
+        height = [sectionViewModel getViewHeight];
+        
         if ([sectionViewModel isFirstOptionInGroup])
         {
-            return 44;
+            bool isFirstTableSection = [indexPath section] == 0;
+            height += isFirstTableSection ? 0: m_groupSeparatorHeight;
         }
     }
+    else
+    {
+        height = [sectionViewModel getChildViewHeight];
+    }
     
-    // TODO: remove magic numbers!
-    return [indexPath row] == 0 ? 40 : 36;
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

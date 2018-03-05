@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsVisibilityController;
 
 @property (weak, nonatomic) IBOutlet UIView *menuContainerView;
+@property (weak, nonatomic) IBOutlet UIView *menuSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
 @property (weak, nonatomic) IBOutlet UIView *menuTableFadeTop;
@@ -137,6 +138,7 @@
     m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithMenuModel:m_menuModel
                                                                           visibilityView:self.menuContainerView
                                                                               titleLabel:self.menuTitleLabel
+                                                                           separatorView:self.menuSeparator
                                                                                tableView:self.menuTableView
                                                                         tableFadeTopView:self.menuTableFadeTop
                                                                      tableFadeBottomView:self.menuTableFadeBottom

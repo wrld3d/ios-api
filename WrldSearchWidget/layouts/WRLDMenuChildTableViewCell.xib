@@ -77,6 +77,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="backgroundPanel" destination="EQ9-Vx-3zE" id="FKl-VV-pan"/>
                 <outlet property="icon" destination="93F-wy-7hH" id="eg1-KW-nIG"/>
                 <outlet property="label" destination="TxS-7W-LSk" id="0B0-eI-RMt"/>
                 <outlet property="separator" destination="3oG-uu-C2d" id="05e-7k-FiC"/>
