@@ -230,7 +230,7 @@
     OCMReject([mockProvider2 searchFor:[OCMArg any]]);
 }
 
-- (void)testCancelledSuggestionsDoNotCompleteWhenRequestCompletes {
+- (void)testCancelledSearchesDoNotCompleteWhenRequestCompletes {
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     [model addSearchProvider:mockProvider];
     
@@ -250,7 +250,7 @@
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
 }
 
-- (void)testCancelledSuggestionsDoNotCompleteWhenRequestCancelled {
+- (void)testCancelledSearchesDoNotCompleteWhenRequestCancelled {
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     [model addSearchProvider:mockProvider];
     
@@ -275,6 +275,116 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
+}
+
+- (void)testSearchCancelledMethodInvokedOnCancelledQuery
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    __block BOOL didRunCancelBlock = NO;
+    [model.searchObserver addQueryCancelledEvent:^(WRLDSearchQuery *query) {
+        didRunCancelBlock = YES;
+    }];
+    
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [query cancel];
+    XCTAssertTrue(didRunCancelBlock);
+}
+
+- (void)testSearchCancelledMethodReceivesCancelledQuery
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    __block WRLDSearchQuery *capturedCancelledQuery;
+    [model.searchObserver addQueryCancelledEvent:^(WRLDSearchQuery *query) {
+        capturedCancelledQuery = query;
+    }];
+    __block BOOL didRunCompletedBlock = NO;
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        didRunCompletedBlock = YES;
+    }];
+    
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [query cancel];
+    
+    XCTAssertFalse(didRunCompletedBlock);
+    XCTAssertNotNil(capturedCancelledQuery);
+    XCTAssertEqual(capturedCancelledQuery, query);
+}
+
+
+- (void)testSearchCancelledMethodNotInvokedOnCompletedQueryWithoutCancelling
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    __block BOOL didCaptureRequest = NO;
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        didCaptureRequest = YES;
+        return YES;
+    }]]);
+    
+    __block BOOL didRunCancelBlock = NO;
+    [model.searchObserver addQueryCancelledEvent:^(WRLDSearchQuery *query) {
+        didRunCancelBlock = YES;
+    }];
+    __block BOOL didRunCompletedBlock = NO;
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        didRunCompletedBlock = YES;
+    }];
+    
+    [model getSearchResultsForString:testString];
+    [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
+    
+    XCTAssertTrue(didRunCompletedBlock);
+    XCTAssertFalse(didRunCancelBlock);
+}
+
+- (void)testSearchCancelledMethodNotInvokedWhenCancelCalledOnCompletedQuery
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    __block BOOL didRunCancelBlock = NO;
+    [model.searchObserver addQueryCancelledEvent:^(WRLDSearchQuery *query) {
+        didRunCancelBlock = YES;
+    }];
+    __block BOOL didRunCompletedBlock = NO;
+    [model.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery *query) {
+        didRunCompletedBlock = YES;
+    }];
+    
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
+    [query cancel];
+    XCTAssertTrue(didRunCompletedBlock);
+    XCTAssertFalse(didRunCancelBlock);
 }
 
 @end

@@ -37,6 +37,7 @@
         _progress = Cancelled;
         _hasCompleted = YES;
         _hasSucceeded = NO;
+        [m_queryObserver cancelled:self];
     }
 }
 
@@ -104,7 +105,7 @@
         return;
     }
     
-    NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandle.identifier];
+    NSNumber *key = [[NSNumber alloc] initWithLong: fulfillerHandle.identifier];
     
     [m_fulfillerResultsDictionary setObject: results forKey: key];
     [self checkForCompletion];
@@ -128,7 +129,7 @@
 
 - (WRLDSearchResultsCollection *) getResultsForFulfiller: (NSInteger) fulfillerHandleId
 {
-    NSNumber *key = [[NSNumber alloc] initWithInt:fulfillerHandleId];
+    NSNumber *key = [[NSNumber alloc] initWithLong: fulfillerHandleId];
     return [m_fulfillerResultsDictionary objectForKey:key];
 }
 

@@ -5,6 +5,7 @@
 {
     NSMutableArray<QueryEvent>* m_startingEvents;
     NSMutableArray<QueryEvent>* m_completedEvent;
+    NSMutableArray<QueryEvent>* m_cancelledEvent;
 }
 
 -(instancetype) init
@@ -14,6 +15,7 @@
     {
         m_startingEvents = [[NSMutableArray<QueryEvent> alloc] init];
         m_completedEvent = [[NSMutableArray<QueryEvent> alloc] init];
+        m_cancelledEvent = [[NSMutableArray<QueryEvent> alloc] init];
     }
     return self;
 }
@@ -46,6 +48,20 @@
     }
 }
 
+- (void) addQueryCancelledEvent: (QueryEvent) event
+{
+    if(event){
+        [m_cancelledEvent addObject:event];
+    }
+}
+
+- (void) removeQueryCancelledEvent: (QueryEvent) event
+{
+    if(event){
+        [m_cancelledEvent removeObject:event];
+    }
+}
+
 - (void) willSearchFor: (WRLDSearchQuery *)query
 {
     for(QueryEvent startingEvent in m_startingEvents)
@@ -59,6 +75,14 @@
     for(QueryEvent finishedEvent in m_completedEvent)
     {
         finishedEvent(query);
+    }
+}
+
+- (void) cancelled: (WRLDSearchQuery *) query
+{
+    for(QueryEvent cancelledEvent in m_cancelledEvent)
+    {
+        cancelledEvent(query);
     }
 }
 
