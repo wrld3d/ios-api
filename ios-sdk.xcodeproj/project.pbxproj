@@ -112,6 +112,9 @@
 		BB6896D12047FC3500E46218 /* WRLDIndoorEntityTapResult+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6896D02047FC3500E46218 /* WRLDIndoorEntityTapResult+Private.h */; };
 		BB6896D32047FE0A00E46218 /* WRLDIndoorEntityApiHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB6896D22047FE0A00E46218 /* WRLDIndoorEntityApiHelpers.mm */; };
 		BB6896D52047FE1900E46218 /* WRLDIndoorEntityApiHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6896D42047FE1900E46218 /* WRLDIndoorEntityApiHelpers.h */; };
+		BB6896D820485BE400E46218 /* WRLDIndoorEntityHighlight.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6896D720485BE400E46218 /* WRLDIndoorEntityHighlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB6896DA20485D3C00E46218 /* WRLDIndoorEntityHighlight.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB6896D920485D3C00E46218 /* WRLDIndoorEntityHighlight.mm */; };
+		BB6896DC20485DAA00E46218 /* WRLDIndoorEntityHighlight+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6896DB20485DAA00E46218 /* WRLDIndoorEntityHighlight+Private.h */; };
 		BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BB97423C1FD52D3D00EE2A39 /* WRLDRoutingQuery+Private.h */; };
 		BB6B6D631FD566EF0070E78F /* WRLDRoutingService+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BBB719DC1FD551E00046A455 /* WRLDRoutingService+Private.h */; };
 		BB6B6D641FD5670C0070E78F /* WRLDRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = BBCDBCDC1FCFE5DE007B19C7 /* WRLDRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -377,6 +380,9 @@
 		BB6896D02047FC3500E46218 /* WRLDIndoorEntityTapResult+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorEntityTapResult+Private.h"; sourceTree = "<group>"; };
 		BB6896D22047FE0A00E46218 /* WRLDIndoorEntityApiHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDIndoorEntityApiHelpers.mm; sourceTree = "<group>"; };
 		BB6896D42047FE1900E46218 /* WRLDIndoorEntityApiHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorEntityApiHelpers.h; sourceTree = "<group>"; };
+		BB6896D720485BE400E46218 /* WRLDIndoorEntityHighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDIndoorEntityHighlight.h; sourceTree = "<group>"; };
+		BB6896D920485D3C00E46218 /* WRLDIndoorEntityHighlight.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDIndoorEntityHighlight.mm; sourceTree = "<group>"; };
+		BB6896DB20485DAA00E46218 /* WRLDIndoorEntityHighlight+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorEntityHighlight+Private.h"; sourceTree = "<group>"; };
 		BB6B6D871FDE6A230070E78F /* WRLDRoutingServiceHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRoutingServiceHelpers.mm; sourceTree = "<group>"; };
 		BB6B6D891FDE6A300070E78F /* WRLDRoutingServiceHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingServiceHelpers.h; sourceTree = "<group>"; };
 		BB6B6D8B1FE24C4F0070E78F /* WRLDRoutingQueryResponse+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDRoutingQueryResponse+Private.h"; sourceTree = "<group>"; };
@@ -813,6 +819,8 @@
 				BB6896D02047FC3500E46218 /* WRLDIndoorEntityTapResult+Private.h */,
 				BB6896D22047FE0A00E46218 /* WRLDIndoorEntityApiHelpers.mm */,
 				BB6896D42047FE1900E46218 /* WRLDIndoorEntityApiHelpers.h */,
+				BB6896D920485D3C00E46218 /* WRLDIndoorEntityHighlight.mm */,
+				BB6896DB20485DAA00E46218 /* WRLDIndoorEntityHighlight+Private.h */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -877,6 +885,7 @@
 				BB84482D2018B0C400F86EFC /* WRLDPickResult.h */,
 				BB3CEC10202B1BCE00AF5235 /* WRLDTouchTapInfo.h */,
 				BB6896CC2047FC0700E46218 /* WRLDIndoorEntityTapResult.h */,
+				BB6896D720485BE400E46218 /* WRLDIndoorEntityHighlight.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -918,6 +927,7 @@
 				D09B2CDF2005197A00162BCC /* WRLDRouteViewOptions.h in Headers */,
 				A82B34861FB4C785009B21D3 /* WRLDAutocompleteOptions.h in Headers */,
 				6F96F33D1FE01F4500A560FF /* WRLDMapsceneSearchMenuItem+Private.h in Headers */,
+				BB6896D820485BE400E46218 /* WRLDIndoorEntityHighlight.h in Headers */,
 				528A5C7D1EDD9BDA00C5454F /* WRLDPolygon.h in Headers */,
 				6F47C76E1FD5B6B40071ECE5 /* WRLDMapscene.h in Headers */,
 				5200BC491ECB607600B6E263 /* WRLDMapView+IBAdditions.h in Headers */,
@@ -963,6 +973,7 @@
 				A89A8FD41FB5B8A80041ABD3 /* WRLDPoiSearchResponse.h in Headers */,
 				6F0FA8C61FE41EBC00C9D71D /* WRLDMapsceneSearchMenuItem.h in Headers */,
 				2CFE0A5B1EC092D9006D51E6 /* WRLDIndoorMap.h in Headers */,
+				BB6896DC20485DAA00E46218 /* WRLDIndoorEntityHighlight+Private.h in Headers */,
 				BB6B6D9D1FEB77E60070E78F /* WRLDBuildingContour.h in Headers */,
 				BB6B6DA31FEB7B940070E78F /* WRLDBuildingDimensions.h in Headers */,
 				BB6B6DA91FEB7D510070E78F /* WRLDBuildingHighlight.h in Headers */,
@@ -1274,6 +1285,7 @@
 				6F9BAB961FC8856900865338 /* WRLDMapsceneService.mm in Sources */,
 				E0F4E1751EB347FB00949ACE /* WRLDGestureDelegate.mm in Sources */,
 				BB6B6D6F1FD567B00070E78F /* WRLDRoute.mm in Sources */,
+				BB6896DA20485D3C00E46218 /* WRLDIndoorEntityHighlight.mm in Sources */,
 				BB6B6D701FD567B30070E78F /* WRLDRouteSection.mm in Sources */,
 				BB6B6D711FD567B60070E78F /* WRLDRouteStep.mm in Sources */,
 				D09B2CE32005199A00162BCC /* WRLDRouteViewOptions.m in Sources */,

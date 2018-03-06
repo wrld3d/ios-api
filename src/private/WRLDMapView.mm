@@ -818,6 +818,37 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     [overlayImpl destroyNative];
 }
 
+#pragma mark - Indoor entity highlights -
+
+- (void)addIndoorEntityHighlight:(WRLDIndoorEntityHighlight*)indoorEntityHighlight
+{
+    [self addOverlay:indoorEntityHighlight];
+}
+
+- (void)removeIndoorEntityHighlight:(WRLDIndoorEntityHighlight*)indoorEntityHighlight
+{
+    [self removeOverlay:indoorEntityHighlight];
+}
+
+- (void)clearAllIndoorEntityHighlights
+{
+    NSMutableArray<id<WRLDOverlay>> *indoorEntityHighlightOverlays = [[NSMutableArray alloc] init];
+    for (auto it = m_overlays.begin(); it != m_overlays.end(); it++)
+    {
+        WRLDOverlayId overlayId = it->first;
+        if(overlayId.overlayType == WRLDOverlayIndoorEntityHighlight)
+        {
+            [indoorEntityHighlightOverlays addObject:it->second];
+        }
+    }
+    
+    for (id<WRLDOverlay> overlay in indoorEntityHighlightOverlays)
+    {
+        [self removeOverlay:overlay];
+    }
+    
+    [indoorEntityHighlightOverlays removeAllObjects];
+}
 
 #pragma mark - controlling the indoor map view -
 
@@ -937,27 +968,6 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     {
         interactionModel.ToggleExpanded();
     }
-}
-
-- (void)setIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds color:(UIColor*) color
-{
-    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
-    indoorEntityApi.SetHighlights(std::string([indoorMapId UTF8String]),
-                                  [WRLDStringApiHelpers copyToStringVector:indoorEntityIds],
-                                  [WRLDMathApiHelpers getEegeoColor:color]);
-}
-
-- (void)clearIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds
-{
-    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
-    indoorEntityApi.ClearHighlights(std::string([indoorMapId UTF8String]),
-                                    [WRLDStringApiHelpers copyToStringVector:indoorEntityIds]);
-}
-
-- (void)clearAllIndoorEntityHighlights
-{
-    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
-    indoorEntityApi.ClearAllHighlights();
 }
 
 - (void)setMapCollapsed:(BOOL)isMapCollapsed
@@ -1219,8 +1229,7 @@ template<typename T> inline T* safe_cast(id instance)
 {
     if ([self.delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
     {
-        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage
-                                                                                                     indoorMapId:_activeIndoorMap.indoorId]];
+        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
     }
 }
 

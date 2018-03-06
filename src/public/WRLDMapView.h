@@ -20,6 +20,7 @@
 #import "WRLDBuildingHighlight.h"
 #import "WRLDBuildingHighlightOptions.h"
 #import "WRLDPickResult.h"
+#import "WRLDIndoorEntityHighlight.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -296,6 +297,27 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void) removeOverlay:(id<WRLDOverlay>) overlay;
 
+#pragma mark - Indoor entity highlights -
+
+/*! @name Indoor entity highlights */
+
+/*!
+ Add a indoor entity highlight to the map.
+ @param indoorEntityHighlight The <WRLDIndoorEntityHighlight> object to add to the map.
+ */
+- (void)addIndoorEntityHighlight:(WRLDIndoorEntityHighlight*)indoorEntityHighlight;
+
+/*!
+ Remove a WRLDIndoorEntityHighlight from the map and destroy it.
+ @param indoorEntityHighlight The <WRLDIndoorEntityHighlight> object to remove from the map.
+ */
+- (void)removeIndoorEntityHighlight:(WRLDIndoorEntityHighlight*)indoorEntityHighlight;
+
+/*!
+ Clears highlights from all indoor entities.
+ */
+- (void)clearAllIndoorEntityHighlights;
+
 
 #pragma mark - controlling the indoor map view -
 
@@ -381,26 +403,6 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @param floorInterpolation A CGFloat between 0.0 and the number of floors in the active <WRLDIndoorMap> object.
  */
 - (void)setFloorInterpolation:(CGFloat)floorInterpolation;
-
-/*!
- Highlights the provided indoor entities in the given indoor map.
- @param indoorMapId The ID of the indoor map which contains the entity ID(s).
- @param indoorEntityIds The ID(s) of the entities.
- @param color The color of this highlight.
- */
-- (void)setIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds color:(UIColor*) color;
-
-/*!
- Clears the highlights from entities in the given indoor map.
- @param indoorMapId The ID of the indoor map which contains the entity ID(s).
- @param indoorEntityIds The ID(s) of the entities.
- */
-- (void)clearIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds;
-
-/*!
- Clears highlights from all indoor entities.
- */
-- (void)clearAllIndoorEntityHighlights;
 
 /*!
  Sets whether the map view should display with vertical scaling applied so that terrain and other map features appear flattened.
