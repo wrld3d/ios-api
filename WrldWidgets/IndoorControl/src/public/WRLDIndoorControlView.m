@@ -108,6 +108,12 @@
     [self hideIndoorMapSlider];
 }
 
+-(WRLDIndoorMapFloor*)currentFloor
+{
+    NSInteger currentFloorIndex = _mapView.currentFloorIndex;
+    return [_mapView activeIndoorMap].floors[currentFloorIndex];
+}
+
 - (void) showIndoorMapSlider
 {
     if ([_mapView isIndoors])
@@ -115,8 +121,9 @@
         [self.pIndoorControl setFullyOnScreen];
         [self.pIndoorControl setTouchEnabled:YES];
         
-        NSString* floorName = [[_mapView activeIndoorMap].floors[0] name];
-        [_pIndoorControl setFloorName:floorName];
+        WRLDIndoorMapFloor* currentFloor = [self currentFloor];
+        
+        [_pIndoorControl setFloorName:currentFloor.name];
         
         NSMutableArray<NSString*>* floorNames = [NSMutableArray array];
         WRLDIndoorMap* indoorMap = [_mapView activeIndoorMap];
@@ -125,7 +132,7 @@
             [floorNames addObject:floor.floorId];
         }
         
-        [self.pIndoorControl updateFloors:floorNames withCurrentFloor:0];
+        [self.pIndoorControl updateFloors:floorNames withCurrentFloor:currentFloor.floorIndex];
     }
 }
 
