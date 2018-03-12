@@ -316,14 +316,36 @@
     [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
 }
 
-- (IBAction)menuButtonClicked:(id)menuButton
+- (void)openMenu
 {
     [m_searchMenuViewController show];
 }
 
-- (IBAction)menuBackButtonClicked:(id)backButton
+- (void)closeMenu
 {
     [m_searchMenuViewController hide];
+}
+
+- (void)collapseMenu
+{
+    [m_searchMenuViewController collapse];
+}
+
+- (void)expandMenuOptionAt:(NSUInteger)index
+{
+    [m_searchMenuViewController expandAt:index];
+}
+
+- (IBAction)menuButtonClicked:(id)menuButton
+{
+    // TODO: allow developers to hook onto button touch so they can optionally expand the or collapse menu options
+    [self openMenu];
+}
+
+- (IBAction)menuBackButtonClicked:(id)backButton
+{
+    [m_searchMenuViewController collapse];
+    [self closeMenu];
 }
 
 @end

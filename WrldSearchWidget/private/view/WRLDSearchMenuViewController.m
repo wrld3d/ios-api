@@ -236,6 +236,42 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }];
 }
 
+- (void)collapse
+{
+    [self collapseAllSections];
+    [m_tableView reloadData];
+    [self resizeMenuTable];
+}
+
+- (void)expandAt:(NSUInteger)index
+{
+    // Ignoring group titles as they are not options.
+    WRLDMenuTableSectionViewModel* sectionToExpand = nil;
+    NSUInteger i = 0;
+    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
+    {
+        // TODO: possibly too nested, factor out into a method
+        if (![sectionViewModel isTitleSection])
+        {
+            if (index == i)
+            {
+                sectionToExpand = sectionViewModel;
+            }
+            ++i;
+        }
+    }
+    
+    // TODO: maybe factor out common code which can be used when expanding in didSelect...
+    
+    if (sectionToExpand != nil && [sectionToExpand isExpandable])
+    {
+        [self collapseAllSections];
+        [sectionToExpand setExpandedState:Expanded];
+        [m_tableView reloadData];
+        [self resizeMenuTable];
+    }
+}
+
 #pragma mark - WRLDViewVisibilityController
 
 - (void)show

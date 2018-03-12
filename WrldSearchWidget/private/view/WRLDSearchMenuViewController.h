@@ -28,6 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)hide;
 
+- (void)collapse;
+
+- (void)expandAt:(NSUInteger)index;
+
 @end
 
 NS_ASSUME_NONNULL_END
