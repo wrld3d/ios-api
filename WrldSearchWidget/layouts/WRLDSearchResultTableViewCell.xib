@@ -39,7 +39,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="50" height="64"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchResultPlaceholder_Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="6e4-p5-u9f">
-                            <rect key="frame" x="9" y="16" width="32" height="32"/>
+                            <rect key="frame" x="9" y="14" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="1Ww-ec-uoi"/>
                                 <constraint firstAttribute="height" constant="32" id="Jkm-Od-1Ct"/>
@@ -51,7 +51,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="I06-8B-CU8"/>
                         <constraint firstItem="6e4-p5-u9f" firstAttribute="centerX" secondItem="NTX-HF-Zq7" secondAttribute="centerX" id="NhG-Zh-qgw"/>
-                        <constraint firstItem="6e4-p5-u9f" firstAttribute="centerY" secondItem="NTX-HF-Zq7" secondAttribute="centerY" id="aHS-ai-1ym"/>
+                        <constraint firstItem="6e4-p5-u9f" firstAttribute="centerY" secondItem="NTX-HF-Zq7" secondAttribute="centerY" constant="-2" id="aHS-ai-1ym"/>
                     </constraints>
                 </view>
             </subviews>

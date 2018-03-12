@@ -88,8 +88,8 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="MJU-fm-ezz"/>
                             </constraints>
-                            <state key="normal" image="MenuIcon.png"/>
-                            <state key="highlighted" image="MenuIcon_Down.png"/>
+                            <state key="normal" image="Menu_butn.png"/>
+                            <state key="highlighted" image="Menu_butn_Pressed_Icon.png"/>
                             <connections>
                                 <action selector="menuButtonClicked:" destination="-1" eventType="touchUpInside" id="BnU-1U-IrA"/>
                             </connections>
@@ -176,10 +176,10 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="jlY-aE-MYe"/>
                                     </constraints>
-                                    <state key="normal" image="MenuBack.png">
+                                    <state key="normal" image="Menu_Back_btn_Icon.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="highlighted" image="MenuBack_Down.png"/>
+                                    <state key="highlighted" image="Menu_butn_Pressed_Icon.png"/>
                                     <connections>
                                         <action selector="menuBackButtonClicked:" destination="-1" eventType="touchUpInside" id="DFG-pP-7PR"/>
                                     </connections>
@@ -282,10 +282,9 @@
         </view>
     </objects>
     <resources>
-        <image name="MenuBack.png" width="40" height="40"/>
-        <image name="MenuBack_Down.png" width="40" height="40"/>
-        <image name="MenuIcon.png" width="40" height="40"/>
-        <image name="MenuIcon_Down.png" width="40" height="40"/>
+        <image name="Menu_Back_btn_Icon.png" width="32" height="32"/>
+        <image name="Menu_butn.png" width="32" height="32"/>
+        <image name="Menu_butn_Pressed_Icon.png" width="32" height="32"/>
         <image name="NoResultsIcon.png" width="32" height="32"/>
     </resources>
 </document>

@@ -62,10 +62,12 @@
     if (highlighted)
     {
         self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuHoverColor];
+        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextHoverColor];
     }
     else
     {
         self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupCollapsedColor];
+        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
     }
 }
 
