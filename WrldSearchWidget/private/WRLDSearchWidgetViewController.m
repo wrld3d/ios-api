@@ -318,6 +318,7 @@
 
 - (void)openMenu
 {
+    [self resignFocus];
     [m_searchMenuViewController show];
 }
 
