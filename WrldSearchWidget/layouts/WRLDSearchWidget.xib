@@ -12,8 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetViewController">
             <connections>
-                <outlet property="menuBackButton" destination="VXk-kO-Zlf" id="MPO-xD-Nwy"/>
-                <outlet property="menuButton" destination="Gsy-aj-hKu" id="PBw-8A-T64"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
                 <outlet property="menuContainerViewHeightConstraint" destination="Mhq-ZP-IKm" id="9C5-th-e5V"/>
                 <outlet property="menuSeparator" destination="EIc-t9-bk5" id="CBE-wW-dpc"/>
@@ -83,7 +81,7 @@
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYl-rC-nwo" userLabel="SearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button" customClass="WRLDHighlightableButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-aj-hKu" userLabel="Wrld Search Widget Menu Button">
                             <rect key="frame" x="4" y="4" width="32" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="MJU-fm-ezz"/>
@@ -171,7 +169,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbP-72-JER" userLabel="Menu Header">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXk-kO-Zlf" userLabel="Wrld Search Widget Back Button" customClass="WRLDHighlightableButton">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXk-kO-Zlf" userLabel="Wrld Search Widget Back Button">
                                     <rect key="frame" x="4" y="4" width="32" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="32" id="jlY-aE-MYe"/>
@@ -179,7 +177,7 @@
                                     <state key="normal" image="Menu_Back_btn_Icon.png">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="highlighted" image="Menu_butn_Pressed_Icon.png"/>
+                                    <state key="highlighted" image="Menu_Back_btn_Icon2.png"/>
                                     <connections>
                                         <action selector="menuBackButtonClicked:" destination="-1" eventType="touchUpInside" id="DFG-pP-7PR"/>
                                     </connections>
@@ -283,6 +281,7 @@
     </objects>
     <resources>
         <image name="Menu_Back_btn_Icon.png" width="32" height="32"/>
+        <image name="Menu_Back_btn_Icon2.png" width="32" height="32"/>
         <image name="Menu_butn.png" width="32" height="32"/>
         <image name="Menu_butn_Pressed_Icon.png" width="32" height="32"/>
         <image name="NoResultsIcon.png" width="32" height="32"/>

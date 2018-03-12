@@ -11,14 +11,12 @@
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDMenuOptionSelectedObserver.h"
-#import "WRLDHighlightableButton.h"
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet WRLDHighlightableButton *menuButton;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -33,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet id<WRLDViewVisibilityController> noResultsVisibilityController;
 
 @property (weak, nonatomic) IBOutlet UIView *menuContainerView;
-@property (weak, nonatomic) IBOutlet WRLDHighlightableButton *menuBackButton;
 @property (weak, nonatomic) IBOutlet UIView *menuSeparator;
 @property (weak, nonatomic) IBOutlet UILabel *menuTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
@@ -211,9 +208,6 @@
     [self.style call:^(UIColor *color) {
         self.noResultsLabel.textColor = color;
     } toApply:WRLDSearchWidgetStyleWarningColor];
-    
-    [self.menuButton applyStyle:self.style];
-    [self.menuBackButton applyStyle:self.style];
 }
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
