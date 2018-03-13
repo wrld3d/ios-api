@@ -4,7 +4,7 @@
 #import "WRLDViewVisibilityController.h"
 #import "WRLDMenuChangedListener.h"
 
-@class WRLDMenuOptionSelectedObserver;
+@class WRLDMenuObserver;
 @class WRLDSearchMenuModel;
 @class WRLDSearchWidgetStyle;
 
@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDSearchMenuViewController : NSObject <WRLDViewVisibilityController, WRLDMenuChangedListener, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, readonly) WRLDMenuOptionSelectedObserver* selectionObserver;
+@property (nonatomic, readonly) WRLDMenuObserver* observer;
 
 - (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
                    visibilityView:(UIView *)visibilityView
@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)collapse;
 
 - (void)expandAt:(NSUInteger)index;
+
+- (void)onMenuButtonClicked;
+
+- (void)onMenuBackButtonClicked;
 
 @end
 

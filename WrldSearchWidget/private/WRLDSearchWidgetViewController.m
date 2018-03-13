@@ -10,7 +10,7 @@
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
-#import "WRLDMenuOptionSelectedObserver.h"
+#import "WRLDMenuObserver.h"
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
@@ -79,9 +79,9 @@
     return m_suggestionsViewController.selectionObserver;
 }
 
-- (WRLDMenuOptionSelectedObserver *)menuOptionSelectionObserver
+- (WRLDMenuObserver *)menuObserver
 {
-    return m_searchMenuViewController.selectionObserver;
+    return m_searchMenuViewController.observer;
 }
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
@@ -340,13 +340,13 @@
 - (IBAction)menuButtonClicked:(id)menuButton
 {
     // TODO: allow developers to hook onto button touch so they can optionally expand the or collapse menu options
-    [self openMenu];
+    [self resignFocus];
+    [m_searchMenuViewController onMenuButtonClicked];
 }
 
 - (IBAction)menuBackButtonClicked:(id)backButton
 {
-    [m_searchMenuViewController collapse];
-    [self closeMenu];
+    [m_searchMenuViewController onMenuBackButtonClicked];
 }
 
 @end

@@ -8,7 +8,7 @@
 #import "WRLDMenuChild.h"
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDMenuTableSectionViewModel.h"
-#import "WRLDMenuOptionSelectedObserver+Private.h"
+#import "WRLDMenuObserver+Private.h"
 
 typedef NSMutableArray<WRLDMenuTableSectionViewModel *> TableSectionViewModelCollection;
 
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_tableView.dataSource = self;
         m_tableView.delegate = self;
         
-        _selectionObserver = [[WRLDMenuOptionSelectedObserver alloc] init];
+        _observer = [[WRLDMenuObserver alloc] init];
         
         m_sectionViewModels = [[TableSectionViewModelCollection alloc] init];
         [self updateSectionViewModels];
@@ -153,6 +153,12 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }
 }
 
+- (void)refreshMenuTable
+{
+    [m_tableView reloadData];
+    [self resizeMenuTable];
+}
+
 - (void)resizeMenuTable
 {
     CGFloat height = m_menuHeaderHeightIncludingSeparator;
@@ -196,14 +202,6 @@ typedef NS_ENUM(NSInteger, GradientState) {
     return m_menuChildTableViewCellStyleIdentifier;
 }
 
-- (void)collapseAllSections
-{
-    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
-    {
-        [sectionViewModel setExpandedState:Collapsed];
-    }
-}
-
 - (void)updateTableFadeViews:(BOOL)animate
 {
     bool contentExtendsAboveTopOfView = (m_tableView.contentOffset.y + m_tableView.contentInset.top > 0);
@@ -236,41 +234,94 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }];
 }
 
+- (void)collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:(BOOL)fromInteraction
+{
+    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
+    {
+        [self setExpandedState:Collapsed
+           forSectionViewModel:sectionViewModel
+      andNotifyFromInteraction:fromInteraction];
+    }
+}
+
+- (void)setExpandedState:(ExpandedStateType)ExpandedState
+     forSectionViewModel:(WRLDMenuTableSectionViewModel *)sectionViewModel
+andNotifyFromInteraction:(BOOL)fromInteraction
+{
+    if (sectionViewModel.expandedState != ExpandedState)
+    {
+        [sectionViewModel setExpandedState:ExpandedState];
+        if (ExpandedState == Expanded)
+        {
+            [self.observer expanded:[sectionViewModel getContext]
+                    fromInteraction:fromInteraction];
+        }
+        else if (ExpandedState == Collapsed)
+        {
+            [self.observer collapsed:[sectionViewModel getContext]
+                     fromInteraction:fromInteraction];
+        }
+    }
+}
+
+- (WRLDMenuTableSectionViewModel *)getSectionViewModelForOptionIndex:(NSUInteger)optionIndex
+{
+    // Ignoring group titles as they are not options.
+    NSUInteger i = 0;
+    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
+    {
+        if ([sectionViewModel isTitleSection])
+        {
+            continue;
+        }
+        
+        if (optionIndex == i)
+        {
+            return sectionViewModel;
+        }
+        ++i;
+    }
+    return nil;
+}
+
+
+#pragma mark - Public Methods
+
 - (void)collapse
 {
-    [self collapseAllSections];
-    [m_tableView reloadData];
-    [self resizeMenuTable];
+    [self collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:NO];
+    [self refreshMenuTable];
 }
 
 - (void)expandAt:(NSUInteger)index
 {
-    // Ignoring group titles as they are not options.
-    WRLDMenuTableSectionViewModel* sectionToExpand = nil;
-    NSUInteger i = 0;
-    for (WRLDMenuTableSectionViewModel* sectionViewModel in m_sectionViewModels)
-    {
-        // TODO: possibly too nested, factor out into a method
-        if (![sectionViewModel isTitleSection])
-        {
-            if (index == i)
-            {
-                sectionToExpand = sectionViewModel;
-            }
-            ++i;
-        }
-    }
-    
-    // TODO: maybe factor out common code which can be used when expanding in didSelect...
+    WRLDMenuTableSectionViewModel* sectionToExpand = [self getSectionViewModelForOptionIndex:index];
     
     if (sectionToExpand != nil && [sectionToExpand isExpandable])
     {
-        [self collapseAllSections];
-        [sectionToExpand setExpandedState:Expanded];
-        [m_tableView reloadData];
-        [self resizeMenuTable];
+        if (sectionToExpand.expandedState == Collapsed)
+        {
+            [self collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:NO];
+            [self setExpandedState:Expanded
+               forSectionViewModel:sectionToExpand
+          andNotifyFromInteraction:NO];
+        }
+        [self refreshMenuTable];
     }
 }
+
+- (void)onMenuButtonClicked
+{
+    [self show];
+}
+
+- (void)onMenuBackButtonClicked
+{
+    [self collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:YES];
+    [self refreshMenuTable];
+    [self hide];
+}
+
 
 #pragma mark - WRLDViewVisibilityController
 
@@ -431,29 +482,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         
         if ([sectionViewModel isExpandable])
         {
-            ExpandedStateType currentExpandedState = sectionViewModel.expandedState;
-            
-            [self collapseAllSections];
-            if (currentExpandedState == Collapsed)
+            bool shouldExpand = sectionViewModel.expandedState == Collapsed;
+            [self collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:YES];
+            if (shouldExpand)
             {
-                [sectionViewModel setExpandedState:Expanded];
+                [self setExpandedState:Expanded
+                   forSectionViewModel:sectionViewModel
+              andNotifyFromInteraction:YES];
             }
-            
-            // TODO: Add expand and collapse events to the WRLDMenuOptionSectionObserver.
-            
-            [m_tableView reloadData];
-            [self resizeMenuTable];
+            [self refreshMenuTable];
         }
         else
         {
-            [self.selectionObserver selected:selectedOptionContext];
+            [self.observer selected:selectedOptionContext];
         }
     }
     else
     {
         NSUInteger childIndex = row - 1;
         selectedOptionContext = [sectionViewModel getChildContextAtIndex:childIndex];
-        [self.selectionObserver selected:selectedOptionContext];
+        [self.observer selected:selectedOptionContext];
     }
 }
 

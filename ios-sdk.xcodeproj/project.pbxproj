@@ -200,9 +200,9 @@
 		A00EA7672048724200B11046 /* ExpanderWhite_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7612048724000B11046 /* ExpanderWhite_Icon@2x.png */; };
 		A00EA7692048724200B11046 /* ExpanderWhite_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7632048724100B11046 /* ExpanderWhite_Icon.png */; };
 		A00EA76B2048724200B11046 /* ExpanderWhite_Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A00EA7652048724200B11046 /* ExpanderWhite_Icon@3x.png */; };
-		A00EA76E20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A00EA77020489F8600B11046 /* WRLDMenuOptionSelectedObserver+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */; };
-		A00EA77220489FF100B11046 /* WRLDMenuOptionSelectedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */; };
+		A00EA76E20489DB100B11046 /* WRLDMenuObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76D20489DB100B11046 /* WRLDMenuObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A00EA77020489F8600B11046 /* WRLDMenuObserver+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */; };
+		A00EA77220489FF100B11046 /* WRLDMenuObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = A00EA77120489FF100B11046 /* WRLDMenuObserver.m */; };
 		A00F1D9020442CDD00A42ECF /* WRLDMenuGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */; };
 		A00F1D942044311100A42ECF /* WRLDMenuOption.m in Sources */ = {isa = PBXBuildFile; fileRef = A00F1D932044311100A42ECF /* WRLDMenuOption.m */; };
@@ -614,9 +614,9 @@
 		A00EA7612048724000B11046 /* ExpanderWhite_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ExpanderWhite_Icon@2x.png"; sourceTree = "<group>"; };
 		A00EA7632048724100B11046 /* ExpanderWhite_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExpanderWhite_Icon.png; sourceTree = "<group>"; };
 		A00EA7652048724200B11046 /* ExpanderWhite_Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ExpanderWhite_Icon@3x.png"; sourceTree = "<group>"; };
-		A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuOptionSelectedObserver.h; sourceTree = "<group>"; };
-		A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMenuOptionSelectedObserver+Private.h"; sourceTree = "<group>"; };
-		A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOptionSelectedObserver.m; sourceTree = "<group>"; };
+		A00EA76D20489DB100B11046 /* WRLDMenuObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuObserver.h; sourceTree = "<group>"; };
+		A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WRLDMenuObserver+Private.h"; sourceTree = "<group>"; };
+		A00EA77120489FF100B11046 /* WRLDMenuObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuObserver.m; sourceTree = "<group>"; };
 		A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDMenuGroup.h; sourceTree = "<group>"; };
 		A00F1D9120442E6D00A42ECF /* WRLDMenuGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuGroup.m; sourceTree = "<group>"; };
 		A00F1D932044311100A42ECF /* WRLDMenuOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDMenuOption.m; sourceTree = "<group>"; };
@@ -947,7 +947,7 @@
 				A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */,
 				A00F1D952044314800A42ECF /* WRLDMenuOption.h */,
 				A00F1D972044369700A42ECF /* WRLDMenuChild.h */,
-				A00EA76D20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h */,
+				A00EA76D20489DB100B11046 /* WRLDMenuObserver.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -1048,8 +1048,8 @@
 				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
 				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
 				A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */,
-				A00EA76F20489F8300B11046 /* WRLDMenuOptionSelectedObserver+Private.h */,
-				A00EA77120489FF100B11046 /* WRLDMenuOptionSelectedObserver.m */,
+				A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */,
+				A00EA77120489FF100B11046 /* WRLDMenuObserver.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1473,7 +1473,7 @@
 				26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */,
 				264B92DD203F303900F6DAE0 /* WRLDSuggestionProviderHandle+Private.h in Headers */,
 				264B92DE203F303900F6DAE0 /* WRLDMoreResultsTableViewCell.h in Headers */,
-				A00EA77020489F8600B11046 /* WRLDMenuOptionSelectedObserver+Private.h in Headers */,
+				A00EA77020489F8600B11046 /* WRLDMenuObserver+Private.h in Headers */,
 				264B92DF203F303900F6DAE0 /* WRLDSearchInProgressTableViewCell.h in Headers */,
 				264B92E0203F303900F6DAE0 /* WRLDSearchResultTableViewCell.h in Headers */,
 				264B92E1203F303900F6DAE0 /* WRLDFadeableView.h in Headers */,
@@ -1492,7 +1492,7 @@
 				264B92EB203F303900F6DAE0 /* WRLDSearchProvider.h in Headers */,
 				264B92EC203F303900F6DAE0 /* WRLDSearchProviderHandle.h in Headers */,
 				264B92ED203F303900F6DAE0 /* WRLDSearchQuery.h in Headers */,
-				A00EA76E20489DB100B11046 /* WRLDMenuOptionSelectedObserver.h in Headers */,
+				A00EA76E20489DB100B11046 /* WRLDMenuObserver.h in Headers */,
 				264B92EE203F303900F6DAE0 /* WRLDSearchQueryObserver.h in Headers */,
 				264B92EF203F303900F6DAE0 /* WRLDSearchRequest.h in Headers */,
 				264B92F0203F303900F6DAE0 /* WRLDSearchRequestFulfillerHandle.h in Headers */,
@@ -2101,7 +2101,7 @@
 				264B92FA203F306E00F6DAE0 /* WRLDSearchQuery.m in Sources */,
 				A00F1D9A2044384F00A42ECF /* WRLDMenuChild.m in Sources */,
 				A080DA222046388F00C5FBB3 /* WRLDMenuGroupTitleTableViewCell.m in Sources */,
-				A00EA77220489FF100B11046 /* WRLDMenuOptionSelectedObserver.m in Sources */,
+				A00EA77220489FF100B11046 /* WRLDMenuObserver.m in Sources */,
 				264B92FB203F306E00F6DAE0 /* WRLDSearchQueryObserver.m in Sources */,
 				264B92FC203F306E00F6DAE0 /* WRLDSearchRequest.m in Sources */,
 				26A5AC6C2045C2BA001881A9 /* WRLDSuggestionTableViewCell.m in Sources */,
