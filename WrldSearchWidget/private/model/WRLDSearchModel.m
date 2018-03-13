@@ -66,6 +66,13 @@
     return query;
 }
 
+-(WRLDSearchQuery *) getSearchResultsForString:(NSString *)queryString withContext:(id<NSObject>)context
+{
+    WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryContext: context queryObserver: self.searchObserver];
+    [query dispatchRequestsToSearchProviders: m_searchProviders];
+    return query;
+}
+
 -(WRLDSearchQuery *) getSuggestionsForString:(NSString *)queryString
 {
     WRLDSearchQuery* query = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryObserver: self.suggestionObserver];

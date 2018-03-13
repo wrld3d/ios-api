@@ -387,4 +387,54 @@
     XCTAssertFalse(didRunCancelBlock);
 }
 
+- (void) testSearchQueryWithNoContextProvidedHasNilContext
+{
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    XCTAssertNil(query.queryContext);
+}
+
+- (void) testSearchWithContextQueryContainsContext
+{
+    id<NSObject> mockContext = OCMProtocolMock(@protocol(NSObject));
+    WRLDSearchQuery *query = [model getSearchResultsForString:testString withContext:mockContext];
+    
+    XCTAssertNotNil(query.queryContext);
+    XCTAssertEqual(mockContext, query.queryContext);
+}
+
+- (void) testRequestContextMatchesQueryContextWhenContextExists
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    id<NSObject> mockContext = OCMProtocolMock(@protocol(NSObject));
+    [model getSearchResultsForString:testString withContext:mockContext];
+    
+    XCTAssertEqual(mockContext, requestCapture.queryContext);
+}
+
+- (void) testRequestContextIsNilWhenNoContextExists
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    [model getSearchResultsForString:testString];
+    
+    XCTAssertNil(requestCapture.queryContext);
+}
+
 @end

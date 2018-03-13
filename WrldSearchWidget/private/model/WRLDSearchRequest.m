@@ -17,10 +17,17 @@
     {
         m_fulfillerHandle = fulfillerHandle;
         m_query = query;
-        _queryString = query.queryString;
         _hasCompleted = false;
     }
     return self;
+}
+
+- (NSString *) queryString {
+    return m_query.queryString;
+}
+
+- (id<NSObject>) queryContext {
+    return m_query.queryContext;
 }
 
 - (void) didComplete: (BOOL)success withResults: (WRLDSearchResultsCollection *) results {

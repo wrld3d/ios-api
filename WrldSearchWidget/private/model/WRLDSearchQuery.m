@@ -22,12 +22,28 @@
     self = [super init];
     if(self)
     {
-        _queryString = queryString;
-        m_requests =[[NSMutableArray<WRLDSearchRequest *> alloc ]  init];
-        m_queryObserver = queryObserver;
-        m_fulfillerResultsDictionary = [[WRLDFulfillerResultsDictionary alloc] init];
+        [self assignInitialValues: queryString queryContext:nil queryObserver:queryObserver];
     }
     return self;
+}
+
+-(instancetype) initWithQueryString:(NSString*) queryString queryContext: (id<NSObject>) queryContext queryObserver:(WRLDSearchQueryObserver *) queryObserver
+{
+    self = [super init];
+    if(self)
+    {
+        [self assignInitialValues: queryString queryContext:queryContext queryObserver:queryObserver];
+    }
+    return self;
+}
+
+- (void) assignInitialValues: (NSString *) queryString queryContext:(id<NSObject>) queryContext queryObserver:(WRLDSearchQueryObserver *) queryObserver
+{
+    _queryString = queryString;
+    _queryContext = queryContext;
+    m_queryObserver = queryObserver;
+    m_requests =[[NSMutableArray<WRLDSearchRequest *> alloc ]  init];
+    m_fulfillerResultsDictionary = [[WRLDFulfillerResultsDictionary alloc] init];
 }
 
 - (void) cancel
