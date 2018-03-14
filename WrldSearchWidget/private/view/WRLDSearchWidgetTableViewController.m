@@ -112,7 +112,15 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }
     [self collapseAllSections];
     [self resizeTable];
-    [m_tableView reloadData];
+    [self safelyReloadData];
+}
+
+-(void) safelyReloadData
+{
+    if([m_providerViewModels count] > 0)
+    {
+        [m_tableView reloadData];
+    }
 }
 
 - (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
@@ -124,12 +132,12 @@ typedef NS_ENUM(NSInteger, GradientState) {
                                                                  maxToShowWhenCollapsed: maxToShowWhenCollapsed
                                                                  maxToShowWhenExpanded: maxToShowWhenExpanded];
     [m_providerViewModels addObject: newProviderViewModel];
-    [m_tableView reloadData];
+    [self safelyReloadData];
 }
 
 - (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
 {
-    [m_tableView reloadData];
+    [self safelyReloadData];
 }
 
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
@@ -411,7 +419,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             } completion:^(BOOL finished) {
                 if(finished)
                 {
-                    [m_tableView reloadData];
+                    [self safelyReloadData];
                     [self resizeTable];
                 }
             }];
@@ -419,7 +427,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         else
         {
             [self collapseAllSections];
-            [m_tableView reloadData];
+            [self safelyReloadData];
             [self resizeTable];
         }
     }
