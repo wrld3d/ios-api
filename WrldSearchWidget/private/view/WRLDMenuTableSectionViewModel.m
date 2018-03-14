@@ -1,5 +1,6 @@
 #import "WRLDMenuTableSectionViewModel.h"
 #import "WRLDMenuGroup.h"
+#import "WRLDMenuGroup+Private.h"
 #import "WRLDMenuOption.h"
 
 @implementation WRLDMenuTableSectionViewModel

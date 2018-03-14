@@ -1,9 +1,11 @@
 #import "WRLDSearchMenuViewController.h"
 #import "WRLDSearchMenuModel.h"
+#import "WRLDSearchMenuModel+Private.h"
 #import "WRLDMenuGroupTitleTableViewCell.h"
 #import "WRLDMenuOptionTableViewCell.h"
 #import "WRLDMenuChildTableViewCell.h"
 #import "WRLDMenuGroup.h"
+#import "WRLDMenuGroup+Private.h"
 #import "WRLDMenuOption.h"
 #import "WRLDMenuChild.h"
 #import "WRLDSearchWidgetStyle.h"
@@ -370,7 +372,7 @@ andNotifyFromInteraction:(BOOL)fromInteraction
 - (void)onMenuChanged
 {
     [self updateSectionViewModels];
-    [self resizeMenuTable];
+    [self refreshMenuTable];
 }
 
 #pragma mark - UITableViewDataSource

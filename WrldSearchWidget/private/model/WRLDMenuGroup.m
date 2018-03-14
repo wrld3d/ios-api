@@ -1,9 +1,12 @@
 #import "WRLDMenuGroup.h"
+#import "WRLDMenuGroup+Private.h"
 #import "WRLDMenuOption.h"
+#import "WRLDMenuChangedListener.h"
 
 @implementation WRLDMenuGroup
 {
     NSMutableArray* m_options;
+    id<WRLDMenuChangedListener> m_listener;
 }
 
 - (instancetype)init
@@ -18,19 +21,19 @@
     {
         _title = title;
         m_options = [[NSMutableArray alloc] init];
+        m_listener = nil;
     }
     
     return self;
 }
 
-- (bool)hasTitle
+- (void)setTitle:(nullable NSString *)title
 {
-    return _title != nil;
-}
-
-- (NSMutableArray *)getOptions
-{
-    return m_options;
+    _title = title;
+    if (m_listener != nil)
+    {
+        [m_listener onMenuChanged];
+    }
 }
 
 - (void)addOption:(WRLDMenuOption *)option
@@ -43,6 +46,23 @@
 {
     [self addOption:[[WRLDMenuOption alloc] initWithText:text
                                                  context:context]];
+}
+
+#pragma mark - WRLDMenuGroup (Private)
+
+- (NSMutableArray *)getOptions
+{
+    return m_options;
+}
+
+- (bool)hasTitle
+{
+    return _title != nil;
+}
+
+- (void)setListener:(id<WRLDMenuChangedListener>)listener
+{
+    m_listener = listener;
 }
 
 @end
