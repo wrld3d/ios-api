@@ -182,7 +182,16 @@ typedef NS_ENUM(NSInteger, GradientState) {
     m_heightConstraint.constant = height;
     [m_visibilityView layoutIfNeeded];
     
+    [self resetScrollPositionIfMenuFitsOnScreen];
     [self updateTableFadeViews:NO];
+}
+
+- (void)resetScrollPositionIfMenuFitsOnScreen
+{
+    if (m_tableView.frame.size.height == m_tableView.contentSize.height)
+    {
+        [m_tableView setContentOffset:CGPointZero];
+    }
 }
 
 - (NSString *)getIdentifierForCellAtPosition:(NSIndexPath *)indexPath
@@ -291,6 +300,7 @@ andNotifyFromInteraction:(BOOL)fromInteraction
         m_visibilityView.hidden = NO;
         [self.observer opened:fromInteraction];
     }
+    [self updateTableFadeViews:NO];
 }
 
 - (void)hideAndNotifyClosedFromInteraction:(BOOL)fromInteraction
