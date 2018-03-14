@@ -373,12 +373,12 @@
 - (void)openMenu
 {
     [self resignFocus];
-    [m_searchMenuViewController show];
+    [m_searchMenuViewController open];
 }
 
 - (void)closeMenu
 {
-    [m_searchMenuViewController hide];
+    [m_searchMenuViewController close];
 }
 
 - (void)collapseMenu
@@ -393,7 +393,6 @@
 
 - (IBAction)menuButtonClicked:(id)menuButton
 {
-    // TODO: allow developers to hook onto button touch so they can optionally expand the or collapse menu options
     [self resignFocus];
     [m_searchMenuViewController onMenuButtonClicked];
 }

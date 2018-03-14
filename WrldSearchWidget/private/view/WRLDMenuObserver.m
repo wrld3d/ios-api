@@ -3,6 +3,8 @@
 
 @implementation WRLDMenuObserver
 {
+    NSMutableArray<OpenedEvent>* m_openedEvents;
+    NSMutableArray<ClosedEvent>* m_closedEvents;
     NSMutableArray<OptionSelectedEvent>* m_selectedOptionEvents;
     NSMutableArray<OptionExpandedEvent>* m_expandedOptionEvents;
     NSMutableArray<OptionCollapsedEvent>* m_collapsedOptionEvents;
@@ -13,11 +15,47 @@
     self = [super init];
     if (self)
     {
+        m_openedEvents = [[NSMutableArray<OpenedEvent> alloc] init];
+        m_closedEvents = [[NSMutableArray<ClosedEvent> alloc] init];
         m_selectedOptionEvents = [[NSMutableArray<OptionSelectedEvent> alloc] init];
         m_expandedOptionEvents = [[NSMutableArray<OptionExpandedEvent> alloc] init];
         m_collapsedOptionEvents = [[NSMutableArray<OptionCollapsedEvent> alloc] init];
     }
     return self;
+}
+
+
+
+- (void)addOpenedEvent:(OpenedEvent)event
+{
+    if (event)
+    {
+        [m_openedEvents addObject:event];
+    }
+}
+
+- (void)removeOpenedEvent:(OpenedEvent)event
+{
+    if (event)
+    {
+        [m_openedEvents removeObject:event];
+    }
+}
+
+- (void)addClosedEvent:(ClosedEvent)event
+{
+    if (event)
+    {
+        [m_closedEvents addObject:event];
+    }
+}
+
+- (void)removeClosedEvent:(ClosedEvent)event
+{
+    if (event)
+    {
+        [m_closedEvents removeObject:event];
+    }
 }
 
 - (void)addOptionSelectedEvent:(OptionSelectedEvent)event
@@ -69,6 +107,22 @@
 }
 
 #pragma mark - WRLDMenuObserver (Private)
+
+- (void)opened:(BOOL)fromInteraction
+{
+    for (OpenedEvent event in m_openedEvents)
+    {
+        event(fromInteraction);
+    }
+}
+
+- (void)closed:(BOOL)fromInteraction
+{
+    for (ClosedEvent event in m_closedEvents)
+    {
+        event(fromInteraction);
+    }
+}
 
 - (void)selected:(NSObject *)optionContext
 {

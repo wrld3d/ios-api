@@ -284,8 +284,36 @@ andNotifyFromInteraction:(BOOL)fromInteraction
     return nil;
 }
 
+- (void)showAndNotifyOpenedFromInteraction:(BOOL)fromInteraction
+{
+    if (m_visibilityView.hidden)
+    {
+        m_visibilityView.hidden = NO;
+        [self.observer opened:fromInteraction];
+    }
+}
+
+- (void)hideAndNotifyClosedFromInteraction:(BOOL)fromInteraction
+{
+    if (!m_visibilityView.hidden)
+    {
+        m_visibilityView.hidden = YES;
+        [self.observer closed:fromInteraction];
+    }
+}
+
 
 #pragma mark - Public Methods
+
+- (void)open
+{
+    [self showAndNotifyOpenedFromInteraction:NO];
+}
+
+- (void)close
+{
+    [self hideAndNotifyClosedFromInteraction:NO];
+}
 
 - (void)collapse
 {
@@ -312,37 +340,14 @@ andNotifyFromInteraction:(BOOL)fromInteraction
 
 - (void)onMenuButtonClicked
 {
-    [self show];
+    [self showAndNotifyOpenedFromInteraction:YES];
 }
 
 - (void)onMenuBackButtonClicked
 {
     [self collapseAllSectionsAndNotifyExpandedStateChangeFromInteraction:YES];
     [self refreshMenuTable];
-    [self hide];
-}
-
-
-#pragma mark - WRLDViewVisibilityController
-
-- (void)show
-{
-    if (!m_visibilityView.hidden)
-    {
-        return;
-    }
-    
-    m_visibilityView.hidden = NO;
-}
-
-- (void)hide
-{
-    if (m_visibilityView.hidden)
-    {
-        return;
-    }
-    
-    m_visibilityView.hidden =  YES;
+    [self hideAndNotifyClosedFromInteraction:YES];
 }
 
 #pragma mark - WRLDMenuChangedListener

@@ -1,7 +1,6 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-#import "WRLDViewVisibilityController.h"
 #import "WRLDMenuChangedListener.h"
 
 @class WRLDMenuObserver;
@@ -10,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WRLDSearchMenuViewController : NSObject <WRLDViewVisibilityController, WRLDMenuChangedListener, UITableViewDataSource, UITableViewDelegate>
+@interface WRLDSearchMenuViewController : NSObject <WRLDMenuChangedListener, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, readonly) WRLDMenuObserver* observer;
 
@@ -24,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
                  heightConstraint:(NSLayoutConstraint *)heightConstraint
                             style:(WRLDSearchWidgetStyle *)style;
 
-- (void)show;
+- (void)open;
 
-- (void)hide;
+- (void)close;
 
 - (void)collapse;
 
