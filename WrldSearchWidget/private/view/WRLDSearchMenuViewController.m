@@ -400,10 +400,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     NSInteger row = [indexPath row];
     if (row == 0)
     {
+        bool isFirstTableSection = [indexPath section] == 0;
         if ([sectionViewModel isTitleSection])
         {
             WRLDMenuGroupTitleTableViewCell* groupTitleCell = (WRLDMenuGroupTitleTableViewCell *)cell;
-            bool isFirstTableSection = [indexPath section] == 0;
             [groupTitleCell populateWith:sectionViewModel
                      isFirstTableSection:isFirstTableSection
                                    style:m_style];
@@ -412,6 +412,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         {
             WRLDMenuOptionTableViewCell* optionCell = (WRLDMenuOptionTableViewCell *)cell;
             [optionCell populateWith:sectionViewModel
+                 isFirstTableSection:isFirstTableSection
                         expanderIcon:m_imgExpanderBlueIcon
                      highlightedIcon:m_imgExpanderWhiteIcon
                                style:m_style];

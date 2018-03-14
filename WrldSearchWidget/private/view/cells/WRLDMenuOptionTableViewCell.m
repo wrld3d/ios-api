@@ -9,6 +9,7 @@
 }
 
 - (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+ isFirstTableSection:(bool)isFirstTableSection
         expanderIcon:(UIImage *)expanderIcon
      highlightedIcon:(UIImage *)highlightedIcon
                style:(WRLDSearchWidgetStyle *)style
@@ -20,7 +21,7 @@
     bool needsExpander = [viewModel isExpandable];
     [self.expander setHidden:!needsExpander];
     
-    bool needsGroupSeparator = [viewModel isFirstOptionInGroup];
+    bool needsGroupSeparator = [viewModel isFirstOptionInGroup] && !isFirstTableSection;
     [self.groupSeparator setHidden:!needsGroupSeparator];
     self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
     

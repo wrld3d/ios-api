@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
 - (void)populateWith:(WRLDMenuTableSectionViewModel *)viewModel
+ isFirstTableSection:(bool)isFirstTableSection
         expanderIcon:(UIImage *)expanderIcon
      highlightedIcon:(UIImage *)highlightedIcon
                style:(WRLDSearchWidgetStyle *)style;
