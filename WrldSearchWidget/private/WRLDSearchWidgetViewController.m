@@ -67,6 +67,10 @@
     id<WRLDViewVisibilityController> m_activeResultsView;
     
     BOOL m_hasFocus;
+    
+    __weak QueryEvent m_searchQueryStartedEvent;
+    __weak QueryEvent m_searchQueryCompletedEvent;
+    __weak QueryEvent m_suggestionQueryCompletedEvent;
 }
 
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver
@@ -140,48 +144,65 @@
                                                                         heightConstraint:self.menuContainerViewHeightConstraint
                                                                                    style:self.style];
     
-    [self setupStyle];
-    [self observeModel];
-}
-    
-- (void) observeModel
-{
     [m_suggestionsViewController.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
         self.searchBar.text = selectedResultModel.title;
         [self triggerSearch : selectedResultModel.title];
     }];
     
-    [m_searchModel.searchObserver addQueryStartingEvent: ^(WRLDSearchQuery * query)
-     {
-         [m_searchResultsViewController showQuery: query];
-         m_activeResultsView = m_searchResultsViewController;
-         if(m_hasFocus)
-         {
-             [m_suggestionsViewController hide];
-             [m_searchResultsViewController show];
-         }
-     }];
+    [self setupStyle];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self observeModel: m_searchModel];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [self stopObservingModel];
+}
     
-    [m_searchModel.searchObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
-     {
-         [m_searchResultsViewController showQuery: query];
-         if(m_searchResultsViewController.visibleResults == 0)
-         {
-             m_activeResultsView = self.noResultsVisibilityController;
-             if(m_hasFocus)
-             {
-                 [m_searchResultsViewController hide];
-                 [self.noResultsVisibilityController show];
-             }
-         }
-         else
-         {
-             m_activeResultsView = m_searchResultsViewController;
-         }
-     }];
+- (void) observeModel: (WRLDSearchModel *) model
+{
+    if(m_searchModel)
+    {
+        [self stopObservingModel];
+    }
     
-    [m_searchModel.suggestionObserver addQueryCompletedEvent: ^(WRLDSearchQuery * query)
-     {
+    m_searchModel = model;
+    
+    QueryEvent searchQueryStartedEvent = ^(WRLDSearchQuery * query)
+    {
+        [m_searchResultsViewController showQuery: query];
+        m_activeResultsView = m_searchResultsViewController;
+        if(m_hasFocus)
+        {
+            [m_suggestionsViewController hide];
+            [m_searchResultsViewController show];
+        }
+    };
+    
+    QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
+    {
+        [m_searchResultsViewController showQuery: query];
+        if(m_searchResultsViewController.visibleResults == 0)
+        {
+            m_activeResultsView = self.noResultsVisibilityController;
+            if(m_hasFocus)
+            {
+                [m_searchResultsViewController hide];
+                [self.noResultsVisibilityController show];
+            }
+        }
+        else
+        {
+            m_activeResultsView = m_searchResultsViewController;
+        }
+    };
+    
+    QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
+    {
          [m_suggestionsViewController showQuery: query];
          [m_searchResultsViewController hide];
          if(m_hasFocus)
@@ -189,7 +210,40 @@
              [m_suggestionsViewController show];
          }
          m_activeResultsView = m_suggestionsViewController;
-     }];
+    };
+    
+    // observers will hold strong references to block events to increase reference counter
+    [m_searchModel.searchObserver addQueryStartingEvent: searchQueryStartedEvent];
+    [m_searchModel.searchObserver addQueryCompletedEvent: searchQueryCompletedEvent];
+    [m_searchModel.suggestionObserver addQueryCompletedEvent: suggestionQueryCompletedEvent];
+    
+    // self will weakly hold on to block event to remove from observer later and prevent circular references
+    m_searchQueryStartedEvent = searchQueryStartedEvent;
+    m_searchQueryCompletedEvent = searchQueryCompletedEvent;
+    m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
+}
+
+- (void) stopObservingModel
+{
+    if(!m_searchModel)
+    {
+        return;
+    }
+    
+    if(m_searchQueryStartedEvent)
+    {
+        [m_searchModel.searchObserver removeQueryStartingEvent: m_searchQueryStartedEvent];
+    }
+    
+    if(m_searchQueryStartedEvent)
+    {
+        [m_searchModel.searchObserver removeQueryCompletedEvent: m_searchQueryCompletedEvent];
+    }
+    
+    if(m_searchQueryStartedEvent)
+    {
+        [m_searchModel.suggestionObserver removeQueryCompletedEvent: m_suggestionQueryCompletedEvent];
+    }
 }
 
 - (void) setupStyle
