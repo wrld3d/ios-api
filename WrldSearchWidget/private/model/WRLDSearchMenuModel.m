@@ -99,5 +99,19 @@
     }
 }
 
+- (void) removeAllGroups
+{
+    for (WRLDMenuGroup* group in m_groups)
+    {
+        [group setListener: nil];
+    }
+    
+    [m_groups removeAllObjects];
+    if (m_listener != nil)
+    {
+        [m_listener onMenuChanged];
+    }
+}
+
 @end
 

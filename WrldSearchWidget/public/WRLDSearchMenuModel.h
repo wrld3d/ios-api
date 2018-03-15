@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeMenuGroupAtIndex:(NSUInteger)index;
 
+- (void)removeAllGroups;
+
 @end
 
 NS_ASSUME_NONNULL_END
