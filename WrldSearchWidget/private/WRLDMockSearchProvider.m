@@ -86,7 +86,7 @@
 
 -(void) fulfilRequest: (WRLDSearchRequest *) searchRequest
 {
-    NSMutableArray<id<WRLDSearchResultModel>> * searchResults = [[NSMutableArray<id<WRLDSearchResultModel>> alloc] init];
+    WRLDMutableSearchResultsCollection * searchResults = [[WRLDMutableSearchResultsCollection alloc] init];
     
     for(int i = 0; i < 20; ++i){
         [searchResults addObject: [self createSearchResult:
