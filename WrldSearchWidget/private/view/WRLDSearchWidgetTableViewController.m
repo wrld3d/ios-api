@@ -111,8 +111,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
         [set updateResultData: [sourceQuery getResultsForFulfiller: set.fulfiller.identifier]];
     }
     [self collapseAllSections];
-    [self resizeTable];
     [self safelyReloadData];
+    [self resizeTable];
 }
 
 -(void) safelyReloadData
