@@ -122,6 +122,8 @@
 		26B3131820567BC300EBDB1E /* SmallBackArrowDarkBlue_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3131220567BC200EBDB1E /* SmallBackArrowDarkBlue_Icon@2x.png */; };
 		26B3131920567BC300EBDB1E /* SmallBackArrowDarkBlue_Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3131320567BC200EBDB1E /* SmallBackArrowDarkBlue_Icon@3x.png */; };
 		26B3131A20567BC300EBDB1E /* SmallBackArrowWhite_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B3131420567BC300EBDB1E /* SmallBackArrowWhite_Icon.png */; };
+		26B31320205FD1CB00EBDB1E /* WRLDSearchWidgetResultsTableDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B3131F205FD1CB00EBDB1E /* WRLDSearchWidgetResultsTableDataSource.h */; };
+		26B31322205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B31321205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m */; };
 		2C27ECEF1EC1DEF900A9E677 /* WrldWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; };
 		2C27ECF01EC1DEF900A9E677 /* WrldWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB2C53E1EC1D76400C0B401 /* WrldWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C27ECF61EC1FE9400A9E677 /* WRLDIndoorMap+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */; };
@@ -530,6 +532,8 @@
 		26B3131220567BC200EBDB1E /* SmallBackArrowDarkBlue_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SmallBackArrowDarkBlue_Icon@2x.png"; sourceTree = "<group>"; };
 		26B3131320567BC200EBDB1E /* SmallBackArrowDarkBlue_Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SmallBackArrowDarkBlue_Icon@3x.png"; sourceTree = "<group>"; };
 		26B3131420567BC300EBDB1E /* SmallBackArrowWhite_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallBackArrowWhite_Icon.png; sourceTree = "<group>"; };
+		26B3131F205FD1CB00EBDB1E /* WRLDSearchWidgetResultsTableDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchWidgetResultsTableDataSource.h; sourceTree = "<group>"; };
+		26B31321205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetResultsTableDataSource.m; sourceTree = "<group>"; };
 		2C27ECF51EC1FE9400A9E677 /* WRLDIndoorMap+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WRLDIndoorMap+Private.h"; sourceTree = "<group>"; };
 		2C32D1E41EBB42AD00FC1B12 /* DebugIndoorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugIndoorControl.h; sourceTree = "<group>"; };
 		2C32D1E51EBB42AD00FC1B12 /* DebugIndoorControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugIndoorControl.m; sourceTree = "<group>"; };
@@ -1037,23 +1041,25 @@
 				262D3D9220344A1500B9FEA8 /* cells */,
 				26178291203C743600DB29A1 /* WRLDFadeableView.h */,
 				26178293203C749100DB29A1 /* WRLDFadeableView.m */,
+				A00EA77120489FF100B11046 /* WRLDMenuObserver.m */,
+				A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */,
+				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
+				A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */,
 				2693DF17202B1734000F91CF /* WRLDSearchBar.h */,
 				2693DF19202B1745000F91CF /* WRLDSearchBar.m */,
+				A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */,
+				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
 				26178257203B103200DB29A1 /* WRLDSearchResultSelectedObserver.m */,
 				26178259203B127100DB29A1 /* WRLDSearchResultSelectedObserver+Private.h */,
 				262D3DA320344C7200B9FEA8 /* WRLDSearchWidgetResultSetViewModel.h */,
 				262D3DA520344C8500B9FEA8 /* WRLDSearchWidgetResultSetViewModel.m */,
+				26B3131F205FD1CB00EBDB1E /* WRLDSearchWidgetResultsTableDataSource.h */,
+				26B31321205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m */,
 				261CBCBA2034374B0037CAC9 /* WRLDSearchWidgetTableViewController.h */,
 				261CBCBC2034375F0037CAC9 /* WRLDSearchWidgetTableViewController.m */,
 				2693DF11202B1045000F91CF /* WRLDSearchWidgetView.h */,
 				2693DF12202B1045000F91CF /* WRLDSearchWidgetView.m */,
 				262D3DB72035BE3600B9FEA8 /* WRLDViewVisibilityController.h */,
-				A00F1D9B2044491100A42ECF /* WRLDSearchMenuViewController.h */,
-				A00F1D9D20444C4C00A42ECF /* WRLDSearchMenuViewController.m */,
-				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
-				A01455F020475F68002268AE /* WRLDMenuTableSectionViewModel.m */,
-				A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */,
-				A00EA77120489FF100B11046 /* WRLDMenuObserver.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1484,6 +1490,7 @@
 				264B92DF203F303900F6DAE0 /* WRLDSearchInProgressTableViewCell.h in Headers */,
 				264B92E0203F303900F6DAE0 /* WRLDSearchResultTableViewCell.h in Headers */,
 				264B92E1203F303900F6DAE0 /* WRLDFadeableView.h in Headers */,
+				26B31320205FD1CB00EBDB1E /* WRLDSearchWidgetResultsTableDataSource.h in Headers */,
 				A0B2F07F205981A200987D5C /* WRLDSearchMenuModel+Private.h in Headers */,
 				264B933B2040194700F6DAE0 /* WRLDPositionedSearchResultModel.h in Headers */,
 				264B92E3203F303900F6DAE0 /* WRLDSearchBar.h in Headers */,
@@ -2130,6 +2137,7 @@
 				A00F1D9E20444C4C00A42ECF /* WRLDSearchMenuViewController.m in Sources */,
 				264B9306203F306E00F6DAE0 /* WRLDSearchWidgetTableViewController.m in Sources */,
 				264B9338204016F500F6DAE0 /* WRLDMockSearchProvider.m in Sources */,
+				26B31322205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m in Sources */,
 				264B9307203F306E00F6DAE0 /* WRLDSearchWidgetView.m in Sources */,
 				264B9308203F306E00F6DAE0 /* WRLDSearchWidgetViewController.m in Sources */,
 				A00F1D9220442E6D00A42ECF /* WRLDMenuGroup.m in Sources */,

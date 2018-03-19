@@ -10,8 +10,7 @@
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDSearchWidgetStyle.h"
-
-typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelCollection;
+#import "WRLDSearchWidgetResultsTableDataSource.h"
 
 typedef NS_ENUM(NSInteger, GradientState) {
     None,
@@ -25,16 +24,16 @@ typedef NS_ENUM(NSInteger, GradientState) {
     UITableView * m_tableView;
     UIView * m_visibilityView;
     NSLayoutConstraint * m_heightConstraint;
-    ResultSetViewModelCollection * m_providerViewModels;
-    NSString * m_defaultCellIdentifier;
-    WRLDSearchQuery *m_displayedQuery;
+    
+    WRLDSearchWidgetResultsTableDataSource * m_dataSource;
+    
+    WRLDSearchWidgetStyle * m_style;
+    
     CGFloat m_fadeDuration;
     
     CGFloat m_searchInProgressCellHeight;
     CGFloat m_moreResultsCellHeight;
     
-    NSString * m_moreResultsCellStyleIdentifier;
-    NSString * m_searchInProgressCellStyleIdentifier;
     NSString * m_showMoreResultsText;
     NSString * m_backToResultsText;
     
@@ -42,43 +41,36 @@ typedef NS_ENUM(NSInteger, GradientState) {
     UIImage *m_imgBackIcon;
     
     bool m_isAnimatingOut;
-    
-    WRLDSearchWidgetStyle * m_style;
 }
 
 - (instancetype) initWithTableView: (UITableView *) tableView
+                        dataSource: (WRLDSearchWidgetResultsTableDataSource *) dataSource
                     visibilityView: (UIView*) visibilityView
-                             style: (WRLDSearchWidgetStyle *) style
                   heightConstraint: (NSLayoutConstraint *) heightConstraint
-             defaultCellIdentifier: (NSString *) defaultCellIdentifier
+                             style: (WRLDSearchWidgetStyle *) style
 {
     self = [super init];
     if(self)
     {
         m_tableView = tableView;
-        m_tableView.dataSource = self;
-        m_tableView.delegate = self;
+        m_dataSource = dataSource;
         m_visibilityView = visibilityView;
         m_heightConstraint = heightConstraint;
-        m_providerViewModels = [[ResultSetViewModelCollection alloc] init];
-        m_isAnimatingOut = false;
-        m_defaultCellIdentifier = defaultCellIdentifier;
-        m_fadeDuration = 0.2f;
         
-        m_moreResultsCellStyleIdentifier = @"WRLDMoreResultsTableViewCell";
-        m_searchInProgressCellStyleIdentifier = @"WRLDSearchInProgressTableViewCell";
+        m_tableView.delegate = self;
+        m_tableView.dataSource = m_dataSource;
         
         m_showMoreResultsText = @"Show More (%d) %@ results";
         m_backToResultsText = @"Back";
+        m_isAnimatingOut = false;
+        m_fadeDuration = 0.2f;
         
         m_searchInProgressCellHeight = 32;
         m_moreResultsCellHeight = 32;
         
-        _selectionObserver = [[WRLDSearchResultSelectedObserver alloc] init];
+        m_style = style;
         
         [self assignCellResourcesTo: m_tableView];
-        
-        m_style = style;
         
         [m_style call:^(UIColor *color) {
             [m_tableView setSeparatorColor: color];
@@ -92,80 +84,43 @@ typedef NS_ENUM(NSInteger, GradientState) {
 {
     NSBundle* resourceBundle = [NSBundle bundleForClass:[WRLDSearchResultTableViewCell class]];
     
-    [tableView registerNib:[UINib nibWithNibName: m_defaultCellIdentifier bundle:resourceBundle]
-                forCellReuseIdentifier: m_defaultCellIdentifier];
-    [tableView registerNib:[UINib nibWithNibName:m_searchInProgressCellStyleIdentifier bundle: resourceBundle]
-                          forCellReuseIdentifier: m_searchInProgressCellStyleIdentifier];
-    [tableView registerNib:[UINib nibWithNibName:m_moreResultsCellStyleIdentifier bundle: resourceBundle]
-                forCellReuseIdentifier: m_moreResultsCellStyleIdentifier];
+    [tableView registerNib:[UINib nibWithNibName: m_dataSource.defaultCellIdentifier bundle:resourceBundle]
+    forCellReuseIdentifier: m_dataSource.defaultCellIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:m_dataSource.moreResultsCellIdentifier bundle: resourceBundle]
+    forCellReuseIdentifier: m_dataSource.moreResultsCellIdentifier];
+    [tableView registerNib:[UINib nibWithNibName:m_dataSource.searchInProgressCellIdentifier bundle: resourceBundle]
+    forCellReuseIdentifier: m_dataSource.searchInProgressCellIdentifier];
     
     m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
     m_imgBackIcon = [UIImage imageNamed:@"SmallBackArrow_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
 }
 
-- (void) showQuery: (WRLDSearchQuery *) sourceQuery
+- (void) refreshTable
 {
-    m_displayedQuery = sourceQuery;
-    for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
-    {
-        [set updateResultData: [sourceQuery getResultsForFulfiller: set.fulfiller.identifier]];
-    }
-    [self collapseAllSections];
     [self safelyReloadData];
     [self resizeTable];
 }
 
 -(void) safelyReloadData
 {
-    if([m_providerViewModels count] > 0)
+    if([m_dataSource providerCount] > 0)
     {
         [m_tableView reloadData];
     }
 }
 
-- (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
-     maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
-      maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded
-{
-    WRLDSearchWidgetResultSetViewModel * newProviderViewModel = [[WRLDSearchWidgetResultSetViewModel alloc]
-                                                                 initForRequestFulfiller: provider
-                                                                 maxToShowWhenCollapsed: maxToShowWhenCollapsed
-                                                                 maxToShowWhenExpanded: maxToShowWhenExpanded];
-    [m_providerViewModels addObject: newProviderViewModel];
-    [self safelyReloadData];
-}
-
-- (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
-{
-    [self safelyReloadData];
-}
-
--(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
-{
-    if(!m_displayedQuery.hasCompleted){
-        return m_searchInProgressCellStyleIdentifier;
-    }
-    
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [index section]];
-    
-    if([setViewModel isMoreResultsCell: [index row]]){
-        return m_moreResultsCellStyleIdentifier;
-    }
-    
-    return setViewModel.fulfiller.cellIdentifier == nil ? m_defaultCellIdentifier : setViewModel.fulfiller.cellIdentifier;
-}
-
 - (void) resizeTable
 {
     CGFloat height = 0;
-    if(!m_displayedQuery.hasCompleted)
+    if(m_dataSource.isAwaitingData)
     {
         height = m_searchInProgressCellHeight;
     }
     else
     {
-        for(WRLDSearchWidgetResultSetViewModel * setViewModel in m_providerViewModels)
+        for(NSInteger dataSourceIndex = 0; dataSourceIndex < [m_dataSource providerCount]; ++ dataSourceIndex)
         {
+            WRLDSearchWidgetResultSetViewModel * setViewModel = [m_dataSource getViewModelForProviderAt:dataSourceIndex];
             height += [setViewModel getResultsCellHeightWhen: setViewModel.expandedState];
             height += [setViewModel hasMoreResultsCellWhen: setViewModel.expandedState] ? m_moreResultsCellHeight : 0;
         }
@@ -182,28 +137,6 @@ typedef NS_ENUM(NSInteger, GradientState) {
             [self applyGradient: [self getGradientState: m_tableView]];
         }
     }];
-}
-
-- (void) expandSection: (NSInteger) expandedSectionPosition
-{
-    _visibleResults = 0;
-    for(NSInteger i = 0; i < [m_providerViewModels count]; ++i)
-    {
-        ExpandedStateType stateForProvider = (i == expandedSectionPosition) ? Expanded : Hidden;
-        WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: i];
-        [setViewModel setExpandedState: stateForProvider];
-        _visibleResults += [setViewModel getVisibleResultCountWhen: stateForProvider];
-    }
-}
-
-- (void) collapseAllSections
-{
-    _visibleResults = 0;
-    for(WRLDSearchWidgetResultSetViewModel * setViewModel in m_providerViewModels)
-    {
-        [setViewModel setExpandedState: Collapsed];
-        _visibleResults += [setViewModel getVisibleResultCountWhen: Collapsed];
-    }
 }
 
 - (void) populateMoreResultsCell: (WRLDMoreResultsTableViewCell *) moreResultsCell fromViewModel: (WRLDSearchWidgetResultSetViewModel *) sectionViewModel
@@ -303,82 +236,39 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *expectedCellIdentifier =[self getIdentifierForCellAtPosition: indexPath];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: expectedCellIdentifier];
-    if(cell == nil)
-    {
-        cell = [tableView dequeueReusableCellWithIdentifier: m_defaultCellIdentifier];
-    }
-    cell.separatorInset = UIEdgeInsetsZero;
-    cell.layoutMargins = UIEdgeInsetsZero;
-    return cell;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if(!m_displayedQuery.hasCompleted)
-    {
-        return 1;
-    }
-    
-    return [m_providerViewModels count];
-}
-
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if(!m_displayedQuery.hasCompleted)
-    {
-        return 1;
-    }
-    
-    WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
-    NSInteger cellsToDisplay = [providerViewModel getVisibleResultCountWhen: providerViewModel.expandedState];
-    if([providerViewModel hasMoreResultsCellWhen: providerViewModel.expandedState])
-    {
-        ++cellsToDisplay;
-    }
-    return cellsToDisplay;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!m_displayedQuery.hasCompleted)
+    if(m_dataSource.isAwaitingData)
     {
-        WRLDSearchInProgressTableViewCell * inProgressCell = (WRLDSearchInProgressTableViewCell *) cell;
+        WRLDSearchInProgressTableViewCell* inProgressCell = (WRLDSearchInProgressTableViewCell *) cell;
         [inProgressCell applyStyle: m_style];
         return;
     }
     
-    WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_providerViewModels objectAtIndex:[indexPath section]];
+    WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_dataSource getViewModelForProviderAt: [indexPath section]];
     if([sectionViewModel isMoreResultsCell: [indexPath row]])
     {
-        WRLDMoreResultsTableViewCell * moreResultsCell = (WRLDMoreResultsTableViewCell *) cell;
+        WRLDMoreResultsTableViewCell* moreResultsCell = (WRLDMoreResultsTableViewCell *) cell;
         [self populateMoreResultsCell: moreResultsCell fromViewModel: sectionViewModel];
         return;
     }
     
-    id<WRLDSearchResultModel> resultModel = [sectionViewModel getResult : [indexPath row]];
     WRLDSearchResultTableViewCell * resultCell = (WRLDSearchResultTableViewCell *) cell;
     [resultCell applyStyle: m_style];
-    [resultCell populateWith: resultModel fromQuery: m_displayedQuery];
+    [m_dataSource populateCell:resultCell withDataFor: indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!m_displayedQuery.hasCompleted)
+    if(m_dataSource.isAwaitingData)
     {
         return m_searchInProgressCellHeight;
     }
     
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_dataSource getViewModelForProviderAt: [indexPath section]];
     if([setViewModel isMoreResultsCell: [indexPath row]])
     {
         return m_moreResultsCellHeight;
@@ -400,17 +290,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!m_displayedQuery.hasCompleted)
+    if(m_dataSource.isAwaitingData)
     {
         return;
     }
     
-    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
+    WRLDSearchWidgetResultSetViewModel * setViewModel = [m_dataSource getViewModelForProviderAt: [indexPath section]];
     if([setViewModel isMoreResultsCell: [indexPath row]])
     {
         if(setViewModel.expandedState == Collapsed)
         {
-            [self expandSection: [indexPath section]];
+            [m_dataSource expandSection: [indexPath section]];
             CGFloat onlySetHeight = [setViewModel getResultsCellHeightWhen: Collapsed] + m_moreResultsCellHeight;
             [UIView animateWithDuration: m_fadeDuration animations:^{
                 m_heightConstraint.constant = onlySetHeight;
@@ -419,23 +309,19 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             } completion:^(BOOL finished) {
                 if(finished)
                 {
-                    [self safelyReloadData];
-                    [self resizeTable];
+                    [self refreshTable];
                 }
             }];
         }
         else
         {
-            [self collapseAllSections];
-            [self safelyReloadData];
-            [self resizeTable];
+            [m_dataSource collapseAllSections];
+            [self refreshTable];
         }
     }
     else
     {
-        id<WRLDSearchResultModel> selectedResultModel = [setViewModel getResult:[indexPath row]];
-        [_selectionObserver selected: selectedResultModel];
-        [setViewModel.fulfiller.selectionObserver selected: selectedResultModel];
+        [m_dataSource selected: indexPath];
     }
 }
 

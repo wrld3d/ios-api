@@ -7,23 +7,17 @@
 @protocol WRLDSearchRequestFulfillerHandle;
 @class WRLDSearchResultSelectedObserver;
 @class WRLDSearchWidgetStyle;
+@class WRLDSearchWidgetResultsTableDataSource;
 
-@interface WRLDSearchWidgetTableViewController : NSObject<UITableViewDataSource, UITableViewDelegate, WRLDViewVisibilityController>
+@interface WRLDSearchWidgetTableViewController : NSObject<UITableViewDelegate, WRLDViewVisibilityController>
+
 - (instancetype) initWithTableView: (UITableView *) tableView
+                        dataSource: (WRLDSearchWidgetResultsTableDataSource *) dataSource
                     visibilityView: (UIView*) visibilityView
-                             style: (WRLDSearchWidgetStyle *) style
                   heightConstraint: (NSLayoutConstraint *) heightConstraint
-             defaultCellIdentifier: (NSString *) defaultCellIdentifier;
+                             style: (WRLDSearchWidgetStyle *) style;
 
-@property (nonatomic, readonly) WRLDSearchResultSelectedObserver * selectionObserver;
-@property (nonatomic, readonly) NSInteger * visibleResults;
-- (void) showQuery: (WRLDSearchQuery *) query;
-
-- (void) displayResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider
-     maxToShowWhenCollapsed: (NSInteger) maxToShowWhenCollapsed
-      maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded;
-
-- (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider;
+- (void) refreshTable;
 - (void) show;
 - (void) hide;
 @end

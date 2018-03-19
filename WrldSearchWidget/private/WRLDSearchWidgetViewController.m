@@ -14,6 +14,7 @@
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
+#import "WRLDSearchWidgetResultsTableDataSource.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
@@ -46,6 +47,8 @@
     WRLDSearchMenuModel* m_menuModel;
     WRLDSearchWidgetTableViewController* m_searchResultsViewController;
     WRLDSearchWidgetTableViewController* m_suggestionsViewController;
+    WRLDSearchWidgetResultsTableDataSource* m_searchResultsDataSource;
+    WRLDSearchWidgetResultsTableDataSource* m_suggestionsDataSource;
     WRLDSearchMenuViewController* m_searchMenuViewController;
     NSString * m_suggestionsTableViewCellStyleIdentifier;
     NSString * m_searchResultsTableViewDefaultCellStyleIdentifier;
@@ -71,21 +74,16 @@
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
     __weak QueryEvent m_suggestionQueryCompletedEvent;
-    
-    NSMutableArray<WRLDSearchProviderHandle *>* m_searchProviders;
-    NSMutableArray<WRLDSuggestionProviderHandle *>* m_suggestionProviders;
-    
-    BOOL m_viewDidLoad;
 }
 
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver
 {
-    return m_searchResultsViewController.selectionObserver;
+    return m_searchResultsDataSource.selectionObserver;
 }
 
 - (WRLDSearchResultSelectedObserver *)suggestionSelectionObserver
 {
-    return m_suggestionsViewController.selectionObserver;
+    return m_suggestionsDataSource.selectionObserver;
 }
 
 - (WRLDMenuObserver *)menuObserver
@@ -120,10 +118,11 @@
         
         m_hasFocus = NO;
         
-        m_searchProviders = [[NSMutableArray<WRLDSearchProviderHandle *> alloc] init];
-        m_suggestionProviders = [[NSMutableArray<WRLDSuggestionProviderHandle *>alloc ] init];
+        m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
+                                     initWithDefaultCellIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
         
-        m_viewDidLoad = NO;
+        m_suggestionsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
+                                   initWithDefaultCellIdentifier: m_suggestionsTableViewCellStyleIdentifier];
     }
     return self;
 }
@@ -133,16 +132,16 @@
     [super viewDidLoad];
     
     m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
+                                                                                        dataSource: m_searchResultsDataSource
                                                                                     visibilityView: self.resultsTableContainerView
-                                                                                             style: self.style
                                                                                   heightConstraint:self.resultsTableHeightConstraint
-                                                                             defaultCellIdentifier:m_searchResultsTableViewDefaultCellStyleIdentifier];
+                                                                                             style:self.style];
     
     m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
+                                                                                      dataSource: m_suggestionsDataSource
                                                                                   visibilityView: self.suggestionsTableContainerView
-                                                                                           style: self.style
                                                                                 heightConstraint:self.suggestionsTableHeightConstraint
-                                                                           defaultCellIdentifier:m_suggestionsTableViewCellStyleIdentifier];
+                                                                                           style:self.style];
 
     m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithMenuModel:m_menuModel
                                                                           visibilityView:self.menuContainerView
@@ -154,23 +153,12 @@
                                                                         heightConstraint:self.menuContainerViewHeightConstraint
                                                                                    style:self.style];
     
-    [m_suggestionsViewController.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
+    [m_suggestionsDataSource.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
         self.searchBar.text = selectedResultModel.title;
         [self triggerSearch : selectedResultModel.title];
     }];
     
     [self setupStyle];
-    
-    for(WRLDSearchProviderHandle * searchProviderHandle in m_searchProviders)
-    {
-        [self addFulfiller:searchProviderHandle toResultsViewController:m_searchResultsViewController];
-    }
-    for(WRLDSuggestionProviderHandle * suggestionProviderHandle in m_suggestionProviders)
-    {
-        [self addFulfiller:suggestionProviderHandle toResultsViewController:m_suggestionsViewController];
-    }
-    
-    m_viewDidLoad = YES;
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -181,6 +169,7 @@
 
 -(void) viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self stopObservingModel: m_searchModel];
 }
     
@@ -195,7 +184,8 @@
     
     QueryEvent searchQueryStartedEvent = ^(WRLDSearchQuery * query)
     {
-        [m_searchResultsViewController showQuery: query];
+        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsViewController refreshTable];
         m_activeResultsView = m_searchResultsViewController;
         if(m_hasFocus)
         {
@@ -206,8 +196,9 @@
     
     QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
     {
-        [m_searchResultsViewController showQuery: query];
-        if(m_searchResultsViewController.visibleResults == 0)
+        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsViewController refreshTable];
+        if(m_searchResultsDataSource.visibleResults == 0)
         {
             m_activeResultsView = self.noResultsVisibilityController;
             if(m_hasFocus)
@@ -224,13 +215,14 @@
     
     QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
     {
-         [m_suggestionsViewController showQuery: query];
-         [m_searchResultsViewController hide];
-         if(m_hasFocus)
-         {
-             [m_suggestionsViewController show];
-         }
-         m_activeResultsView = m_suggestionsViewController;
+        [m_suggestionsDataSource updateResultsFrom: query];
+        [m_suggestionsViewController refreshTable];
+        [m_searchResultsViewController hide];
+        if(m_hasFocus)
+        {
+            [m_suggestionsViewController show];
+        }
+        m_activeResultsView = m_suggestionsViewController;
     };
     
     // observers will hold strong references to block events to increase reference counter
@@ -364,41 +356,26 @@
 
 - (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
 {
-    [m_searchProviders addObject:searchProvider];
-    if(m_viewDidLoad) {
-        [self addFulfiller:searchProvider toResultsViewController:m_searchResultsViewController];
-    }
-}
-
-- (void) addFulfiller:(id<WRLDSearchRequestFulfillerHandle>) fulfiller toResultsViewController:(WRLDSearchWidgetTableViewController*) tableViewController
-{
-    [tableViewController displayResultsFrom: fulfiller
-                     maxToShowWhenCollapsed: maxVisibleCollapsedResults
-                      maxToShowWhenExpanded: maxVisibleExpandedResults];
+    [m_searchResultsDataSource displayResultsFrom: searchProvider
+            maxToShowWhenCollapsed: maxVisibleCollapsedResults
+             maxToShowWhenExpanded: maxVisibleExpandedResults];
 }
 
 - (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle *) searchProvider
 {
-    [m_searchProviders removeObject:searchProvider];
-    if(m_viewDidLoad) {
-        [m_searchResultsViewController stopDisplayingResultsFrom: searchProvider];
-    }
+    [m_searchResultsDataSource stopDisplayingResultsFrom: searchProvider];
 }
 
 - (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
 {
-    [m_suggestionProviders addObject:suggestionProvider];
-    if(m_viewDidLoad) {
-        [self addFulfiller:suggestionProvider toResultsViewController:m_suggestionsViewController];
-    }
+    [m_suggestionsDataSource displayResultsFrom: suggestionProvider
+                           maxToShowWhenCollapsed: maxVisibleCollapsedResults
+                            maxToShowWhenExpanded: maxVisibleSuggestions];
 }
 
 - (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
 {
-    [m_suggestionProviders removeObject:suggestionProvider];
-    if(m_viewDidLoad) {
-        [m_suggestionsViewController stopDisplayingResultsFrom: suggestionProvider];
-    }
+    [m_suggestionsDataSource stopDisplayingResultsFrom: suggestionProvider];
 }
 
 -(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
