@@ -62,7 +62,6 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="iconImageView" destination="RSc-dz-b9d" id="gW6-8A-vqL"/>
                 <outlet property="spacer" destination="ecs-gN-pwx" id="uPz-vy-dHd"/>
                 <outlet property="titleLabel" destination="XAk-t6-Qze" id="Kf1-xK-mgx"/>
             </connections>

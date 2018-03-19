@@ -33,6 +33,14 @@
                   regularAttributes: m_descriptionLabelRegularAttrs
                      boldAttributes: m_descriptionLabelBoldAttrs];
     }
+    
+    if(self.iconImageView && searchResult.iconKey)
+    {
+        NSURL* iconUrl = [NSURL URLWithString: searchResult.iconKey];
+        if(iconUrl){
+            [self loadFromURL: iconUrl];
+        }
+    }
 }
 
 - (void) applyStyle: (WRLDSearchWidgetStyle *) style
@@ -67,6 +75,21 @@
     }
     
     [label setAttributedText: attributedText];
+}
+
+- (void) loadFromURL: (NSURL *) url
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* imageData = [NSData dataWithContentsOfURL: url];
+        if (imageData) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage * image = [UIImage imageWithData: imageData];
+                if (image) {
+                    self.iconImageView.image = image;
+                }
+            });
+        }
+    });
 }
 
 - (void)awakeFromNib
