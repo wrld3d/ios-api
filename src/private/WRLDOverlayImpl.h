@@ -16,9 +16,7 @@ typedef NS_ENUM(NSInteger, WRLDOverlayType)
 
     WRLDOverlayPositioner,
 
-    WRLDOverlayBuildingHighlight,
-    
-    WRLDOverlayIndoorEntityHighlight
+    WRLDOverlayBuildingHighlight
 };
 
 typedef struct _WRLDOverlayId
