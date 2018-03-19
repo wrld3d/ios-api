@@ -1219,8 +1219,7 @@ template<typename T> inline T* safe_cast(id instance)
 {
     if ([self.delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
     {
-        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage
-                                                                                                     indoorMapId:_activeIndoorMap.indoorId]];
+        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
     }
 }
 
