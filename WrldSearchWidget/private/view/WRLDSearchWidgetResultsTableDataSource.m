@@ -121,6 +121,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
     id<WRLDSearchResultModel> selectedResultModel = [setViewModel getResult:[indexPath row]];
     [setViewModel.fulfiller.selectionObserver selected: selectedResultModel];
+    [self.selectionObserver selected:selectedResultModel];
 }
 
 - (void) populateCell: (WRLDSearchResultTableViewCell *)cell withDataFor:(NSIndexPath *)indexPath
