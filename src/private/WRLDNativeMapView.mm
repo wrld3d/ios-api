@@ -25,6 +25,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_mapsceneCompletedHandler(this, &WRLDNativeMapView::OnMapsceneLoadCompleted)
 , m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
 , m_buildingInformationReceivedHandler(this, &WRLDNativeMapView::OnBuildingInformationReceived)
+, m_indoorEntityPickedHandler(this, &WRLDNativeMapView::OnIndoorEntityPicked)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -38,12 +39,14 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetMapsceneApi().RegisterMapsceneRequestCompletedCallback(m_mapsceneCompletedHandler);
     mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetBuildingsApi().RegisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
+    mapApi.GetIndoorEntityApi().RegisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
-    
+
+    mapApi.GetIndoorEntityApi().UnregisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
     mapApi.GetBuildingsApi().UnregisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
     mapApi.GetRoutingApi().UnregisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetPoiApi().UnregisterSearchCompletedCallback(m_poiSearchCompletedHandler);
@@ -125,6 +128,11 @@ void WRLDNativeMapView::OnRoutingQueryCompleted(const Eegeo::Routes::Webservice:
 void WRLDNativeMapView::OnBuildingInformationReceived(const Eegeo::BuildingHighlights::BuildingHighlightId& buildingHighlightId)
 {
     [m_mapView notifyBuildingInformationReceived:buildingHighlightId];
+}
+
+void WRLDNativeMapView::OnIndoorEntityPicked(const Eegeo::Api::IndoorEntityPickedMessage& indoorEntityPickedMessage)
+{
+    [m_mapView notifyIndoorEntityTapped:indoorEntityPickedMessage];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()

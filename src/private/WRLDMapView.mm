@@ -26,6 +26,9 @@
 #import "WRLDBuildingHighlight+Private.h"
 #import "WRLDPickResult.h"
 #import "WRLDPickingApiHelpers.h"
+#import "WRLDMathApiHelpers.h"
+#import "WRLDStringApiHelpers.h"
+#import "WRLDIndoorEntityApiHelpers.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -50,6 +53,7 @@
 #include "MapsceneRequestResponse.h"
 #include "EegeoBuildingsApi.h"
 #include "EegeoPickingApi.h"
+#include "EegeoIndoorEntityApi.h"
 
 #include <string>
 
@@ -935,6 +939,27 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     }
 }
 
+- (void)setIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds color:(UIColor*) color
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.SetHighlights(std::string([indoorMapId UTF8String]),
+                                  [WRLDStringApiHelpers copyToStringVector:indoorEntityIds],
+                                  [WRLDMathApiHelpers getEegeoColor:color]);
+}
+
+- (void)clearIndoorEntityHighlights:(NSString*)indoorMapId indoorEntityIds:(NSArray<NSString*>*)indoorEntityIds
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.ClearHighlights(std::string([indoorMapId UTF8String]),
+                                    [WRLDStringApiHelpers copyToStringVector:indoorEntityIds]);
+}
+
+- (void)clearAllIndoorEntityHighlights
+{
+    Eegeo::Api::EegeoIndoorEntityApi& indoorEntityApi = [self getMapApi].GetIndoorEntityApi();
+    indoorEntityApi.ClearAllHighlights();
+}
+
 - (void)setMapCollapsed:(BOOL)isMapCollapsed
 {
     [self getMapApi].GetRenderingApi().SetMapCollapsed(isMapCollapsed);
@@ -1187,6 +1212,14 @@ template<typename T> inline T* safe_cast(id instance)
     if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
     {
         [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+    }
+}
+
+- (void)notifyIndoorEntityTapped:(const Eegeo::Api::IndoorEntityPickedMessage&)indoorEntityPickedMessage
+{
+    if ([self.delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
+    {
+        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
     }
 }
 

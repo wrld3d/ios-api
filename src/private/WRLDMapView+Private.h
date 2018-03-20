@@ -5,6 +5,7 @@
 #include "RoutingQueryResponse.h"
 #include "PositioningTypes.h"
 #include "MapsceneRequestResponse.h"
+#include "EegeoIndoorEntityApi.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result;
 
 - (void)notifyBuildingInformationReceived:(int)buildingHighlightId;
+
+- (void)notifyIndoorEntityTapped:(const Eegeo::Api::IndoorEntityPickedMessage&)indoorEntityPickedMessage;
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
