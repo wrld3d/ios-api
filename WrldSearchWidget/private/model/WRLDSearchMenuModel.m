@@ -83,6 +83,20 @@
     }
 }
 
+- (void) removeAllGroups
+{
+    for (WRLDMenuGroup* group in m_groups)
+    {
+        [group setListener:nil];
+    }
+    
+    [m_groups removeAllObjects];
+    if (m_listener != nil)
+    {
+        [m_listener onMenuChanged];
+    }
+}
+
 #pragma mark - WRLDSearchMenuModel (Private)
 
 - (NSMutableArray *)getGroups
@@ -96,20 +110,6 @@
     for (WRLDMenuGroup* group in m_groups)
     {
         [group setListener:m_listener];
-    }
-}
-
-- (void) removeAllGroups
-{
-    for (WRLDMenuGroup* group in m_groups)
-    {
-        [group setListener: nil];
-    }
-    
-    [m_groups removeAllObjects];
-    if (m_listener != nil)
-    {
-        [m_listener onMenuChanged];
     }
 }
 

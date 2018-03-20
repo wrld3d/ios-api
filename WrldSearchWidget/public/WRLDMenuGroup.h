@@ -17,6 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addOption:(NSString *)text
           context:(nullable NSObject *)context;
 
+- (void)removeOption:(WRLDMenuOption *)option;
+
+- (void)insertOption:(WRLDMenuOption *)option
+             atIndex:(NSUInteger)index;
+
+- (void)removeOptionAtIndex:(NSUInteger)index;
+
+- (void)removeAllOptions;
+
 @end
 
 NS_ASSUME_NONNULL_END
