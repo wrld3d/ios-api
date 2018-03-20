@@ -60,3 +60,4 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDVector3.h"
 #import "WRLDPickResult.h"
 #import "WRLDTouchTapInfo.h"
+#import "WRLDIndoorEntityTapResult.h"
