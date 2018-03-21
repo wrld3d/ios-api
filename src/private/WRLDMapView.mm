@@ -1034,7 +1034,7 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
         Eegeo::v2 p = Eegeo::v2(static_cast<float>(point.x), static_cast<float>(point.y));
         Eegeo::Space::LatLongAltitude lla(0.0, 0.0, 0.0);
         
-        bool success = spacesApi.TryGetScreenToTerrainPoint(p, lla);
+        bool success = [self isIndoors] ? spacesApi.TryGetScreenToIndoorPoint(p, lla) : spacesApi.TryGetScreenToTerrainPoint(p, lla);
         
         if (success)
         {
