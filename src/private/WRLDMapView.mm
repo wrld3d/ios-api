@@ -91,6 +91,8 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
     NSNumber* m_startDirection;
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
+    
+    NSHashTable* m_eventListeners;
 }
 
 
@@ -158,6 +160,8 @@ const double defaultStartZoomLevel = 8;
     m_startDirection = nil;
 
     m_overlays = {};
+    
+    m_eventListeners = [NSHashTable weakObjectsHashTable];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onAppWillEnterForeground)
@@ -489,6 +493,16 @@ const double defaultStartZoomLevel = 8;
 {
     Eegeo::Api::EegeoMapApi& mapApi = m_pApiRunner->GetEegeoApiHostModule()->GetEegeoMapApi();
     return mapApi;
+}
+
+- (void)registerMapViewDelegateForEvents: (id<WRLDMapViewDelegate>)delegate
+{
+    [m_eventListeners addObject:delegate];
+}
+
+- (void)unregisterMapViewDelegateForEvents: (id<WRLDMapViewDelegate>)delegate
+{
+    [m_eventListeners removeObject:delegate];
 }
 
 #pragma mark - public interface implementation -
@@ -992,66 +1006,128 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     
 - (void)notifyMapViewRegionWillChange
 {
-    if ([self.delegate respondsToSelector:@selector(mapViewRegionWillChange:)])
+    [self notifyMapViewRegionWillChange:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapViewRegionWillChange:self];
+        if(listener!=nil)
+        {
+            [self notifyMapViewRegionWillChange:listener];
+        }
+    }
+}
+
+- (void)notifyMapViewRegionWillChange:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapViewRegionWillChange:)])
+    {
+        [delegate mapViewRegionWillChange:self];
     }
 }
     
 - (void)notifyMapViewRegionIsChanging
 {
-    if ([self.delegate respondsToSelector:@selector(mapViewRegionIsChanging:)])
+    [self notifyMapViewRegionIsChanging:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapViewRegionIsChanging:self];
+        if(listener!=nil)
+        {
+            [self notifyMapViewRegionIsChanging:listener];
+        }
+    }
+}
+
+- (void)notifyMapViewRegionIsChanging:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapViewRegionIsChanging:)])
+    {
+        [delegate mapViewRegionIsChanging:self];
     }
 }
 
 - (void)notifyMapViewRegionDidChange
 {
-    if ([self.delegate respondsToSelector:@selector(mapViewRegionDidChange:)])
+    [self notifyMapViewRegionDidChange:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapViewRegionDidChange:self];
+        if(listener!=nil)
+        {
+            [self notifyMapViewRegionDidChange:listener];
+        }
+    }
+}
+
+- (void)notifyMapViewRegionDidChange:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapViewRegionDidChange:)])
+    {
+        [delegate mapViewRegionDidChange:self];
     }
 }
     
 -(void)notifyInitialStreamingCompleted
 {
-    if ([self.delegate respondsToSelector:@selector(mapViewDidFinishLoadingInitialMap:)])
+    [self notifyInitialStreamingCompleted:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapViewDidFinishLoadingInitialMap:self];
+        if(listener!=nil)
+        {
+            [self notifyInitialStreamingCompleted:listener];
+        }
+    }
+}
+
+-(void)notifyInitialStreamingCompleted:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapViewDidFinishLoadingInitialMap:)])
+    {
+        [delegate mapViewDidFinishLoadingInitialMap:self];
     }
 }
 
 -(void)notifyTouchTapped:(CGPoint)point
 {
-    Boolean respondsToDidTapMap = [self.delegate respondsToSelector:@selector(mapView:didTapMap:)];
-    Boolean respondsToDidTapView = [self.delegate respondsToSelector:@selector(mapView:didTapView:)];
-
-    if (respondsToDidTapMap || respondsToDidTapView)
+    Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
+        
+    Eegeo::v2 p = Eegeo::v2(static_cast<float>(point.x), static_cast<float>(point.y));
+    Eegeo::Space::LatLongAltitude lla(0.0, 0.0, 0.0);
+        
+    bool success = spacesApi.TryGetScreenToTerrainPoint(p, lla);
+        
+    if (success)
     {
-        Eegeo::Api::EegeoSpacesApi& spacesApi = [self getMapApi].GetSpacesApi();
+        WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
+
+        WRLDTouchTapInfo tapInfo = WRLDTouchTapInfoMake(point, coordinateWithAltitude);
         
-        Eegeo::v2 p = Eegeo::v2(static_cast<float>(point.x), static_cast<float>(point.y));
-        Eegeo::Space::LatLongAltitude lla(0.0, 0.0, 0.0);
+        [self notifyTouchTapped:tapInfo delegate:self.delegate];
         
-        bool success = spacesApi.TryGetScreenToTerrainPoint(p, lla);
-        
-        if (success)
+        for(id<WRLDMapViewDelegate> listener in m_eventListeners)
         {
-            WRLDCoordinateWithAltitude coordinateWithAltitude = WRLDCoordinateWithAltitudeMake(CLLocationCoordinate2DMake(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees()), lla.GetAltitude());
-
-            if (respondsToDidTapMap)
+            if(listener!=nil)
             {
-                [self.delegate mapView:self didTapMap:coordinateWithAltitude];
-            }
-
-            if (respondsToDidTapView)
-            {
-                WRLDTouchTapInfo tapInfo = WRLDTouchTapInfoMake(point, coordinateWithAltitude);
-
-                [self.delegate mapView:self didTapView:tapInfo];
+                [self notifyTouchTapped:tapInfo delegate:listener];
             }
         }
+    }
+}
+
+-(void)notifyTouchTapped:(WRLDTouchTapInfo)tapInfo delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    Boolean respondsToDidTapMap = [delegate respondsToSelector:@selector(mapView:didTapMap:)];
+    Boolean respondsToDidTapView = [delegate respondsToSelector:@selector(mapView:didTapView:)];
+    
+    if (respondsToDidTapMap)
+    {
+        [delegate mapView:self didTapMap:tapInfo.coordinateWithAltitude];
+    }
+
+    if (respondsToDidTapView)
+    {
+        [delegate mapView:self didTapView:tapInfo];
     }
 }
 
@@ -1083,9 +1159,22 @@ template<typename T> inline T* safe_cast(id instance)
         return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(mapView:didTapMarker:)])
+    [self notifyMarkerTapped:marker delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapView:self didTapMarker:marker];
+        if(listener!=nil)
+        {
+            [self notifyMarkerTapped:marker delegate:listener];
+        }
+    }
+}
+
+- (void)notifyMarkerTapped:(WRLDMarker*)marker delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:didTapMarker:)])
+    {
+        [delegate mapView:self didTapMarker:marker];
     }
 }
 
@@ -1098,9 +1187,25 @@ template<typename T> inline T* safe_cast(id instance)
             WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
             if (positioner != nil)
             {
-                [self.delegate mapView:self positionerDidChange:positioner];
+                [self notifyPositionerProjectionChanged:positioner delegate:self.delegate];
+                
+                for(id<WRLDMapViewDelegate> listener in m_eventListeners)
+                {
+                    if(listener!=nil)
+                    {
+                        [self notifyPositionerProjectionChanged:positioner delegate:listener];
+                    }
+                }
             }
         }
+    }
+}
+
+- (void)notifyPositionerProjectionChanged:(WRLDPositioner*)positioner delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:positionerDidChange:)])
+    {
+        [delegate mapView:self positionerDidChange:positioner];
     }
 }
 
@@ -1153,7 +1258,25 @@ template<typename T> inline T* safe_cast(id instance)
         [poiSearchResponse.results addObject:searchResult];
     }
 
-    [self.delegate mapView:self poiSearchDidComplete:result.Id poiSearchResponse:poiSearchResponse];
+    [self notifyPoiSearchCompleted:result.Id poiSearchResponse:poiSearchResponse delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
+    {
+        if(listener!=nil)
+        {
+            [self notifyPoiSearchCompleted:result.Id poiSearchResponse:poiSearchResponse delegate:listener];
+        }
+    }
+}
+
+- (void)notifyPoiSearchCompleted:(int) poiSearchId
+               poiSearchResponse:(WRLDPoiSearchResponse*) poiSearchResponse
+                        delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:poiSearchDidComplete:poiSearchResponse:)])
+    {
+        [delegate mapView:self poiSearchDidComplete:poiSearchId poiSearchResponse:poiSearchResponse];
+    }
 }
 
 - (void)notifyMapsceneCompleted:(const Eegeo::Mapscenes::MapsceneRequestResponse&)result
@@ -1177,7 +1300,25 @@ template<typename T> inline T* safe_cast(id instance)
         cameraApi.MoveCamera(mapCameraUpdate);
     }
     
-    [self.delegate mapView:self mapsceneRequestDidComplete:result.GetRequestId() mapsceneResponse:response];
+    [self notifyMapsceneCompleted:result.GetRequestId() mapsceneResponse:response delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
+    {
+        if(listener!=nil)
+        {
+            [self notifyMapsceneCompleted:result.GetRequestId() mapsceneResponse:response delegate:listener];
+        }
+    }
+}
+
+- (void)notifyMapsceneCompleted:(int) requestId
+               mapsceneResponse:(WRLDMapsceneRequestResponse*) mapsceneResponse
+                       delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:mapsceneRequestDidComplete:mapsceneResponse:)])
+    {
+        [delegate mapView:self mapsceneRequestDidComplete:requestId mapsceneResponse:mapsceneResponse];
+    }
 }
 
 - (void)notifyRoutingQueryCompleted:(const Eegeo::Routes::Webservice::RoutingQueryResponse&)result
@@ -1185,6 +1326,26 @@ template<typename T> inline T* safe_cast(id instance)
     WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
     [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
+    
+    [self notifyRoutingQueryCompleted:result.Id routingQueryResponse:routingQueryResponse delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
+    {
+        if(listener!=nil)
+        {
+            [self notifyRoutingQueryCompleted:result.Id routingQueryResponse:routingQueryResponse delegate:listener];
+        }
+    }
+}
+
+- (void)notifyRoutingQueryCompleted:(int) requestId
+               routingQueryResponse:(WRLDRoutingQueryResponse*) routingQueryResponse
+                           delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:routingQueryDidComplete:routingQueryResponse:)])
+    {
+        [delegate mapView:self routingQueryDidComplete:requestId routingQueryResponse:routingQueryResponse];
+    }
 }
 
 - (void)notifyBuildingInformationReceived:(int)buildingHighlightId
@@ -1209,17 +1370,44 @@ template<typename T> inline T* safe_cast(id instance)
 
     [buildingHighlight loadBuildingInformationFromNative];
 
-    if ([self.delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
+    [self notifyBuildingInformationReceived:buildingHighlight delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
+        if(listener!=nil)
+        {
+            [self notifyBuildingInformationReceived:buildingHighlight delegate:listener];
+        }
+    }
+}
+
+- (void)notifyBuildingInformationReceived:(WRLDBuildingHighlight*)buildingHighlight delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:didReceiveBuildingInformationForHighlight:)])
+    {
+        [delegate mapView:self didReceiveBuildingInformationForHighlight:buildingHighlight];
     }
 }
 
 - (void)notifyIndoorEntityTapped:(const Eegeo::Api::IndoorEntityPickedMessage&)indoorEntityPickedMessage
 {
-    if ([self.delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
+    WRLDIndoorEntityTapResult* indoorEntityTapResult = [WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage];
+    [self notifyIndoorEntityTapped:indoorEntityTapResult delegate:self.delegate];
+    
+    for(id<WRLDMapViewDelegate> listener in m_eventListeners)
     {
-        [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
+        if(listener!=nil)
+        {
+            [self notifyIndoorEntityTapped:indoorEntityTapResult delegate:listener];
+        }
+    }
+}
+
+- (void)notifyIndoorEntityTapped:(WRLDIndoorEntityTapResult*)indoorEntityTapResult delegate:(id<WRLDMapViewDelegate>)delegate
+{
+    if ([delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
+    {
+        [delegate mapView:self didTapIndoorEntities:indoorEntityTapResult];
     }
 }
 

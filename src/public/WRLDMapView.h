@@ -61,8 +61,17 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 - (instancetype)initWithFrame:(CGRect)frame
                 andMapOptions:(nullable WRLDMapOptions *)mapOptions;
 
+/*!
+ Register A <WRLDMapViewDelegate> object to receive events from this view. Allows more observers to be registered to the WRLDMapView if needed.
+ @param delegate The <WRLDMapViewDelegate> object.
+ */
+- (void)registerMapViewDelegateForEvents: (id<WRLDMapViewDelegate>)delegate;
 
-
+/*!
+ Unregister A <WRLDMapViewDelegate> object from this view.
+ @param delegate The <WRLDMapViewDelegate> object.
+ */
+- (void)unregisterMapViewDelegateForEvents: (id<WRLDMapViewDelegate>)delegate;
 
 
 #pragma mark - manipulating the visible portion of the map -
