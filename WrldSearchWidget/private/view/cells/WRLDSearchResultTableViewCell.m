@@ -3,43 +3,49 @@
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchQuery.h"
 #import "WRLDSearchWidgetStyle.h"
+#import "WRLDAsyncImageLoadResponse.h"
+#import "WRLDUrlImageLoader.h"
+#import "WRLDLabelTextHighlighter.h"
 
 @implementation WRLDSearchResultTableViewCell
 {
-    NSDictionary *m_titleLabelRegularAttrs;
-    NSDictionary *m_titleLabelBoldAttrs;
-    NSDictionary *m_descriptionLabelRegularAttrs;
-    NSDictionary *m_descriptionLabelBoldAttrs;
-    
     UIView *m_selectedBackgroundView;
+    
+    WRLDAsyncImageLoadResponse * m_imageLoadResponse;
 }
 
 - (void) populateWith: (id<WRLDSearchResultModel>) searchResult fromQuery: (WRLDSearchQuery *) query
 {
-    if(self.titleLabel)
-    {
-        [self applyAttributedTextTo:self.titleLabel
-                               text: searchResult.title
-                           boldText: query.queryString
-                  regularAttributes: m_titleLabelRegularAttrs
-                     boldAttributes: m_titleLabelBoldAttrs];
-    }
+    [WRLDLabelTextHighlighter applyAttributedTextTo:self.titleLabel
+                                               fullText: searchResult.title
+                                  regularAttributes: self.titleLabelRegularAttrs
+                                           boldText: query.queryString
+                                     boldAttributes: self.titleLabelBoldAttrs];
     
-    if(self.descriptionLabel)
-    {
-        [self applyAttributedTextTo:self.descriptionLabel
-                               text: searchResult.subTitle
-                           boldText: query.queryString
-                  regularAttributes: m_descriptionLabelRegularAttrs
-                     boldAttributes: m_descriptionLabelBoldAttrs];
-    }
+    [WRLDLabelTextHighlighter applyAttributedTextTo:self.descriptionLabel
+                                               fullText: searchResult.subTitle
+                                  regularAttributes: self.descriptionLabelRegularAttrs
+                                           boldText: query.queryString
+                                     boldAttributes: self.descriptionLabelBoldAttrs];
     
-    if(self.iconImageView && searchResult.iconKey)
-    {
-        NSURL* iconUrl = [NSURL URLWithString: searchResult.iconKey];
-        if(iconUrl){
-            [self loadFromURL: iconUrl];
+    WRLDUrlImageLoader* urlImageLoader = [[WRLDUrlImageLoader alloc] init];
+    m_imageLoadResponse = [urlImageLoader assignImageFromUrlString:searchResult.iconKey assignmentCallback:^(UIImage * image) {
+        if(self.iconImageView != nil)
+        {
+            self.iconImageView.image = image;
+            m_imageLoadResponse = nil;
         }
+    } cancellationCallback:^{
+        m_imageLoadResponse = nil;
+    }];
+}
+
+- (void) prepareForReuse
+{
+    [super prepareForReuse];
+    if(m_imageLoadResponse)
+    {
+        [m_imageLoadResponse cancel];
     }
 }
 
@@ -60,38 +66,6 @@
     m_selectedBackgroundView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleResultSelectedColor];
 }
 
-- (void) applyAttributedTextTo :(UILabel*) label text:(NSString*) text boldText:(NSString*) boldText regularAttributes:(NSDictionary *) regularAttributes boldAttributes:(NSDictionary*) boldAttributes
-{
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:regularAttributes];
-    NSRange remainingString = NSMakeRange(0, [text length]);
-    NSRange boldRange = [text rangeOfString:boldText options:NSCaseInsensitiveSearch range:remainingString];
-    
-    while(boldRange.location != NSNotFound)
-    {
-        [attributedText setAttributes:boldAttributes range:boldRange];
-        NSInteger endOfBoldText = boldRange.location + boldRange.length;
-        remainingString = NSMakeRange(endOfBoldText, [text length] - endOfBoldText);
-        boldRange = [text rangeOfString:boldText options:NSCaseInsensitiveSearch range:remainingString];
-    }
-    
-    [label setAttributedText: attributedText];
-}
-
-- (void) loadFromURL: (NSURL *) url
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* imageData = [NSData dataWithContentsOfURL: url];
-        if (imageData) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage * image = [UIImage imageWithData: imageData];
-                if (image) {
-                    self.iconImageView.image = image;
-                }
-            });
-        }
-    });
-}
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -99,16 +73,24 @@
     {
         UIFont * titleLabelFont = [self.titleLabel font];
         UIFont *titleLabelBoldFont = [UIFont fontWithDescriptor:[[titleLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:titleLabelFont.pointSize];
-        m_titleLabelRegularAttrs = @{NSFontAttributeName:titleLabelFont};
-        m_titleLabelBoldAttrs = @{NSFontAttributeName:titleLabelBoldFont};
+        self.titleLabelRegularAttrs = @{NSFontAttributeName:titleLabelFont};
+        self.titleLabelBoldAttrs = @{NSFontAttributeName:titleLabelBoldFont};
+    }
+    else{
+        self.titleLabelRegularAttrs = [[NSDictionary alloc] init];
+        self.titleLabelBoldAttrs = [[NSDictionary alloc] init];
     }
     
     if(self.descriptionLabel)
     {
         UIFont * descriptionLabelFont = [self.descriptionLabel font];
         UIFont *descriptionLabelBoldFont = [UIFont fontWithDescriptor:[[descriptionLabelFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:descriptionLabelFont.pointSize];
-        m_descriptionLabelRegularAttrs = @{NSFontAttributeName:descriptionLabelFont};
-        m_descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
+        self.descriptionLabelRegularAttrs = @{NSFontAttributeName:descriptionLabelFont};
+        self.descriptionLabelBoldAttrs = @{NSFontAttributeName:descriptionLabelBoldFont};
+    }
+    else{
+        self.descriptionLabelRegularAttrs = [[NSDictionary alloc] init];
+        self.descriptionLabelBoldAttrs = [[NSDictionary alloc] init];
     }
     
     m_selectedBackgroundView = [[UIView alloc] init];

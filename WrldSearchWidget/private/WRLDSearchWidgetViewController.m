@@ -378,7 +378,7 @@
     [m_suggestionsDataSource stopDisplayingResultsFrom: suggestionProvider];
 }
 
--(void) registerCellForResultsTable: (NSString *) cellIdentifier : (UINib *) nib
+-(void) registerNib:(UINib *)nib forUseWithResultsTableCellIdentifier:(NSString *)cellIdentifier
 {
     [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
 }

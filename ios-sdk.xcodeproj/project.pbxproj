@@ -81,6 +81,13 @@
 		2664D2A32040625F006FA154 /* WRLDPositionedSearchResultModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664D2A02040625F006FA154 /* WRLDPositionedSearchResultModelTests.m */; };
 		2664D2A620407827006FA154 /* WrldSearchWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264B92B2203F2E5C00F6DAE0 /* WrldSearchWidget.framework */; };
 		2664D2A72040783A006FA154 /* WrldSearchWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 264B92B2203F2E5C00F6DAE0 /* WrldSearchWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		269EDB5A2063A32D00BD9116 /* WRLDUrlImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 269EDB592063A32D00BD9116 /* WRLDUrlImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		269EDB5C2063A35500BD9116 /* WRLDLabelTextHighlighter.h in Headers */ = {isa = PBXBuildFile; fileRef = 269EDB5B2063A35500BD9116 /* WRLDLabelTextHighlighter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		269EDB5E2063A41900BD9116 /* WRLDUrlImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 269EDB5D2063A41900BD9116 /* WRLDUrlImageLoader.m */; };
+		269EDB602063B19200BD9116 /* WRLDLabelTextHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = 269EDB5F2063B19200BD9116 /* WRLDLabelTextHighlighter.m */; };
+		269EDB622063B5F000BD9116 /* WRLDAsyncImageLoadResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 269EDB612063B5F000BD9116 /* WRLDAsyncImageLoadResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		269EDB642063B60800BD9116 /* WRLDAsyncImageLoadResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 269EDB632063B60800BD9116 /* WRLDAsyncImageLoadResponse.m */; };
+		269EDB662063B8AA00BD9116 /* WRLDAsyncImageLoadResponseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269EDB652063B8AA00BD9116 /* WRLDAsyncImageLoadResponseTests.m */; };
 		26A5AC5A20445169001881A9 /* WRLDSearchWidgetStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 26A5AC5920445169001881A9 /* WRLDSearchWidgetStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26A5AC5C20445182001881A9 /* WRLDSearchWidgetStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5AC5B20445182001881A9 /* WRLDSearchWidgetStyle.m */; };
 		26A5AC6020447005001881A9 /* WRLDSearchWidgetStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A5AC5F20447005001881A9 /* WRLDSearchWidgetStyleTests.m */; };
@@ -488,6 +495,13 @@
 		2693DF15202B13BC000F91CF /* WRLDSearchWidgetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchWidgetViewController.m; sourceTree = "<group>"; };
 		2693DF17202B1734000F91CF /* WRLDSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchBar.h; sourceTree = "<group>"; };
 		2693DF19202B1745000F91CF /* WRLDSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchBar.m; sourceTree = "<group>"; };
+		269EDB592063A32D00BD9116 /* WRLDUrlImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDUrlImageLoader.h; sourceTree = "<group>"; };
+		269EDB5B2063A35500BD9116 /* WRLDLabelTextHighlighter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDLabelTextHighlighter.h; sourceTree = "<group>"; };
+		269EDB5D2063A41900BD9116 /* WRLDUrlImageLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDUrlImageLoader.m; sourceTree = "<group>"; };
+		269EDB5F2063B19200BD9116 /* WRLDLabelTextHighlighter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDLabelTextHighlighter.m; sourceTree = "<group>"; };
+		269EDB612063B5F000BD9116 /* WRLDAsyncImageLoadResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDAsyncImageLoadResponse.h; sourceTree = "<group>"; };
+		269EDB632063B60800BD9116 /* WRLDAsyncImageLoadResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDAsyncImageLoadResponse.m; sourceTree = "<group>"; };
+		269EDB652063B8AA00BD9116 /* WRLDAsyncImageLoadResponseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WRLDAsyncImageLoadResponseTests.m; path = WRLDSearchWidgetTests/WRLDAsyncImageLoadResponseTests.m; sourceTree = SOURCE_ROOT; };
 		26A3B35C20332611004C4D99 /* WRLDSearchQueryObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchQueryObserver.h; sourceTree = "<group>"; };
 		26A3B35E20332620004C4D99 /* WRLDSearchQueryObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WRLDSearchQueryObserver.m; sourceTree = "<group>"; };
 		26A3B36220332C26004C4D99 /* WRLDSearchRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDSearchRequest.h; sourceTree = "<group>"; };
@@ -923,6 +937,7 @@
 		2664D29420406237006FA154 /* WrldSearchWidgetTests */ = {
 			isa = PBXGroup;
 			children = (
+				269EDB652063B8AA00BD9116 /* WRLDAsyncImageLoadResponseTests.m */,
 				26A5AC5F20447005001881A9 /* WRLDSearchWidgetStyleTests.m */,
 				2664D2A02040625F006FA154 /* WRLDPositionedSearchResultModelTests.m */,
 				2664D29E2040625F006FA154 /* WRLDSearchModelSearchTests.m */,
@@ -935,9 +950,17 @@
 		2693DEA7202AFDD5000F91CF /* public */ = {
 			isa = PBXGroup;
 			children = (
+				269EDB612063B5F000BD9116 /* WRLDAsyncImageLoadResponse.h */,
 				2619A087202CBB12002CF191 /* WRLDBasicSearchResultModel.h */,
+				269EDB592063A32D00BD9116 /* WRLDUrlImageLoader.h */,
+				269EDB5B2063A35500BD9116 /* WRLDLabelTextHighlighter.h */,
+				A00F1D972044369700A42ECF /* WRLDMenuChild.h */,
+				A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */,
+				A00EA76D20489DB100B11046 /* WRLDMenuObserver.h */,
+				A00F1D952044314800A42ECF /* WRLDMenuOption.h */,
 				2619A05E202C6039002CF191 /* WRLDMockSearchProvider.h */,
 				261091FF2031A3D50065B3D4 /* WRLDPositionedSearchResultModel.h */,
+				A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */,
 				2619A03B202B58C1002CF191 /* WRLDSearchModel.h */,
 				2619A032202B5156002CF191 /* WRLDSearchProvider.h */,
 				2619A02F202B5156002CF191 /* WRLDSearchProviderHandle.h */,
@@ -953,11 +976,6 @@
 				2693DEF1202B0007000F91CF /* WRLDSearchWidgetViewController.h */,
 				2619A030202B5156002CF191 /* WRLDSuggestionProvider.h */,
 				2619A033202B5156002CF191 /* WRLDSuggestionProviderHandle.h */,
-				A001E29220407AAA0086A7EA /* WRLDSearchMenuModel.h */,
-				A00F1D8F20442CCC00A42ECF /* WRLDMenuGroup.h */,
-				A00F1D952044314800A42ECF /* WRLDMenuOption.h */,
-				A00F1D972044369700A42ECF /* WRLDMenuChild.h */,
-				A00EA76D20489DB100B11046 /* WRLDMenuObserver.h */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -1041,8 +1059,11 @@
 			isa = PBXGroup;
 			children = (
 				262D3D9220344A1500B9FEA8 /* cells */,
+				269EDB632063B60800BD9116 /* WRLDAsyncImageLoadResponse.m */,
 				26178291203C743600DB29A1 /* WRLDFadeableView.h */,
 				26178293203C749100DB29A1 /* WRLDFadeableView.m */,
+				269EDB5D2063A41900BD9116 /* WRLDUrlImageLoader.m */,
+				269EDB5F2063B19200BD9116 /* WRLDLabelTextHighlighter.m */,
 				A00EA77120489FF100B11046 /* WRLDMenuObserver.m */,
 				A00EA76F20489F8300B11046 /* WRLDMenuObserver+Private.h */,
 				A01455EE20475A9F002268AE /* WRLDMenuTableSectionViewModel.h */,
@@ -1515,9 +1536,12 @@
 				264B92EF203F303900F6DAE0 /* WRLDSearchRequest.h in Headers */,
 				264B92F0203F303900F6DAE0 /* WRLDSearchRequestFulfillerHandle.h in Headers */,
 				264B92F1203F303900F6DAE0 /* WRLDSearchResultModel.h in Headers */,
+				269EDB5A2063A32D00BD9116 /* WRLDUrlImageLoader.h in Headers */,
+				269EDB5C2063A35500BD9116 /* WRLDLabelTextHighlighter.h in Headers */,
 				A00F1D982044369800A42ECF /* WRLDMenuChild.h in Headers */,
 				A080DA202046383100C5FBB3 /* WRLDMenuGroupTitleTableViewCell.h in Headers */,
 				A00F1D9C2044491100A42ECF /* WRLDSearchMenuViewController.h in Headers */,
+				269EDB622063B5F000BD9116 /* WRLDAsyncImageLoadResponse.h in Headers */,
 				264B92F2203F303900F6DAE0 /* WRLDSearchResultSelectedObserver.h in Headers */,
 				26A5AC6A2045C2A7001881A9 /* WRLDSuggestionTableViewCell.h in Headers */,
 				A01455F7204783BD002268AE /* WRLDMenuChildTableViewCell.h in Headers */,
@@ -2128,6 +2152,7 @@
 				A01455F6204783BD002268AE /* WRLDMenuChildTableViewCell.m in Sources */,
 				264B9339204016F500F6DAE0 /* WRLDPositionedSearchResultModel.m in Sources */,
 				A080DA1C2045E4A000C5FBB3 /* WRLDMenuOptionTableViewCell.m in Sources */,
+				269EDB602063B19200BD9116 /* WRLDLabelTextHighlighter.m in Sources */,
 				264B92FE203F306E00F6DAE0 /* WRLDMoreResultsTableViewCell.m in Sources */,
 				264B92FF203F306E00F6DAE0 /* WRLDSearchInProgressTableViewCell.m in Sources */,
 				A001E29420407ADF0086A7EA /* WRLDSearchMenuModel.m in Sources */,
@@ -2138,9 +2163,11 @@
 				A00F1D942044311100A42ECF /* WRLDMenuOption.m in Sources */,
 				264B9304203F306E00F6DAE0 /* WRLDSearchResultSelectedObserver.m in Sources */,
 				264B9305203F306E00F6DAE0 /* WRLDSearchWidgetResultSetViewModel.m in Sources */,
+				269EDB642063B60800BD9116 /* WRLDAsyncImageLoadResponse.m in Sources */,
 				A00F1D9E20444C4C00A42ECF /* WRLDSearchMenuViewController.m in Sources */,
 				264B9306203F306E00F6DAE0 /* WRLDSearchWidgetTableViewController.m in Sources */,
 				264B9338204016F500F6DAE0 /* WRLDMockSearchProvider.m in Sources */,
+				269EDB5E2063A41900BD9116 /* WRLDUrlImageLoader.m in Sources */,
 				26B31322205FD1E100EBDB1E /* WRLDSearchWidgetResultsTableDataSource.m in Sources */,
 				264B9307203F306E00F6DAE0 /* WRLDSearchWidgetView.m in Sources */,
 				264B9308203F306E00F6DAE0 /* WRLDSearchWidgetViewController.m in Sources */,
@@ -2166,6 +2193,7 @@
 				2664D2A22040625F006FA154 /* WRLDSearchModelSuggestionTests.m in Sources */,
 				2664D2A12040625F006FA154 /* WRLDSearchModelSearchTests.m in Sources */,
 				26A5AC6020447005001881A9 /* WRLDSearchWidgetStyleTests.m in Sources */,
+				269EDB662063B8AA00BD9116 /* WRLDAsyncImageLoadResponseTests.m in Sources */,
 				2664D2A32040625F006FA154 /* WRLDPositionedSearchResultModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
