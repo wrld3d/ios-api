@@ -76,6 +76,11 @@
     __weak QueryEvent m_suggestionQueryCompletedEvent;
 }
 
+- (BOOL) searchBarIsFirstResponder
+{
+    return self.searchBar.isFirstResponder;
+}
+
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver
 {
     return m_searchResultsDataSource.selectionObserver;

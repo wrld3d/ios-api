@@ -16,6 +16,7 @@
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * suggestionSelectionObserver;
 @property (nonatomic, readonly) WRLDMenuObserver * menuObserver;
 @property (nonatomic, readonly) WRLDSearchWidgetStyle * style;
+@property (nonatomic, readonly) BOOL searchBarIsFirstResponder;
 @property (nonatomic, readonly) BOOL isMenuOpen;
 @property (nonatomic, readonly) BOOL isResultsViewVisible;
 
