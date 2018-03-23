@@ -388,6 +388,7 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView show];
+        _isResultsViewVisible = YES;
     }
 }
 
@@ -396,6 +397,7 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView hide];
+        _isResultsViewVisible = NO;
     }
 }
 
@@ -403,11 +405,13 @@
 {
     [self resignFocus];
     [m_searchMenuViewController open];
+    _isMenuOpen = YES;
 }
 
 - (void)closeMenu
 {
     [m_searchMenuViewController close];
+    _isMenuOpen = NO;
 }
 
 - (void)collapseMenu
