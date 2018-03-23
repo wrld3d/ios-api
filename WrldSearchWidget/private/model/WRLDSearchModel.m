@@ -24,6 +24,13 @@
         _searchObserver = [[WRLDSearchQueryObserver alloc] init];
         _suggestionObserver = [[WRLDSearchQueryObserver alloc] init];
         m_providerIdGeneration = 0;
+        
+        [self.searchObserver addQueryStartingEvent:^(WRLDSearchQuery * query){
+            _isSearchQueryInFlight = YES;}];
+        [self.searchObserver addQueryCompletedEvent:^(WRLDSearchQuery * query){
+            _isSearchQueryInFlight = NO;}];
+        [self.searchObserver addQueryCancelledEvent:^(WRLDSearchQuery * query){
+            _isSearchQueryInFlight = NO;}];
     }
     
     return self;

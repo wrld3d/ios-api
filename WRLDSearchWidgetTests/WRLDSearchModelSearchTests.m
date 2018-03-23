@@ -437,4 +437,41 @@
     XCTAssertNil(requestCapture.queryContext);
 }
 
+- (void) testQueryInFlightFlagIsTrueWhenQueryInFlight
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    [model getSearchResultsForString:testString];
+    XCTAssertTrue(model.isSearchQueryInFlight);
+}
+
+- (void) testQueryInFlightFlagIsFalseAfterQueryCompletes
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    __block WRLDSearchRequest *requestCapture = nil;
+    
+    OCMStub([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchRequest* request){
+        requestCapture = request;
+        return YES;
+    }]]);
+    
+    [model getSearchResultsForString:testString];
+    [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
+    
+    XCTAssertFalse(model.isSearchQueryInFlight);
+}
+
+- (void) testQueryInFlightFlagIsFalseAfterQueryCancelled
+{
+    id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
+    [model addSearchProvider:mockProvider];
+    
+    WRLDSearchQuery* query = [model getSearchResultsForString:testString];
+    [query cancel];
+    
+    XCTAssertFalse(model.isSearchQueryInFlight);
+}
+
 @end
