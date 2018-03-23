@@ -1180,21 +1180,18 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyPositionerProjectionChanged
 {
-    if ([self.delegate respondsToSelector:@selector(mapView:positionerDidChange:)])
+    for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
     {
-        for(auto i=m_overlays.begin(); i!=m_overlays.end(); ++i)
+        WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
+        if (positioner != nil)
         {
-            WRLDPositioner* positioner = safe_cast<WRLDPositioner>(i->second);
-            if (positioner != nil)
+            [self notifyPositionerProjectionChanged:positioner delegate:self.delegate];
+            
+            for(id<WRLDMapViewDelegate> listener in m_eventListeners)
             {
-                [self notifyPositionerProjectionChanged:positioner delegate:self.delegate];
-                
-                for(id<WRLDMapViewDelegate> listener in m_eventListeners)
+                if(listener!=nil)
                 {
-                    if(listener!=nil)
-                    {
-                        [self notifyPositionerProjectionChanged:positioner delegate:listener];
-                    }
+                    [self notifyPositionerProjectionChanged:positioner delegate:listener];
                 }
             }
         }
@@ -1325,8 +1322,6 @@ template<typename T> inline T* safe_cast(id instance)
 {
     WRLDRoutingQueryResponse* routingQueryResponse = [WRLDRoutingServiceHelpers createWRLDRoutingQueryResponse:result];
 
-    [self.delegate mapView:self routingQueryDidComplete:result.Id routingQueryResponse:routingQueryResponse];
-    
     [self notifyRoutingQueryCompleted:result.Id routingQueryResponse:routingQueryResponse delegate:self.delegate];
     
     for(id<WRLDMapViewDelegate> listener in m_eventListeners)
