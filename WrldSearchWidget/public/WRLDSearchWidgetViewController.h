@@ -26,6 +26,12 @@
 -(void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
 -(void) registerNib: (UINib *) nib forUseWithResultsTableCellIdentifier: (NSString *) cellIdentifier;
 
+- (void) clearSearch;
+
+- (void) showResultsView;
+
+- (void) hideResultsView;
+
 - (void) resignFocus;
 
 - (void)openMenu;

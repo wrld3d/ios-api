@@ -280,10 +280,7 @@
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
 {
     [searchBar setActive: true];
-    if(m_activeResultsView != nil)
-    {
-        [m_activeResultsView show];
-    }
+    [self showResultsView];
     m_hasFocus = YES;
 }
 
@@ -299,10 +296,7 @@
         [self.searchBar resignFirstResponder];
     }
     
-    if(m_activeResultsView != nil)
-    {
-        [m_activeResultsView hide];
-    }
+    [self hideResultsView];
     m_hasFocus = NO;
 }
 
@@ -381,6 +375,28 @@
 -(void) registerNib:(UINib *)nib forUseWithResultsTableCellIdentifier:(NSString *)cellIdentifier
 {
     [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
+}
+
+- (void) clearSearch
+{
+    [self.searchBar setText:@""];
+    [self hideResultsView];
+}
+
+- (void) showResultsView
+{
+    if(m_activeResultsView != nil)
+    {
+        [m_activeResultsView show];
+    }
+}
+
+- (void) hideResultsView
+{
+    if(m_activeResultsView != nil)
+    {
+        [m_activeResultsView hide];
+    }
 }
 
 - (void)openMenu
