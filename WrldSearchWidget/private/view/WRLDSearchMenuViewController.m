@@ -362,6 +362,11 @@ andNotifyFromInteraction:(BOOL)fromInteraction
     [self hideAndNotifyClosedFromInteraction:YES];
 }
 
+- (BOOL)isMenuOpen
+{
+    return !m_visibilityView.hidden;
+}
+
 #pragma mark - WRLDMenuChangedListener
 
 - (void)onMenuTitleChanged

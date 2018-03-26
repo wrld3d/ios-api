@@ -99,6 +99,11 @@
     return m_searchMenuViewController.observer;
 }
 
+- (BOOL)isMenuOpen
+{
+    return [m_searchMenuViewController isMenuOpen];
+}
+
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
 {
     return [self initWithSearchModel:searchModel
@@ -419,13 +424,11 @@
 {
     [self resignFocus];
     [m_searchMenuViewController open];
-    _isMenuOpen = YES;
 }
 
 - (void)closeMenu
 {
     [m_searchMenuViewController close];
-    _isMenuOpen = NO;
 }
 
 - (void)collapseMenu
