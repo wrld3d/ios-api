@@ -37,12 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)usesRadius;
 
 /*!
- @returns The search radius in meters.
+ @returns The search result boost radius in meters.
  */
 - (double)getRadius;
 
 /*!
- @param radius Set the search radius in meters.
+ @param radius Set the search result boost radius in meters.
  */
 - (void)setRadius:(double)radius;
 
