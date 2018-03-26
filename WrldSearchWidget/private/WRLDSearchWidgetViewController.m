@@ -18,6 +18,9 @@
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchbarLeadingConstraint;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -162,6 +165,12 @@
         self.searchBar.text = selectedResultModel.title;
         [self triggerSearch : selectedResultModel.title];
     }];
+    
+    if (m_menuModel == nil)
+    {
+        [self.menuButton setHidden:YES];
+        [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
+    }
     
     [self setupStyle];
 }

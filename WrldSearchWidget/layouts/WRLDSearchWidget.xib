@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetViewController">
             <connections>
+                <outlet property="menuButton" destination="Gsy-aj-hKu" id="gPr-Zx-6NW"/>
+                <outlet property="menuButtonWidthConstraint" destination="MJU-fm-ezz" id="e0p-CE-W7m"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
                 <outlet property="menuContainerViewHeightConstraint" destination="Mhq-ZP-IKm" id="9C5-th-e5V"/>
                 <outlet property="menuSeparator" destination="EIc-t9-bk5" id="CBE-wW-dpc"/>
@@ -26,6 +28,7 @@
                 <outlet property="resultsTableHeightConstraint" destination="Ch0-Pu-hmk" id="X93-NU-WXm"/>
                 <outlet property="resultsTableView" destination="URT-uZ-0JQ" id="WwU-4o-USZ"/>
                 <outlet property="searchBar" destination="nwq-hq-zts" id="3X3-RJ-bFn"/>
+                <outlet property="searchbarLeadingConstraint" destination="7K7-kT-zzp" id="szu-ey-iOQ"/>
                 <outlet property="suggestionsTableContainerView" destination="vWc-gR-AKq" id="eJq-pP-c1C"/>
                 <outlet property="suggestionsTableHeightConstraint" destination="E2e-1a-TmF" id="iIE-y0-PVK"/>
                 <outlet property="suggestionsTableView" destination="0kP-eT-3ph" id="df6-oc-qgf"/>
