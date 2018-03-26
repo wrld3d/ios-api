@@ -100,19 +100,21 @@ typedef NSMutableArray<WRLDSearchWidgetStyleApplier *> StyleCollection;
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSecondaryColor]               setColorFromInt: 0xF0F0F0];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleSearchBarColor]               setColorFromInt: 0xFFFFFF];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleResultBackgroundColor]        setColorFromInt: 0xFFFFFF];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleResultSelectedColor]          setColorFromInt: 0xD0DDEF];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleResultSelectedColor]          setColorFromInt: 0xD9EAF5];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextPrimaryColor]             setColorFromInt: 0x202020];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleTextSecondaryColor]           setColorFromInt: 0x606060];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleLinkColor]                    setColorFromInt: 0x0071BC];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleLinkColor]                    setColorFromInt: 0x002B63];
     [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleWarningColor]                 setColorFromInt: 0xD1021A];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleDividerColor]                 setColorFromInt: 0xB9C9E0];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupExpandedColor]       setColorFromInt: 0x1256B0];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupCollapsedColor]      setColorFromInt: 0xF0F0F0];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupTextExpandedColor]   setColorFromInt: 0xFFFFFF];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupTextHoverColor]      setColorFromInt: 0xFFFFFF];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuGroupTextCollapsedColor]  setColorFromInt: 0x1256B0];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuHoverColor]               setColorFromInt: 0x1256B0];
-    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuIconColor]                setColorFromInt: 0x0071BC];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMajorDividerColor]            setColorFromInt: 0x8095B1];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMinorDividerColor]            setColorFromInt: 0xB9C9E0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionExpandedColor]      setColorFromInt: 0x1256B0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionCollapsedColor]     setColorFromInt: 0xF0F0F0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionTextExpandedColor]  setColorFromInt: 0xFFFFFF];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionTextHoverColor]     setColorFromInt: 0xFFFFFF];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionTextCollapsedColor] setColorFromInt: 0x1256B0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuOptionHoverColor]         setColorFromInt: 0x1256B0];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuChildOptionHoverColor]    setColorFromInt: 0xD9EAF5];
+    [[m_styleAppliers objectAtIndex: WRLDSearchWidgetStyleMenuIconColor]                setColorFromInt: 0x002B63];
 }
 
 - (void) call:(ApplyColorEvent)event toApply:(WRLDSearchWidgetStyleType) style

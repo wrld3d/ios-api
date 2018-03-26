@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         
         [m_style call:^(UIColor *color) {
             [m_tableView setSeparatorColor: color];
-        } toApply:WRLDSearchWidgetStyleDividerColor];
+        } toApply:WRLDSearchWidgetStyleMinorDividerColor];
     }
     
     return self;

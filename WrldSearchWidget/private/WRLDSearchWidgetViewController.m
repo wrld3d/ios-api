@@ -63,13 +63,6 @@
     
     NSInteger maxVisibleSuggestions;
     
-    UIColor * m_primaryBackgroundColor;
-    UIColor * m_primaryForegroundColor;
-    UIColor * m_focusBackgroundColor;
-    UIColor * m_focusForegroundColor;
-    UIColor * m_disabledBackgroundColor;
-    UIColor * m_disabledForegroundColor;
-    
     id<WRLDViewVisibilityController> m_activeResultsView;
     
     BOOL m_hasFocus;

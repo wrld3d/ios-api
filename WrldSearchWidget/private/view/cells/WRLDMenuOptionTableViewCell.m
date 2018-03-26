@@ -5,6 +5,9 @@
 @implementation WRLDMenuOptionTableViewCell
 {
     WRLDSearchWidgetStyle* m_style;
+    UIImage* m_expanderIcon;
+    UIImage* m_highlightedExpanderIcon;
+    bool m_needsExpander;
     bool m_isExpanded;
 }
 
@@ -15,20 +18,22 @@
                style:(WRLDSearchWidgetStyle *)style
 {
     m_style = style;
+    m_expanderIcon = expanderIcon;
+    m_highlightedExpanderIcon = highlightedIcon;
     
     self.label.text = [viewModel getText];
     
-    bool needsExpander = [viewModel isExpandable];
-    [self.expander setHidden:!needsExpander];
+    m_needsExpander = [viewModel isExpandable];
+    [self.expander setHidden:!m_needsExpander];
     
     bool needsGroupSeparator = [viewModel isFirstOptionInGroup] && !isFirstTableSection;
     [self.groupSeparator setHidden:!needsGroupSeparator];
-    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
+    self.groupSeparator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMajorDividerColor];
     
     m_isExpanded = viewModel.expandedState == Expanded;
     bool needsBottomSeparator = ![viewModel isLastOptionInGroup] && !m_isExpanded;
     [self.separator setHidden:!needsBottomSeparator];
-    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMinorDividerColor];
     
     [UIView animateWithDuration: 0.2f animations:^{
         CGFloat degrees = m_isExpanded ? 270.0f : 0.0f;
@@ -38,15 +43,15 @@
     
     if (m_isExpanded)
     {
-        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupExpandedColor];
-        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextExpandedColor];
-        [self.expander setImage:highlightedIcon];
+        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionExpandedColor];
+        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextExpandedColor];
+        [self.expander setImage:m_highlightedExpanderIcon];
     }
     else
     {
-        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupCollapsedColor];
-        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
-        [self.expander setImage:expanderIcon];
+        self.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionCollapsedColor];
+        self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextCollapsedColor];
+        [self.expander setImage:m_expanderIcon];
     }
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -62,14 +67,16 @@
     
     if (highlighted)
     {
-        self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuHoverColor];
-        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextHoverColor];
+        self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuOptionHoverColor];
+        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextHoverColor];
     }
     else
     {
-        self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupCollapsedColor];
-        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
+        self.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuOptionCollapsedColor];
+        self.label.textColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextCollapsedColor];
     }
+    
+    [self.expander setImage:(highlighted ? m_highlightedExpanderIcon : m_expanderIcon)];
 }
 
 @end

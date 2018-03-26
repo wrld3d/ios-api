@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_sectionViewModels = [[TableSectionViewModelCollection alloc] init];
         [self updateSectionViewModels];
         
-        separatorView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleDividerColor];
+        separatorView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleMajorDividerColor];
         
         [self assignCellResourcesTo:m_tableView];
         [self initTableFadeViews];

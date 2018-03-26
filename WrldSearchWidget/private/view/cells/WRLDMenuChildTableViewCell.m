@@ -20,7 +20,7 @@
     self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStylePrimaryColor];
     
     self.label.text = menuChild != nil ? menuChild.text : @"";
-    self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuGroupTextCollapsedColor];
+    self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextCollapsedColor];
     
     // TODO: set icon
     //[self.icon setImage:icon];
@@ -29,7 +29,7 @@
     bool isLastChild = childIndex == [viewModel getChildCount] - 1;
     
     [self.separator setHidden:isLastChild];
-    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleDividerColor];
+    self.separator.backgroundColor = [style colorForStyle:WRLDSearchWidgetStyleMinorDividerColor];
     
     CAGradientLayer* gradient = [[CAGradientLayer alloc] init];
     gradient.frame = self.shadowGradient.bounds;
@@ -73,7 +73,7 @@
     
     if (highlighted)
     {
-        self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuHoverColor];
+        self.backgroundPanel.backgroundColor = [m_style colorForStyle:WRLDSearchWidgetStyleMenuChildOptionHoverColor];
     }
     else
     {
