@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDMoreResultsTableViewCell"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="9Zw-au-2N6" customClass="WRLDMoreResultsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sJ-WP-fZl">
+                    <rect key="frame" x="30" y="0.0" width="345" height="32"/>
+                    <color key="tintColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.4431372549" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6v2-ol-P5F" userLabel="Icon Space">
+                    <rect key="frame" x="0.0" y="0.0" width="30" height="32"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MoreResults_Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cp0-ED-igY">
+                            <rect key="frame" x="3" y="4" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Cp0-ED-igY" secondAttribute="height" multiplier="1:1" id="TFj-QU-ADm"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Cp0-ED-igY" firstAttribute="centerY" secondItem="6v2-ol-P5F" secondAttribute="centerY" id="56i-bn-czo"/>
+                        <constraint firstItem="Cp0-ED-igY" firstAttribute="centerX" secondItem="6v2-ol-P5F" secondAttribute="centerX" id="6oe-uy-n0O"/>
+                        <constraint firstAttribute="width" constant="30" id="fa1-zn-m0W"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6v2-ol-P5F" firstAttribute="top" secondItem="9Zw-au-2N6" secondAttribute="top" id="VX4-dA-yKN"/>
+                <constraint firstItem="9sJ-WP-fZl" firstAttribute="top" secondItem="9Zw-au-2N6" secondAttribute="top" id="aaD-a2-vM7"/>
+                <constraint firstItem="9sJ-WP-fZl" firstAttribute="leading" secondItem="6v2-ol-P5F" secondAttribute="trailing" id="e5V-e8-ufz"/>
+                <constraint firstItem="9sJ-WP-fZl" firstAttribute="trailing" secondItem="9Zw-au-2N6" secondAttribute="trailing" id="hCq-1x-I9F"/>
+                <constraint firstItem="9sJ-WP-fZl" firstAttribute="bottom" secondItem="9Zw-au-2N6" secondAttribute="bottom" id="qFF-5S-h6F"/>
+                <constraint firstItem="6v2-ol-P5F" firstAttribute="bottom" secondItem="9Zw-au-2N6" secondAttribute="bottom" id="tu0-9T-fTv"/>
+                <constraint firstItem="6v2-ol-P5F" firstAttribute="leading" secondItem="9Zw-au-2N6" secondAttribute="leading" id="wn4-Re-dtX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="icon" destination="Cp0-ED-igY" id="HmR-10-2fO"/>
+                <outlet property="label" destination="9sJ-WP-fZl" id="GsI-Gm-pNL"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="74"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MoreResults_Icon.png" width="24" height="24"/>
+    </resources>
+</document>
