@@ -22,8 +22,10 @@
     self.label.text = menuChild != nil ? menuChild.text : @"";
     self.label.textColor = [style colorForStyle:WRLDSearchWidgetStyleMenuOptionTextCollapsedColor];
     
-    // TODO: set icon
-    //[self.icon setImage:icon];
+    if(menuChild.icon && [menuChild.icon length]) {
+        UIImage* image = [UIImage imageNamed:menuChild.icon];
+        [self.icon setImage:image];
+    }
     
     bool isFirstChild = childIndex == 0;
     bool isLastChild = childIndex == [viewModel getChildCount] - 1;
