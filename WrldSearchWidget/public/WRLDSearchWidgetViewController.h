@@ -45,4 +45,8 @@
 
 - (void)expandMenuOptionAt:(NSUInteger)index;
 
+- (void)enableVoiceSearch:(NSString*)promptText;
+
+- (void)disableVoiceSearch;
+
 @end

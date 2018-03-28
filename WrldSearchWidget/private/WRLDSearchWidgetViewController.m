@@ -15,12 +15,17 @@
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
 #import "WRLDSearchWidgetResultsTableDataSource.h"
+#import "WRLDSpeechHandler.h"
+#import "WRLDSearchWidgetView.h"
 
 @interface WRLDSearchWidgetViewController()
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchbarLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *voiceButtonWidthConstraint;
+
+@property (weak, nonatomic) IBOutlet UIButton *voiceButton;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -55,6 +60,8 @@
     WRLDSearchMenuViewController* m_searchMenuViewController;
     NSString * m_suggestionsTableViewCellStyleIdentifier;
     NSString * m_searchResultsTableViewDefaultCellStyleIdentifier;
+    
+    WRLDSpeechHandler* m_speechHandler;
     
     WRLDSearchQuery * m_mostRecentQuery;
     
@@ -129,6 +136,14 @@
         
         m_suggestionsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
                                    initWithDefaultCellIdentifier: m_suggestionsTableViewCellStyleIdentifier];
+        
+        CGRect fullScreen = [[UIScreen mainScreen] bounds];
+        m_speechHandler = [[WRLDSpeechHandler alloc] initWithFrame:fullScreen];
+        [self.view addSubview:m_speechHandler];
+        
+        // TODO: Discuss better way to handling this so SpeechHandler can handle widget input.
+        [(WRLDSearchWidgetView*)(self.view) setSpeechHandler: m_speechHandler];
+        
     }
     return self;
 }
@@ -170,6 +185,10 @@
         [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
     }
     
+    [self.voiceButtonWidthConstraint setConstant:0];
+    [self determineVoiceButtonVisibility];
+    [self setupVoiceControl];
+    
     [self setupStyle];
 }
 
@@ -177,6 +196,11 @@
 {
     [super viewWillAppear:animated];
     [self observeModel: m_searchModel];
+    
+    if(@available(iOS 10.0, *))
+    {
+        [m_speechHandler authorize];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -196,8 +220,11 @@
     
     QueryEvent searchQueryStartedEvent = ^(WRLDSearchQuery * query)
     {
+        [self.searchBar setText:query.queryString];
+        
         [m_searchResultsDataSource updateResultsFrom: query];
         [m_searchResultsViewController refreshTable];
+        [self determineVoiceButtonVisibility];
         m_activeResultsView = m_searchResultsViewController;
         if(m_hasFocus)
         {
@@ -336,6 +363,8 @@
         [m_suggestionsViewController hide];
         m_activeResultsView = nil;
     }
+    
+    [self determineVoiceButtonVisibility];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -443,6 +472,101 @@
 - (IBAction)menuBackButtonClicked:(id)backButton
 {
     [m_searchMenuViewController onMenuBackButtonClicked];
+}
+
+- (BOOL)showVoiceButton
+{
+    if(@available(iOS 10.0, *))
+    {
+        return [m_speechHandler isEnabled] && [m_speechHandler isAuthorized];
+    }
+    else return NO;
+}
+
+- (void)enableVoiceSearch:(NSString*)promptText
+{
+    if(@available(iOS 10.0, *))
+    {
+        [m_speechHandler enableWithPrompt:promptText];
+        [self determineVoiceButtonVisibility];
+    }
+    else
+    {
+        NSLog(@"Cannot enable voice search on iOS Versions less than 10.0");
+    }
+}
+
+- (void)disableVoiceSearch
+{
+    [m_speechHandler disable];
+    [self determineVoiceButtonVisibility];
+}
+
+- (void) determineVoiceButtonVisibility {
+    if( [[self.searchBar text] length] > 0)
+    {
+        if(![self.voiceButton isHidden]) {
+            [UIView animateWithDuration:0.25 animations:^{
+                [self.voiceButtonWidthConstraint setConstant:0];
+            } completion:^(BOOL finished) {
+                if(finished) {
+                    self.voiceButton.hidden = YES;
+                }
+            }];
+        }
+    }
+    else {
+        if([self showVoiceButton] && self.voiceButtonWidthConstraint.constant < 32)
+        {
+            self.voiceButton.hidden = NO;
+            [UIView animateWithDuration:0.25 animations:^{
+                [self.voiceButtonWidthConstraint setConstant:32];
+            }];
+        }
+    }
+}
+
+-(void) setupVoiceControl
+{
+    VoiceAuthorizedEvent voiceAuthorizedChangedEvent = ^(BOOL authorized)
+    {
+        [self determineVoiceButtonVisibility];
+    };
+    
+    VoiceEvent voiceRecordCancelEvent = ^()
+    {
+        [self cancelVoiceSearch];
+    };
+    
+    VoiceRecordedEvent voiceRecordCompleteEvent = ^(NSString* transcript)
+    {
+        [self.searchBar setUserInteractionEnabled:YES];
+        [m_searchModel getSearchResultsForString:transcript];
+        [self showResultsView];
+    };
+    
+    // TODO: Remove these where?
+    [m_speechHandler.observer addAuthorizationChangedEvent:voiceAuthorizedChangedEvent];
+    [m_speechHandler.observer addVoiceRecordCancelledEvent:voiceRecordCancelEvent];
+    [m_speechHandler.observer addVoiceRecordCompleteEvent:voiceRecordCompleteEvent];
+}
+
+- (IBAction) voiceButtonClicked:(id)sender
+{
+    if(!m_speechHandler.isRecording)
+    {
+        [m_speechHandler startRecording];
+        [self.searchBar setUserInteractionEnabled:NO];
+    }
+    else
+    {
+        [m_speechHandler endRecording];
+    }
+}
+
+-(void)cancelVoiceSearch
+{
+    [self.searchBar setUserInteractionEnabled:YES];
 }
 
 @end
