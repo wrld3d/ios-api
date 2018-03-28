@@ -18,7 +18,7 @@
     return self;
 }
 
-- (void)addGainedFocusEvent:(FocusEvent)event
+- (void)addSearchbarGainedFocusEvent:(SearchbarFocusEvent)event
 {
     if (event)
     {
@@ -54,15 +54,15 @@
 
 - (void)searchbarGainFocus
 {
-    for (FocusEvent event in m_searchGainedFocusEvents)
+    for (SearchbarFocusEvent event in m_searchbarGainedFocusEvents)
     {
         event();
     }
 }
 
-- (void)resignFocus
+- (void)searchbarResignFocus
 {
-    for (FocusEvent event in m_searchResignedFocusEvents)
+    for (SearchbarFocusEvent event in m_searchbarResignedFocusEvents)
     {
         event();
     }
