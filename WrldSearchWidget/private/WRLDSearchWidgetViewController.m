@@ -11,6 +11,8 @@
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDMenuObserver.h"
+#import "WRLDSearchWidgetObserver.h"
+#import "WRLDSearchWidgetObserver+Private.h"
 #import "WRLDSearchWidgetStyle.h"
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
@@ -72,8 +74,6 @@
     
     id<WRLDViewVisibilityController> m_activeResultsView;
     
-    BOOL m_hasFocus;
-    
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
     __weak QueryEvent m_suggestionQueryCompletedEvent;
@@ -128,8 +128,9 @@
         maxVisibleSuggestions = 3;
         
         _style = [[WRLDSearchWidgetStyle alloc] init];
+        _observer = [[WRLDSearchWidgetObserver alloc] init];
         
-        m_hasFocus = NO;
+        _hasFocus = NO;
         
         m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
                                      initWithDefaultCellIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
@@ -226,7 +227,7 @@
         [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
         m_activeResultsView = m_searchResultsViewController;
-        if(m_hasFocus)
+        if(_hasFocus)
         {
             [m_suggestionsViewController hide];
             [m_searchResultsViewController show];
@@ -240,7 +241,7 @@
         if(m_searchResultsDataSource.visibleResults == 0)
         {
             m_activeResultsView = self.noResultsVisibilityController;
-            if(m_hasFocus)
+            if(_hasFocus)
             {
                 [m_searchResultsViewController hide];
                 [self.noResultsVisibilityController show];
@@ -257,7 +258,7 @@
         [m_suggestionsDataSource updateResultsFrom: query];
         [m_suggestionsViewController refreshTable];
         [m_searchResultsViewController hide];
-        if(m_hasFocus)
+        if(_hasFocus)
         {
             [m_suggestionsViewController show];
         }
@@ -320,7 +321,12 @@
 {
     [searchBar setActive: true];
     [self showResultsView];
-    m_hasFocus = YES;
+    
+    if (!_hasFocus)
+    {
+        [self.observer gainFocus];
+        _hasFocus = YES;
+    }
 }
 
 - (void) searchBarTextDidEndEditing:(WRLDSearchBar *)searchBar
@@ -336,7 +342,12 @@
     }
     
     [self hideResultsView];
-    m_hasFocus = NO;
+    
+    if (_hasFocus)
+    {
+        [self.observer resignFocus];
+        _hasFocus = NO;
+    }
 }
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
