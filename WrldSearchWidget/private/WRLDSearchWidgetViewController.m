@@ -317,6 +317,11 @@
     } toApply:WRLDSearchWidgetStyleWarningColor];
 }
 
+- (void) setSearchBarPlaceholder:(NSString*)placeholder
+{
+    [self.searchBar setPlaceholder:placeholder];
+}
+
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
 {
     [searchBar setActive: true];

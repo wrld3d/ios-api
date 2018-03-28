@@ -12,6 +12,7 @@
     UIColor *m_inactiveBorderColor;
     CGFloat m_fontSize;
     UIFont *m_font;
+    NSString* m_placeholderText;
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -43,6 +44,7 @@
 {
     m_fontSize = 16;
     m_font = [UIFont  systemFontOfSize:m_fontSize];
+    m_placeholderText = @"Search the WRLD";
     
     if(@available(iOS 11.0, *))
     {
@@ -166,6 +168,18 @@
         }
         self.layer.borderColor = [m_inactiveBorderColor CGColor];
     }
+}
+
+-(void) setPlaceholder:(NSString *)placeholder
+{
+    m_placeholderText = placeholder;
+    [super setPlaceholder:m_placeholderText];
+}
+
+-(void) layoutSubviews
+{
+    [super layoutSubviews];
+    [super setPlaceholder:m_placeholderText];
 }
 
 @end
