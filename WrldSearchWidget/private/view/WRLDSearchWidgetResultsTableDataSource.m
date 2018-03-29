@@ -53,6 +53,14 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [self collapseAllSections];
 }
 
+- (NSString*) getDisplayedQueryText
+{
+    if(m_displayedQuery != nil) {
+        return m_displayedQuery.queryString;
+    }
+    return nil;
+}
+
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
 {
     if(!m_displayedQuery.hasCompleted){
@@ -176,6 +184,19 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     cell.separatorInset = UIEdgeInsetsZero;
     cell.layoutMargins = UIEdgeInsetsZero;
     return cell;
+}
+
+- (NSInteger)getTotalResultCount
+{
+    NSInteger count = 0;
+    
+    for(NSInteger i = 0; i < [m_providerViewModels count]; ++i)
+    {
+        WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: i];
+        count += [setViewModel getResultCount];
+    }
+    
+    return count;
 }
 
 @end

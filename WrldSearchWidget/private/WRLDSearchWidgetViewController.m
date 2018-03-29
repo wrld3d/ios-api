@@ -232,6 +232,8 @@
             [m_suggestionsViewController hide];
             [m_searchResultsViewController show];
         }
+        
+        [self refreshSearchBarTextForCurrentQuery];
     };
     
     QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -250,6 +252,7 @@
         else
         {
             m_activeResultsView = m_searchResultsViewController;
+            [self refreshSearchBarTextForCurrentQuery];
         }
     };
     
@@ -446,6 +449,9 @@
     {
         [m_activeResultsView show];
         _isResultsViewVisible = YES;
+        
+        [self refreshSearchBarTextForCurrentQuery];
+        
     }
 }
 
@@ -455,7 +461,29 @@
     {
         [m_activeResultsView hide];
         _isResultsViewVisible = NO;
+        
+        [self refreshSearchBarTextForCurrentQuery];
     }
+}
+
+-(void) refreshSearchBarTextForCurrentQuery
+{
+    if(_isResultsViewVisible)
+    {
+        if([m_searchResultsDataSource getDisplayedQueryText] != nil) {
+            [self.searchBar setText:[NSString stringWithFormat: @"%@", [m_searchResultsDataSource getDisplayedQueryText]]];
+        }
+    }
+    else
+    {
+        if([m_searchResultsDataSource getDisplayedQueryText] != nil &&
+           !m_searchModel.isSearchQueryInFlight) {
+            [self.searchBar setText:[NSString stringWithFormat: @"%@ (%ld)",
+                                     [m_searchResultsDataSource getDisplayedQueryText],
+                                     (long)[m_searchResultsDataSource getTotalResultCount]]];
+        }
+    }
+        
 }
 
 - (void)openMenu

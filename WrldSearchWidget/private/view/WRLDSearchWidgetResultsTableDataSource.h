@@ -21,6 +21,7 @@
 @property (nonatomic, readonly) NSInteger * visibleResults;
 
 - (void) updateResultsFrom: (WRLDSearchQuery *) query;
+- (NSString*) getDisplayedQueryText;
 
 - (void) selected : (NSIndexPath *) index;
 - (void) expandSection: (NSInteger) expandedSectionPosition;
@@ -35,6 +36,8 @@
       maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded;
 
 - (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider;
+
+- (NSInteger) getTotalResultCount;
 @end
 
 
