@@ -3,8 +3,8 @@
 
 @implementation WRLDSearchWidgetObserver
 {
-    NSMutableArray<FocusEvent>* m_searchGainedFocusEvents;
-    NSMutableArray<FocusEvent>* m_searchResignedFocusEvents;
+    NSMutableArray<SearchbarFocusEvent>* m_searchbarGainedFocusEvents;
+    NSMutableArray<SearchbarFocusEvent>* m_searchbarResignedFocusEvents;
 }
 
 - (instancetype)init
@@ -12,57 +12,57 @@
     self = [super init];
     if (self)
     {
-        m_searchGainedFocusEvents = [[NSMutableArray<FocusEvent> alloc] init];
-        m_searchResignedFocusEvents = [[NSMutableArray<FocusEvent> alloc] init];
+        m_searchbarGainedFocusEvents = [[NSMutableArray<SearchbarFocusEvent> alloc] init];
+        m_searchbarResignedFocusEvents = [[NSMutableArray<SearchbarFocusEvent> alloc] init];
     }
     return self;
 }
 
-- (void)addGainedFocusEvent:(FocusEvent)event
+- (void)addSearchbarGainedFocusEvent:(SearchbarFocusEvent)event
 {
     if (event)
     {
-        [m_searchGainedFocusEvents addObject:event];
+        [m_searchbarGainedFocusEvents addObject:event];
     }
 }
 
-- (void)removeGainedFocusEvent:(FocusEvent)event
+- (void)removeSearchbarGainedFocusEvent:(SearchbarFocusEvent)event
 {
     if (event)
     {
-        [m_searchGainedFocusEvents removeObject:event];
+        [m_searchbarGainedFocusEvents removeObject:event];
     }
 }
 
-- (void)addResignedFocusEvent:(FocusEvent)event
+- (void)addSearchbarResignedFocusEvent:(SearchbarFocusEvent)event
 {
     if (event)
     {
-        [m_searchResignedFocusEvents addObject:event];
+        [m_searchbarResignedFocusEvents addObject:event];
     }
 }
 
-- (void)removeResignedFocusEvent:(FocusEvent)event
+- (void)removeSearchbarResignedFocusEvent:(SearchbarFocusEvent)event
 {
     if (event)
     {
-        [m_searchResignedFocusEvents removeObject:event];
+        [m_searchbarResignedFocusEvents removeObject:event];
     }
 }
 
 #pragma mark - WRLDSearchWidgetObserver.h (Private)
 
-- (void)gainFocus
+- (void)searchbarGainFocus
 {
-    for (FocusEvent event in m_searchGainedFocusEvents)
+    for (SearchbarFocusEvent event in m_searchbarGainedFocusEvents)
     {
         event();
     }
 }
 
-- (void)resignFocus
+- (void)searchbarResignFocus
 {
-    for (FocusEvent event in m_searchResignedFocusEvents)
+    for (SearchbarFocusEvent event in m_searchbarResignedFocusEvents)
     {
         event();
     }

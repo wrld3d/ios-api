@@ -73,6 +73,8 @@
     NSInteger maxVisibleSuggestions;
     
     id<WRLDViewVisibilityController> m_activeResultsView;
+
+    BOOL m_hasFocus;
     
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
@@ -130,7 +132,8 @@
         _style = [[WRLDSearchWidgetStyle alloc] init];
         _observer = [[WRLDSearchWidgetObserver alloc] init];
         
-        _hasFocus = NO;
+        m_hasFocus = NO;
+        _searchbarHasFocus = NO;
         
         m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
                                      initWithDefaultCellIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
@@ -227,7 +230,7 @@
         [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
         m_activeResultsView = m_searchResultsViewController;
-        if(_hasFocus)
+        if(m_hasFocus)
         {
             [m_suggestionsViewController hide];
             [m_searchResultsViewController show];
@@ -243,7 +246,7 @@
         if(m_searchResultsDataSource.visibleResults == 0)
         {
             m_activeResultsView = self.noResultsVisibilityController;
-            if(_hasFocus)
+            if(m_hasFocus)
             {
                 [m_searchResultsViewController hide];
                 [self.noResultsVisibilityController show];
@@ -261,7 +264,7 @@
         [m_suggestionsDataSource updateResultsFrom: query];
         [m_suggestionsViewController refreshTable];
         [m_searchResultsViewController hide];
-        if(_hasFocus)
+        if(m_hasFocus)
         {
             [m_suggestionsViewController show];
         }
@@ -329,32 +332,39 @@
 {
     [searchBar setActive: true];
     [self showResultsView];
+    m_hasFocus = YES;
     
-    if (!_hasFocus)
+    if (!_searchbarHasFocus)
     {
-        [self.observer gainFocus];
-        _hasFocus = YES;
+        [self.observer searchbarGainFocus];
+        _searchbarHasFocus = YES;
     }
 }
 
 - (void) searchBarTextDidEndEditing:(WRLDSearchBar *)searchBar
 {
-    [searchBar setActive: false];
+    [searchBar setActive:false];
+    [self searchbarResignFocus];
 }
 
 - (void) resignFocus
 {
-    if(self.searchBar.isFirstResponder)
+    [self searchbarResignFocus];
+    [self hideResultsView];
+    m_hasFocus = NO;
+}
+
+- (void)searchbarResignFocus
+{
+    if (self.searchBar.isFirstResponder)
     {
         [self.searchBar resignFirstResponder];
     }
     
-    [self hideResultsView];
-    
-    if (_hasFocus)
+    if (_searchbarHasFocus)
     {
-        [self.observer resignFocus];
-        _hasFocus = NO;
+        [self.observer searchbarResignFocus];
+        _searchbarHasFocus = NO;
     }
 }
 

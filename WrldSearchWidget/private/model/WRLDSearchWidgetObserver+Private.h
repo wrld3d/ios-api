@@ -4,9 +4,9 @@
 
 @interface WRLDSearchWidgetObserver (Private)
 
-- (void)gainFocus;
+- (void)searchbarGainFocus;
 
-- (void)resignFocus;
+- (void)searchbarResignFocus;
 
 @end
 
