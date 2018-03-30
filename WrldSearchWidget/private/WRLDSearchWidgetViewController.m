@@ -106,6 +106,11 @@
     return [m_searchMenuViewController isMenuOpen];
 }
 
+- (BOOL)hasSearchResults
+{
+    return m_activeResultsView == m_searchResultsViewController && m_searchResultsDataSource.visibleResults > 0;
+}
+
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
 {
     return [self initWithSearchModel:searchModel
@@ -257,11 +262,13 @@
         else
         {
             m_activeResultsView = m_searchResultsViewController;
+            [self.observer receiveSearchResults];
             if(_isResultsViewVisible)
             {
                 [m_searchResultsViewController show];
                 [self.noResultsVisibilityController hide];
             }
+            [self.observer showSearchResults];
         }
         
         [self refreshSearchBarTextForCurrentQuery];
@@ -386,6 +393,14 @@
         return;
     }
     
+    if ([searchText length] == 0)
+    {
+        if (m_activeResultsView == m_searchResultsViewController)
+        {
+            [self.observer clearSearchResults];
+        }
+    }
+    
     [m_searchResultsViewController hide];
     [self.noResultsVisibilityController hide];
     
@@ -458,7 +473,6 @@
 - (void) clearSearch
 {
     [self.searchBar setText:@""];
-    [self hideResultsView];
 }
 
 - (void) showResultsView
@@ -466,10 +480,16 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView show];
-        _isResultsViewVisible = YES;
+        if (!_isResultsViewVisible)
+        {
+            _isResultsViewVisible = YES;
+            if (m_activeResultsView == m_searchResultsViewController)
+            {
+                [self.observer showSearchResults];
+            }
+        }
         
         [self refreshSearchBarTextForCurrentQuery];
-        
     }
 }
 
@@ -478,7 +498,15 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView hide];
-        _isResultsViewVisible = NO;
+        
+        if (_isResultsViewVisible)
+        {
+            _isResultsViewVisible = NO;
+            if (m_activeResultsView == m_searchResultsViewController)
+            {
+                [self.observer hideSearchResults];
+            }
+        }
         
         [self refreshSearchBarTextForCurrentQuery];
     }

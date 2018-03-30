@@ -22,6 +22,7 @@
 @property (nonatomic, readonly) BOOL isMenuOpen;
 @property (nonatomic, readonly) BOOL isResultsViewVisible;
 @property (nonatomic, readonly) BOOL searchbarHasFocus;
+@property (nonatomic, readonly) BOOL hasSearchResults;
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel;
 

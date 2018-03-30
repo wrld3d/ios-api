@@ -5,6 +5,10 @@
 {
     NSMutableArray<SearchbarFocusEvent>* m_searchbarGainedFocusEvents;
     NSMutableArray<SearchbarFocusEvent>* m_searchbarResignedFocusEvents;
+    NSMutableArray<Event>* m_searchResultsReceivedEvents;
+    NSMutableArray<Event>* m_searchResultsClearedEvents;
+    NSMutableArray<Event>* m_searchResultsShowingEvents;
+    NSMutableArray<Event>* m_searchResultsHiddenEvents;
 }
 
 - (instancetype)init
@@ -14,6 +18,10 @@
     {
         m_searchbarGainedFocusEvents = [[NSMutableArray<SearchbarFocusEvent> alloc] init];
         m_searchbarResignedFocusEvents = [[NSMutableArray<SearchbarFocusEvent> alloc] init];
+        m_searchResultsReceivedEvents = [[NSMutableArray<Event> alloc] init];
+        m_searchResultsClearedEvents = [[NSMutableArray<Event> alloc] init];
+        m_searchResultsShowingEvents = [[NSMutableArray<Event> alloc] init];
+        m_searchResultsHiddenEvents = [[NSMutableArray<Event> alloc] init];
     }
     return self;
 }
@@ -50,6 +58,70 @@
     }
 }
 
+- (void)addSearchResultsReceivedEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsReceivedEvents addObject:event];
+    }
+}
+
+- (void)removeSearchResultsReceivedEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsReceivedEvents removeObject:event];
+    }
+}
+
+- (void)addSearchResultsClearedEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsClearedEvents addObject:event];
+    }
+}
+
+- (void)removeSearchResultsClearedEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsClearedEvents removeObject:event];
+    }
+}
+
+- (void)addSearchResultsShowingEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsShowingEvents addObject:event];
+    }
+}
+
+- (void)removeSearchResultsShowingEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsShowingEvents removeObject:event];
+    }
+}
+
+- (void)addSearchResultsHiddenEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsHiddenEvents addObject:event];
+    }
+}
+
+- (void)removeSearchResultsHiddenEvent:(Event)event
+{
+    if (event)
+    {
+        [m_searchResultsHiddenEvents removeObject:event];
+    }
+}
+
 #pragma mark - WRLDSearchWidgetObserver.h (Private)
 
 - (void)searchbarGainFocus
@@ -63,6 +135,38 @@
 - (void)searchbarResignFocus
 {
     for (SearchbarFocusEvent event in m_searchbarResignedFocusEvents)
+    {
+        event();
+    }
+}
+
+- (void)receiveSearchResults
+{
+    for (Event event in m_searchResultsReceivedEvents)
+    {
+        event();
+    }
+}
+
+- (void)clearSearchResults
+{
+    for (Event event in m_searchResultsClearedEvents)
+    {
+        event();
+    }
+}
+
+- (void)showSearchResults
+{
+    for (Event event in m_searchResultsShowingEvents)
+    {
+        event();
+    }
+}
+
+- (void)hideSearchResults
+{
+    for (Event event in m_searchResultsHiddenEvents)
     {
         event();
     }
