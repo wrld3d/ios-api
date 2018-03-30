@@ -233,6 +233,7 @@
         if(m_hasFocus)
         {
             [m_suggestionsViewController hide];
+            [self.noResultsVisibilityController hide];
             [m_searchResultsViewController show];
         }
         
@@ -243,10 +244,11 @@
     {
         [m_searchResultsDataSource updateResultsFrom: query];
         [m_searchResultsViewController refreshTable];
+     
         if(m_searchResultsDataSource.visibleResults == 0)
         {
             m_activeResultsView = self.noResultsVisibilityController;
-            if(m_hasFocus)
+            if(_isResultsViewVisible)
             {
                 [m_searchResultsViewController hide];
                 [self.noResultsVisibilityController show];
@@ -255,8 +257,14 @@
         else
         {
             m_activeResultsView = m_searchResultsViewController;
-            [self refreshSearchBarTextForCurrentQuery];
+            if(_isResultsViewVisible)
+            {
+                [m_searchResultsViewController show];
+                [self.noResultsVisibilityController hide];
+            }
         }
+        
+        [self refreshSearchBarTextForCurrentQuery];
     };
     
     QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -294,12 +302,12 @@
         [model.searchObserver removeQueryStartingEvent: m_searchQueryStartedEvent];
     }
     
-    if(m_searchQueryStartedEvent)
+    if(m_searchQueryCompletedEvent)
     {
         [model.searchObserver removeQueryCompletedEvent: m_searchQueryCompletedEvent];
     }
     
-    if(m_searchQueryStartedEvent)
+    if(m_suggestionQueryCompletedEvent)
     {
         [model.suggestionObserver removeQueryCompletedEvent: m_suggestionQueryCompletedEvent];
     }
@@ -336,8 +344,8 @@
     
     if (!_searchbarHasFocus)
     {
-        [self.observer searchbarGainFocus];
         _searchbarHasFocus = YES;
+        [self.observer searchbarGainFocus];
     }
 }
 
@@ -363,8 +371,8 @@
     
     if (_searchbarHasFocus)
     {
-        [self.observer searchbarResignFocus];
         _searchbarHasFocus = NO;
+        [self.observer searchbarResignFocus];
     }
 }
 
