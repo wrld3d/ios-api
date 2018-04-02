@@ -397,7 +397,6 @@
     NSString *trimmedSearchText = [searchText stringByTrimmingCharactersInSet:
                                    [NSCharacterSet whitespaceCharacterSet]];
     
-    if ([searchText length] == 0)
     bool hasSearchQueryAndNewTextDiffers = [m_searchModel isCurrentQueryForSearch] && ![trimmedSearchText isEqualToString: [m_searchModel getCurrentQuery].queryString];
     
     if (hasSearchQueryAndNewTextDiffers)
