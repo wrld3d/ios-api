@@ -7,7 +7,6 @@
 
 @implementation WRLDSearchBar
 {
-    CGFloat m_searchBarIconWidth;
     UIColor *m_activeBorderColor;
     UIColor *m_inactiveBorderColor;
     CGFloat m_fontSize;
@@ -43,16 +42,8 @@
 -(void) defineConstants
 {
     m_fontSize = 16;
-    m_font = [UIFont  systemFontOfSize:m_fontSize];
+    m_font = [UIFont systemFontOfSize:m_fontSize];
     m_placeholderText = @"Search the WRLD";
-    
-    if(@available(iOS 11.0, *))
-    {
-        m_searchBarIconWidth = 30;
-    }
-    else{
-        m_searchBarIconWidth = 24;
-    }
 }
 
 - (void) applyStyle: (WRLDSearchWidgetStyle *) style
@@ -86,10 +77,12 @@
         if(@available(iOS 9.0, *))
         {
             [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setAttributedPlaceholder:attributedString];
+            [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setLeftViewMode:UITextFieldViewModeUnlessEditing];
         }
         else
         {
             [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setAttributedPlaceholder:attributedString];
+            [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setLeftViewMode:UITextFieldViewModeUnlessEditing];
         }
     } toApply:WRLDSearchWidgetStyleTextSecondaryColor];
     
@@ -100,6 +93,7 @@
     [style call:^(UIColor *color) {
         [self setInactiveBorderColor:color];
     } toApply:WRLDSearchWidgetStyleSecondaryColor];
+    
 }
 
 -(void) customiseStyle
@@ -154,18 +148,10 @@
 {
     if(isActive)
     {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self setPositionAdjustment:UIOffsetMake(-m_searchBarIconWidth, 0) forSearchBarIcon:UISearchBarIconSearch];
-        }];
         self.layer.borderColor = [m_activeBorderColor CGColor];
     }
     else
     {
-        if(self.text.length == 0){
-            [UIView animateWithDuration:0.25 animations:^{
-                [self setPositionAdjustment:UIOffsetMake(0, 0) forSearchBarIcon:UISearchBarIconSearch];
-            }];
-        }
         self.layer.borderColor = [m_inactiveBorderColor CGColor];
     }
 }
