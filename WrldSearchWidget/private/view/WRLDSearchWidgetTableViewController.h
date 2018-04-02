@@ -18,8 +18,6 @@
                              style: (WRLDSearchWidgetStyle *) style;
 
 - (void) refreshTable;
-- (void) show;
-- (void) hide;
 @end
 
 

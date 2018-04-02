@@ -58,7 +58,8 @@
 }
 
 - (void)testRunningASuggestionQueryReturnsValidObject {
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertNotNil(query);
 }
 
@@ -88,7 +89,8 @@
     
     [model addSuggestionProvider:mockProvider1];
     [model addSuggestionProvider:mockProvider2];
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertFalse(query.hasCompleted);
     [requestCapture1 didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
     XCTAssertFalse(query.hasCompleted);
@@ -174,14 +176,16 @@
 }
 
 - (void)testASuggestionQueryWithZeroProvidersIsComplete {
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertEqual([query progress], Completed);
 }
 
 - (void)testAnIncompleteSuggestionQueryReturnsNilResults {
     id<WRLDSuggestionProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSuggestionProvider));
     WRLDSuggestionProviderHandle * providerHandle = [model addSuggestionProvider:mockProvider];
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertNil([query getResultsForFulfiller: providerHandle.identifier]);
 }
 
@@ -211,7 +215,8 @@
 - (void)testQueryDispatchedToSuggestionProvidersMatchesRunQuery {
     id<WRLDSuggestionProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSuggestionProvider));
     [model addSuggestionProvider:mockProvider];
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     OCMVerify([mockProvider getSuggestions:[OCMArg checkWithBlock:^BOOL(WRLDSearchQuery * providerQuery){
         return providerQuery.queryString == query.queryString;
     }]]);
@@ -243,7 +248,8 @@
         XCTFail();
     }];
     
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
 }
@@ -263,7 +269,8 @@
         XCTFail();
     }];
     
-    WRLDSearchQuery *query = [model getSuggestionsForString:testString];
+    [model getSuggestionsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     [requestCapture cancel];
 }

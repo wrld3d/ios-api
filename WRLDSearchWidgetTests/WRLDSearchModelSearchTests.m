@@ -58,7 +58,8 @@
 }
 
 - (void)testRunningASearchQueryReturnsValidObject {
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertNotNil(query);
 }
 
@@ -88,7 +89,8 @@
     
     [model addSearchProvider:mockProvider1];
     [model addSearchProvider:mockProvider2];
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertFalse(query.hasCompleted);
     [requestCapture1 didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
     XCTAssertFalse(query.hasCompleted);
@@ -176,14 +178,16 @@
 }
 
 - (void)testASearchQueryWithZeroProvidersIsComplete {
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertEqual([query progress], Completed);
 }
 
 - (void)testAnIncompleteSearchQueryReturnsNilResults {
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     WRLDSearchProviderHandle * providerHandle = [model addSearchProvider:mockProvider];
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertNil([query getResultsForFulfiller: providerHandle.identifier]);
 }
 
@@ -213,7 +217,8 @@
 - (void)testQueryDispatchedToSearchProvidersMatchesRunQuery {
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     [model addSearchProvider:mockProvider];
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     OCMVerify([mockProvider searchFor:[OCMArg checkWithBlock:^BOOL(WRLDSearchQuery * providerQuery){
         return providerQuery.queryString == query.queryString;
     }]]);
@@ -245,7 +250,8 @@
         XCTFail();
     }];
     
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
 }
@@ -265,7 +271,8 @@
         XCTFail();
     }];
     
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     [requestCapture cancel];
 }
@@ -294,7 +301,8 @@
         didRunCancelBlock = YES;
     }];
     
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     XCTAssertTrue(didRunCancelBlock);
 }
@@ -320,7 +328,8 @@
         didRunCompletedBlock = YES;
     }];
     
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     
     XCTAssertFalse(didRunCompletedBlock);
@@ -380,7 +389,8 @@
         didRunCompletedBlock = YES;
     }];
     
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [requestCapture didComplete:YES withResults:[[WRLDSearchResultsCollection alloc]init]];
     [query cancel];
     XCTAssertTrue(didRunCompletedBlock);
@@ -389,14 +399,16 @@
 
 - (void) testSearchQueryWithNoContextProvidedHasNilContext
 {
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     XCTAssertNil(query.queryContext);
 }
 
 - (void) testSearchWithContextQueryContainsContext
 {
     id<NSObject> mockContext = OCMProtocolMock(@protocol(NSObject));
-    WRLDSearchQuery *query = [model getSearchResultsForString:testString withContext:mockContext];
+    [model getSearchResultsForString:testString withContext:mockContext];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     
     XCTAssertNotNil(query.queryContext);
     XCTAssertEqual(mockContext, query.queryContext);
@@ -468,7 +480,8 @@
     id<WRLDSearchProvider> mockProvider = OCMProtocolMock(@protocol(WRLDSearchProvider));
     [model addSearchProvider:mockProvider];
     
-    WRLDSearchQuery* query = [model getSearchResultsForString:testString];
+    [model getSearchResultsForString:testString];
+    WRLDSearchQuery *query = [model getCurrentQuery];
     [query cancel];
     
     XCTAssertFalse(model.isSearchQueryInFlight);

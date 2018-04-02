@@ -242,8 +242,9 @@
         m_activeResultsView = m_searchResultsViewController;
         if(m_hasFocus)
         {
-            [m_suggestionsViewController hide];
-            [self.noResultsVisibilityController hide];
+            BOOL animateOut = NO;
+            [m_suggestionsViewController hide: animateOut];
+            [self.noResultsVisibilityController hide: animateOut];
             [self showSearchResultsView];
         }
         
@@ -262,7 +263,8 @@
             if(_isResultsViewVisible)
             {
                 [self hideSearchResultsView];
-                [self.noResultsVisibilityController show];
+                BOOL animateIn = YES;
+                [self.noResultsVisibilityController show: animateIn];
             }
         }
         else
@@ -271,8 +273,9 @@
             [self.observer receiveSearchResults];
             if(_isResultsViewVisible)
             {
+                BOOL animateOut = YES;
                 [self showSearchResultsView];
-                [self.noResultsVisibilityController hide];
+                [self.noResultsVisibilityController hide: animateOut];
             }
         }
         
@@ -287,7 +290,8 @@
         [self hideSearchResultsView];
         if(m_hasFocus)
         {
-            [m_suggestionsViewController show];
+            BOOL animateIn = YES;
+            [m_suggestionsViewController show: animateIn];
         }
         m_activeResultsView = m_suggestionsViewController;
     };
@@ -421,7 +425,8 @@
         [m_searchModel cancelCurrentQuery];
         
         // TODO: should probably be done as a side effect of clearing the suggestions, like in Android.
-        [m_suggestionsViewController hide];
+        BOOL animateOut = YES;
+        [m_suggestionsViewController hide: animateOut];
         m_activeResultsView = nil;
     }
     
@@ -436,7 +441,8 @@
 
 - (void) triggerSearch : (NSString *) queryString
 {
-    [m_suggestionsViewController hide];
+    BOOL animateOut = YES;
+    [m_suggestionsViewController hide: animateOut];
     [m_searchModel getSearchResultsForString: queryString];
     [self.searchBar resignFirstResponder];
 }
@@ -477,8 +483,9 @@
 
 - (void)clearSearchResults
 {
+    BOOL animateOut = YES;
     [self hideSearchResultsView];
-    [self.noResultsVisibilityController hide];
+    [self.noResultsVisibilityController hide: animateOut];
     
     [m_searchResultsDataSource clearResults];
     [self.observer clearSearchResults];
@@ -488,7 +495,8 @@
 {
     if (!m_isSearchResultsViewVisible)
     {
-        [m_searchResultsViewController show];
+        BOOL animateIn = YES;
+        [m_searchResultsViewController show: animateIn];
         m_isSearchResultsViewVisible = YES;
         _isResultsViewVisible = YES;
         [self.observer showSearchResults];
@@ -499,7 +507,8 @@
 {
     if (m_isSearchResultsViewVisible)
     {
-        [m_searchResultsViewController hide];
+        BOOL animateOut = YES;
+        [m_searchResultsViewController hide: animateOut];
         m_isSearchResultsViewVisible = NO;
         _isResultsViewVisible = NO;
         [self.observer hideSearchResults];
@@ -516,7 +525,8 @@
         }
         else
         {
-            [m_activeResultsView show];
+            BOOL animateIn = YES;
+            [m_activeResultsView show: animateIn];
         }
         _isResultsViewVisible = YES;
         
@@ -535,7 +545,8 @@
         }
         else
         {
-            [m_activeResultsView hide];
+            BOOL animateOut = YES;
+            [m_activeResultsView hide: animateOut];
         }
         _isResultsViewVisible = NO;
         

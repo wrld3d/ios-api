@@ -4,7 +4,7 @@
 
 @protocol WRLDViewVisibilityController
 
-- (void) show;
-- (void) hide;
+- (void) show: (BOOL) animated;
+- (void) hide: (BOOL) animated;
 
 @end

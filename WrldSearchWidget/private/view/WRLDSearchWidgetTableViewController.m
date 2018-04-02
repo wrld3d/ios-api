@@ -201,7 +201,18 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 #pragma mark - WRLDViewVisibilityController
 
-- (void) show
+- (void) show: (BOOL) animated
+{
+    if(animated)
+    {
+        [self showWithAnimation];
+    }
+    else{
+        [self showImmediately];
+    }
+}
+
+- (void) showWithAnimation
 {
     if(!m_visibilityView.hidden)
     {
@@ -214,7 +225,18 @@ typedef NS_ENUM(NSInteger, GradientState) {
     m_visibilityView.hidden = NO;
 }
 
-- (void) hide
+- (void) hide: (BOOL) animated
+{
+    if(animated)
+    {
+        [self hideWithAnimation];
+    }
+    else{
+        [self hideImmediately];
+    }
+}
+
+- (void) hideWithAnimation
 {
     if(m_isAnimatingOut || m_visibilityView.hidden)
     {
@@ -232,6 +254,24 @@ typedef NS_ENUM(NSInteger, GradientState) {
         }
     }];
 }
+
+- (void) showImmediately
+{
+    [m_visibilityView.layer removeAllAnimations];
+    m_visibilityView.alpha = 1.0;
+    m_visibilityView.hidden = NO;
+    m_isAnimatingOut = false;
+}
+
+- (void) hideImmediately
+{
+    [m_visibilityView.layer removeAllAnimations];
+    m_visibilityView.alpha = 0.0;
+    m_isAnimatingOut = false;
+    m_visibilityView.hidden = YES;
+}
+
+
 
 #pragma mark - UITableViewDelegate
 
