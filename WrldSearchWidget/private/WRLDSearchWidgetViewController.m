@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *voiceButtonWidthConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *voiceButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingInProgressActivityIndicator;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -243,6 +244,7 @@
         }
         
         [self refreshSearchBarTextForCurrentQuery];
+        [self startSearchInProgressAnimation];
     };
     
     QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -272,6 +274,7 @@
         }
         
         [self refreshSearchBarTextForCurrentQuery];
+        [self stopSearchInProgressAnimation];
     };
     
     QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -295,6 +298,14 @@
     m_searchQueryStartedEvent = searchQueryStartedEvent;
     m_searchQueryCompletedEvent = searchQueryCompletedEvent;
     m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
+}
+
+-(void)startSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator startAnimating];
+}
+
+-(void)stopSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator stopAnimating];
 }
 
 - (void) stopObservingModel: (WRLDSearchModel *) model
@@ -417,6 +428,7 @@
     }
     
     [self determineVoiceButtonVisibility];
+    [self stopSearchInProgressAnimation];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar

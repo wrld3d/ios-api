@@ -25,7 +25,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         
         _defaultCellIdentifier = defaultCellIdentifier;
         _moreResultsCellIdentifier = @"WRLDMoreResultsTableViewCell";
-        _searchInProgressCellIdentifier = @"WRLDSearchInProgressTableViewCell";
+        
     }
     
     return self;
@@ -63,10 +63,6 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 -(NSString *) getIdentifierForCellAtPosition:(NSIndexPath *) index
 {
-    if(!m_displayedQuery.hasCompleted){
-        return self.searchInProgressCellIdentifier;
-    }
-    
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [index section]];
     
     if([setViewModel isMoreResultsCell: [index row]]){
@@ -150,7 +146,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     if(!m_displayedQuery.hasCompleted)
     {
-        return 1;
+        return 0;
     }
     
     return [m_providerViewModels count];
@@ -160,7 +156,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     
     if(!m_displayedQuery.hasCompleted)
     {
-        return 1;
+        return 0;
     }
     
     WRLDSearchWidgetResultSetViewModel * providerViewModel = [m_providerViewModels objectAtIndex:section];
@@ -200,3 +196,4 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 }
 
 @end
+

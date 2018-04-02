@@ -5,7 +5,6 @@
 #import "WRLDSearchRequestFulfillerHandle.h"
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDMoreResultsTableViewCell.h"
-#import "WRLDSearchInProgressTableViewCell.h"
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
@@ -65,7 +64,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_isAnimatingOut = false;
         m_fadeDuration = 0.2f;
         
-        m_searchInProgressCellHeight = 32;
+        m_searchInProgressCellHeight = 0;
         m_moreResultsCellHeight = 32;
         
         m_style = style;
@@ -88,8 +87,6 @@ typedef NS_ENUM(NSInteger, GradientState) {
     forCellReuseIdentifier: m_dataSource.defaultCellIdentifier];
     [tableView registerNib:[UINib nibWithNibName:m_dataSource.moreResultsCellIdentifier bundle: resourceBundle]
     forCellReuseIdentifier: m_dataSource.moreResultsCellIdentifier];
-    [tableView registerNib:[UINib nibWithNibName:m_dataSource.searchInProgressCellIdentifier bundle: resourceBundle]
-    forCellReuseIdentifier: m_dataSource.searchInProgressCellIdentifier];
     
     m_imgMoreResultsIcon = [UIImage imageNamed:@"MoreResults_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
     m_imgBackIcon = [UIImage imageNamed:@"SmallBackArrow_Icon.png" inBundle: resourceBundle compatibleWithTraitCollection:nil];
@@ -242,8 +239,6 @@ typedef NS_ENUM(NSInteger, GradientState) {
 {
     if(m_dataSource.isAwaitingData)
     {
-        WRLDSearchInProgressTableViewCell* inProgressCell = (WRLDSearchInProgressTableViewCell *) cell;
-        [inProgressCell applyStyle: m_style];
         return;
     }
     
