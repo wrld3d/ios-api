@@ -35,7 +35,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (BOOL) isAwaitingData
 {
-    return ![m_displayedQuery hasCompleted];
+    return m_displayedQuery != nil && ![m_displayedQuery hasCompleted];
 }
 
 - (NSInteger) providerCount
@@ -53,9 +53,21 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     [self collapseAllSections];
 }
 
+- (void) clearResults
+{
+    m_displayedQuery = nil;
+    WRLDSearchResultsCollection* emptyResults = [[WRLDSearchResultsCollection alloc] init];
+    for (WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
+    {
+        [set updateResultData:emptyResults];
+    }
+    [self collapseAllSections];
+}
+
 - (NSString*) getDisplayedQueryText
 {
-    if(m_displayedQuery != nil) {
+    if(m_displayedQuery != nil)
+    {
         return m_displayedQuery.queryString;
     }
     return nil;
@@ -65,7 +77,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [index section]];
     
-    if([setViewModel isMoreResultsCell: [index row]]){
+    if([setViewModel isMoreResultsCell: [index row]])
+    {
         return self.moreResultsCellIdentifier;
     }
     
@@ -88,12 +101,14 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     WRLDSearchWidgetResultSetViewModel* modelToRemove = nil;
     for(WRLDSearchWidgetResultSetViewModel* viewModel in m_providerViewModels)
     {
-        if(viewModel.fulfiller.identifier == fulfiller.identifier){
+        if(viewModel.fulfiller.identifier == fulfiller.identifier)
+        {
             modelToRemove = viewModel;
             break;
         }
     }
-    if(modelToRemove != nil){
+    if(modelToRemove != nil)
+    {
         [m_providerViewModels removeObject: modelToRemove];
     }
 }
@@ -144,7 +159,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(!m_displayedQuery.hasCompleted)
+    if(m_displayedQuery != nil && !m_displayedQuery.hasCompleted)
     {
         return 0;
     }
@@ -154,7 +169,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if(!m_displayedQuery.hasCompleted)
+    if(m_displayedQuery != nil && !m_displayedQuery.hasCompleted)
     {
         return 0;
     }

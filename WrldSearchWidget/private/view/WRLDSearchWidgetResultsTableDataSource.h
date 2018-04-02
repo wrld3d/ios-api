@@ -20,6 +20,7 @@
 @property (nonatomic, readonly) NSInteger * visibleResults;
 
 - (void) updateResultsFrom: (WRLDSearchQuery *) query;
+- (void) clearResults;
 - (NSString*) getDisplayedQueryText;
 
 - (void) selected : (NSIndexPath *) index;
