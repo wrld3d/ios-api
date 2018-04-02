@@ -5,7 +5,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *menuSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *searchBarSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *voiceOptionSubView;
-@property (unsafe_unretained, nonatomic) IBOutlet UIView *voiceSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *resultsSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *suggestionsSubView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *menuContainerSubView;
@@ -28,10 +27,6 @@
     {
         return YES;
     }
-    if([self subviewContainsEvent: self.voiceSubView point: point event: event])
-    {
-        return YES;
-    }
     if([self subviewContainsEvent: self.resultsSubView point: point event: event])
     {
         return YES;
@@ -48,11 +43,6 @@
     [self.owner resignFocus];
     
     return NO;
-}
-
--(void) setSpeechHandler: (UIView*)speechHandlerView
-{
-    self.voiceSubView = speechHandlerView;
 }
 
 -(BOOL) subviewContainsEvent: (UIView*) view

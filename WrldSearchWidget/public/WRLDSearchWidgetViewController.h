@@ -10,6 +10,7 @@
 @class WRLDMenuObserver;
 @class WRLDSearchWidgetObserver;
 @class WRLDSearchWidgetStyle;
+@class WRLDSpeechHandler;
 
 @interface WRLDSearchWidgetViewController : UIViewController <UISearchBarDelegate>
 
@@ -48,7 +49,7 @@
 
 - (void)expandMenuOptionAt:(NSUInteger)index;
 
-- (void)enableVoiceSearch:(NSString*)promptText;
+- (void)enableVoiceSearch:(WRLDSpeechHandler*)speechHandler;
 
 - (void)disableVoiceSearch;
 

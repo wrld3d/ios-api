@@ -7,6 +7,7 @@
 @interface WRLDSpeechHandler()
 @property (strong, nonatomic) IBOutlet UIView *microphoneOverlayRootView;
 @property (strong, nonatomic) IBOutlet UIView *microphoneIconView;
+@property (strong, nonatomic) IBOutlet UIView *microphoneContainerView;
 @property (strong, nonatomic) IBOutlet UILabel *promptTextView;
 @end
 
@@ -23,6 +24,7 @@
     BOOL m_wasCancelled;
     CGFloat m_inputVolume;
     CGRect m_originalIconBounds;
+    CGRect m_originalIconContainerBounds;
     CGRect m_screenFrame;
 }
 
@@ -31,7 +33,6 @@
     self = [super initWithFrame:frame];
     if(self)
     {
-        _isEnabled = NO;
         _isAuthorized = NO;
         _isRecording = NO;
         _promptText = @"Search the WRLD";
@@ -45,6 +46,7 @@
         
         [self addSubview:m_rootView];
         m_rootView.frame = m_screenFrame;
+        self.frame = m_screenFrame;
         
         self.hidden = YES;
         
@@ -52,32 +54,20 @@
         self.microphoneIconView.layer.cornerRadius = initialRadius + 5;
         self.microphoneIconView.clipsToBounds = YES;
         
+        float initialContainerRadius = self.microphoneContainerView.bounds.size.height/2.0f;
+        self.microphoneContainerView.layer.cornerRadius = initialContainerRadius + 5;
+        self.microphoneContainerView.clipsToBounds = YES;
+        
         m_originalIconBounds = self.microphoneIconView.bounds;
+        m_originalIconContainerBounds = self.microphoneContainerView.bounds;
     }
     return self;
 }
 
--(void)layoutSubviews
+-(void) setPrompt:(NSString*)promptText
 {
-    // TODO: Fix up full-screen view hackery
-    CGPoint rootOffset = [self convertPoint:CGPointMake(0, 0) toView:nil];
-    m_screenFrame.origin.x = -rootOffset.x;
-    m_screenFrame.origin.y = -rootOffset.y;
-    m_rootView.frame = m_screenFrame;
-    
-    [super layoutSubviews];
-}
-
--(void) enableWithPrompt:(NSString*)promptText
-{
-    _isEnabled = YES;
     _promptText = promptText;
     [self.promptTextView setText:_promptText];
-}
-
--(void) disable
-{
-    _isEnabled = NO;
 }
 
 -(IBAction)outsideBoundsClickHandler:(id)sender
@@ -150,17 +140,13 @@
 {
     if([m_audioEngine isRunning]) {
         
-        NSLog(@"Time ran out so ending recording");
+        NSLog(@"Ending recording");
         [self endRecording];
     }
 }
 
 -(void)startRecording
 {
-    if(!self.isEnabled) {
-        return;
-    }
-    
     if(!self.isAuthorized) {
         return;
     }
@@ -278,7 +264,8 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.3 animations:^{
-                [self.microphoneIconView setBounds:CGRectInset(m_originalIconBounds, -m_inputVolume, -m_inputVolume)];
+                float animateScale = 1.0f;
+                [self.microphoneContainerView setBounds:CGRectInset(m_originalIconContainerBounds, -m_inputVolume*animateScale, -m_inputVolume*animateScale)];
             }];
         });
     }];

@@ -17,7 +17,7 @@
 #import "WRLDSearchMenuModel.h"
 #import "WRLDSearchMenuViewController.h"
 #import "WRLDSearchWidgetResultsTableDataSource.h"
-#import "WRLDSpeechHandler.h"
+#import "WRLDSpeechHandler+Private.h"
 #import "WRLDSearchWidgetView.h"
 
 @interface WRLDSearchWidgetViewController()
@@ -79,6 +79,10 @@
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
     __weak QueryEvent m_suggestionQueryCompletedEvent;
+    
+    __weak VoiceAuthorizedEvent m_speechHandlerAuthChangedEvent;
+    __weak VoiceEvent m_speechHandlerCancelledEvent;
+    __weak VoiceRecordedEvent m_speechHandlerCompletedEvent;
 }
 
 - (BOOL) searchBarIsFirstResponder
@@ -141,12 +145,7 @@
         m_suggestionsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
                                    initWithDefaultCellIdentifier: m_suggestionsTableViewCellStyleIdentifier];
         
-        CGRect fullScreen = [[UIScreen mainScreen] bounds];
-        m_speechHandler = [[WRLDSpeechHandler alloc] initWithFrame:fullScreen];
-        [self.view addSubview:m_speechHandler];
-        
-        // TODO: Discuss better way to handling this so SpeechHandler can handle widget input.
-        [(WRLDSearchWidgetView*)(self.view) setSpeechHandler: m_speechHandler];
+        m_speechHandler = nil;
         
     }
     return self;
@@ -191,7 +190,6 @@
     
     [self.voiceButtonWidthConstraint setConstant:0];
     [self determineVoiceButtonVisibility];
-    [self setupVoiceControl];
     
     [self setupStyle];
 }
@@ -386,6 +384,8 @@
         return;
     }
     
+    // TODO: As per Droid, editing text away from current matching query should clear query and results.
+    
     [m_searchResultsViewController hide];
     [self.noResultsVisibilityController hide];
     
@@ -540,16 +540,22 @@
 {
     if(@available(iOS 10.0, *))
     {
-        return [m_speechHandler isEnabled] && [m_speechHandler isAuthorized];
+        return m_speechHandler != nil && [m_speechHandler isAuthorized];
     }
     else return NO;
 }
 
-- (void)enableVoiceSearch:(NSString*)promptText
+- (void)enableVoiceSearch:(WRLDSpeechHandler*)speechHandler
 {
     if(@available(iOS 10.0, *))
     {
-        [m_speechHandler enableWithPrompt:promptText];
+        if(m_speechHandler != nil) {
+            [self disableVoiceSearch];
+        }
+        
+        m_speechHandler = speechHandler;
+        
+        [self observeSpeechHandler: speechHandler];
         [self determineVoiceButtonVisibility];
     }
     else
@@ -560,7 +566,13 @@
 
 - (void)disableVoiceSearch
 {
-    [m_speechHandler disable];
+    if(m_speechHandler != nil && m_speechHandler.isRecording) {
+        [m_speechHandler endRecording];
+    }
+    
+    [self stopObservingSpeechHandler: m_speechHandler];
+    
+    m_speechHandler = nil;
     [self determineVoiceButtonVisibility];
 }
 
@@ -588,7 +600,7 @@
     }
 }
 
--(void) setupVoiceControl
+-(void) observeSpeechHandler: (WRLDSpeechHandler*)speechHandler
 {
     VoiceAuthorizedEvent voiceAuthorizedChangedEvent = ^(BOOL authorized)
     {
@@ -607,10 +619,24 @@
         [self showResultsView];
     };
     
-    // TODO: Remove these where?
-    [m_speechHandler.observer addAuthorizationChangedEvent:voiceAuthorizedChangedEvent];
-    [m_speechHandler.observer addVoiceRecordCancelledEvent:voiceRecordCancelEvent];
-    [m_speechHandler.observer addVoiceRecordCompleteEvent:voiceRecordCompleteEvent];
+    [speechHandler.observer addAuthorizationChangedEvent:voiceAuthorizedChangedEvent];
+    [speechHandler.observer addVoiceRecordCancelledEvent:voiceRecordCancelEvent];
+    [speechHandler.observer addVoiceRecordCompleteEvent:voiceRecordCompleteEvent];
+    
+    m_speechHandlerAuthChangedEvent = voiceAuthorizedChangedEvent;
+    m_speechHandlerCancelledEvent = voiceRecordCancelEvent;
+    m_speechHandlerCompletedEvent = voiceRecordCompleteEvent;
+}
+
+-(void) stopObservingSpeechHandler: (WRLDSpeechHandler*)speechHandler
+{
+    [speechHandler.observer removeAuthorizationChangedEvent:m_speechHandlerAuthChangedEvent];
+    [speechHandler.observer removeVoiceRecordCancelledEvent:m_speechHandlerCancelledEvent];
+    [speechHandler.observer removeVoiceRecordCompleteEvent:m_speechHandlerCompletedEvent];
+
+    m_speechHandlerAuthChangedEvent = nil;
+    m_speechHandlerCancelledEvent = nil;
+    m_speechHandlerCompletedEvent = nil;
 }
 
 - (IBAction) voiceButtonClicked:(id)sender
