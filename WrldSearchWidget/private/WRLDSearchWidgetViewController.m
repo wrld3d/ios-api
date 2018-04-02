@@ -66,8 +66,6 @@
     
     WRLDSpeechHandler* m_speechHandler;
     
-    WRLDSearchQuery * m_mostRecentQuery;
-    
     NSInteger maxVisibleCollapsedResults;
     NSInteger maxVisibleExpandedResults;
     
@@ -76,6 +74,7 @@
     id<WRLDViewVisibilityController> m_activeResultsView;
 
     BOOL m_hasFocus;
+    BOOL m_isSearchResultsViewVisible;
     
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
@@ -109,7 +108,7 @@
 
 - (BOOL)hasSearchResults
 {
-    return m_activeResultsView == m_searchResultsViewController && m_searchResultsDataSource.visibleResults > 0;
+    return m_searchResultsDataSource.visibleResults > 0;
 }
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
@@ -139,6 +138,7 @@
         _observer = [[WRLDSearchWidgetObserver alloc] init];
         
         m_hasFocus = NO;
+        m_isSearchResultsViewVisible = NO;
         _searchbarHasFocus = NO;
         
         m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
@@ -240,7 +240,7 @@
         {
             [m_suggestionsViewController hide];
             [self.noResultsVisibilityController hide];
-            [m_searchResultsViewController show];
+            [self showSearchResultsView];
         }
         
         [self refreshSearchBarTextForCurrentQuery];
@@ -257,7 +257,7 @@
             m_activeResultsView = self.noResultsVisibilityController;
             if(_isResultsViewVisible)
             {
-                [m_searchResultsViewController hide];
+                [self hideSearchResultsView];
                 [self.noResultsVisibilityController show];
             }
         }
@@ -267,10 +267,9 @@
             [self.observer receiveSearchResults];
             if(_isResultsViewVisible)
             {
-                [m_searchResultsViewController show];
+                [self showSearchResultsView];
                 [self.noResultsVisibilityController hide];
             }
-            [self.observer showSearchResults];
         }
         
         [self refreshSearchBarTextForCurrentQuery];
@@ -281,7 +280,7 @@
     {
         [m_suggestionsDataSource updateResultsFrom: query];
         [m_suggestionsViewController refreshTable];
-        [m_searchResultsViewController hide];
+        [self hideSearchResultsView];
         if(m_hasFocus)
         {
             [m_suggestionsViewController show];
@@ -396,33 +395,28 @@
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    // TODO: we don't trim text in Android. Should porbably make one consistent with the other
     NSString *trimmedSearchText = [searchText stringByTrimmingCharactersInSet:
-                               [NSCharacterSet whitespaceCharacterSet]];
-
-    if(m_mostRecentQuery && [trimmedSearchText isEqualToString: m_mostRecentQuery.queryString])
+                                   [NSCharacterSet whitespaceCharacterSet]];
+    
+    bool hasSearchQueryAndNewTextDiffers = [m_searchModel isCurrentQueryForSearch] && ![trimmedSearchText isEqualToString: [m_searchModel getCurrentQuery].queryString];
+    
+    if (hasSearchQueryAndNewTextDiffers)
     {
-        return;
+        [m_searchModel cancelCurrentQuery];
+        [self clearSearchResults];
     }
-    
-    if ([searchText length] == 0)
-    {
-        if (m_activeResultsView == m_searchResultsViewController)
-        {
-            [self.observer clearSearchResults];
-        }
-    }
-    
-    [m_searchResultsViewController hide];
-    [self.noResultsVisibilityController hide];
-    
-    [self cancelMostRecentQueryIfNotComplete];
     
     if([trimmedSearchText length] > 0)
     {
-        m_mostRecentQuery = [m_searchModel getSuggestionsForString: trimmedSearchText];
+        [m_searchModel getSuggestionsForString:trimmedSearchText];
     }
     else
     {
+        // TODO: should probably split search model into a suggestions model or at least separate the queries
+        [m_searchModel cancelCurrentQuery];
+        
+        // TODO: should probably be done as a side effect of clearing the suggestions, like in Android.
         [m_suggestionsViewController hide];
         m_activeResultsView = nil;
     }
@@ -438,19 +432,9 @@
 
 - (void) triggerSearch : (NSString *) queryString
 {
-    [self cancelMostRecentQueryIfNotComplete];
     [m_suggestionsViewController hide];
-    m_mostRecentQuery = [m_searchModel getSearchResultsForString: queryString];
+    [m_searchModel getSearchResultsForString: queryString];
     [self.searchBar resignFirstResponder];
-}
-
-- (void) cancelMostRecentQueryIfNotComplete
-{
-    if(!m_mostRecentQuery.hasCompleted)
-    {
-        [m_mostRecentQuery cancel];
-        m_mostRecentQuery = nil;
-    }
 }
 
 - (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
@@ -487,19 +471,50 @@
     [self.searchBar setText:@""];
 }
 
+- (void)clearSearchResults
+{
+    [self hideSearchResultsView];
+    [self.noResultsVisibilityController hide];
+    
+    [m_searchResultsDataSource clearResults];
+    [self.observer clearSearchResults];
+}
+
+- (void)showSearchResultsView
+{
+    if (!m_isSearchResultsViewVisible)
+    {
+        [m_searchResultsViewController show];
+        m_isSearchResultsViewVisible = YES;
+        _isResultsViewVisible = YES;
+        [self.observer showSearchResults];
+    }
+}
+
+- (void)hideSearchResultsView
+{
+    if (m_isSearchResultsViewVisible)
+    {
+        [m_searchResultsViewController hide];
+        m_isSearchResultsViewVisible = NO;
+        _isResultsViewVisible = NO;
+        [self.observer hideSearchResults];
+    }
+}
+
 - (void) showResultsView
 {
     if(m_activeResultsView != nil)
     {
-        [m_activeResultsView show];
-        if (!_isResultsViewVisible)
+        if (m_activeResultsView == m_searchResultsViewController)
         {
-            _isResultsViewVisible = YES;
-            if (m_activeResultsView == m_searchResultsViewController)
-            {
-                [self.observer showSearchResults];
-            }
+            [self showSearchResultsView];
         }
+        else
+        {
+            [m_activeResultsView show];
+        }
+        _isResultsViewVisible = YES;
         
         [self refreshSearchBarTextForCurrentQuery];
     }
@@ -509,16 +524,16 @@
 {
     if(m_activeResultsView != nil)
     {
-        [m_activeResultsView hide];
         
-        if (_isResultsViewVisible)
+        if (m_activeResultsView == m_searchResultsViewController)
         {
-            _isResultsViewVisible = NO;
-            if (m_activeResultsView == m_searchResultsViewController)
-            {
-                [self.observer hideSearchResults];
-            }
+            [self hideSearchResultsView];
         }
+        else
+        {
+            [m_activeResultsView hide];
+        }
+        _isResultsViewVisible = NO;
         
         [self refreshSearchBarTextForCurrentQuery];
     }
