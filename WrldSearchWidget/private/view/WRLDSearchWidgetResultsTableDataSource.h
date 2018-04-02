@@ -8,6 +8,8 @@
 @class WRLDSearchWidgetResultSetViewModel;
 @class WRLDSearchResultTableViewCell;
 
+typedef void (^SearchResultsSourceEvent) (void);
+
 @interface WRLDSearchWidgetResultsTableDataSource : NSObject<UITableViewDataSource>
 
 - (instancetype) initWithDefaultCellIdentifier: (NSString *) defaultCellIdentifier;
@@ -36,6 +38,11 @@
       maxToShowWhenExpanded: (NSInteger) maxToShowWhenExpanded;
 
 - (void) stopDisplayingResultsFrom: (id<WRLDSearchRequestFulfillerHandle>) provider;
+
+- (void) addResultsSectionExpandedEvent: (SearchResultsSourceEvent)event;
+- (void) removeResultsSectionExpandedEvent: (SearchResultsSourceEvent)event;
+- (void) addResultsSectionsCollapsedEvent: (SearchResultsSourceEvent)event;
+- (void) removeResultsSectionsCollapsedEvent: (SearchResultsSourceEvent)event;
 
 - (NSInteger) getTotalResultCount;
 @end

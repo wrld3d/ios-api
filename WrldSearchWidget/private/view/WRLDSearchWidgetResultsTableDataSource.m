@@ -13,6 +13,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     ResultSetViewModelCollection * m_providerViewModels;
     WRLDSearchQuery *m_displayedQuery;
+    
+    NSMutableArray<SearchResultsSourceEvent>* m_resultsSectionExpandedEvents;
+    NSMutableArray<SearchResultsSourceEvent>* m_resultsSectionsCollapsedEvents;
 }
 
 - (instancetype) initWithDefaultCellIdentifier: (NSString *) defaultCellIdentifier
@@ -25,6 +28,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         
         _defaultCellIdentifier = defaultCellIdentifier;
         _moreResultsCellIdentifier = @"WRLDMoreResultsTableViewCell";
+        
+        m_resultsSectionExpandedEvents = [[NSMutableArray<SearchResultsSourceEvent> alloc] init];
+        m_resultsSectionsCollapsedEvents = [[NSMutableArray<SearchResultsSourceEvent> alloc] init];
         
     }
     
@@ -123,6 +129,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         [setViewModel setExpandedState: stateForProvider];
         _visibleResults += [setViewModel getVisibleResultCountWhen: stateForProvider];
     }
+    [self searchResultSectionExpanded];
 }
 
 - (void) collapseAllSections
@@ -133,6 +140,8 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
         [setViewModel setExpandedState: Collapsed];
         _visibleResults += [setViewModel getVisibleResultCountWhen: Collapsed];
     }
+    
+    [self searchResultSectionsCollapsed];
 }
 
 - (void) selected: (NSIndexPath *) indexPath
@@ -208,6 +217,54 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     }
     
     return count;
+}
+
+- (void) addResultsSectionExpandedEvent: (SearchResultsSourceEvent)event
+{
+    if(event)
+    {
+        [m_resultsSectionExpandedEvents addObject:event];
+    }
+}
+
+- (void) removeResultsSectionExpandedEvent: (SearchResultsSourceEvent)event
+{
+    if(event)
+    {
+        [m_resultsSectionExpandedEvents removeObject:event];
+    }
+}
+
+- (void) addResultsSectionsCollapsedEvent: (SearchResultsSourceEvent)event
+{
+    if(event)
+    {
+        [m_resultsSectionsCollapsedEvents addObject:event];
+    }
+}
+
+- (void) removeResultsSectionsCollapsedEvent: (SearchResultsSourceEvent)event
+{
+    if(event)
+    {
+        [m_resultsSectionsCollapsedEvents removeObject:event];
+    }
+}
+
+- (void) searchResultSectionExpanded
+{
+    for( SearchResultsSourceEvent event in m_resultsSectionExpandedEvents)
+    {
+        event();
+    }
+}
+
+- (void) searchResultSectionsCollapsed
+{
+    for( SearchResultsSourceEvent event in m_resultsSectionsCollapsedEvents)
+    {
+        event();
+    }
 }
 
 @end

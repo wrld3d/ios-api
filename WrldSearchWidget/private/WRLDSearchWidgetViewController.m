@@ -194,6 +194,12 @@
         [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
     }
     
+    SearchResultsSourceEvent resultsSectionExpandedStateChangedEvent = ^() {
+        [self searchbarResignFocus];
+    };
+    
+    [m_searchResultsDataSource addResultsSectionExpandedEvent:resultsSectionExpandedStateChangedEvent];
+    
     [self.voiceButtonWidthConstraint setConstant:0];
     [self determineVoiceButtonVisibility];
     
