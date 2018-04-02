@@ -15,7 +15,6 @@
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * selectionObserver;
 @property (nonatomic, readonly) NSString* defaultCellIdentifier;
 @property (nonatomic, readonly) NSString* moreResultsCellIdentifier;
-@property (nonatomic, readonly) NSString* searchInProgressCellIdentifier;
 @property (nonatomic, readonly) BOOL isAwaitingData;
 @property (nonatomic, readonly) NSInteger providerCount;
 @property (nonatomic, readonly) NSInteger * visibleResults;

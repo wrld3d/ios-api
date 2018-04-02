@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *voiceButtonWidthConstraint;
 
 @property (weak, nonatomic) IBOutlet UIButton *voiceButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingInProgressActivityIndicator;
 
 @property (weak, nonatomic) IBOutlet UIView *resultsTableContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
@@ -108,6 +109,11 @@
 - (BOOL)isMenuOpen
 {
     return [m_searchMenuViewController isMenuOpen];
+}
+
+- (BOOL)hasSearchResults
+{
+    return m_activeResultsView == m_searchResultsViewController && m_searchResultsDataSource.visibleResults > 0;
 }
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
@@ -236,6 +242,7 @@
         }
         
         [self refreshSearchBarTextForCurrentQuery];
+        [self startSearchInProgressAnimation];
     };
     
     QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -255,14 +262,17 @@
         else
         {
             m_activeResultsView = m_searchResultsViewController;
+            [self.observer receiveSearchResults];
             if(_isResultsViewVisible)
             {
                 [m_searchResultsViewController show];
                 [self.noResultsVisibilityController hide];
             }
+            [self.observer showSearchResults];
         }
         
         [self refreshSearchBarTextForCurrentQuery];
+        [self stopSearchInProgressAnimation];
     };
     
     QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
@@ -286,6 +296,14 @@
     m_searchQueryStartedEvent = searchQueryStartedEvent;
     m_searchQueryCompletedEvent = searchQueryCompletedEvent;
     m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
+}
+
+-(void)startSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator startAnimating];
+}
+
+-(void)stopSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator stopAnimating];
 }
 
 - (void) stopObservingModel: (WRLDSearchModel *) model
@@ -386,6 +404,14 @@
     
     // TODO: As per Droid, editing text away from current matching query should clear query and results.
     
+    if ([searchText length] == 0)
+    {
+        if (m_activeResultsView == m_searchResultsViewController)
+        {
+            [self.observer clearSearchResults];
+        }
+    }
+    
     [m_searchResultsViewController hide];
     [self.noResultsVisibilityController hide];
     
@@ -402,6 +428,7 @@
     }
     
     [self determineVoiceButtonVisibility];
+    [self stopSearchInProgressAnimation];
 }
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -458,7 +485,6 @@
 - (void) clearSearch
 {
     [self.searchBar setText:@""];
-    [self hideResultsView];
 }
 
 - (void) showResultsView
@@ -466,10 +492,16 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView show];
-        _isResultsViewVisible = YES;
+        if (!_isResultsViewVisible)
+        {
+            _isResultsViewVisible = YES;
+            if (m_activeResultsView == m_searchResultsViewController)
+            {
+                [self.observer showSearchResults];
+            }
+        }
         
         [self refreshSearchBarTextForCurrentQuery];
-        
     }
 }
 
@@ -478,7 +510,15 @@
     if(m_activeResultsView != nil)
     {
         [m_activeResultsView hide];
-        _isResultsViewVisible = NO;
+        
+        if (_isResultsViewVisible)
+        {
+            _isResultsViewVisible = NO;
+            if (m_activeResultsView == m_searchResultsViewController)
+            {
+                [self.observer hideSearchResults];
+            }
+        }
         
         [self refreshSearchBarTextForCurrentQuery];
     }

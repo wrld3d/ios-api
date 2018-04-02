@@ -8,5 +8,13 @@
 
 - (void)searchbarResignFocus;
 
+- (void)receiveSearchResults;
+
+- (void)clearSearchResults;
+
+- (void)showSearchResults;
+
+- (void)hideSearchResults;
+
 @end
 

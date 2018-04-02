@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetViewController">
             <connections>
+                <outlet property="loadingInProgressActivityIndicator" destination="iQe-NE-D7F" id="EGX-Mg-VsG"/>
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="gPr-Zx-6NW"/>
                 <outlet property="menuButtonWidthConstraint" destination="MJU-fm-ezz" id="e0p-CE-W7m"/>
                 <outlet property="menuContainerView" destination="Ooa-S7-mFc" id="gAF-hK-2lc"/>
@@ -108,6 +109,10 @@
                                 <outlet property="searchBarBackground" destination="gYl-rC-nwo" id="0u1-5g-GYQ"/>
                             </connections>
                         </searchBar>
+                        <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iQe-NE-D7F">
+                            <rect key="frame" x="307" y="12" width="20" height="20"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uZ-5k-wKJ" userLabel="Voice Control Button">
                             <rect key="frame" x="339" y="4" width="32" height="36"/>
                             <constraints>
@@ -129,10 +134,12 @@
                         <constraint firstItem="nwq-hq-zts" firstAttribute="top" secondItem="gYl-rC-nwo" secondAttribute="top" constant="6" id="ZYT-Od-hQF"/>
                         <constraint firstItem="4uZ-5k-wKJ" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-4" id="biy-Pz-GeE"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="leading" secondItem="gYl-rC-nwo" secondAttribute="leading" constant="4" id="caj-ko-mtc"/>
+                        <constraint firstItem="iQe-NE-D7F" firstAttribute="centerY" secondItem="gYl-rC-nwo" secondAttribute="centerY" id="cvs-2K-lLQ"/>
                         <constraint firstItem="nwq-hq-zts" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-6" id="eFa-OQ-5Wn"/>
                         <constraint firstItem="4uZ-5k-wKJ" firstAttribute="trailing" secondItem="gYl-rC-nwo" secondAttribute="trailing" constant="-4" id="eJn-zr-fUD"/>
                         <constraint firstItem="Gsy-aj-hKu" firstAttribute="bottom" secondItem="gYl-rC-nwo" secondAttribute="bottom" constant="-4" id="mmO-3q-rZe"/>
                         <constraint firstAttribute="height" constant="44" id="ndG-A3-qxD"/>
+                        <constraint firstItem="nwq-hq-zts" firstAttribute="trailing" secondItem="iQe-NE-D7F" secondAttribute="trailing" constant="8" id="zUn-3o-P6u"/>
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ub-Ja-lSU" userLabel="No Results View" customClass="WRLDFadeableView">
