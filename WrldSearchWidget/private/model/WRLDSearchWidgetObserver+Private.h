@@ -8,6 +8,10 @@
 
 - (void)searchbarResignFocus;
 
+- (void)searchWidgetGainFocus;
+
+- (void)searchWidgetResignFocus;
+
 - (void)receiveSearchResults;
 
 - (void)clearSearchResults;

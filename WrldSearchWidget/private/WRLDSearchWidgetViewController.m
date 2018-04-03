@@ -73,7 +73,7 @@
     
     id<WRLDViewVisibilityController> m_activeResultsView;
 
-    BOOL m_hasFocus;
+    BOOL m_searchHasFocus;
     BOOL m_isSearchResultsViewVisible;
     
     __weak QueryEvent m_searchQueryStartedEvent;
@@ -83,6 +83,9 @@
     __weak VoiceAuthorizedEvent m_speechHandlerAuthChangedEvent;
     __weak VoiceEvent m_speechHandlerCancelledEvent;
     __weak VoiceRecordedEvent m_speechHandlerCompletedEvent;
+    
+    __weak OpenedEvent m_menuOpenedEvent;
+    __weak ClosedEvent m_menuClosedEvent;
 }
 
 - (BOOL) searchBarIsFirstResponder
@@ -115,6 +118,11 @@
     return m_searchResultsDataSource.visibleResults > 0;
 }
 
+- (BOOL) hasFocus
+{
+    return m_searchHasFocus || self.isMenuOpen;
+}
+
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
 {
     return [self initWithSearchModel:searchModel
@@ -141,7 +149,7 @@
         _style = [[WRLDSearchWidgetStyle alloc] init];
         _observer = [[WRLDSearchWidgetObserver alloc] init];
         
-        m_hasFocus = NO;
+        m_searchHasFocus = NO;
         m_isSearchResultsViewVisible = NO;
         _searchbarHasFocus = NO;
         
@@ -240,7 +248,7 @@
         [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
         m_activeResultsView = m_searchResultsViewController;
-        if(m_hasFocus)
+        if(m_searchHasFocus)
         {
             BOOL animateOut = NO;
             [m_suggestionsViewController hide: animateOut];
@@ -273,8 +281,8 @@
             [self.observer receiveSearchResults];
             if(_isResultsViewVisible)
             {
-                BOOL animateOut = YES;
                 [self showSearchResultsView];
+                BOOL animateOut = YES;
                 [self.noResultsVisibilityController hide: animateOut];
             }
         }
@@ -288,7 +296,7 @@
         [m_suggestionsDataSource updateResultsFrom: query];
         [m_suggestionsViewController refreshTable];
         [self hideSearchResultsView];
-        if(m_hasFocus)
+        if(m_searchHasFocus)
         {
             BOOL animateIn = YES;
             [m_suggestionsViewController show: animateIn];
@@ -296,15 +304,35 @@
         m_activeResultsView = m_suggestionsViewController;
     };
     
+    OpenedEvent menuOpenedEvent = ^(BOOL fromInteraction)
+    {
+        if(!m_searchHasFocus && fromInteraction)
+        {
+            [self.observer searchWidgetGainFocus];
+        }
+    };
+    
+    ClosedEvent menuClosedEvent = ^(BOOL fromInteraction)
+    {
+        if(fromInteraction)
+        {
+            [self.observer searchWidgetResignFocus];
+        }
+    };
+    
     // observers will hold strong references to block events to increase reference counter
     [m_searchModel.searchObserver addQueryStartingEvent: searchQueryStartedEvent];
     [m_searchModel.searchObserver addQueryCompletedEvent: searchQueryCompletedEvent];
     [m_searchModel.suggestionObserver addQueryCompletedEvent: suggestionQueryCompletedEvent];
+    [self.menuObserver addOpenedEvent: menuOpenedEvent];
+    [self.menuObserver addClosedEvent: menuClosedEvent];
     
     // self will weakly hold on to block event to remove from observer later and prevent circular references
     m_searchQueryStartedEvent = searchQueryStartedEvent;
     m_searchQueryCompletedEvent = searchQueryCompletedEvent;
     m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
+    m_menuOpenedEvent = menuOpenedEvent;
+    m_menuClosedEvent = menuClosedEvent;
 }
 
 -(void)startSearchInProgressAnimation{
@@ -336,6 +364,16 @@
     {
         [model.suggestionObserver removeQueryCompletedEvent: m_suggestionQueryCompletedEvent];
     }
+    
+    if(m_menuOpenedEvent)
+    {
+        [self.menuObserver removeOpenedEvent: m_menuOpenedEvent];
+    }
+    
+    if(m_menuClosedEvent)
+    {
+        [self.menuObserver removeClosedEvent: m_menuClosedEvent];
+    }
 }
 
 - (void) setupStyle
@@ -365,7 +403,7 @@
 {
     [searchBar setActive: true];
     [self showResultsView];
-    m_hasFocus = YES;
+    m_searchHasFocus = YES;
     
     if (!_searchbarHasFocus)
     {
@@ -382,9 +420,41 @@
 
 - (void) resignFocus
 {
+    BOOL hadFocus = self.hasFocus;
+    if(m_searchHasFocus)
+    {
+        [self minimiseSearchView];
+        m_searchHasFocus = NO;
+    }
+    if(self.isMenuOpen)
+    {
+        [m_searchMenuViewController close];
+    }
+    
+    if(hadFocus)
+    {
+        [_observer searchWidgetResignFocus];
+    }
+}
+
+- (void) minimiseSearchView
+{
     [self searchbarResignFocus];
-    [self hideResultsView];
-    m_hasFocus = NO;
+    if(m_activeResultsView != nil)
+    {
+        if (m_activeResultsView == m_searchResultsViewController)
+        {
+            [self hideSearchResultsView];
+        }
+        else
+        {
+            BOOL animateOut = YES;
+            [m_activeResultsView hide: animateOut];
+        }
+        _isResultsViewVisible = NO;
+        
+        [self refreshSearchBarTextForCurrentQuery];
+    }
 }
 
 - (void)searchbarResignFocus
@@ -517,6 +587,7 @@
 
 - (void) showResultsView
 {
+    BOOL hadFocus = self.hasFocus;
     if(m_activeResultsView != nil)
     {
         if (m_activeResultsView == m_searchResultsViewController)
@@ -532,25 +603,25 @@
         
         [self refreshSearchBarTextForCurrentQuery];
     }
+    
+    if(!hadFocus)
+    {
+        m_searchHasFocus = true;
+        [_observer searchWidgetGainFocus];
+    }
 }
 
 - (void) hideResultsView
 {
-    if(m_activeResultsView != nil)
+    BOOL hadFocus = self.hasFocus;
+    
+    [self searchbarResignFocus];
+    [self minimiseSearchView];
+    
+    if(hadFocus)
     {
-        
-        if (m_activeResultsView == m_searchResultsViewController)
-        {
-            [self hideSearchResultsView];
-        }
-        else
-        {
-            BOOL animateOut = YES;
-            [m_activeResultsView hide: animateOut];
-        }
-        _isResultsViewVisible = NO;
-        
-        [self refreshSearchBarTextForCurrentQuery];
+        m_searchHasFocus = false;
+        [_observer searchWidgetResignFocus];
     }
 }
 
@@ -576,13 +647,22 @@
 
 - (void)openMenu
 {
-    [self resignFocus];
+    bool hadFocus = self.hasFocus;
+    [self minimiseSearchView];
     [m_searchMenuViewController open];
+    if(!hadFocus)
+    {
+        [_observer searchWidgetGainFocus];
+    }
 }
 
 - (void)closeMenu
 {
+    bool hadFocus = self.hasFocus;
     [m_searchMenuViewController close];
+    if(hadFocus){
+        [_observer searchWidgetResignFocus];
+    }
 }
 
 - (void)collapseMenu
@@ -597,7 +677,7 @@
 
 - (IBAction)menuButtonClicked:(id)menuButton
 {
-    [self resignFocus];
+    [self minimiseSearchView];
     [m_searchMenuViewController onMenuButtonClicked];
 }
 
