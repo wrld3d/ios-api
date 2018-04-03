@@ -88,10 +88,7 @@
     __weak ClosedEvent m_menuClosedEvent;
 }
 
-- (BOOL) searchBarIsFirstResponder
-{
-    return self.searchBar.isFirstResponder;
-}
+#pragma mark - API
 
 - (WRLDSearchResultSelectedObserver *)searchSelectionObserver
 {
@@ -106,6 +103,11 @@
 - (WRLDMenuObserver *)menuObserver
 {
     return m_searchMenuViewController.observer;
+}
+
+- (BOOL) searchBarIsFirstResponder
+{
+    return self.searchBar.isFirstResponder;
 }
 
 - (BOOL)isMenuOpen
@@ -164,6 +166,169 @@
     }
     return self;
 }
+
+- (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
+{
+    [m_searchResultsDataSource displayResultsFrom: searchProvider
+                           maxToShowWhenCollapsed: maxVisibleCollapsedResults
+                            maxToShowWhenExpanded: maxVisibleExpandedResults];
+}
+
+- (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle *) searchProvider
+{
+    [m_searchResultsDataSource stopDisplayingResultsFrom: searchProvider];
+}
+
+- (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
+{
+    [m_suggestionsDataSource displayResultsFrom: suggestionProvider
+                         maxToShowWhenCollapsed: maxVisibleCollapsedResults
+                          maxToShowWhenExpanded: maxVisibleSuggestions];
+}
+
+- (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
+{
+    [m_suggestionsDataSource stopDisplayingResultsFrom: suggestionProvider];
+}
+
+-(void) registerNib:(UINib *)nib forUseWithResultsTableCellIdentifier:(NSString *)cellIdentifier
+{
+    [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
+}
+
+- (void) clearSearch
+{
+    [self.searchBar setText:@""];
+}
+
+- (void) showResultsView
+{
+    BOOL hadFocus = self.hasFocus;
+    if(m_activeResultsView != nil)
+    {
+        if (m_activeResultsView == m_searchResultsViewController)
+        {
+            [self showSearchResultsView];
+        }
+        else
+        {
+            BOOL animateIn = YES;
+            [m_activeResultsView show: animateIn];
+        }
+        _isResultsViewVisible = YES;
+        
+        [self refreshSearchBarTextForCurrentQuery];
+    }
+    
+    if(!hadFocus)
+    {
+        m_searchHasFocus = true;
+        [_observer searchWidgetGainFocus];
+    }
+}
+
+- (void) hideResultsView
+{
+    BOOL hadFocus = self.hasFocus;
+    
+    [self searchbarResignFocus];
+    [self minimiseSearchView];
+    
+    if(hadFocus)
+    {
+        m_searchHasFocus = false;
+        [_observer searchWidgetResignFocus];
+    }
+}
+
+- (void) resignFocus
+{
+    BOOL hadFocus = self.hasFocus;
+    if(m_searchHasFocus)
+    {
+        [self minimiseSearchView];
+        m_searchHasFocus = NO;
+    }
+    if(self.isMenuOpen)
+    {
+        [m_searchMenuViewController close];
+    }
+    
+    if(hadFocus)
+    {
+        [_observer searchWidgetResignFocus];
+    }
+}
+
+- (void)openMenu
+{
+    bool hadFocus = self.hasFocus;
+    [self minimiseSearchView];
+    [m_searchMenuViewController open];
+    if(!hadFocus)
+    {
+        [_observer searchWidgetGainFocus];
+    }
+}
+
+- (void)closeMenu
+{
+    bool hadFocus = self.hasFocus;
+    [m_searchMenuViewController close];
+    if(hadFocus){
+        [_observer searchWidgetResignFocus];
+    }
+}
+
+- (void)collapseMenu
+{
+    [m_searchMenuViewController collapse];
+}
+
+
+
+- (void)expandMenuOptionAt:(NSUInteger)index
+{
+    [m_searchMenuViewController expandAt:index];
+}
+
+- (void)enableVoiceSearch:(WRLDSpeechHandler*)speechHandler
+{
+    if(@available(iOS 10.0, *))
+    {
+        if(m_speechHandler != nil) {
+            [self disableVoiceSearch];
+        }
+        
+        m_speechHandler = speechHandler;
+        
+        [self observeSpeechHandler: speechHandler];
+        [self determineVoiceButtonVisibility];
+    }
+    else
+    {
+        NSLog(@"Cannot enable voice search on iOS Versions less than 10.0");
+    }
+}
+
+- (void)disableVoiceSearch
+{
+    if(m_speechHandler != nil && m_speechHandler.isRecording) {
+        [m_speechHandler endRecording];
+    }
+    
+    [self stopObservingSpeechHandler: m_speechHandler];
+    
+    m_speechHandler = nil;
+    [self determineVoiceButtonVisibility];
+}
+
+- (void) setSearchBarPlaceholder:(NSString*)placeholder
+{
+    [self.searchBar setPlaceholder:placeholder];
+}
+
+#pragma mark - Implementation
 
 -(void)viewDidLoad
 {
@@ -394,11 +559,6 @@
     } toApply:WRLDSearchWidgetStyleWarningColor];
 }
 
-- (void) setSearchBarPlaceholder:(NSString*)placeholder
-{
-    [self.searchBar setPlaceholder:placeholder];
-}
-
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
 {
     [searchBar setActive: true];
@@ -416,25 +576,6 @@
 {
     [searchBar setActive:false];
     [self searchbarResignFocus];
-}
-
-- (void) resignFocus
-{
-    BOOL hadFocus = self.hasFocus;
-    if(m_searchHasFocus)
-    {
-        [self minimiseSearchView];
-        m_searchHasFocus = NO;
-    }
-    if(self.isMenuOpen)
-    {
-        [m_searchMenuViewController close];
-    }
-    
-    if(hadFocus)
-    {
-        [_observer searchWidgetResignFocus];
-    }
 }
 
 - (void) minimiseSearchView
@@ -517,40 +658,6 @@
     [self.searchBar resignFirstResponder];
 }
 
-- (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
-{
-    [m_searchResultsDataSource displayResultsFrom: searchProvider
-            maxToShowWhenCollapsed: maxVisibleCollapsedResults
-             maxToShowWhenExpanded: maxVisibleExpandedResults];
-}
-
-- (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle *) searchProvider
-{
-    [m_searchResultsDataSource stopDisplayingResultsFrom: searchProvider];
-}
-
-- (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
-{
-    [m_suggestionsDataSource displayResultsFrom: suggestionProvider
-                           maxToShowWhenCollapsed: maxVisibleCollapsedResults
-                            maxToShowWhenExpanded: maxVisibleSuggestions];
-}
-
-- (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProvider
-{
-    [m_suggestionsDataSource stopDisplayingResultsFrom: suggestionProvider];
-}
-
--(void) registerNib:(UINib *)nib forUseWithResultsTableCellIdentifier:(NSString *)cellIdentifier
-{
-    [self.resultsTableView registerNib:nib forCellReuseIdentifier: cellIdentifier];
-}
-
-- (void) clearSearch
-{
-    [self.searchBar setText:@""];
-}
-
 - (void)clearSearchResults
 {
     BOOL animateOut = YES;
@@ -585,46 +692,6 @@
     }
 }
 
-- (void) showResultsView
-{
-    BOOL hadFocus = self.hasFocus;
-    if(m_activeResultsView != nil)
-    {
-        if (m_activeResultsView == m_searchResultsViewController)
-        {
-            [self showSearchResultsView];
-        }
-        else
-        {
-            BOOL animateIn = YES;
-            [m_activeResultsView show: animateIn];
-        }
-        _isResultsViewVisible = YES;
-        
-        [self refreshSearchBarTextForCurrentQuery];
-    }
-    
-    if(!hadFocus)
-    {
-        m_searchHasFocus = true;
-        [_observer searchWidgetGainFocus];
-    }
-}
-
-- (void) hideResultsView
-{
-    BOOL hadFocus = self.hasFocus;
-    
-    [self searchbarResignFocus];
-    [self minimiseSearchView];
-    
-    if(hadFocus)
-    {
-        m_searchHasFocus = false;
-        [_observer searchWidgetResignFocus];
-    }
-}
-
 -(void) refreshSearchBarTextForCurrentQuery
 {
     if(_isResultsViewVisible)
@@ -645,36 +712,6 @@
         
 }
 
-- (void)openMenu
-{
-    bool hadFocus = self.hasFocus;
-    [self minimiseSearchView];
-    [m_searchMenuViewController open];
-    if(!hadFocus)
-    {
-        [_observer searchWidgetGainFocus];
-    }
-}
-
-- (void)closeMenu
-{
-    bool hadFocus = self.hasFocus;
-    [m_searchMenuViewController close];
-    if(hadFocus){
-        [_observer searchWidgetResignFocus];
-    }
-}
-
-- (void)collapseMenu
-{
-    [m_searchMenuViewController collapse];
-}
-
-- (void)expandMenuOptionAt:(NSUInteger)index
-{
-    [m_searchMenuViewController expandAt:index];
-}
-
 - (IBAction)menuButtonClicked:(id)menuButton
 {
     [self minimiseSearchView];
@@ -693,37 +730,6 @@
         return m_speechHandler != nil && [m_speechHandler isAuthorized];
     }
     else return NO;
-}
-
-- (void)enableVoiceSearch:(WRLDSpeechHandler*)speechHandler
-{
-    if(@available(iOS 10.0, *))
-    {
-        if(m_speechHandler != nil) {
-            [self disableVoiceSearch];
-        }
-        
-        m_speechHandler = speechHandler;
-        
-        [self observeSpeechHandler: speechHandler];
-        [self determineVoiceButtonVisibility];
-    }
-    else
-    {
-        NSLog(@"Cannot enable voice search on iOS Versions less than 10.0");
-    }
-}
-
-- (void)disableVoiceSearch
-{
-    if(m_speechHandler != nil && m_speechHandler.isRecording) {
-        [m_speechHandler endRecording];
-    }
-    
-    [self stopObservingSpeechHandler: m_speechHandler];
-    
-    m_speechHandler = nil;
-    [self determineVoiceButtonVisibility];
 }
 
 - (void) determineVoiceButtonVisibility {
