@@ -246,6 +246,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     m_isAnimatingOut = true;
     [UIView animateWithDuration: m_fadeDuration animations:^{
         m_visibilityView.alpha = 0.0;
+        m_heightConstraint.constant = 0;
     } completion:^(BOOL finished) {
         if(finished)
         {
@@ -267,6 +268,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
 {
     [m_visibilityView.layer removeAllAnimations];
     m_visibilityView.alpha = 0.0;
+    m_heightConstraint.constant = 0;
     m_isAnimatingOut = false;
     m_visibilityView.hidden = YES;
 }
