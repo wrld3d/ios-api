@@ -71,9 +71,10 @@
     
     NSInteger maxVisibleSuggestions;
     
-    id<WRLDViewVisibilityController> m_activeResultsView;
+    id<WRLDViewVisibilityController> m_activeResultsViewVisibilityController;
 
     BOOL m_searchHasFocus;
+    BOOL m_willShowResultsViews;
     BOOL m_isSearchResultsViewVisible;
     
     __weak QueryEvent m_searchQueryStartedEvent;
@@ -115,6 +116,11 @@
     return [m_searchMenuViewController isMenuOpen];
 }
 
+- (BOOL) isResultsViewVisible
+{
+    return m_willShowResultsViews;
+}
+
 - (BOOL)hasSearchResults
 {
     return m_searchResultsDataSource.visibleResults > 0;
@@ -152,6 +158,7 @@
         _observer = [[WRLDSearchWidgetObserver alloc] init];
         
         m_searchHasFocus = NO;
+        m_willShowResultsViews = NO;
         m_isSearchResultsViewVisible = NO;
         _searchbarHasFocus = NO;
         
@@ -204,20 +211,18 @@
 - (void) showResultsView
 {
     BOOL hadFocus = self.hasFocus;
-    if(m_activeResultsView != nil)
+    if(m_activeResultsViewVisibilityController != nil)
     {
-        if (m_activeResultsView == m_searchResultsViewController)
-        {
-            [self showSearchResultsView];
-        }
-        else
-        {
-            BOOL animateIn = YES;
-            [m_activeResultsView show: animateIn];
-        }
-        _isResultsViewVisible = YES;
+        BOOL animateIn = YES;
+        [m_activeResultsViewVisibilityController show: animateIn];
+        m_willShowResultsViews = YES;
+        BOOL showNumResults = NO;
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
         
-        [self refreshSearchBarTextForCurrentQuery];
+        if (m_activeResultsViewVisibilityController == m_searchResultsViewController)
+        {
+            [self searchResultsViewBecameVisibleDispatch];
+        }
     }
     
     if(!hadFocus)
@@ -412,16 +417,10 @@
         [m_searchResultsDataSource updateResultsFrom: query];
         [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
-        m_activeResultsView = m_searchResultsViewController;
-        if(m_searchHasFocus)
-        {
-            BOOL animateOut = NO;
-            [m_suggestionsViewController hide: animateOut];
-            [self.noResultsVisibilityController hide: animateOut];
-            [self showSearchResultsView];
-        }
+        [self showSearchResultsView];
+        BOOL showNumResults = NO;
         
-        [self refreshSearchBarTextForCurrentQuery];
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
         [self startSearchInProgressAnimation];
     };
     
@@ -432,27 +431,16 @@
      
         if(m_searchResultsDataSource.visibleResults == 0)
         {
-            m_activeResultsView = self.noResultsVisibilityController;
-            if(_isResultsViewVisible)
-            {
-                [self hideSearchResultsView];
-                BOOL animateIn = YES;
-                [self.noResultsVisibilityController show: animateIn];
-            }
+            [self showNoResultsView];
         }
         else
         {
-            m_activeResultsView = m_searchResultsViewController;
             [self.observer receiveSearchResults];
-            if(_isResultsViewVisible)
-            {
-                [self showSearchResultsView];
-                BOOL animateOut = YES;
-                [self.noResultsVisibilityController hide: animateOut];
-            }
+            [self showSearchResultsView];
         }
         
-        [self refreshSearchBarTextForCurrentQuery];
+        BOOL showNumResults = !m_willShowResultsViews;
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
         [self stopSearchInProgressAnimation];
     };
     
@@ -460,13 +448,7 @@
     {
         [m_suggestionsDataSource updateResultsFrom: query];
         [m_suggestionsViewController refreshTable];
-        [self hideSearchResultsView];
-        if(m_searchHasFocus)
-        {
-            BOOL animateIn = YES;
-            [m_suggestionsViewController show: animateIn];
-        }
-        m_activeResultsView = m_suggestionsViewController;
+        [self showSuggestionsView];
     };
     
     OpenedEvent menuOpenedEvent = ^(BOOL fromInteraction)
@@ -565,6 +547,9 @@
     [self showResultsView];
     m_searchHasFocus = YES;
     
+    BOOL showNumResults = NO;
+    [self refreshSearchBarTextForCurrentQuery: showNumResults];
+    
     if (!_searchbarHasFocus)
     {
         _searchbarHasFocus = YES;
@@ -578,23 +563,77 @@
     [self searchbarResignFocus];
 }
 
+- (void) showNoResultsView
+{
+    if(m_willShowResultsViews)
+    {
+        BOOL animateOut = NO;
+        [m_suggestionsViewController hide: animateOut];
+        [m_searchResultsViewController hide: animateOut];
+        
+        if (m_activeResultsViewVisibilityController == m_searchResultsViewController)
+        {
+            [self searchResultsViewBecameHiddenDispatch];
+        }
+        
+        BOOL animateIn = YES;
+        [self.noResultsVisibilityController show: animateIn];
+    }
+    m_activeResultsViewVisibilityController = self.noResultsVisibilityController;
+}
+
+- (void) showSearchResultsView
+{
+    if(m_willShowResultsViews)
+    {
+        BOOL animateOut = NO;
+        [m_suggestionsViewController hide: animateOut];
+        [self.noResultsVisibilityController hide: animateOut];
+        
+        BOOL animateIn = YES;
+        [m_searchResultsViewController show: animateIn];
+        [self searchResultsViewBecameVisibleDispatch];
+    }
+    m_activeResultsViewVisibilityController = m_searchResultsViewController;
+}
+
+- (void) showSuggestionsView
+{
+    m_willShowResultsViews = YES;
+    BOOL animateOut = NO;
+    [m_searchResultsViewController hide: animateOut];
+    [self.noResultsVisibilityController hide: animateOut];
+        
+    if (m_activeResultsViewVisibilityController == m_searchResultsViewController)
+    {
+        [self searchResultsViewBecameHiddenDispatch];
+    }
+        
+    BOOL animateIn = YES;
+    [m_suggestionsViewController show: animateIn];
+    m_activeResultsViewVisibilityController = m_suggestionsViewController;
+}
+
 - (void) minimiseSearchView
 {
     [self searchbarResignFocus];
-    if(m_activeResultsView != nil)
+    [self animateOutActiveView];
+    BOOL showNumResults = YES;
+    [self refreshSearchBarTextForCurrentQuery: showNumResults];
+}
+
+- (void) animateOutActiveView
+{
+    if(m_activeResultsViewVisibilityController != nil)
     {
-        if (m_activeResultsView == m_searchResultsViewController)
-        {
-            [self hideSearchResultsView];
-        }
-        else
-        {
-            BOOL animateOut = YES;
-            [m_activeResultsView hide: animateOut];
-        }
-        _isResultsViewVisible = NO;
+        BOOL animateOut = YES;
+        [m_activeResultsViewVisibilityController hide: animateOut];
         
-        [self refreshSearchBarTextForCurrentQuery];
+        if (m_activeResultsViewVisibilityController == m_searchResultsViewController)
+        {
+            [self searchResultsViewBecameHiddenDispatch];
+        }
+        m_willShowResultsViews = NO;
     }
 }
 
@@ -638,7 +677,7 @@
         // TODO: should probably be done as a side effect of clearing the suggestions, like in Android.
         BOOL animateOut = YES;
         [m_suggestionsViewController hide: animateOut];
-        m_activeResultsView = nil;
+        m_activeResultsViewVisibilityController = nil;
     }
     
     [self determineVoiceButtonVisibility];
@@ -660,47 +699,36 @@
 
 - (void)clearSearchResults
 {
-    BOOL animateOut = YES;
-    [self hideSearchResultsView];
-    [self.noResultsVisibilityController hide: animateOut];
+    [self animateOutActiveView];
+    
+    BOOL showNumResults = NO;
+    [self refreshSearchBarTextForCurrentQuery: showNumResults];
     
     [m_searchResultsDataSource clearResults];
     [self.observer clearSearchResults];
 }
 
-- (void)showSearchResultsView
+- (void)searchResultsViewBecameVisibleDispatch
 {
     if (!m_isSearchResultsViewVisible)
     {
-        BOOL animateIn = YES;
-        [m_searchResultsViewController show: animateIn];
         m_isSearchResultsViewVisible = YES;
-        _isResultsViewVisible = YES;
         [self.observer showSearchResults];
     }
 }
 
-- (void)hideSearchResultsView
+- (void)searchResultsViewBecameHiddenDispatch
 {
     if (m_isSearchResultsViewVisible)
     {
-        BOOL animateOut = YES;
-        [m_searchResultsViewController hide: animateOut];
         m_isSearchResultsViewVisible = NO;
-        _isResultsViewVisible = NO;
         [self.observer hideSearchResults];
     }
 }
 
--(void) refreshSearchBarTextForCurrentQuery
+-(void) refreshSearchBarTextForCurrentQuery: (BOOL) showNumResults
 {
-    if(_isResultsViewVisible)
-    {
-        if([m_searchResultsDataSource getDisplayedQueryText] != nil) {
-            [self.searchBar setText:[NSString stringWithFormat: @"%@", [m_searchResultsDataSource getDisplayedQueryText]]];
-        }
-    }
-    else
+    if(showNumResults)
     {
         if([m_searchResultsDataSource getDisplayedQueryText] != nil &&
            !m_searchModel.isSearchQueryInFlight) {
@@ -709,7 +737,12 @@
                                      (long)[m_searchResultsDataSource getTotalResultCount]]];
         }
     }
-        
+    else
+    {
+        if([m_searchResultsDataSource getDisplayedQueryText] != nil) {
+            [self.searchBar setText:[NSString stringWithFormat: @"%@", [m_searchResultsDataSource getDisplayedQueryText]]];
+        }
+    }
 }
 
 - (IBAction)menuButtonClicked:(id)menuButton
