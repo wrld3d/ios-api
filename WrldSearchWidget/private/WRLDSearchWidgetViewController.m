@@ -150,7 +150,7 @@
         m_searchResultsTableViewDefaultCellStyleIdentifier = @"WRLDSearchResultTableViewCell";
         
         maxVisibleCollapsedResults = 3;
-        maxVisibleExpandedResults = 100;
+        maxVisibleExpandedResults = NSIntegerMax;
         
         maxVisibleSuggestions = 3;
         
