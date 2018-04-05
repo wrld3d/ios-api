@@ -13,15 +13,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) WRLDMenuObserver* observer;
 
-- (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
-                   visibilityView:(UIView *)visibilityView
-                       titleLabel:(UILabel *)titleLabel
-                    separatorView:(UIView *)separatorView
-                        tableView:(UITableView *)tableView
-                 tableFadeTopView:(UIView *)tableFadeTop
-              tableFadeBottomView:(UIView *)tableFadeBottom
-                 heightConstraint:(NSLayoutConstraint *)heightConstraint
-                            style:(WRLDSearchWidgetStyle *)style;
+- (instancetype) initWithVisibilityView:(UIView *)visibilityView
+                             titleLabel:(UILabel *)titleLabel
+                          separatorView:(UIView *)separatorView
+                              tableView:(UITableView *)tableView
+                       tableFadeTopView:(UIView *)tableFadeTop
+                    tableFadeBottomView:(UIView *)tableFadeBottom
+                       heightConstraint:(NSLayoutConstraint *)heightConstraint
+                                  style:(WRLDSearchWidgetStyle *)style;
+
+- (void) setModel: (WRLDSearchMenuModel *) menuModel;
+- (void) removeModel;
 
 - (void)open;
 

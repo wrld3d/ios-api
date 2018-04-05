@@ -1,4 +1,4 @@
-#import "WRLDSearchWidgetViewController.h"
+#import "WRLDSearchWidgetView.h"
 #import "WRLDSearchBar.h"
 #import "WRLDSearchProviderHandle.h"
 #import "WRLDSuggestionProviderHandle.h"
@@ -18,9 +18,14 @@
 #import "WRLDSearchMenuViewController.h"
 #import "WRLDSearchWidgetResultsTableDataSource.h"
 #import "WRLDSpeechHandler+Private.h"
-#import "WRLDSearchWidgetView.h"
 
-@interface WRLDSearchWidgetViewController()
+@interface WRLDSearchWidgetView()
+
+@property (weak, nonatomic) IBOutlet UIView *view;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *searchBarSubView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *voiceOptionSubView;
+
 @property (unsafe_unretained, nonatomic) IBOutlet WRLDSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *menuButtonWidthConstraint;
@@ -52,7 +57,7 @@
 
 @end
 
-@implementation WRLDSearchWidgetViewController
+@implementation WRLDSearchWidgetView
 {
     WRLDSearchModel* m_searchModel;
     WRLDSearchMenuModel* m_menuModel;
@@ -87,6 +92,72 @@
     
     __weak OpenedEvent m_menuOpenedEvent;
     __weak ClosedEvent m_menuClosedEvent;
+}
+
+#pragma mark - UIView Extended
+
+- (instancetype) initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame])
+    {
+        [self initMembers];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if(self = [super initWithCoder:aDecoder])
+    {
+        [self initMembers];
+    }
+    return self;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if([self subviewContainsEvent: self.menuContainerView point: point event: event])
+    {
+        return YES;
+    }
+    if([self subviewContainsEvent: self.searchBarSubView point: point event: event])
+    {
+        return YES;
+    }
+    if([self subviewContainsEvent: self.voiceOptionSubView point: point event: event])
+    {
+        return YES;
+    }
+    if([self subviewContainsEvent: self.resultsTableContainerView point: point event: event])
+    {
+        return YES;
+    }
+    if([self subviewContainsEvent: self.suggestionsTableContainerView point: point event: event])
+    {
+        return YES;
+    }
+    
+    [self resignFocus];
+    
+    return NO;
+}
+
+- (void) layoutSubviews
+{
+    [super layoutSubviews];
+    CGRect rect = self.frame;
+    rect.origin = self.view.frame.origin;
+    self.view.frame = rect;
+}
+
+-(void) willMoveToSuperview:(UIView *)newSuperview
+{
+    [super willMoveToSuperview: newSuperview];
+    
+    if(@available(iOS 10.0, *))
+    {
+        [m_speechHandler authorize];
+    }
 }
 
 #pragma mark - API
@@ -131,47 +202,153 @@
     return m_searchHasFocus || self.isMenuOpen;
 }
 
-- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
+- (void) useSearchModel: (WRLDSearchModel *) searchModel
 {
-    return [self initWithSearchModel:searchModel
-                           menuModel:nil];
+    if(m_searchModel)
+    {
+        [self deregisterFromSearchModel];
+    }
+    
+    m_searchModel = searchModel;
+    
+    QueryEvent searchQueryStartedEvent = ^(WRLDSearchQuery * query)
+    {
+        [self.searchBar setText:query.queryString];
+        
+        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsViewController refreshTable];
+        [self determineVoiceButtonVisibility];
+        [self showSearchResultsView];
+        BOOL showNumResults = NO;
+        
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
+        [self startSearchInProgressAnimation];
+    };
+    
+    QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
+    {
+        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsViewController refreshTable];
+        
+        if(m_searchResultsDataSource.visibleResults == 0)
+        {
+            [self showNoResultsView];
+        }
+        else
+        {
+            [self.observer receiveSearchResults];
+            [self showSearchResultsView];
+        }
+        
+        BOOL showNumResults = !m_willShowResultsViews;
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
+        [self stopSearchInProgressAnimation];
+    };
+    
+    QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
+    {
+        [m_suggestionsDataSource updateResultsFrom: query];
+        [m_suggestionsViewController refreshTable];
+        [self showSuggestionsView];
+    };
+    
+    // observers will hold strong references to block events to increase reference counter
+    [m_searchModel.searchObserver addQueryStartingEvent: searchQueryStartedEvent];
+    [m_searchModel.searchObserver addQueryCompletedEvent: searchQueryCompletedEvent];
+    [m_searchModel.suggestionObserver addQueryCompletedEvent: suggestionQueryCompletedEvent];
+    
+    // self will weakly hold on to block event to remove from observer later and prevent circular references
+    m_searchQueryStartedEvent = searchQueryStartedEvent;
+    m_searchQueryCompletedEvent = searchQueryCompletedEvent;
+    m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
 }
 
-- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
-                          menuModel:(WRLDSearchMenuModel *)menuModel
+- (void) useMenuModel: (WRLDSearchMenuModel *) menuModel
 {
-    NSBundle* bundle = [NSBundle bundleForClass:[WRLDSearchWidgetViewController class]];
-    self = [super initWithNibName: @"WRLDSearchWidget" bundle:bundle];
-    if(self)
+    if(m_menuModel)
     {
-        m_searchModel = searchModel;
-        m_menuModel = menuModel;
-        m_suggestionsTableViewCellStyleIdentifier = @"WRLDSuggestionTableViewCell";
-        m_searchResultsTableViewDefaultCellStyleIdentifier = @"WRLDSearchResultTableViewCell";
-        
-        maxVisibleCollapsedResults = 3;
-        maxVisibleExpandedResults = 100;
-        
-        maxVisibleSuggestions = 3;
-        
-        _style = [[WRLDSearchWidgetStyle alloc] init];
-        _observer = [[WRLDSearchWidgetObserver alloc] init];
-        
-        m_searchHasFocus = NO;
-        m_willShowResultsViews = NO;
-        m_isSearchResultsViewVisible = NO;
-        _searchbarHasFocus = NO;
-        
-        m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
-                                     initWithDefaultCellIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
-        
-        m_suggestionsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
-                                   initWithDefaultCellIdentifier: m_suggestionsTableViewCellStyleIdentifier];
-        
-        m_speechHandler = nil;
-        
+        [self deregisterFromMenuModel];
     }
-    return self;
+    
+    m_menuModel = menuModel;
+    
+    OpenedEvent menuOpenedEvent = ^(BOOL fromInteraction)
+    {
+        if(!m_searchHasFocus && fromInteraction)
+        {
+            [self.observer searchWidgetGainFocus];
+        }
+    };
+    
+    ClosedEvent menuClosedEvent = ^(BOOL fromInteraction)
+    {
+        if(fromInteraction)
+        {
+            [self.observer searchWidgetResignFocus];
+        }
+    };
+    
+    // observer will hold strong references to block events to increase reference counter
+    [self.menuObserver addOpenedEvent: menuOpenedEvent];
+    [self.menuObserver addClosedEvent: menuClosedEvent];
+    
+    // self will weakly hold on to block event to remove from observer later and prevent circular references
+    m_menuOpenedEvent = menuOpenedEvent;
+    m_menuClosedEvent = menuClosedEvent;
+    
+    [m_searchMenuViewController setModel:m_menuModel];
+    
+    [self.menuButton setHidden:NO];
+    [self.searchbarLeadingConstraint setConstant: 0];
+}
+
+- (void) deregisterFromSearchModel
+{
+    if(!m_searchModel)
+    {
+        return;
+    }
+    
+    if(m_searchQueryStartedEvent)
+    {
+        [m_searchModel.searchObserver removeQueryStartingEvent: m_searchQueryStartedEvent];
+    }
+    
+    if(m_searchQueryCompletedEvent)
+    {
+        [m_searchModel.searchObserver removeQueryCompletedEvent: m_searchQueryCompletedEvent];
+    }
+    
+    if(m_suggestionQueryCompletedEvent)
+    {
+        [m_searchModel.suggestionObserver removeQueryCompletedEvent: m_suggestionQueryCompletedEvent];
+    }
+    
+    m_searchModel = nil;
+}
+
+- (void) deregisterFromMenuModel
+{
+    if(m_menuModel == nil)
+    {
+        return;
+    }
+    
+    if(self.menuObserver)
+    {
+        [self.menuObserver removeOpenedEvent: m_menuOpenedEvent];
+    }
+    
+    if(m_menuClosedEvent)
+    {
+        [self.menuObserver removeClosedEvent: m_menuClosedEvent];
+    }
+    
+    [self.menuButton setHidden:NO];
+    [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
+    
+    [m_searchMenuViewController removeModel];
+    m_menuModel = nil;
 }
 
 - (void) displaySearchProvider :(WRLDSearchProviderHandle *) searchProvider
@@ -290,8 +467,6 @@
     [m_searchMenuViewController collapse];
 }
 
-
-
 - (void)expandMenuOptionAt:(NSUInteger)index
 {
     [m_searchMenuViewController expandAt:index];
@@ -333,213 +508,7 @@
     [self.searchBar setPlaceholder:placeholder];
 }
 
-#pragma mark - Implementation
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
-                                                                                        dataSource: m_searchResultsDataSource
-                                                                                    visibilityView: self.resultsTableContainerView
-                                                                                  heightConstraint:self.resultsTableHeightConstraint
-                                                                                             style:self.style];
-    
-    m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
-                                                                                      dataSource: m_suggestionsDataSource
-                                                                                  visibilityView: self.suggestionsTableContainerView
-                                                                                heightConstraint:self.suggestionsTableHeightConstraint
-                                                                                           style:self.style];
-
-    m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithMenuModel:m_menuModel
-                                                                          visibilityView:self.menuContainerView
-                                                                              titleLabel:self.menuTitleLabel
-                                                                           separatorView:self.menuSeparator
-                                                                               tableView:self.menuTableView
-                                                                        tableFadeTopView:self.menuTableFadeTop
-                                                                     tableFadeBottomView:self.menuTableFadeBottom
-                                                                        heightConstraint:self.menuContainerViewHeightConstraint
-                                                                                   style:self.style];
-    
-    [m_suggestionsDataSource.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
-        self.searchBar.text = selectedResultModel.title;
-        [self triggerSearch : selectedResultModel.title];
-    }];
-    
-    if (m_menuModel == nil)
-    {
-        [self.menuButton setHidden:YES];
-        [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
-    }
-    
-    SearchResultsSourceEvent resultsSectionExpandedStateChangedEvent = ^() {
-        [self searchbarResignFocus];
-    };
-    
-    [m_searchResultsDataSource addResultsSectionExpandedEvent:resultsSectionExpandedStateChangedEvent];
-    
-    [self.voiceButtonWidthConstraint setConstant:0];
-    [self determineVoiceButtonVisibility];
-    
-    [self setupStyle];
-}
-
--(void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self observeModel: m_searchModel];
-    
-    if(@available(iOS 10.0, *))
-    {
-        [m_speechHandler authorize];
-    }
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self stopObservingModel: m_searchModel];
-}
-    
-- (void) observeModel: (WRLDSearchModel *) model
-{
-    if(m_searchModel)
-    {
-        [self stopObservingModel: m_searchModel];
-    }
-    
-    m_searchModel = model;
-    
-    QueryEvent searchQueryStartedEvent = ^(WRLDSearchQuery * query)
-    {
-        [self.searchBar setText:query.queryString];
-        
-        [m_searchResultsDataSource updateResultsFrom: query];
-        [m_searchResultsViewController refreshTable];
-        [self determineVoiceButtonVisibility];
-        [self showSearchResultsView];
-        BOOL showNumResults = NO;
-        
-        [self refreshSearchBarTextForCurrentQuery: showNumResults];
-        [self startSearchInProgressAnimation];
-    };
-    
-    QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
-    {
-        [m_searchResultsDataSource updateResultsFrom: query];
-        [m_searchResultsViewController refreshTable];
-     
-        if(m_searchResultsDataSource.visibleResults == 0)
-        {
-            [self showNoResultsView];
-        }
-        else
-        {
-            [self.observer receiveSearchResults];
-            [self showSearchResultsView];
-        }
-        
-        BOOL showNumResults = !m_willShowResultsViews;
-        [self refreshSearchBarTextForCurrentQuery: showNumResults];
-        [self stopSearchInProgressAnimation];
-    };
-    
-    QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
-    {
-        [m_suggestionsDataSource updateResultsFrom: query];
-        [m_suggestionsViewController refreshTable];
-        [self showSuggestionsView];
-    };
-    
-    OpenedEvent menuOpenedEvent = ^(BOOL fromInteraction)
-    {
-        if(!m_searchHasFocus && fromInteraction)
-        {
-            [self.observer searchWidgetGainFocus];
-        }
-    };
-    
-    ClosedEvent menuClosedEvent = ^(BOOL fromInteraction)
-    {
-        if(fromInteraction)
-        {
-            [self.observer searchWidgetResignFocus];
-        }
-    };
-    
-    // observers will hold strong references to block events to increase reference counter
-    [m_searchModel.searchObserver addQueryStartingEvent: searchQueryStartedEvent];
-    [m_searchModel.searchObserver addQueryCompletedEvent: searchQueryCompletedEvent];
-    [m_searchModel.suggestionObserver addQueryCompletedEvent: suggestionQueryCompletedEvent];
-    [self.menuObserver addOpenedEvent: menuOpenedEvent];
-    [self.menuObserver addClosedEvent: menuClosedEvent];
-    
-    // self will weakly hold on to block event to remove from observer later and prevent circular references
-    m_searchQueryStartedEvent = searchQueryStartedEvent;
-    m_searchQueryCompletedEvent = searchQueryCompletedEvent;
-    m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
-    m_menuOpenedEvent = menuOpenedEvent;
-    m_menuClosedEvent = menuClosedEvent;
-}
-
--(void)startSearchInProgressAnimation{
-    [self.loadingInProgressActivityIndicator startAnimating];
-}
-
--(void)stopSearchInProgressAnimation{
-    [self.loadingInProgressActivityIndicator stopAnimating];
-}
-
-- (void) stopObservingModel: (WRLDSearchModel *) model
-{
-    if(!model)
-    {
-        return;
-    }
-    
-    if(m_searchQueryStartedEvent)
-    {
-        [model.searchObserver removeQueryStartingEvent: m_searchQueryStartedEvent];
-    }
-    
-    if(m_searchQueryCompletedEvent)
-    {
-        [model.searchObserver removeQueryCompletedEvent: m_searchQueryCompletedEvent];
-    }
-    
-    if(m_suggestionQueryCompletedEvent)
-    {
-        [model.suggestionObserver removeQueryCompletedEvent: m_suggestionQueryCompletedEvent];
-    }
-    
-    if(m_menuOpenedEvent)
-    {
-        [self.menuObserver removeOpenedEvent: m_menuOpenedEvent];
-    }
-    
-    if(m_menuClosedEvent)
-    {
-        [self.menuObserver removeClosedEvent: m_menuClosedEvent];
-    }
-}
-
-- (void) setupStyle
-{
-    [self.style call:^(UIColor *color) {
-        self.resultsTableContainerView.backgroundColor = color;
-    } toApply:WRLDSearchWidgetStylePrimaryColor];
-    
-    [self.style call:^(UIColor *color) {
-        self.suggestionsTableContainerView.backgroundColor = color;
-        self.noResultsView.backgroundColor = color;
-    } toApply:WRLDSearchWidgetStyleSecondaryColor];
-    
-    [self.searchBar applyStyle: self.style];
-    
-    [self.style call:^(UIColor *color) {
-        self.noResultsLabel.textColor = color;
-    } toApply:WRLDSearchWidgetStyleWarningColor];
-}
+#pragma mark - UISearchBarDelegate
 
 - (void) searchBarTextDidBeginEditing:(WRLDSearchBar *)searchBar
 {
@@ -561,6 +530,154 @@
 {
     [searchBar setActive:false];
     [self searchbarResignFocus];
+}
+
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    // TODO: we don't trim text in Android. Should porbably make one consistent with the other
+    NSString *trimmedSearchText = [searchText stringByTrimmingCharactersInSet:
+                                   [NSCharacterSet whitespaceCharacterSet]];
+    
+    bool hasSearchQueryAndNewTextDiffers = [m_searchModel isCurrentQueryForSearch] && ![trimmedSearchText isEqualToString: [m_searchModel getCurrentQuery].queryString];
+    
+    if (hasSearchQueryAndNewTextDiffers)
+    {
+        [m_searchModel cancelCurrentQuery];
+        [self clearSearchResults];
+    }
+    
+    if([trimmedSearchText length] > 0)
+    {
+        [m_searchModel getSuggestionsForString: trimmedSearchText];
+    }
+    else
+    {
+        // TODO: should probably split search model into a suggestions model or at least separate the queries
+        [m_searchModel cancelCurrentQuery];
+        
+        // TODO: should probably be done as a side effect of clearing the suggestions, like in Android.
+        BOOL animateOut = YES;
+        [m_suggestionsViewController hide: animateOut];
+        m_activeResultsViewVisibilityController = nil;
+    }
+    
+    [self determineVoiceButtonVisibility];
+    [self stopSearchInProgressAnimation];
+}
+
+#pragma mark - Implementation - UIView Extend
+
+- (void) initMembers
+{
+    m_suggestionsTableViewCellStyleIdentifier = @"WRLDSuggestionTableViewCell";
+    m_searchResultsTableViewDefaultCellStyleIdentifier = @"WRLDSearchResultTableViewCell";
+    
+    maxVisibleCollapsedResults = 3;
+    maxVisibleExpandedResults = 100;
+    
+    maxVisibleSuggestions = 3;
+    
+    _style = [[WRLDSearchWidgetStyle alloc] init];
+    _observer = [[WRLDSearchWidgetObserver alloc] init];
+    
+    m_searchHasFocus = NO;
+    m_willShowResultsViews = NO;
+    m_isSearchResultsViewVisible = NO;
+    _searchbarHasFocus = NO;
+    
+    m_searchResultsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
+                                 initWithDefaultCellIdentifier: m_searchResultsTableViewDefaultCellStyleIdentifier];
+    
+    m_suggestionsDataSource = [[WRLDSearchWidgetResultsTableDataSource alloc]
+                               initWithDefaultCellIdentifier: m_suggestionsTableViewCellStyleIdentifier];
+    
+    m_speechHandler = nil;
+    
+    [self setupView];
+    [self setupStyle];
+}
+
+-(BOOL) subviewContainsEvent: (UIView*) view
+                       point: (CGPoint)point
+                       event: (UIEvent*) event
+{
+    if (view.userInteractionEnabled && ![view isHidden] && [view pointInside:[self convertPoint:point toView:view] withEvent:event]) {
+        return YES;
+    }
+    return NO;
+}
+
+-(void) setupView
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[WRLDSearchWidgetView class]];
+    [bundle loadNibNamed:@"WRLDSearchWidget" owner:self options:nil];
+    [self addSubview: self.view];
+    
+    m_searchResultsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.resultsTableView
+                                                                                        dataSource: m_searchResultsDataSource
+                                                                                    visibilityView: self.resultsTableContainerView
+                                                                                  heightConstraint:self.resultsTableHeightConstraint
+                                                                                             style:self.style];
+    
+    m_suggestionsViewController = [[WRLDSearchWidgetTableViewController alloc] initWithTableView: self.suggestionsTableView
+                                                                                      dataSource: m_suggestionsDataSource
+                                                                                  visibilityView: self.suggestionsTableContainerView
+                                                                                heightConstraint:self.suggestionsTableHeightConstraint
+                                                                                           style:self.style];
+    
+    m_searchMenuViewController = [[WRLDSearchMenuViewController alloc] initWithVisibilityView:self.menuContainerView
+                                                                                   titleLabel:self.menuTitleLabel
+                                                                                separatorView:self.menuSeparator
+                                                                                    tableView:self.menuTableView
+                                                                             tableFadeTopView:self.menuTableFadeTop
+                                                                          tableFadeBottomView:self.menuTableFadeBottom
+                                                                             heightConstraint:self.menuContainerViewHeightConstraint
+                                                                                        style:self.style];
+    
+    [m_suggestionsDataSource.selectionObserver addResultSelectedEvent:^(id<WRLDSearchResultModel> selectedResultModel) {
+        self.searchBar.text = selectedResultModel.title;
+        [self triggerSearch : selectedResultModel.title];
+    }];
+    
+    SearchResultsSourceEvent resultsSectionExpandedStateChangedEvent = ^() {
+        [self searchbarResignFocus];
+    };
+    
+    [self.menuButton setHidden:YES];
+    [self.searchbarLeadingConstraint setConstant:-self.menuButtonWidthConstraint.constant];
+    
+    [m_searchResultsDataSource addResultsSectionExpandedEvent:resultsSectionExpandedStateChangedEvent];
+    
+    [self.voiceButtonWidthConstraint setConstant:0];
+    [self determineVoiceButtonVisibility];
+}
+
+- (void) setupStyle
+{
+    [self.style call:^(UIColor *color) {
+        self.resultsTableContainerView.backgroundColor = color;
+    } toApply:WRLDSearchWidgetStylePrimaryColor];
+    
+    [self.style call:^(UIColor *color) {
+        self.suggestionsTableContainerView.backgroundColor = color;
+        self.noResultsView.backgroundColor = color;
+    } toApply:WRLDSearchWidgetStyleSecondaryColor];
+    
+    [self.searchBar applyStyle: self.style];
+    
+    [self.style call:^(UIColor *color) {
+        self.noResultsLabel.textColor = color;
+    } toApply:WRLDSearchWidgetStyleWarningColor];
+}
+
+#pragma mark - Implementation - API
+
+-(void)startSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator startAnimating];
+}
+
+-(void)stopSearchInProgressAnimation{
+    [self.loadingInProgressActivityIndicator stopAnimating];
 }
 
 - (void) showNoResultsView
@@ -651,39 +768,6 @@
     }
 }
 
-- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    // TODO: we don't trim text in Android. Should porbably make one consistent with the other
-    NSString *trimmedSearchText = [searchText stringByTrimmingCharactersInSet:
-                                   [NSCharacterSet whitespaceCharacterSet]];
-    
-    bool hasSearchQueryAndNewTextDiffers = [m_searchModel isCurrentQueryForSearch] && ![trimmedSearchText isEqualToString: [m_searchModel getCurrentQuery].queryString];
-    
-    if (hasSearchQueryAndNewTextDiffers)
-    {
-        [m_searchModel cancelCurrentQuery];
-        [self clearSearchResults];
-    }
-    
-    if([trimmedSearchText length] > 0)
-    {
-        [m_searchModel getSuggestionsForString:trimmedSearchText];
-    }
-    else
-    {
-        // TODO: should probably split search model into a suggestions model or at least separate the queries
-        [m_searchModel cancelCurrentQuery];
-        
-        // TODO: should probably be done as a side effect of clearing the suggestions, like in Android.
-        BOOL animateOut = YES;
-        [m_suggestionsViewController hide: animateOut];
-        m_activeResultsViewVisibilityController = nil;
-    }
-    
-    [self determineVoiceButtonVisibility];
-    [self stopSearchInProgressAnimation];
-}
-
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self triggerSearch: searchBar.text];
@@ -755,6 +839,8 @@
 {
     [m_searchMenuViewController onMenuBackButtonClicked];
 }
+
+#pragma mark - Implementation - Speech
 
 - (BOOL)showVoiceButton
 {

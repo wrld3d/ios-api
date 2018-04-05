@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WRLDSearchWidgetView">
             <connections>
                 <outlet property="loadingInProgressActivityIndicator" destination="iQe-NE-D7F" id="EGX-Mg-VsG"/>
                 <outlet property="menuButton" destination="Gsy-aj-hKu" id="gPr-Zx-6NW"/>
@@ -29,17 +29,18 @@
                 <outlet property="resultsTableHeightConstraint" destination="Ch0-Pu-hmk" id="X93-NU-WXm"/>
                 <outlet property="resultsTableView" destination="URT-uZ-0JQ" id="WwU-4o-USZ"/>
                 <outlet property="searchBar" destination="nwq-hq-zts" id="3X3-RJ-bFn"/>
+                <outlet property="searchBarSubView" destination="gYl-rC-nwo" id="GTP-DU-zsT"/>
                 <outlet property="searchbarLeadingConstraint" destination="7K7-kT-zzp" id="szu-ey-iOQ"/>
                 <outlet property="suggestionsTableContainerView" destination="vWc-gR-AKq" id="eJq-pP-c1C"/>
                 <outlet property="suggestionsTableHeightConstraint" destination="E2e-1a-TmF" id="iIE-y0-PVK"/>
                 <outlet property="suggestionsTableView" destination="0kP-eT-3ph" id="df6-oc-qgf"/>
-                <outlet property="view" destination="q5F-mI-7jP" id="QkN-3a-GsU"/>
+                <outlet property="view" destination="q5F-mI-7jP" id="yOv-N7-tJX"/>
                 <outlet property="voiceButton" destination="4uZ-5k-wKJ" id="2wJ-Zg-gJi"/>
                 <outlet property="voiceButtonWidthConstraint" destination="42a-ua-lrJ" id="p8l-3N-Cmz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="q5F-mI-7jP" customClass="WRLDSearchWidgetView">
+        <view contentMode="scaleToFill" id="q5F-mI-7jP">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -294,15 +295,6 @@
                 <constraint firstItem="vWc-gR-AKq" firstAttribute="leading" secondItem="q5F-mI-7jP" secondAttribute="leading" id="zBu-f7-WYW"/>
                 <constraint firstItem="fS6-Uh-JhU" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="q5F-mI-7jP" secondAttribute="bottom" id="zdR-85-uWB"/>
             </constraints>
-            <connections>
-                <outlet property="menuContainerSubView" destination="Ooa-S7-mFc" id="aa0-w6-tgj"/>
-                <outlet property="menuSubView" destination="Gsy-aj-hKu" id="bLp-0R-4ex"/>
-                <outlet property="owner" destination="-1" id="iam-dy-t5d"/>
-                <outlet property="resultsSubView" destination="fS6-Uh-JhU" id="x0f-zS-dg3"/>
-                <outlet property="searchBarSubView" destination="nwq-hq-zts" id="Tgg-aV-HbC"/>
-                <outlet property="suggestionsSubView" destination="vWc-gR-AKq" id="hLb-uU-GcF"/>
-                <outlet property="voiceOptionSubView" destination="4uZ-5k-wKJ" id="mvN-Zf-PgX"/>
-            </connections>
             <point key="canvasLocation" x="24.5" y="50.5"/>
         </view>
     </objects>

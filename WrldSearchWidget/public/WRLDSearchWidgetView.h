@@ -12,7 +12,7 @@
 @class WRLDSearchWidgetStyle;
 @class WRLDSpeechHandler;
 
-@interface WRLDSearchWidgetViewController : UIViewController <UISearchBarDelegate>
+@interface WRLDSearchWidgetView : UIView <UISearchBarDelegate>
 
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * searchSelectionObserver;
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * suggestionSelectionObserver;
@@ -26,37 +26,34 @@
 @property (nonatomic, readonly) BOOL hasSearchResults;
 @property (nonatomic, readonly) BOOL hasFocus;
 
-- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel;
+- (void) useSearchModel: (WRLDSearchModel *) searchModel;
+- (void) useMenuModel: (WRLDSearchMenuModel *) menuModel;
 
-- (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
-                          menuModel:(WRLDSearchMenuModel *)menuModel;
+- (void) deregisterFromSearchModel;
+- (void) deregisterFromMenuModel;
 
-- (void) displaySearchProvider :(WRLDSearchProviderHandle*) searchProvider;
-- (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle*) searchProvider;
-- (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
-- (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
+- (void) displaySearchProvider: (WRLDSearchProviderHandle*) searchProvider;
+- (void) stopDisplayingSearchProvider: (WRLDSearchProviderHandle*) searchProvider;
+
+- (void) displaySuggestionProvider: (WRLDSuggestionProviderHandle*) suggestionProvider;
+- (void) stopDisplayingSuggestionProvider: (WRLDSuggestionProviderHandle*) suggestionProvider;
+
 - (void) registerNib: (UINib *) nib forUseWithResultsTableCellIdentifier: (NSString *) cellIdentifier;
 
 - (void) clearSearch;
-
 - (void) showResultsView;
-
 - (void) hideResultsView;
 
 - (void) resignFocus;
 
 - (void) openMenu;
-
 - (void) closeMenu;
-
 - (void) collapseMenu;
+- (void) expandMenuOptionAt: (NSUInteger)index;
 
-- (void) expandMenuOptionAt:(NSUInteger)index;
-
-- (void) enableVoiceSearch:(WRLDSpeechHandler*)speechHandler;
-
+- (void) enableVoiceSearch: (WRLDSpeechHandler*)speechHandler;
 - (void) disableVoiceSearch;
 
-- (void) setSearchBarPlaceholder:(NSString*)placeholder;
+- (void) setSearchBarPlaceholder: (NSString*)placeholder;
 
 @end
