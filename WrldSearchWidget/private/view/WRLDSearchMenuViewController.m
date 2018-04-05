@@ -44,19 +44,20 @@ typedef NS_ENUM(NSInteger, GradientState) {
     CGFloat m_groupSeparatorHeight;
 }
 
-- (instancetype) initWithVisibilityView:(UIView *)visibilityView
-                     titleLabel:(UILabel *)titleLabel
-                  separatorView:(UIView *)separatorView
-                      tableView:(UITableView *)tableView
-               tableFadeTopView:(UIView *)tableFadeTopView
-            tableFadeBottomView:(UIView *)tableFadeBottomView
-               heightConstraint:(NSLayoutConstraint *)heightConstraint
-                          style:(WRLDSearchWidgetStyle *)style
+- (instancetype)initWithMenuModel:(WRLDSearchMenuModel *)menuModel
+                   visibilityView:(UIView *)visibilityView
+                       titleLabel:(UILabel *)titleLabel
+                    separatorView:(UIView *)separatorView
+                        tableView:(UITableView *)tableView
+                 tableFadeTopView:(UIView *)tableFadeTopView
+              tableFadeBottomView:(UIView *)tableFadeBottomView
+                 heightConstraint:(NSLayoutConstraint *)heightConstraint
+                            style:(WRLDSearchWidgetStyle *)style
 {
     self = [super init];
     if (self)
     {
-        m_menuModel = nil;
+        m_menuModel = menuModel;
         m_visibilityView = visibilityView;
         m_titleLabel = titleLabel;
         m_tableView = tableView;
@@ -72,38 +73,26 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_menuHeaderHeightIncludingSeparator = 48.0f;
         m_groupSeparatorHeight = 4.0f;
         
+        [m_menuModel setListener:self];
+        
         m_tableView.dataSource = self;
         m_tableView.delegate = self;
         
         _observer = [[WRLDMenuObserver alloc] init];
         
         m_sectionViewModels = [[TableSectionViewModelCollection alloc] init];
+        [self updateSectionViewModels];
         
         separatorView.backgroundColor = [style colorForStyle: WRLDSearchWidgetStyleMajorDividerColor];
         
         [self assignCellResourcesTo:m_tableView];
-        [self initTableFadeViews];        
+        [self initTableFadeViews];
+        
+        [self updateTitleLabelText];
+        [self resizeMenuTable];
     }
     
     return self;
-}
-
-- (void) setModel: (WRLDSearchMenuModel *) menuModel
-{
-    m_menuModel = menuModel;
-    [m_menuModel setListener:self];
-    [self updateSectionViewModels];
-    [self updateTitleLabelText];
-    [self refreshMenuTable];
-}
-
-- (void) removeModel
-{
-    m_menuModel = nil;
-    [m_menuModel setListener: nil];
-    [self updateSectionViewModels];
-    [self updateTitleLabelText];
-    [self refreshMenuTable];
 }
 
 - (void)assignCellResourcesTo:(UITableView *)tableView
@@ -143,22 +132,12 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 - (void)updateTitleLabelText
 {
-    if(m_menuModel == nil)
-    {
-        return;
-    }
-    
     m_titleLabel.text = m_menuModel.title;
 }
 
 - (void)updateSectionViewModels
 {
     [m_sectionViewModels removeAllObjects];
-    
-    if(m_menuModel == nil)
-    {
-        return;
-    }
     
     for (WRLDMenuGroup* menuGroup in [m_menuModel getGroups])
     {
@@ -196,7 +175,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     }
     
     // Account for group separator height
-    NSUInteger menuGroupCount = (m_menuModel == nil) ? 0 : [[m_menuModel getGroups] count];
+    NSUInteger menuGroupCount = [[m_menuModel getGroups] count];
     if (menuGroupCount > 0)
     {
         height += (menuGroupCount - 1) * m_groupSeparatorHeight;

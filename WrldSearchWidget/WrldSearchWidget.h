@@ -10,7 +10,7 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <WrldSearchWidget/PublicHeader.h>
 
 #import "WRLDMockSearchProvider.h"
-#import "WRLDSearchWidgetView.h"
+#import "WRLDSearchWidgetViewController.h"
 #import "WRLDSearchModel.h"
 #import "WRLDSearchResultModel.h"
 #import "WRLDSearchProvider.h"
