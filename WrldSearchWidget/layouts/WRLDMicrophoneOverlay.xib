@@ -25,7 +25,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhy-bd-J0L" userLabel="Background">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <color key="backgroundColor" white="0.5" alpha="0.49915158370000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.49915158370000001" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
@@ -42,7 +42,7 @@
                                 <constraint firstAttribute="height" constant="32" id="rIn-7V-eAe"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-8Z-uxL" userLabel="Microphone Icon Container">
@@ -52,7 +52,7 @@
                                     <rect key="frame" x="4" y="4" width="56" height="56"/>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" red="0.74901960779999999" green="0.85882352939999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.85098039215686272" green="0.91764705882352937" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="64" id="9cX-rE-Gep"/>
                                 <constraint firstItem="er0-At-FYZ" firstAttribute="centerY" secondItem="2b9-8Z-uxL" secondAttribute="centerY" id="H4k-Vb-doJ"/>
@@ -65,7 +65,10 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="128" id="tBs-6R-Kl5"/>
                             </constraints>
-                            <state key="normal" title="Cancel"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" red="0.070588235294117646" green="0.33725490196078434" blue="0.69019607843137254" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="cancelButtonClickHandler:" destination="-1" eventType="primaryActionTriggered" id="UC3-PA-3Cg"/>
                             </connections>

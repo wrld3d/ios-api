@@ -319,7 +319,7 @@
 - (void)disableVoiceSearch
 {
     if(m_speechHandler != nil && m_speechHandler.isRecording) {
-        [m_speechHandler endRecording];
+        [m_speechHandler cancelRecording];
     }
     
     [self stopObservingSpeechHandler: m_speechHandler];
@@ -388,11 +388,6 @@
 {
     [super viewWillAppear:animated];
     [self observeModel: m_searchModel];
-    
-    if(@available(iOS 10.0, *))
-    {
-        [m_speechHandler authorize];
-    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -760,7 +755,7 @@
 {
     if(@available(iOS 10.0, *))
     {
-        return m_speechHandler != nil && [m_speechHandler isAuthorized];
+        return m_speechHandler != nil;
     }
     else return NO;
 }
@@ -837,7 +832,7 @@
     }
     else
     {
-        [m_speechHandler endRecording];
+        [m_speechHandler cancelRecording];
     }
 }
 

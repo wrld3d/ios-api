@@ -9,8 +9,4 @@
 - (IBAction)insideBoundsClickHandler:(id)sender;
 - (IBAction)cancelButtonClickHandler:(id)sender;
 
--(void) authorize;
--(void) startRecording;
--(void) endRecording;
-
 @end

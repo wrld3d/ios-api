@@ -23,9 +23,8 @@
     NSTimer* m_speechTimeout;
     BOOL m_wasCancelled;
     CGFloat m_inputVolume;
-    CGRect m_originalIconBounds;
+    CGFloat m_baseIconCornerRadius;
     CGRect m_originalIconContainerBounds;
-    CGRect m_screenFrame;
 }
 
 -(instancetype) initWithFrame:(CGRect)frame
@@ -37,28 +36,25 @@
         _isRecording = NO;
         _promptText = @"Search the WRLD";
         
-        m_screenFrame = frame;
-        
         NSBundle* bundle = [NSBundle bundleForClass:[WRLDSpeechHandler class]];
         m_rootView = [[bundle loadNibNamed:@"WRLDMicrophoneOverlay" owner:self options:nil] objectAtIndex:0];
+        [self addSubview:m_rootView];
         
         _observer = [[WRLDSpeechObserver alloc] init];
         
-        [self addSubview:m_rootView];
-        m_rootView.frame = m_screenFrame;
-        self.frame = m_screenFrame;
-        
+        self.frame = frame;
         self.hidden = YES;
+        self.alpha = 0.0f;
         
         float initialRadius = self.microphoneIconView.bounds.size.height/2.0f;
-        self.microphoneIconView.layer.cornerRadius = initialRadius + 5;
+        self.microphoneIconView.layer.cornerRadius = initialRadius;
         self.microphoneIconView.clipsToBounds = YES;
         
         float initialContainerRadius = self.microphoneContainerView.bounds.size.height/2.0f;
-        self.microphoneContainerView.layer.cornerRadius = initialContainerRadius + 5;
+        self.microphoneContainerView.layer.cornerRadius = initialContainerRadius;
         self.microphoneContainerView.clipsToBounds = YES;
         
-        m_originalIconBounds = self.microphoneIconView.bounds;
+        m_baseIconCornerRadius = initialContainerRadius;
         m_originalIconContainerBounds = self.microphoneContainerView.bounds;
     }
     return self;
@@ -88,7 +84,7 @@
 {
     [m_audioEngine stop];
     [m_recognitionRequest endAudio];
-    self.hidden = YES;
+    [self hide];
 }
 
 -(void) cancelRecording
@@ -100,7 +96,7 @@
 
 -(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if(self.hidden) {
+    if(self.hidden || self.alpha == 0.0) {
         return NO;
     }
     return [super pointInside:point withEvent:event];
@@ -140,7 +136,6 @@
 {
     if([m_audioEngine isRunning]) {
         
-        NSLog(@"Ending recording");
         [self endRecording];
     }
 }
@@ -148,7 +143,7 @@
 -(void)startRecording
 {
     if(!self.isAuthorized) {
-        return;
+        [self authorize];
     }
     
     if(self.isRecording) {
@@ -174,7 +169,7 @@
     [self initialiseAudioSampling :inputNode];
     
     _isRecording = YES;
-    self.hidden = NO;
+    [self show];
     
     [m_audioEngine prepare];
     
@@ -186,21 +181,28 @@
     [m_audioEngine startAndReturnError:&error];
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    m_rootView.frame = self.frame;
+}
+
 - (AVAudioSession*)initialiseAudioSession
 {
     NSError* error;
     AVAudioSession* audioSession = [AVAudioSession sharedInstance];
     if(![audioSession setCategory:AVAudioSessionCategoryRecord error:&error]) {
-        NSLog(@"%@", [error domain]);
+        NSLog(@"Audio session category failure: %@", [error domain]);
         return nil;
     }
     if(![audioSession setMode:AVAudioSessionModeMeasurement error:&error]) {
-        NSLog(@"%@", [error domain]);
+        NSLog(@"Audio session measurement failure: %@", [error domain]);
         return nil;
     }
     
     if(![audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
-        NSLog(@"%@", [error domain]);
+        NSLog(@"Audio session option failure: %@", [error domain]);
         return nil;
     }
     
@@ -212,7 +214,7 @@
     SFSpeechRecognitionTask* recognitionTask = [m_speechRecognizer recognitionTaskWithRequest:m_recognitionRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
         if(error != nil || result.isFinal) {
             [m_audioEngine stop];
-            self.hidden = YES;
+            [self hide];
             [inputNode removeTapOnBus:0];
             _isRecording = NO;
             if(m_speechTimeout) {
@@ -221,11 +223,9 @@
             
             NSString* bestTranscription = result.bestTranscription.formattedString;
             if(!m_wasCancelled && bestTranscription && [bestTranscription length]) {
-                NSLog(@"%@", bestTranscription);
                 [_observer speechRecordingCompleted:bestTranscription];
             }
             else {
-                NSLog(@"Coudn't transcribe input");
                 [self cancelRecording];
             }
             
@@ -264,8 +264,9 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.3 animations:^{
-                float animateScale = 1.0f;
+                float animateScale = 1.0;
                 [self.microphoneContainerView setBounds:CGRectInset(m_originalIconContainerBounds, -m_inputVolume*animateScale, -m_inputVolume*animateScale)];
+                [self.microphoneContainerView.layer setCornerRadius:m_baseIconCornerRadius + m_inputVolume*animateScale];
             }];
         });
     }];
@@ -274,6 +275,24 @@
 -(void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available
 {
     _isAuthorized = available;
+    [_observer authorizationChanged:_isAuthorized];
+}
+
+-(void) show
+{
+    [self setHidden:NO];
+    [UIView animateWithDuration:0.2 animations:^{
+        self.alpha = 1.0;
+    }];
+}
+
+-(void) hide
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self setHidden:YES];
+    }];
 }
 
 @end
