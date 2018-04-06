@@ -696,11 +696,11 @@
 {
     [self animateOutActiveView];
     
-    BOOL showNumResults = NO;
-    [self refreshSearchBarTextForCurrentQuery: showNumResults];
-    
     [m_searchResultsDataSource clearResults];
     [self.observer clearSearchResults];
+    
+    BOOL showNumResults = NO;
+    [self refreshSearchBarTextForCurrentQuery: showNumResults];
 }
 
 - (void)searchResultsViewBecameVisibleDispatch
