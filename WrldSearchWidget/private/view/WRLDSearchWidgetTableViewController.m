@@ -223,6 +223,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_visibilityView.alpha = 1.0;
     }];
     m_visibilityView.hidden = NO;
+    [self resizeTable];
 }
 
 - (void) hide: (BOOL) animated
