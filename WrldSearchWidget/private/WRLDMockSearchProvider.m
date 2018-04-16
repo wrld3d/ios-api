@@ -20,6 +20,8 @@
     if (self = [super init])
     {
         [self setupValues:2.0 suggestionDelayInSeconds:0.1];
+        self.numReturnedSearchResults = 20;
+        self.numReturnedSuggestions = 20;
     }
     
     return self;
@@ -48,7 +50,7 @@
 {
     if(m_suggestionResultsDelayInSeconds > 0)
     {
-        NSDictionary * userInfo = @{ @"Request" : request };
+        NSDictionary * userInfo = @{ @"Request" : request, @"ResultsCount" : [[NSNumber alloc] initWithInt: self.numReturnedSearchResults]  };
         [NSTimer scheduledTimerWithTimeInterval:m_searchResultsDelayInSeconds
                                          target:self
                                        selector:@selector(completeQuery:)
@@ -57,7 +59,7 @@
     }
     else
     {
-        [self fulfilRequest: request];
+        [self fulfilRequest: request numResults: self.numReturnedSearchResults];
     }
 }
 
@@ -65,7 +67,7 @@
 {
     if(m_suggestionResultsDelayInSeconds > 0)
     {
-        NSDictionary * userInfo = @{ @"Request" : request };
+        NSDictionary * userInfo = @{ @"Request" : request, @"ResultsCount" : [[NSNumber alloc] initWithInt: self.numReturnedSuggestions]  };
         [NSTimer scheduledTimerWithTimeInterval:m_suggestionResultsDelayInSeconds
                                          target:self
                                        selector:@selector(completeQuery:)
@@ -74,21 +76,22 @@
     }
     else
     {
-        [self fulfilRequest: request];
+        [self fulfilRequest: request numResults: self.numReturnedSuggestions];
     }
 }
 
 - (void)completeQuery:(NSTimer*)theTimer {
     WRLDSearchRequest *request = [[theTimer userInfo] objectForKey:@"Request"];
+    NSNumber* numResults = [[theTimer userInfo] objectForKey:@"ResultsCount"];
     
-    [self fulfilRequest: request];
+    [self fulfilRequest: request numResults: numResults.integerValue];
 }
 
--(void) fulfilRequest: (WRLDSearchRequest *) searchRequest
+-(void) fulfilRequest: (WRLDSearchRequest *) searchRequest numResults:(NSInteger) numResults
 {
     WRLDMutableSearchResultsCollection * searchResults = [[WRLDMutableSearchResultsCollection alloc] init];
     
-    for(int i = 0; i < 20; ++i){
+    for(int i = 0; i < numResults; ++i){
         [searchResults addObject: [self createSearchResult:
                                    [NSString stringWithFormat:@"Mock Result %@ %d", searchRequest.queryString, i]
                                                   subTitle: [NSString stringWithFormat:@"Mock Result Description %d", i]]];
