@@ -25,6 +25,8 @@
     CGFloat m_inputVolume;
     CGFloat m_baseIconCornerRadius;
     CGRect m_originalIconContainerBounds;
+    
+    BOOL m_willOpenAfterAuthorizing;
 }
 
 -(instancetype) initWithFrame:(CGRect)frame
@@ -56,6 +58,7 @@
         
         m_baseIconCornerRadius = initialContainerRadius;
         m_originalIconContainerBounds = self.microphoneContainerView.bounds;
+        m_willOpenAfterAuthorizing = NO;
     }
     return self;
 }
@@ -118,18 +121,26 @@
                 case SFSpeechRecognizerAuthorizationStatusAuthorized:
                     _isAuthorized = YES;
                     [_observer authorizationChanged:_isAuthorized];
+                    if(m_willOpenAfterAuthorizing) {
+                        [self startRecording];
+                    }
                     break;
                 case SFSpeechRecognizerAuthorizationStatusDenied:
                 case SFSpeechRecognizerAuthorizationStatusRestricted:
                 case SFSpeechRecognizerAuthorizationStatusNotDetermined:
                     _isAuthorized = NO;
                     [_observer authorizationChanged:_isAuthorized];
+                    if(m_willOpenAfterAuthorizing) {
+                        [self showSpeechRecognitionPermissionError];
+                    }
                     break;
                 default:
                     break;
             }
+            m_willOpenAfterAuthorizing = NO;
         });
     }];
+
 }
 
 -(void)completeVoiceQuery:(NSTimer*)timer
@@ -143,7 +154,13 @@
 -(void)startRecording
 {
     if(!self.isAuthorized) {
+        m_willOpenAfterAuthorizing = YES;
         [self authorize];
+        return;
+    }
+    
+    if(![self checkForMicrophoneAccess]) {
+        return;
     }
     
     if(self.isRecording) {
@@ -293,6 +310,50 @@
     } completion:^(BOOL finished) {
         [self setHidden:YES];
     }];
+}
+
+-(void)showSpeechRecognitionPermissionError
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Speech Recognition failure"
+                                                    message:@"Could not authorize Speech Recognition. Please ensure you have granted the Speech recognition permission to use this feature."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+-(void)showMicrophoneAccessError
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Microphone access failure"
+                                                    message:@"Could not access Microphone. Please ensure you have granted Microphone access to use this feature."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+-(BOOL)checkForMicrophoneAccess
+{
+    switch ([[AVAudioSession sharedInstance] recordPermission]) {
+        case AVAudioSessionRecordPermissionGranted:
+            return YES;
+        case AVAudioSessionRecordPermissionDenied:
+            [self showMicrophoneAccessError];
+            return NO;
+        case AVAudioSessionRecordPermissionUndetermined:
+            [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (granted) {
+                        [self startRecording];
+                    }
+                    else {
+                        [self showMicrophoneAccessError];
+                    }
+                });
+            }];
+            return NO;
+    }
+    return NO;
 }
 
 @end
