@@ -788,6 +788,10 @@
 {
     VoiceAuthorizedEvent voiceAuthorizedChangedEvent = ^(BOOL authorized)
     {
+        if(!authorized)
+        {
+            [self.searchBar setUserInteractionEnabled:YES];
+        }
         [self determineVoiceButtonVisibility];
     };
     
@@ -827,8 +831,8 @@
 {
     if(!m_speechHandler.isRecording)
     {
-        [m_speechHandler startRecording];
         [self.searchBar setUserInteractionEnabled:NO];
+        [m_speechHandler startRecording];
     }
     else
     {

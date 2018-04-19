@@ -25,6 +25,8 @@
     CGFloat m_inputVolume;
     CGFloat m_baseIconCornerRadius;
     CGRect m_originalIconContainerBounds;
+    BOOL m_isSpeechAuthorized;
+    BOOL m_isMicAuthorized;
     
     BOOL m_willOpenAfterAuthorizing;
 }
@@ -34,7 +36,6 @@
     self = [super initWithFrame:frame];
     if(self)
     {
-        _isAuthorized = NO;
         _isRecording = NO;
         _promptText = @"Search the WRLD";
         
@@ -43,6 +44,9 @@
         [self addSubview:m_rootView];
         
         _observer = [[WRLDSpeechObserver alloc] init];
+        
+        m_isSpeechAuthorized = NO;
+        m_isMicAuthorized = NO;
         
         self.frame = frame;
         self.hidden = YES;
@@ -61,6 +65,11 @@
         m_willOpenAfterAuthorizing = NO;
     }
     return self;
+}
+
+-(BOOL) isAuthorized
+{
+    return m_isSpeechAuthorized && m_isMicAuthorized;
 }
 
 -(void) setPrompt:(NSString*)promptText
@@ -111,16 +120,14 @@
     m_speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en-GB"]];
     m_speechRecognizer.delegate = self;
     
-    _isAuthorized = NO;
-    
     m_audioEngine = [[AVAudioEngine alloc] init];
     
     [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
         dispatch_async(dispatch_get_main_queue(), ^{
             switch(status) {
                 case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                    _isAuthorized = YES;
-                    [_observer authorizationChanged:_isAuthorized];
+                    m_isSpeechAuthorized = YES;
+                    [_observer authorizationChanged:self.isAuthorized];
                     if(m_willOpenAfterAuthorizing) {
                         [self startRecording];
                     }
@@ -128,8 +135,8 @@
                 case SFSpeechRecognizerAuthorizationStatusDenied:
                 case SFSpeechRecognizerAuthorizationStatusRestricted:
                 case SFSpeechRecognizerAuthorizationStatusNotDetermined:
-                    _isAuthorized = NO;
-                    [_observer authorizationChanged:_isAuthorized];
+                    m_isSpeechAuthorized = NO;
+                    [_observer authorizationChanged:self.isAuthorized];
                     if(m_willOpenAfterAuthorizing) {
                         [self showSpeechRecognitionPermissionError];
                     }
@@ -153,7 +160,7 @@
 
 -(void)startRecording
 {
-    if(!self.isAuthorized) {
+    if(!m_isSpeechAuthorized) {
         m_willOpenAfterAuthorizing = YES;
         [self authorize];
         return;
@@ -291,8 +298,8 @@
 
 -(void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available
 {
-    _isAuthorized = available;
-    [_observer authorizationChanged:_isAuthorized];
+    m_isSpeechAuthorized = available;
+    [_observer authorizationChanged:self.isAuthorized];
 }
 
 -(void) show
@@ -334,21 +341,29 @@
 
 -(BOOL)checkForMicrophoneAccess
 {
+    m_isMicAuthorized = NO;
     switch ([[AVAudioSession sharedInstance] recordPermission]) {
         case AVAudioSessionRecordPermissionGranted:
+            m_isMicAuthorized = YES;
+            [_observer authorizationChanged:self.isAuthorized];
             return YES;
         case AVAudioSessionRecordPermissionDenied:
             [self showMicrophoneAccessError];
+            m_isMicAuthorized = NO;
+            [_observer authorizationChanged:self.isAuthorized];
             return NO;
         case AVAudioSessionRecordPermissionUndetermined:
             [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (granted) {
+                        m_isMicAuthorized = YES;
                         [self startRecording];
                     }
                     else {
+                        m_isMicAuthorized = NO;
                         [self showMicrophoneAccessError];
                     }
+                    [_observer authorizationChanged:self.isAuthorized];
                 });
             }];
             return NO;
