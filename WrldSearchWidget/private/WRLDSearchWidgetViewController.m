@@ -227,7 +227,7 @@
     
     if(!hadFocus)
     {
-        m_searchHasFocus = true;
+        m_searchHasFocus = YES;
         [_observer searchWidgetGainFocus];
     }
 }
@@ -241,7 +241,7 @@
     
     if(hadFocus)
     {
-        m_searchHasFocus = false;
+        m_searchHasFocus = NO;
         [_observer searchWidgetResignFocus];
     }
 }
@@ -281,6 +281,7 @@
     bool hadFocus = self.hasFocus;
     [m_searchMenuViewController close];
     if(hadFocus){
+        m_searchHasFocus = NO;
         [_observer searchWidgetResignFocus];
     }
 }
@@ -458,6 +459,7 @@
     {
         if(fromInteraction)
         {
+            m_searchHasFocus = NO;
             [self.observer searchWidgetResignFocus];
         }
     };
