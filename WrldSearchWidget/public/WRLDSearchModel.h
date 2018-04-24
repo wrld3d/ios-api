@@ -21,10 +21,12 @@
 -(WRLDSuggestionProviderHandle *) addSuggestionProvider :(id<WRLDSuggestionProvider>) suggestionProvider;
 -(void) removeSuggestionProvider :(WRLDSuggestionProviderHandle *) suggestionProviderHandle;
 
-- (void)getSearchResultsForString:(NSString *) queryString;
 - (void)getSuggestionsForString:(NSString *) queryString;
 
+- (void)getSearchResultsForString:(NSString *) queryString;
+- (void)getSearchResultsForString:(NSString *) queryString clearCurrentResults: (BOOL) clearCurrentResults;
 - (void)getSearchResultsForString:(NSString *) queryString withContext: (id<NSObject>) context;
+- (void)getSearchResultsForString:(NSString *) queryString withContext: (id<NSObject>) context clearCurrentResults: (BOOL) clearCurrentResults;
 
 - (void)cancelCurrentQuery;
 

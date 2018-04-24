@@ -9,8 +9,16 @@
 
 @interface WRLDSearchQuery (Private)
 
-- (instancetype) initWithQueryString: (NSString*) queryString queryObserver: (WRLDSearchQueryObserver *) queryObserver;
-- (instancetype) initWithQueryString: (NSString*) queryString queryContext: (id<NSObject>) queryContext queryObserver: (WRLDSearchQueryObserver *) queryObserver;
+- (instancetype) initWithQueryString: (NSString*) queryString
+                 clearResultsOnStart: (BOOL) clearResultsOnStart
+                       queryObserver: (WRLDSearchQueryObserver *) queryObserver;
+
+- (instancetype) initWithQueryString: (NSString*) queryString
+                        queryContext: (id<NSObject>) queryContext
+                 clearResultsOnStart: (BOOL) clearResultsOnStart
+                       queryObserver: (WRLDSearchQueryObserver *) queryObserver;
+
+@property (nonatomic, readonly) BOOL clearResultsOnStart;
 
 - (void) dispatchRequestsToSearchProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;
 - (void) dispatchRequestsToSuggestionProviders: (WRLDSearchRequestFulfillerCollection *) providerHandles;

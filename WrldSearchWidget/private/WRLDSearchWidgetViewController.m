@@ -410,7 +410,7 @@
     {
         [self.searchBar setText:query.queryString];
         
-        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsDataSource setQuery: query updateResults: query.clearResultsOnStart];
         [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
         [self showSearchResultsView];
@@ -422,7 +422,7 @@
     
     QueryEvent searchQueryCompletedEvent = ^(WRLDSearchQuery * query)
     {
-        [m_searchResultsDataSource updateResultsFrom: query];
+        [m_searchResultsDataSource setQuery: query updateResults: YES];
         [m_searchResultsViewController refreshTable];
      
         if(m_searchResultsDataSource.visibleResults == 0)
@@ -442,7 +442,7 @@
     
     QueryEvent suggestionQueryCompletedEvent = ^(WRLDSearchQuery * query)
     {
-        [m_suggestionsDataSource updateResultsFrom: query];
+        [m_suggestionsDataSource setQuery: query updateResults: YES];
         [m_suggestionsViewController refreshTable];
         [self showSuggestionsView];
     };

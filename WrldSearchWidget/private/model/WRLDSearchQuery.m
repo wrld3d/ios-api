@@ -15,35 +15,57 @@
     WRLDFulfillerResultsDictionary* m_fulfillerResultsDictionary;
     NSMutableArray<WRLDSearchRequest *>* m_requests;
     WRLDSearchQueryObserver* m_queryObserver;
+    BOOL m_clearResultsOnStart;
 }
 
--(instancetype) initWithQueryString:(NSString*) queryString queryObserver:(WRLDSearchQueryObserver *) queryObserver
+-(instancetype) initWithQueryString:(NSString*) queryString
+                clearResultsOnStart: (BOOL) clearResultsOnStart
+                      queryObserver:(WRLDSearchQueryObserver *) queryObserver
 {
     self = [super init];
     if(self)
     {
-        [self assignInitialValues: queryString queryContext:nil queryObserver:queryObserver];
+        [self assignInitialValues: queryString
+                     queryContext:nil
+                    queryObserver:queryObserver
+              clearResultsOnStart:clearResultsOnStart];
+        m_clearResultsOnStart = clearResultsOnStart;
     }
     return self;
 }
 
--(instancetype) initWithQueryString:(NSString*) queryString queryContext: (id<NSObject>) queryContext queryObserver:(WRLDSearchQueryObserver *) queryObserver
+-(instancetype) initWithQueryString:(NSString*) queryString
+                       queryContext: (id<NSObject>) queryContext
+                clearResultsOnStart: (BOOL) clearResultsOnStart
+                      queryObserver:(WRLDSearchQueryObserver *) queryObserver
 {
     self = [super init];
     if(self)
     {
-        [self assignInitialValues: queryString queryContext:queryContext queryObserver:queryObserver];
+        [self assignInitialValues: queryString
+                     queryContext:queryContext
+                    queryObserver:queryObserver
+              clearResultsOnStart:clearResultsOnStart];
     }
     return self;
 }
 
-- (void) assignInitialValues: (NSString *) queryString queryContext:(id<NSObject>) queryContext queryObserver:(WRLDSearchQueryObserver *) queryObserver
+-(BOOL) clearResultsOnStart
+{
+    return m_clearResultsOnStart;
+}
+
+- (void) assignInitialValues: (NSString *) queryString
+                queryContext: (id<NSObject>) queryContext
+               queryObserver: (WRLDSearchQueryObserver *) queryObserver
+         clearResultsOnStart: (BOOL) clearResultsOnStart
 {
     _queryString = queryString;
     _queryContext = queryContext;
     m_queryObserver = queryObserver;
     m_requests =[[NSMutableArray<WRLDSearchRequest *> alloc ]  init];
     m_fulfillerResultsDictionary = [[WRLDFulfillerResultsDictionary alloc] init];
+    m_clearResultsOnStart = clearResultsOnStart;
 }
 
 - (void) cancel

@@ -15,7 +15,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
     None,
     Top,
     Bottom,
-    TopAndBottom
+    TopAndBottom,
+    Inactive
 };
 
 @implementation WRLDSearchWidgetTableViewController
@@ -94,6 +95,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 - (void) refreshTable
 {
+    [m_tableView setUserInteractionEnabled: !m_dataSource.isQueryInFlight];
     [self safelyReloadData];
     [self resizeTable];
 }
@@ -152,6 +154,9 @@ typedef NS_ENUM(NSInteger, GradientState) {
 
 -(GradientState) getGradientState : (UIScrollView*) scrollView
 {
+    if(m_dataSource.isQueryInFlight){
+        return Inactive;
+    }
     bool contentExtendsAboveTopOfView = (scrollView.contentOffset.y + scrollView.contentInset.top > 0);
     bool contentExtendsBelowBottomOfView = (scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height);
     
@@ -176,6 +181,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
     
     CGColorRef outerColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
     CGColorRef innerColor = [UIColor colorWithWhite:1.0 alpha:0.0].CGColor;
+    CGColorRef inactiveColor = [UIColor colorWithWhite:0.0 alpha:0.24].CGColor;
     
     switch (state) {
         case None:
@@ -194,6 +200,11 @@ typedef NS_ENUM(NSInteger, GradientState) {
         case TopAndBottom:
             gradient.colors = @[(__bridge id)innerColor, (__bridge id)outerColor, (__bridge id)outerColor, (__bridge id)innerColor];
             gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.2],[NSNumber numberWithFloat:0.8],[NSNumber numberWithFloat:1.0]];
+            m_tableView.layer.mask = gradient;
+            break;
+        case Inactive:
+            gradient.colors = @[(__bridge id)inactiveColor, (__bridge id)inactiveColor];
+            gradient.locations = @[[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:1.0]];
             m_tableView.layer.mask = gradient;
             break;
     }
@@ -284,6 +295,8 @@ typedef NS_ENUM(NSInteger, GradientState) {
     {
         return;
     }
+    
+    [cell setUserInteractionEnabled: !m_dataSource.isQueryInFlight];
     
     WRLDSearchWidgetResultSetViewModel *sectionViewModel = [m_dataSource getViewModelForProviderAt: [indexPath section]];
     if([sectionViewModel isMoreResultsCell: [indexPath row]])

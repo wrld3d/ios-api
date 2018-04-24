@@ -18,10 +18,11 @@ typedef void (^SearchResultsSourceEvent) (void);
 @property (nonatomic, readonly) NSString* defaultCellIdentifier;
 @property (nonatomic, readonly) NSString* moreResultsCellIdentifier;
 @property (nonatomic, readonly) BOOL isAwaitingData;
+@property (nonatomic, readonly) BOOL isQueryInFlight;
 @property (nonatomic, readonly) NSInteger providerCount;
 @property (nonatomic, readonly) NSInteger * visibleResults;
 
-- (void) updateResultsFrom: (WRLDSearchQuery *) query;
+- (void) setQuery: (WRLDSearchQuery *) query updateResults: (BOOL) updateResults;
 - (void) clearResults;
 - (NSString*) getDisplayedQueryText;
 

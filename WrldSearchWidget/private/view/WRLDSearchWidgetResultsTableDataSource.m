@@ -3,6 +3,7 @@
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDSearchResultTableViewCell.h"
 #import "WRLDSearchQuery.h"
+#import "WRLDSearchQuery+Private.h"
 #import "WRLDSearchTypes.h"
 #import "WRLDSearchWidgetResultSetViewModel.h"
 
@@ -41,6 +42,13 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (BOOL) isAwaitingData
 {
+    BOOL showResultsFromPreviousQuery = !m_displayedQuery.clearResultsOnStart;
+    BOOL showResultsFromCurrentQuery = [m_displayedQuery hasCompleted];
+    return m_displayedQuery != nil && !(showResultsFromCurrentQuery || showResultsFromPreviousQuery);
+}
+
+- (BOOL) isQueryInFlight
+{
     return m_displayedQuery != nil && ![m_displayedQuery hasCompleted];
 }
 
@@ -49,14 +57,17 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
     return [m_providerViewModels count];
 }
 
-- (void) updateResultsFrom: (WRLDSearchQuery *) query
+- (void) setQuery: (WRLDSearchQuery *) query updateResults: (BOOL) updateResults
 {
     m_displayedQuery = query;
-    for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
+    if(updateResults)
     {
-        [set updateResultData: [query getResultsForFulfiller: set.fulfiller.identifier]];
+        for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
+        {
+            [set updateResultData: [query getResultsForFulfiller: set.fulfiller.identifier]];
+        }
+        [self collapseAllSections];
     }
-    [self collapseAllSections];
 }
 
 - (void) clearResults
@@ -168,7 +179,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(m_displayedQuery != nil && !m_displayedQuery.hasCompleted)
+    if(self.isAwaitingData)
     {
         return 0;
     }
@@ -178,7 +189,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if(m_displayedQuery != nil && !m_displayedQuery.hasCompleted)
+    if(self.isAwaitingData)
     {
         return 0;
     }

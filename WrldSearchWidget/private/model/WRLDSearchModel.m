@@ -73,7 +73,9 @@
 -(void) getSearchResultsForString:(NSString *)queryString
 {
     [self cancelCurrentQuery];
-    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryObserver: self.searchObserver];
+    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString
+                                              clearResultsOnStart: YES
+                                                    queryObserver: self.searchObserver];
     [m_currentQuery dispatchRequestsToSearchProviders: m_searchProviders];
     m_isCurrentQueryForSearch = YES;
 }
@@ -81,7 +83,32 @@
 -(void) getSearchResultsForString:(NSString *)queryString withContext:(id<NSObject>)context
 {
     [self cancelCurrentQuery];
-    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryContext: context queryObserver: self.searchObserver];
+    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString
+                                                     queryContext: context
+                                              clearResultsOnStart: YES
+                                                    queryObserver: self.searchObserver];
+    [m_currentQuery dispatchRequestsToSearchProviders: m_searchProviders];
+    m_isCurrentQueryForSearch = YES;
+}
+
+
+-(void) getSearchResultsForString:(NSString *)queryString clearCurrentResults: (BOOL) clearCurrentResults
+{
+    [self cancelCurrentQuery];
+    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString
+                                              clearResultsOnStart: clearCurrentResults
+                                                    queryObserver: self.searchObserver];
+    [m_currentQuery dispatchRequestsToSearchProviders: m_searchProviders];
+    m_isCurrentQueryForSearch = YES;
+}
+
+-(void) getSearchResultsForString:(NSString *)queryString withContext:(id<NSObject>)context clearCurrentResults: (BOOL) clearCurrentResults
+{
+    [self cancelCurrentQuery];
+    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString
+                                                     queryContext: context
+                                              clearResultsOnStart: clearCurrentResults
+                                                    queryObserver: self.searchObserver];
     [m_currentQuery dispatchRequestsToSearchProviders: m_searchProviders];
     m_isCurrentQueryForSearch = YES;
 }
@@ -89,7 +116,9 @@
 -(void) getSuggestionsForString:(NSString *)queryString
 {
     [self cancelCurrentQuery];
-    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString queryObserver: self.suggestionObserver];
+    m_currentQuery = [[WRLDSearchQuery alloc] initWithQueryString: queryString
+                                              clearResultsOnStart: NO
+                                                    queryObserver: self.suggestionObserver];
     [m_currentQuery dispatchRequestsToSuggestionProviders: m_suggestionProviders];
 }
 
