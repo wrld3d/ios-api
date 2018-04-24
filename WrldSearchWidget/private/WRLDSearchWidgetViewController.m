@@ -8,6 +8,7 @@
 #import "WRLDSearchModel.h"
 #import "WRLDSearchQueryObserver.h"
 #import "WRLDSearchQuery.h"
+#import "WRLDSearchQuery+Private.h"
 #import "WRLDSearchResultSelectedObserver.h"
 #import "WRLDSearchResultSelectedObserver+Private.h"
 #import "WRLDMenuObserver.h"
@@ -79,6 +80,7 @@
     
     __weak QueryEvent m_searchQueryStartedEvent;
     __weak QueryEvent m_searchQueryCompletedEvent;
+    __weak QueryEvent m_searchQueryCancelledEvent;
     __weak QueryEvent m_suggestionQueryCompletedEvent;
     
     __weak VoiceAuthorizedEvent m_speechHandlerAuthChangedEvent;
@@ -411,11 +413,21 @@
         [self.searchBar setText:query.queryString];
         
         [m_searchResultsDataSource setQuery: query updateResults: query.clearResultsOnStart];
-        [m_searchResultsViewController refreshTable];
         [self determineVoiceButtonVisibility];
-        [self showSearchResultsView];
-        BOOL showNumResults = NO;
         
+        if(!m_searchResultsDataSource.isAwaitingData)
+        {
+            if(m_searchResultsDataSource.visibleResults == 0){
+                [self showNoResultsView];
+            }
+            else
+            {
+                [m_searchResultsViewController refreshTable];
+                [self showSearchResultsView];
+            }
+        }
+        
+        BOOL showNumResults = NO;
         [self refreshSearchBarTextForCurrentQuery: showNumResults];
         [self startSearchInProgressAnimation];
     };
@@ -435,6 +447,15 @@
             [self showSearchResultsView];
         }
         
+        BOOL showNumResults = !m_willShowResultsViews;
+        [self refreshSearchBarTextForCurrentQuery: showNumResults];
+        [self stopSearchInProgressAnimation];
+    };
+    
+    QueryEvent searchQueryCancelledEvent = ^(WRLDSearchQuery * query)
+    {
+        [m_searchResultsDataSource setQuery: query updateResults: YES];
+        [self showNoResultsView];
         BOOL showNumResults = !m_willShowResultsViews;
         [self refreshSearchBarTextForCurrentQuery: showNumResults];
         [self stopSearchInProgressAnimation];
@@ -467,6 +488,7 @@
     // observers will hold strong references to block events to increase reference counter
     [m_searchModel.searchObserver addQueryStartingEvent: searchQueryStartedEvent];
     [m_searchModel.searchObserver addQueryCompletedEvent: searchQueryCompletedEvent];
+    [m_searchModel.searchObserver addQueryCancelledEvent: searchQueryCancelledEvent];
     [m_searchModel.suggestionObserver addQueryCompletedEvent: suggestionQueryCompletedEvent];
     [self.menuObserver addOpenedEvent: menuOpenedEvent];
     [self.menuObserver addClosedEvent: menuClosedEvent];
@@ -474,6 +496,7 @@
     // self will weakly hold on to block event to remove from observer later and prevent circular references
     m_searchQueryStartedEvent = searchQueryStartedEvent;
     m_searchQueryCompletedEvent = searchQueryCompletedEvent;
+    m_searchQueryCancelledEvent = searchQueryCancelledEvent;
     m_suggestionQueryCompletedEvent = suggestionQueryCompletedEvent;
     m_menuOpenedEvent = menuOpenedEvent;
     m_menuClosedEvent = menuClosedEvent;
@@ -502,6 +525,11 @@
     if(m_searchQueryCompletedEvent)
     {
         [model.searchObserver removeQueryCompletedEvent: m_searchQueryCompletedEvent];
+    }
+    
+    if(m_searchQueryCancelledEvent)
+    {
+        [model.searchObserver removeQueryCancelledEvent: m_searchQueryCancelledEvent];
     }
     
     if(m_suggestionQueryCompletedEvent)

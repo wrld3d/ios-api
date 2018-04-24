@@ -14,6 +14,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     ResultSetViewModelCollection * m_providerViewModels;
     WRLDSearchQuery *m_displayedQuery;
+    WRLDSearchQuery *m_currentQuery;
     
     NSMutableArray<SearchResultsSourceEvent>* m_resultsSectionExpandedEvents;
     NSMutableArray<SearchResultsSourceEvent>* m_resultsSectionsCollapsedEvents;
@@ -42,14 +43,14 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (BOOL) isAwaitingData
 {
-    BOOL showResultsFromPreviousQuery = !m_displayedQuery.clearResultsOnStart;
-    BOOL showResultsFromCurrentQuery = [m_displayedQuery hasCompleted];
-    return m_displayedQuery != nil && !(showResultsFromCurrentQuery || showResultsFromPreviousQuery);
+    BOOL showResultsFromPreviousQuery = m_displayedQuery != nil && !m_currentQuery.clearResultsOnStart;
+    BOOL showResultsFromCurrentQuery = m_currentQuery != nil && [m_currentQuery hasCompleted];
+    return !(showResultsFromCurrentQuery || showResultsFromPreviousQuery);
 }
 
 - (BOOL) isQueryInFlight
 {
-    return m_displayedQuery != nil && ![m_displayedQuery hasCompleted];
+    return m_currentQuery != nil && ![m_currentQuery hasCompleted];
 }
 
 - (NSInteger) providerCount
@@ -59,9 +60,10 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (void) setQuery: (WRLDSearchQuery *) query updateResults: (BOOL) updateResults
 {
-    m_displayedQuery = query;
+    m_currentQuery = query;
     if(updateResults)
     {
+        m_displayedQuery = m_currentQuery;
         for(WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
         {
             [set updateResultData: [query getResultsForFulfiller: set.fulfiller.identifier]];
@@ -72,6 +74,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (void) clearResults
 {
+    m_currentQuery = nil;
     m_displayedQuery = nil;
     WRLDSearchResultsCollection* emptyResults = [[WRLDSearchResultsCollection alloc] init];
     for (WRLDSearchWidgetResultSetViewModel *set in m_providerViewModels)
@@ -83,9 +86,9 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 
 - (NSString*) getDisplayedQueryText
 {
-    if(m_displayedQuery != nil)
+    if(m_currentQuery != nil)
     {
-        return m_displayedQuery.queryString;
+        return m_currentQuery.queryString;
     }
     return nil;
 }
@@ -167,7 +170,7 @@ typedef NSMutableArray<WRLDSearchWidgetResultSetViewModel *> ResultSetViewModelC
 {
     WRLDSearchWidgetResultSetViewModel * setViewModel = [m_providerViewModels objectAtIndex: [indexPath section]];
     id<WRLDSearchResultModel> resultModel = [setViewModel getResult : [indexPath row]];
-    [cell populateWith: resultModel fromQuery: m_displayedQuery];
+    [cell populateWith: resultModel fromQuery: m_currentQuery];
 }
 
 -(WRLDSearchWidgetResultSetViewModel *) getViewModelForProviderAt: (NSInteger) section
