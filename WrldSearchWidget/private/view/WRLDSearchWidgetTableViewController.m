@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, GradientState) {
         m_tableView.delegate = self;
         m_tableView.dataSource = m_dataSource;
         
-        m_showMoreResultsText = @"Show More (%d) %@ results";
+        m_showMoreResultsText = @"Show more (%d) %@ results";
         m_backToResultsText = @"Back";
         m_isAnimatingOut = false;
         m_fadeDuration = 0.2f;
