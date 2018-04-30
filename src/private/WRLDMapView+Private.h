@@ -39,6 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)notifyIndoorEntityTapped:(const Eegeo::Api::IndoorEntityPickedMessage&)indoorEntityPickedMessage;
 
+- (void)notifyPrecacheOperationCompleted:(int)operationId;
+
+- (void)notifyPrecacheOperationCancelled:(int)operationId;
+
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 
 const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDElevationMode elevationMode);

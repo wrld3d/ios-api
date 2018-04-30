@@ -29,6 +29,9 @@
 #import "WRLDMathApiHelpers.h"
 #import "WRLDStringApiHelpers.h"
 #import "WRLDIndoorEntityApiHelpers.h"
+#import "WRLDPrecacheOperation.h"
+#import "WRLDPrecacheOperation+Private.h"
+#import "WRLDPrecacheOperationResult+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -54,6 +57,7 @@
 #include "EegeoBuildingsApi.h"
 #include "EegeoPickingApi.h"
 #include "EegeoIndoorEntityApi.h"
+#include "EegeoPrecacheApi.h"
 
 #include <string>
 
@@ -91,6 +95,7 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
     NSNumber* m_startDirection;
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
+    std::unordered_map<Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType, WRLDPrecacheOperation*> m_precacheOperations;
 }
 
 
@@ -1221,6 +1226,56 @@ template<typename T> inline T* safe_cast(id instance)
     {
         [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
     }
+}
+
+- (WRLDPrecacheOperation*)_findAndRemovePrecachingOperation:(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType&)operationId
+{
+    auto operationIt = m_precacheOperations.find(operationId);
+    
+    if (operationIt == m_precacheOperations.end())
+    {
+        return nullptr;
+    }
+    
+    auto operation = operationIt->second;
+    m_precacheOperations.erase(operationIt);
+    
+    return operation;
+}
+
+- (void)_handlePrecacheOperationCompletion:(int)operationId succeeded:(BOOL)succeeded
+{
+    auto operation = [self _findAndRemovePrecachingOperation:operationId];
+    
+    if (operation != nullptr)
+    {
+        auto pResult = [[WRLDPrecacheOperationResult alloc] initWithStatus:succeeded];
+        [operation completeWithResult:pResult];
+    }
+}
+
+- (void)notifyPrecacheOperationCompleted:(int)operationId
+{
+    [self _handlePrecacheOperationCompletion:operationId succeeded:TRUE];
+}
+
+- (void)notifyPrecacheOperationCancelled:(int)operationId
+{
+    [self _handlePrecacheOperationCompletion:operationId succeeded:FALSE];
+}
+
+- (WRLDPrecacheOperation*)precache:(CLLocationCoordinate2D)center
+                            radius:(double)radius
+                 completionHandler:(WRLDPrecacheOperationHandler)completionHandler
+{
+    auto& precacheApi = [self getMapApi].GetPrecacheApi();
+    Eegeo::Space::LatLongAltitude lla(center.latitude, center.longitude, 0.0);
+    int operationId = static_cast<int>(precacheApi.BeginPrecacheOperation(lla, radius));
+    
+    auto operation = [[WRLDPrecacheOperation alloc] initWithId:operationId precacheApi:precacheApi completionHandler:completionHandler];
+    m_precacheOperations[operationId] = operation;
+    
+    return operation;
 }
 
 @end
