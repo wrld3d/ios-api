@@ -20,10 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) double fractionAlongRoutePath;
 
 /// Route Step that this point lies on.
-@property (nonatomic, copy) WRLDRouteStep* routeStep;
+@property (nonatomic, retain) WRLDRouteStep* routeStep;
 
 /// Route Section that this point lies on.
-@property (nonatomic, copy) WRLDRouteSection* routeSection;
+@property (nonatomic, retain) WRLDRouteSection* routeSection;
 
 @end
 

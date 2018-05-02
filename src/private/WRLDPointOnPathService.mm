@@ -97,9 +97,9 @@
     
     newPointOnRouteInfo.fractionAlongRoutePath = pointOnRouteInfo.m_fractionAlongRoutePath;
     
-    newPointOnRouteInfo.routeSection = route.sections[pointOnRouteInfo.m_routeSectionIndex];
+    newPointOnRouteInfo.routeSection = [route.sections objectAtIndex:pointOnRouteInfo.m_routeSectionIndex];
     
-    newPointOnRouteInfo.routeStep = newPointOnRouteInfo.routeSection.steps[pointOnRouteInfo.m_routeStepIndex];
+    newPointOnRouteInfo.routeStep = [newPointOnRouteInfo.routeSection.steps objectAtIndex:pointOnRouteInfo.m_routeStepIndex];
     
     return newPointOnRouteInfo;
 }
