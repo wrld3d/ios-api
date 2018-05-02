@@ -41,9 +41,31 @@ NS_ASSUME_NONNULL_BEGIN
                                 count:(NSInteger)count
                                 point:(CLLocationCoordinate2D)point ;
 
+/*!
+ Retrieve information about the closest point on a WRLDRoute to a provided target point.
+ 
 
+ @param route The WRLDRoute to test against.
+ @param point The desired target point.
+ @returns The WRLDPointOnRouteInfo that represents information about that point, or nil if no suitable point is found.
+ */
 - (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute *)route
                                 point:(CLLocationCoordinate2D)point;
+
+/*!
+ Retrieve information about the closest point on a WRLDRoute to a provided target point on an Indoor Map.
+ 
+
+ @param route The WRLDRoute to test against.
+ @param point The desired target point.
+ @param indoorMapId The Indoor Map Id string that the target point is located within.
+ @param indoorMapFloorId The indoor map floor id that the target point is located on.
+ @returns The WRLDPointOnRouteInfo that represents information about that point, or nil if no suitable point is found.
+ */
+- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute *)route
+                                point:(CLLocationCoordinate2D)point
+                                withIndoorMapId:(NSString*)indoorMapId
+                                indoorMapFloorId:(NSInteger)indoorMapFloorId;
 
 @end
 

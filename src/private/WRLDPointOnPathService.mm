@@ -93,9 +93,13 @@
     newPointOnRouteInfo.projectedPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.m_projectedPoint.GetLatitudeInDegrees(),
                                                                     pointOnRouteInfo.m_projectedPoint.GetLongitudeInDegrees());
     
-    newPointOnRouteInfo.distanceToTargetPointSqr = pointOnRouteInfo.m_distanceToTargetPointSqr;
+    newPointOnRouteInfo.distanceToTargetPoint = pointOnRouteInfo.m_distanceToTargetPoint;
     
-    newPointOnRouteInfo.fractionAlongRoutePath = pointOnRouteInfo.m_fractionAlongRoutePath;
+    newPointOnRouteInfo.fractionAlongRouteStep = pointOnRouteInfo.m_fractionAlongRouteStep;
+    
+    newPointOnRouteInfo.fractionAlongRouteSection = pointOnRouteInfo.m_fractionAlongRouteSection;
+    
+    newPointOnRouteInfo.fractionAlongRoute = pointOnRouteInfo.m_fractionAlongRoute;
     
     newPointOnRouteInfo.routeSection = [route.sections objectAtIndex:pointOnRouteInfo.m_routeSectionIndex];
     
@@ -125,15 +129,28 @@
 
 - (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute*)route
                                 point:(CLLocationCoordinate2D)point
+                                withIndoorMapId:(NSString*)indoorMapId
+                                indoorMapFloorId:(NSInteger)indoorMapFloorId
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     Eegeo::Routes::Webservice::RouteData* routeData = [self makeRouteDataFromWRLDRoute:route];
     
-    Eegeo::PointOnPath::PointOnRouteInfo pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, routeData);
+    Eegeo::PointOnPath::PointOnRouteInfo pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, routeData, std::string([indoorMapId UTF8String]), indoorMapFloorId);
+
+    if(pointOnRoute.m_validResult == false)
+    {
+        return nil;
+    }
 
     WRLDPointOnRouteInfo* pointOnRouteInfo = [self makeWRLDPointOnRouteInfoFromPlatform:pointOnRoute withRoute:route];
     
     return pointOnRouteInfo;
+}
+
+- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute*)route
+                                point:(CLLocationCoordinate2D)point
+{
+    return [self getPointOnRoute:route point:point withIndoorMapId:@"" indoorMapFloorId:0];
 }
 
 
