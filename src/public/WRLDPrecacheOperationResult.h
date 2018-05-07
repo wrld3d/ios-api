@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  A result of a precache operation.
- Returned when a precache operation completes via the completionHandler block passed to precache.
+ Returned when a precache operation completes via the completionHandler block passed to [mapView precache:radius:completionHandler].
  */
 @interface WRLDPrecacheOperationResult : NSObject
 
