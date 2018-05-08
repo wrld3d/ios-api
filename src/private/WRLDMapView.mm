@@ -1268,20 +1268,10 @@ template<typename T> inline T* safe_cast(id instance)
                             radius:(double)radius
                  completionHandler:(WRLDPrecacheOperationHandler)completionHandler
 {
-    const double MaxPrecacheRadius = 16000.0;
-    
-    if (radius > MaxPrecacheRadius || radius <= 0.0)
+    if (radius > Eegeo::Api::EegeoPrecacheApi::MaxPrecacheRadius || radius <= 0.0)
     {
-        NSString* message = [NSString stringWithFormat:@"radius of %f was outside of valid (0.0, %f] range.", radius, MaxPrecacheRadius];
+        NSString* message = [NSString stringWithFormat:@"radius of %f was outside of valid (0.0, %f] range.", radius, Eegeo::Api::EegeoPrecacheApi::MaxPrecacheRadius];
         NSException* exception = [NSException exceptionWithName:NSInvalidArgumentException reason:message userInfo:nil];
-        @throw exception;
-    }
-    
-    if (!CLLocationCoordinate2DIsValid(center))
-    {
-        NSException* exception = [NSException exceptionWithName:NSInvalidArgumentException
-                                                         reason:@"center was not a valid latLong coordinate."
-                                                       userInfo:nil];
         @throw exception;
     }
     

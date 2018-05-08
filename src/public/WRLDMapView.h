@@ -154,7 +154,6 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated;
 
-
 #pragma mark - markers -
 
 
@@ -298,6 +297,20 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void) removeOverlay:(id<WRLDOverlay>) overlay;
 
+#pragma mark - precaching -
+
+/*! @name Precaching */
+
+/*!
+ Begin an operation to asynchronously precache a spherical area of the map.  This allows that area to load faster in future.
+ @param center The center of the area to precache.
+ @param radius The radius (in meters) of the area to precache.
+ @param completionHandler The block to be executed on completion or failure of the precache operation.
+ @returns An object with a cancel method to allow you to cancel the precache operation.
+ */
+- (WRLDPrecacheOperation*)precache:(CLLocationCoordinate2D)center
+                            radius:(double)radius
+                 completionHandler:(WRLDPrecacheOperationHandler)completionHandler;
 
 #pragma mark - controlling the indoor map view -
 
@@ -409,17 +422,6 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @param isMapCollapsed If YES, map appears flattened; If NO, map displays with default vertical scaling.
  */
 - (void)setMapCollapsed:(BOOL)isMapCollapsed;
-
-/*!
- Begin an operation to asynchronously precache a spherical area of the map.  This allows that area to load faster in future.
- @param center The center of the area to precache.
- @param radius The radius (in meters) of the area to precache.
- @param completionHandler The block to be executed on completion or failure of the precache operation.
- @returns An object with a cancel method to allow you to cancel the precache operation.
- */
-- (WRLDPrecacheOperation*)precache:(CLLocationCoordinate2D)center
-                                          radius:(double)radius
-                              completionHandler:(WRLDPrecacheOperationHandler)completionHandler;
 
 /*!
  @returns The POI service.
