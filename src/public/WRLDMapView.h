@@ -20,6 +20,8 @@
 #import "WRLDBuildingHighlight.h"
 #import "WRLDBuildingHighlightOptions.h"
 #import "WRLDPickResult.h"
+#import "WRLDPrecacheOperation.h"
+#import "WRLDPrecacheOperationResult.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -151,7 +153,6 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @param animated YES to animate smoothly to the new camera state, NO to snap immediately. Note that if the region is too far away from the current camera location, this parameter will be ignored and the camera will snap the new location.
  */
 - (void)setCoordinateBounds:(WRLDCoordinateBounds)bounds animated:(BOOL)animated;
-
 
 #pragma mark - markers -
 
@@ -296,6 +297,20 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void) removeOverlay:(id<WRLDOverlay>) overlay;
 
+#pragma mark - precaching -
+
+/*! @name Precaching */
+
+/*!
+ Begin an operation to asynchronously precache a spherical area of the map.  This allows that area to load faster in future.
+ @param center The center of the area to precache.
+ @param radius The radius (in meters) of the area to precache.
+ @param completionHandler The block to be executed on completion or failure of the precache operation.
+ @returns An object with a cancel method to allow you to cancel the precache operation.
+ */
+- (WRLDPrecacheOperation*)precache:(CLLocationCoordinate2D)center
+                            radius:(double)radius
+                 completionHandler:(WRLDPrecacheOperationHandler)completionHandler;
 
 #pragma mark - controlling the indoor map view -
 

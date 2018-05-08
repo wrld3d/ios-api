@@ -8,6 +8,7 @@
 #include "EegeoPoiApi.h"
 #include "EegeoMapsceneApi.h"
 #include "EegeoRoutingApi.h"
+#include "EegeoPrecacheApi.h"
 #include "iOSApiRunner.h"
 
 
@@ -26,6 +27,8 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
 , m_buildingInformationReceivedHandler(this, &WRLDNativeMapView::OnBuildingInformationReceived)
 , m_indoorEntityPickedHandler(this, &WRLDNativeMapView::OnIndoorEntityPicked)
+, m_precacheCompletedHandler(this, &WRLDNativeMapView::OnPrecacheOperationCompleted)
+, m_precacheCancelledHandler(this, &WRLDNativeMapView::OnPrecacheOperationCancelled)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -40,12 +43,16 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetBuildingsApi().RegisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
     mapApi.GetIndoorEntityApi().RegisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
+    mapApi.GetPrecacheApi().RegisterPrecacheOperationCompletedCallback(m_precacheCompletedHandler);
+    mapApi.GetPrecacheApi().RegisterPrecacheOperationCancelledCallback(m_precacheCancelledHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
 
+    mapApi.GetPrecacheApi().UnregisterPrecacheOperationCancelledCallback(m_precacheCancelledHandler);
+    mapApi.GetPrecacheApi().UnregisterPrecacheOperationCompletedCallback(m_precacheCompletedHandler);
     mapApi.GetIndoorEntityApi().UnregisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
     mapApi.GetBuildingsApi().UnregisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
     mapApi.GetRoutingApi().UnregisterQueryCompletedCallback(m_routingQueryCompletedHandler);
@@ -133,6 +140,16 @@ void WRLDNativeMapView::OnBuildingInformationReceived(const Eegeo::BuildingHighl
 void WRLDNativeMapView::OnIndoorEntityPicked(const Eegeo::Api::IndoorEntityPickedMessage& indoorEntityPickedMessage)
 {
     [m_mapView notifyIndoorEntityTapped:indoorEntityPickedMessage];
+}
+
+void WRLDNativeMapView::OnPrecacheOperationCompleted(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType& operationId)
+{
+    [m_mapView notifyPrecacheOperationCompleted:operationId];
+}
+
+void WRLDNativeMapView::OnPrecacheOperationCancelled(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType& operationId)
+{
+    [m_mapView notifyPrecacheOperationCancelled:operationId];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()
