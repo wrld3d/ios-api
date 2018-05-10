@@ -86,24 +86,24 @@
     return routeData;
 }
 
-- (WRLDPointOnRouteInfo*) makeWRLDPointOnRouteInfoFromPlatform:(Eegeo::PointOnPath::PointOnRouteInfo)pointOnRouteInfo withRoute:(WRLDRoute*)route
+- (WRLDPointOnRouteInfo*) makeWRLDPointOnRouteInfoFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route
 {
     WRLDPointOnRouteInfo* newPointOnRouteInfo = [[WRLDPointOnRouteInfo alloc] init];
     
-    newPointOnRouteInfo.projectedPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.m_projectedPoint.GetLatitudeInDegrees(),
-                                                                    pointOnRouteInfo.m_projectedPoint.GetLongitudeInDegrees());
+    newPointOnRouteInfo.projectedPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLatitudeInDegrees(),
+                                                                    pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLongitudeInDegrees());
     
-    newPointOnRouteInfo.distanceToTargetPoint = pointOnRouteInfo.m_distanceToTargetPoint;
+    newPointOnRouteInfo.distanceToTargetPoint = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
     
-    newPointOnRouteInfo.fractionAlongRouteStep = pointOnRouteInfo.m_fractionAlongRouteStep;
+    newPointOnRouteInfo.fractionAlongRouteStep = pointOnRouteInfo.GetFractionAlongRouteStep();
     
-    newPointOnRouteInfo.fractionAlongRouteSection = pointOnRouteInfo.m_fractionAlongRouteSection;
+    newPointOnRouteInfo.fractionAlongRouteSection = pointOnRouteInfo.GetFractionAlongRouteSection();
     
-    newPointOnRouteInfo.fractionAlongRoute = pointOnRouteInfo.m_fractionAlongRoute;
+    newPointOnRouteInfo.fractionAlongRoute = pointOnRouteInfo.GetFractionAlongRoute();
     
-    newPointOnRouteInfo.routeSection = [route.sections objectAtIndex:pointOnRouteInfo.m_routeSectionIndex];
+    newPointOnRouteInfo.routeSection = [route.sections objectAtIndex:pointOnRouteInfo.GetRouteSectionIndex()];
     
-    newPointOnRouteInfo.routeStep = [newPointOnRouteInfo.routeSection.steps objectAtIndex:pointOnRouteInfo.m_routeStepIndex];
+    newPointOnRouteInfo.routeStep = [newPointOnRouteInfo.routeSection.steps objectAtIndex:pointOnRouteInfo.GetRouteStepIndex()];
     
     return newPointOnRouteInfo;
 }
@@ -114,7 +114,7 @@
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     
-    Eegeo::Space::LatLong projectedPoint = m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]);
+    Eegeo::Space::LatLong projectedPoint = m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]).GetResultPoint();
     
     return CLLocationCoordinate2DMake(projectedPoint.GetLatitudeInDegrees(), projectedPoint.GetLongitudeInDegrees());
 }
@@ -124,7 +124,7 @@
                                 point:(CLLocationCoordinate2D)point
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
-    return (CGFloat)m_pointOnPathApi->GetPointFractionAlongPath(latLng, [self makeLatLongPath:path count:count]);
+    return (CGFloat)m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]).GetFractionAlongPath();
 }
 
 - (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute*)route
@@ -135,9 +135,13 @@
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     Eegeo::Routes::Webservice::RouteData* routeData = [self makeRouteDataFromWRLDRoute:route];
     
-    Eegeo::PointOnPath::PointOnRouteInfo pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, routeData, std::string([indoorMapId UTF8String]), indoorMapFloorId);
+    Eegeo::Routes::PointOnRouteOptions pointOnRouteOptions;
+    pointOnRouteOptions.IndoorMapId = std::string([indoorMapId UTF8String]);
+    pointOnRouteOptions.IndoorMapFloorId = indoorMapFloorId;
+    
+    Eegeo::Routes::PointOnRoute pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, *routeData, pointOnRouteOptions);
 
-    if(pointOnRoute.m_validResult == false)
+    if(!pointOnRoute.IsValidResult())
     {
         return nil;
     }

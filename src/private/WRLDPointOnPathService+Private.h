@@ -2,6 +2,7 @@
 
 #include "EegeoPointOnPathApi.h"
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class WRLDPointOnPathService;
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Eegeo::Routes::Webservice::RouteData*) makeRouteDataFromWRLDRoute:(WRLDRoute*)route;
 
-- (WRLDPointOnRouteInfo*) makeWRLDPointOnRouteInfoFromPlatform:(Eegeo::PointOnPath::PointOnRouteInfo)pointOnRouteInfo withRoute:(WRLDRoute*)route;
+- (WRLDPointOnRouteInfo*) makeWRLDPointOnRouteInfoFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route;
 
 @end
 
