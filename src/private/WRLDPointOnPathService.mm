@@ -86,14 +86,17 @@
     return routeData;
 }
 
-- (WRLDPointOnRouteInfo*) makeWRLDPointOnRouteInfoFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route
+- (WRLDPointOnRoute*) makeWRLDPointOnRouteFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route
 {
-    WRLDPointOnRouteInfo* newPointOnRouteInfo = [[WRLDPointOnRouteInfo alloc] init];
+    WRLDPointOnRoute* newPointOnRouteInfo = [[WRLDPointOnRoute alloc] init];
     
-    newPointOnRouteInfo.projectedPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLatitudeInDegrees(),
+    newPointOnRouteInfo.resultPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLatitudeInDegrees(),
                                                                     pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLongitudeInDegrees());
     
-    newPointOnRouteInfo.distanceToTargetPoint = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
+    newPointOnRouteInfo.inputPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetInputPoint().GetLatitudeInDegrees(),
+                                                                pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetInputPoint().GetLongitudeInDegrees());
+    
+    newPointOnRouteInfo.distanceFromInputPoint = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
     
     newPointOnRouteInfo.fractionAlongRouteStep = pointOnRouteInfo.GetFractionAlongRouteStep();
     
@@ -127,7 +130,7 @@
     return (CGFloat)m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]).GetFractionAlongPath();
 }
 
-- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute*)route
+- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute*)route
                                 point:(CLLocationCoordinate2D)point
                                 withIndoorMapId:(NSString*)indoorMapId
                                 indoorMapFloorId:(NSInteger)indoorMapFloorId
@@ -146,12 +149,12 @@
         return nil;
     }
 
-    WRLDPointOnRouteInfo* pointOnRouteInfo = [self makeWRLDPointOnRouteInfoFromPlatform:pointOnRoute withRoute:route];
+    WRLDPointOnRoute* pointOnRouteInfo = [self makeWRLDPointOnRouteFromPlatform:pointOnRoute withRoute:route];
     
     return pointOnRouteInfo;
 }
 
-- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute*)route
+- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute*)route
                                 point:(CLLocationCoordinate2D)point
 {
     return [self getPointOnRoute:route point:point withIndoorMapId:@"" indoorMapFloorId:0];

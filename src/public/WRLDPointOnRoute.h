@@ -8,13 +8,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// This type contains information about a projected point on a route.
-@interface WRLDPointOnRouteInfo : NSObject
+@interface WRLDPointOnRoute : NSObject
 
 /// The closest point on the Route to the target point.
-@property (nonatomic) CLLocationCoordinate2D projectedPoint;
+@property (nonatomic) CLLocationCoordinate2D resultPoint;
 
-/// Absolute distance to target point (in ECEF space).
-@property (nonatomic) double distanceToTargetPoint;
+/// The original target point tested against.
+@property (nonatomic) CLLocationCoordinate2D inputPoint;
+
+/// Absolute distance from the input point (in ECEF space).
+@property (nonatomic) double distanceFromInputPoint;
 
 /// Fraction that the projected point travelled along entire route.
 @property (nonatomic) double fractionAlongRoute;

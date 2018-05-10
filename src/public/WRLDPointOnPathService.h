@@ -4,7 +4,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "WRLDRoute.h"
-#import "WRLDPointOnRouteInfo.h"
+#import "WRLDPointOnRoute.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -47,9 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param route The WRLDRoute to test against.
  @param point The desired target point.
- @returns The WRLDPointOnRouteInfo that represents information about that point, or nil if no suitable point is found.
+ @returns The WRLDPointOnRoute that represents information about that point, or nil if no suitable point is found.
  */
-- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute *)route
+- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute *)route
                                 point:(CLLocationCoordinate2D)point;
 
 /*!
@@ -60,9 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param point The desired target point.
  @param indoorMapId The Indoor Map Id string that the target point is located within.
  @param indoorMapFloorId The indoor map floor id that the target point is located on.
- @returns The WRLDPointOnRouteInfo that represents information about that point, or nil if no suitable point is found.
+ @returns The WRLDPointOnRoute that represents information about that point, or nil if no suitable point is found.
  */
-- (WRLDPointOnRouteInfo*) getPointOnRoute:(WRLDRoute *)route
+- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute *)route
                                 point:(CLLocationCoordinate2D)point
                                 withIndoorMapId:(NSString*)indoorMapId
                                 indoorMapFloorId:(NSInteger)indoorMapFloorId;
