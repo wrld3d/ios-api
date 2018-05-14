@@ -1276,7 +1276,7 @@ template<typename T> inline T* safe_cast(id instance)
     }
     
     auto& precacheApi = [self getMapApi].GetPrecacheApi();
-    Eegeo::Space::LatLongAltitude lla(center.latitude, center.longitude, 0.0);
+    auto lla = Eegeo::Space::LatLongAltitude::FromDegrees(center.latitude, center.longitude, 0.0);
     int operationId = static_cast<int>(precacheApi.BeginPrecacheOperation(lla, radius));
     
     auto operation = [[WRLDPrecacheOperation alloc] initWithId:operationId precacheApi:precacheApi completionHandler:completionHandler];
