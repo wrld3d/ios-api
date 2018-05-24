@@ -1,12 +1,14 @@
-#import "WRLDPointOnPathService.h"
-#import "WRLDPointOnPathService+Private.h"
+#import "WRLDPointOnPath.h"
+#import "WRLDPointOnPath+Private.h"
+#import "WRLDPointOnRouteResult+Private.h"
+#import "WRLDPointOnPathResult+Private.h"
 
 #import <CoreLocation/CoreLocation.h>
 
 #include <vector>
 
 
-@implementation WRLDPointOnPathService
+@implementation WRLDPointOnPath
 {
     Eegeo::Api::EegeoPointOnPathApi* m_pointOnPathApi;
 }
@@ -69,6 +71,7 @@
             Eegeo::Routes::Webservice::RouteStep newStep = { path,
                                                              transportationMode,
                                                              std::string([routeStep.indoorId UTF8String]),
+                                                             "",
                                                              directions,
                                                              routeStep.duration,
                                                              routeStep.distance,
@@ -86,61 +89,65 @@
     return routeData;
 }
 
-- (WRLDPointOnRoute*) makeWRLDPointOnRouteFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route
+- (WRLDPointOnRouteResult*) makeWRLDPointOnRouteFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route
 {
-    WRLDPointOnRoute* newPointOnRouteInfo = [[WRLDPointOnRoute alloc] init];
-    
-    newPointOnRouteInfo.resultPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLatitudeInDegrees(),
+    CLLocationCoordinate2D resultPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLatitudeInDegrees(),
                                                                     pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetResultPoint().GetLongitudeInDegrees());
     
-    newPointOnRouteInfo.inputPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetInputPoint().GetLatitudeInDegrees(),
+    CLLocationCoordinate2D inputPoint = CLLocationCoordinate2DMake(pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetInputPoint().GetLatitudeInDegrees(),
                                                                 pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetInputPoint().GetLongitudeInDegrees());
     
-    newPointOnRouteInfo.distanceFromInputPoint = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
+    double distanceFromInputPoint = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
     
-    newPointOnRouteInfo.fractionAlongRouteStep = pointOnRouteInfo.GetFractionAlongRouteStep();
+    double fractionAlongRouteStep = pointOnRouteInfo.GetFractionAlongRouteStep();
     
-    newPointOnRouteInfo.fractionAlongRouteSection = pointOnRouteInfo.GetFractionAlongRouteSection();
+    double fractionAlongRouteSection = pointOnRouteInfo.GetFractionAlongRouteSection();
     
-    newPointOnRouteInfo.fractionAlongRoute = pointOnRouteInfo.GetFractionAlongRoute();
+    double fractionAlongRoute = pointOnRouteInfo.GetFractionAlongRoute();
     
-    newPointOnRouteInfo.routeSection = [route.sections objectAtIndex:pointOnRouteInfo.GetRouteSectionIndex()];
+    WRLDRouteSection *routeSection = [route.sections objectAtIndex:pointOnRouteInfo.GetRouteSectionIndex()];
     
-    newPointOnRouteInfo.routeStep = [newPointOnRouteInfo.routeSection.steps objectAtIndex:pointOnRouteInfo.GetRouteStepIndex()];
+    WRLDRouteStep *routeStep = [routeSection.steps objectAtIndex:pointOnRouteInfo.GetRouteStepIndex()];
+    
+    WRLDPointOnRouteResult* newPointOnRouteInfo = [[WRLDPointOnRouteResult alloc] initWithResultPoint:resultPoint inputPoint:inputPoint distanceFromInputPoint:distanceFromInputPoint fractionAlongRoute:fractionAlongRoute fractionAlongRouteSection:fractionAlongRouteSection fractionAlongRouteStep:fractionAlongRouteStep routeStep:routeStep routeSection:routeSection];
     
     return newPointOnRouteInfo;
 }
 
-- (CLLocationCoordinate2D) getPointOnPath:(CLLocationCoordinate2D* )path
-                           count:(NSInteger)count
-                           point:(CLLocationCoordinate2D)point
+- (WRLDPointOnPathResult*) getPointOnPath:(CLLocationCoordinate2D* )path
+                                    count:(NSInteger)count
+                                    point:(CLLocationCoordinate2D)point
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     
-    Eegeo::Space::LatLong projectedPoint = m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]).GetResultPoint();
+    Eegeo::Geometry::Paths::PointOnPath pointOnPath = m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]);
     
-    return CLLocationCoordinate2DMake(projectedPoint.GetLatitudeInDegrees(), projectedPoint.GetLongitudeInDegrees());
+    CLLocationCoordinate2D resultPoint = CLLocationCoordinate2DMake(pointOnPath.GetResultPoint().GetLatitudeInDegrees(), pointOnPath.GetResultPoint().GetLongitudeInDegrees());
+    CLLocationCoordinate2D inputPoint = point;
+    double fractionAlongPath = pointOnPath.GetFractionAlongPath();
+    double distanceFromInputPoint = pointOnPath.GetDistanceFromInputPoint();
+    int indexOfPathSegmentStartVertex = pointOnPath.GetIndexOfPathSegmentStartVertex();
+    int indexOfPathSegmentEndVertex = pointOnPath.GetIndexOfPathSegmentEndVertex();
+    
+    WRLDPointOnPathResult* wrldPointOnPathResult = [[WRLDPointOnPathResult alloc] initWithResultPoint:resultPoint inputPoint:inputPoint
+                                                                               distanceFromInputPoint:distanceFromInputPoint
+                                                                                    fractionAlongPath:fractionAlongPath
+                                                                        indexOfPathSegmentStartVertex:indexOfPathSegmentStartVertex
+                                                                          indexOfPathSegmentEndVertex:indexOfPathSegmentEndVertex];
+    
+    return wrldPointOnPathResult;
 }
 
-- (CGFloat) getPointFractionAlongPath:(CLLocationCoordinate2D *)path
-                                count:(NSInteger)count
+- (WRLDPointOnRouteResult*) getPointOnRoute:(WRLDRoute*)route
                                 point:(CLLocationCoordinate2D)point
-{
-    Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
-    return (CGFloat)m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]).GetFractionAlongPath();
-}
-
-- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute*)route
-                                point:(CLLocationCoordinate2D)point
-                                withIndoorMapId:(NSString*)indoorMapId
-                                indoorMapFloorId:(NSInteger)indoorMapFloorId
+                                options:(WRLDPointOnRouteOptions*)options
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     Eegeo::Routes::Webservice::RouteData* routeData = [self makeRouteDataFromWRLDRoute:route];
     
     Eegeo::Routes::PointOnRouteOptions pointOnRouteOptions;
-    pointOnRouteOptions.IndoorMapId = std::string([indoorMapId UTF8String]);
-    pointOnRouteOptions.IndoorMapFloorId = indoorMapFloorId;
+    pointOnRouteOptions.IndoorMapId = std::string([options.getIndoorMapId UTF8String]);
+    pointOnRouteOptions.IndoorMapFloorId = static_cast<int>(options.getIndoorMapFloorId);
     
     Eegeo::Routes::PointOnRoute pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, *routeData, pointOnRouteOptions);
 
@@ -149,15 +156,9 @@
         return nil;
     }
 
-    WRLDPointOnRoute* pointOnRouteInfo = [self makeWRLDPointOnRouteFromPlatform:pointOnRoute withRoute:route];
+    WRLDPointOnRouteResult* pointOnRouteInfo = [self makeWRLDPointOnRouteFromPlatform:pointOnRoute withRoute:route];
     
     return pointOnRouteInfo;
-}
-
-- (WRLDPointOnRoute*) getPointOnRoute:(WRLDRoute*)route
-                                point:(CLLocationCoordinate2D)point
-{
-    return [self getPointOnRoute:route point:point withIndoorMapId:@"" indoorMapFloorId:0];
 }
 
 

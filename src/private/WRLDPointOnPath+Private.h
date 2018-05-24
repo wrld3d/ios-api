@@ -5,9 +5,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class WRLDPointOnPathService;
+@class WRLDPointOnPath;
 
-@interface WRLDPointOnPathService (Private)
+@interface WRLDPointOnPath (Private)
 
 - (instancetype)initWithApi:(Eegeo::Api::EegeoPointOnPathApi&)pointOnPathApi;
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Eegeo::Routes::Webservice::RouteData*) makeRouteDataFromWRLDRoute:(WRLDRoute*)route;
 
-- (WRLDPointOnRoute*) makeWRLDPointOnRouteFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route;
+- (WRLDPointOnRouteResult*) makeWRLDPointOnRouteFromPlatform:(Eegeo::Routes::PointOnRoute)pointOnRouteInfo withRoute:(WRLDRoute*)route;
 
 @end
 

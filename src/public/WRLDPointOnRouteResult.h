@@ -8,31 +8,31 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// This type contains information about a projected point on a route.
-@interface WRLDPointOnRoute : NSObject
+@interface WRLDPointOnRouteResult : NSObject
 
 /// The closest point on the Route to the target point.
-@property (nonatomic) CLLocationCoordinate2D resultPoint;
+@property (nonatomic, readonly) CLLocationCoordinate2D resultPoint;
 
 /// The original target point tested against.
-@property (nonatomic) CLLocationCoordinate2D inputPoint;
+@property (nonatomic, readonly) CLLocationCoordinate2D inputPoint;
 
 /// Absolute distance from the input point (in ECEF space).
-@property (nonatomic) double distanceFromInputPoint;
+@property (nonatomic, readonly) double distanceFromInputPoint;
 
 /// Fraction that the projected point travelled along entire route.
-@property (nonatomic) double fractionAlongRoute;
+@property (nonatomic, readonly) double fractionAlongRoute;
 
 /// Fraction that the projected point travelled along the route section.
-@property (nonatomic) double fractionAlongRouteSection;
+@property (nonatomic, readonly) double fractionAlongRouteSection;
 
 /// Fraction that the projected point travelled along the route step.
-@property (nonatomic) double fractionAlongRouteStep;
+@property (nonatomic, readonly) double fractionAlongRouteStep;
 
 /// Route Step that the projected point lies on.
-@property (nonatomic, retain) WRLDRouteStep* routeStep;
+@property (nonatomic, retain, readonly) WRLDRouteStep* routeStep;
 
 /// Route Section that the projected point lies on.
-@property (nonatomic, retain) WRLDRouteSection* routeSection;
+@property (nonatomic, retain, readonly) WRLDRouteSection* routeSection;
 
 @end
 

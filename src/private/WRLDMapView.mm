@@ -29,8 +29,8 @@
 #import "WRLDMathApiHelpers.h"
 #import "WRLDStringApiHelpers.h"
 #import "WRLDIndoorEntityApiHelpers.h"
-#import "WRLDPointOnPathService.h"
-#import "WRLDPointOnPathService+Private.h"
+#import "WRLDPointOnPath.h"
+#import "WRLDPointOnPath+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -990,9 +990,9 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 }
 
 #pragma mark - PointOnPath service
-- (WRLDPointOnPathService*)createPointOnPathService
+- (WRLDPointOnPath*)createPointOnPath
 {
-    return [[WRLDPointOnPathService alloc] initWithApi: [self getMapApi].GetPointOnPathApi()];
+    return [[WRLDPointOnPath alloc] initWithApi: [self getMapApi].GetPointOnPathApi()];
 }
 
 #pragma mark - WRLDMapView (Private)

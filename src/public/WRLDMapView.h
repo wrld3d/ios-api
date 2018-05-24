@@ -20,7 +20,7 @@
 #import "WRLDBuildingHighlight.h"
 #import "WRLDBuildingHighlightOptions.h"
 #import "WRLDPickResult.h"
-#import "WRLDPointOnPathService.h"
+#import "WRLDPointOnPath.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -425,9 +425,9 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 - (WRLDRoutingService*)createRoutingService;
 
 /*!
- @returns The PointOnPath service.
+ @returns The PointOnPath.
  */
-- (WRLDPointOnPathService*)createPointOnPathService;
+- (WRLDPointOnPath*)createPointOnPath;
 
 @end
 
