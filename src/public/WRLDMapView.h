@@ -22,6 +22,7 @@
 #import "WRLDPickResult.h"
 #import "WRLDPrecacheOperation.h"
 #import "WRLDPrecacheOperationResult.h"
+#import "WRLDPointOnPath.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -437,6 +438,11 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @returns The Routing service.
  */
 - (WRLDRoutingService*)createRoutingService;
+
+/*!
+ @returns The PointOnPath.
+ */
+- (WRLDPointOnPath*)createPointOnPath;
 
 @end
 
