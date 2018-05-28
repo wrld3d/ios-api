@@ -61,6 +61,8 @@ FOUNDATION_EXPORT const unsigned char WrldVersionString[];
 #import "WRLDPickResult.h"
 #import "WRLDTouchTapInfo.h"
 #import "WRLDIndoorEntityTapResult.h"
+#import "WRLDPrecacheOperation.h"
+#import "WRLDPrecacheOperationResult.h"
 #import "WRLDPointOnRouteResult.h"
 #import "WRLDPointOnPath.h"
 #import "WRLDPointOnPathResult.h"
