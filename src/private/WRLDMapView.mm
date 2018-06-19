@@ -997,7 +997,7 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 #pragma mark - PointOnPath service
 - (WRLDPointOnPath*)createPointOnPath
 {
-    return [[WRLDPointOnPath alloc] initWithApi: [self getMapApi].GetPointOnPathApi()];
+    return [[WRLDPointOnPath alloc] initWithApi: [self getMapApi].GetPathApi()];
 }
 
 #pragma mark - WRLDMapView (Private)

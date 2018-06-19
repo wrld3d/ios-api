@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EegeoPointOnPathApi.h"
+#include "EegeoPathApi.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDPointOnPath (Private)
 
-- (instancetype)initWithApi:(Eegeo::Api::EegeoPointOnPathApi&)pointOnPathApi;
+- (instancetype)initWithApi:(Eegeo::Api::EegeoPathApi&)pathApi;
 
 - (std::vector<Eegeo::Space::LatLong>) makeLatLongPath:(CLLocationCoordinate2D*)path
                                        count:(NSInteger)count;

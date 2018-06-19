@@ -10,14 +10,14 @@
 
 @implementation WRLDPointOnPath
 {
-    Eegeo::Api::EegeoPointOnPathApi* m_pointOnPathApi;
+    Eegeo::Api::EegeoPathApi* m_pathApi;
 }
 
-- (instancetype)initWithApi:(Eegeo::Api::EegeoPointOnPathApi&)pointOnPathApi
+- (instancetype)initWithApi:(Eegeo::Api::EegeoPathApi&)pathApi
 {
     if (self = [super init])
     {
-        m_pointOnPathApi = &pointOnPathApi;
+        m_pathApi = &pathApi;
     }
 
     return self;
@@ -120,7 +120,7 @@
 {
     Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     
-    Eegeo::Geometry::Paths::PointOnPath pointOnPath = m_pointOnPathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]);
+    Eegeo::Geometry::Paths::PointOnPath pointOnPath = m_pathApi->GetPointOnPath(latLng, [self makeLatLongPath:path count:count]);
     
     CLLocationCoordinate2D resultPoint = CLLocationCoordinate2DMake(pointOnPath.GetResultPoint().GetLatitudeInDegrees(), pointOnPath.GetResultPoint().GetLongitudeInDegrees());
     CLLocationCoordinate2D inputPoint = point;
@@ -142,14 +142,14 @@
                                 point:(CLLocationCoordinate2D)point
                                 options:(WRLDPointOnRouteOptions*)options
 {
-    Eegeo::Space::LatLong latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
+    const auto& latLng = Eegeo::Space::LatLong::FromDegrees(point.latitude, point.longitude);
     Eegeo::Routes::Webservice::RouteData* routeData = [self makeRouteDataFromWRLDRoute:route];
     
     Eegeo::Routes::PointOnRouteOptions pointOnRouteOptions;
     pointOnRouteOptions.IndoorMapId = std::string([options.getIndoorMapId UTF8String]);
     pointOnRouteOptions.IndoorMapFloorId = static_cast<int>(options.getIndoorMapFloorId);
     
-    Eegeo::Routes::PointOnRoute pointOnRoute = m_pointOnPathApi->GetPointOnRoute(latLng, *routeData, pointOnRouteOptions);
+    const auto& pointOnRoute = m_pathApi->GetPointOnRoute(latLng, *routeData, pointOnRouteOptions);
 
     if(!pointOnRoute.IsValidResult())
     {
