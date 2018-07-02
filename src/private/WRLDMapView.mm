@@ -858,9 +858,10 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
             const Eegeo::Api::EegeoIndoorMapFloorData& floorData = indoorMapData.floors[i];
             NSString* floorId = [NSString stringWithCString:floorData.floorId.c_str() encoding:[NSString defaultCStringEncoding]];
             NSString* floorName = [NSString stringWithCString:floorData.floorName.c_str() encoding:[NSString defaultCStringEncoding]];
-            NSInteger floorIndex = static_cast<int>(floorData.floorNumber);
+            NSInteger floorIndex = static_cast<NSInteger>(i);
+            NSInteger floorNumber = static_cast<NSInteger>(floorData.floorNumber);
 
-            WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex];
+            WRLDIndoorMapFloor* floor = [[WRLDIndoorMapFloor alloc] initWithId:floorId name:floorName floorIndex:floorIndex floorNumber:floorNumber];
             [floors addObject:floor];
         }
         NSString* userData = [NSString stringWithCString:indoorMapData.userData.c_str() encoding:[NSString defaultCStringEncoding]];

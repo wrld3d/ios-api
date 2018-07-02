@@ -15,6 +15,9 @@
 /// The index of this floor relative to the bottom floor of its indoor map.
 @property (readonly) NSInteger floorIndex;
 
+/// The floor number of this floor. For example, 1.
+@property (readonly) NSInteger floorNumber;
+
 @end
 
 
