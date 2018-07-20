@@ -5,7 +5,6 @@
 
 #include "WRLDRoutingQueryOptions.h"
 #include "WRLDRoutingQueryWaypoint.h"
-#include "WRLDRoutingServiceHelpers.h"
 
 #include "RoutingQueryOptions.h"
 
@@ -49,8 +48,7 @@
 
     Eegeo::Routes::Webservice::RoutingQueryOptions routingQueryOptions =
     {
-        routingQueryWaypoints,
-        [WRLDRoutingServiceHelpers ToWRLDTransportationMode:[options getTransportationMode]]
+        routingQueryWaypoints
     };
 
     return [[WRLDRoutingQuery alloc] initWithIdAndApi: m_routingApi->BeginRoutingQuery(routingQueryOptions) routingApi:*m_routingApi];

@@ -26,8 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (CLLocationCoordinate2D*)createWRLDRouteStepPath:(const std::vector<Eegeo::Space::LatLong>&) withPath;
 
-+ (Eegeo::Routes::Webservice::TransportationMode) ToWRLDTransportationMode:(WRLDRouteTransportationMode)type;
-
 @end
 
 NS_ASSUME_NONNULL_END

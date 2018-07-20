@@ -7,7 +7,5 @@
 typedef NS_ENUM(NSInteger, WRLDRouteTransportationMode)
 {
     /// Indicates that the route is a walking Route.
-    WRLDWalking,
-    /// Indicates that the route is a driving Route.
-    WRLDDriving
+    WRLDWalking
 };

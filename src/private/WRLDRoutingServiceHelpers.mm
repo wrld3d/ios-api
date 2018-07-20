@@ -109,25 +109,4 @@
     return path;
 }
 
-+ (Eegeo::Routes::Webservice::TransportationMode) ToWRLDTransportationMode:(WRLDRouteTransportationMode)type
-{
-    Eegeo::Routes::Webservice::TransportationMode transportationMode;
-    
-    switch (type)
-    {
-        case WRLDRouteTransportationMode::WRLDWalking:
-            transportationMode = Eegeo::Routes::Webservice::TransportationMode::Walking;
-            break;
-        case WRLDRouteTransportationMode::WRLDDriving:
-            transportationMode = Eegeo::Routes::Webservice::TransportationMode::Driving;
-            break;
-            
-        default:
-            transportationMode = Eegeo::Routes::Webservice::TransportationMode::Walking;
-            break;
-    }
-    
-    return transportationMode;
-}
-
 @end

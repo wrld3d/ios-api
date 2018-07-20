@@ -1,7 +1,6 @@
 #pragma once
 
 #import <CoreLocation/CoreLocation.h>
-#import "WRLDRouteTransportationMode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,20 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
  @returns The waypoints in this query.
  */
 - (NSMutableArray*)getWaypoints;
-
-/*!
- Set the desired transportation mode for the route, e.g. Walking or Driving. The default mode is Walking.
- 
- @param transportationMode An Enum that represents transportationMode, e.g Walking or Driving.
-*/
-- (void)setTransportationMode:(WRLDRouteTransportationMode)transportationMode;
-
-/*!
- Gets the transportationMode for the type of route that should be queried, e.g. Walking or Driving.
- 
- @returns The transportation mode in this query.
- */
-- (WRLDRouteTransportationMode)getTransportationMode;
 
 @end
 
