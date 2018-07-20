@@ -2,6 +2,7 @@
 #import "WRLDRoutingQueryOptions.h"
 #import "WRLDRoutingQueryWaypoint.h"
 #import "WRLDRoutingQueryWaypoint+Private.h"
+#import "WRLDRouteTransportationMode.h"
 
 @interface WRLDRoutingQueryOptions ()
 
