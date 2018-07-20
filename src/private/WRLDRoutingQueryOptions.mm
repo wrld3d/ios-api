@@ -11,6 +11,7 @@
 @implementation WRLDRoutingQueryOptions
 {
     NSMutableArray* m_waypoints;
+    WRLDRouteTransportationMode m_mode;
 }
 
 - (instancetype)init {
@@ -41,6 +42,16 @@
 - (NSMutableArray*)getWaypoints
 {
     return m_waypoints;
+}
+
+- (void)setTransportationMode:(WRLDRouteTransportationMode)mode
+{
+    m_mode = mode;
+}
+
+- (WRLDRouteTransportationMode)getTransportationMode
+{
+    return m_mode;
 }
 
 @end
