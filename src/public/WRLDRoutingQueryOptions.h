@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*!
  Set the desired transportation mode for the route, e.g. Walking or Driving. The default mode is Walking.
+ Driving routes are available for limited areas.  Please contact support@wrld3d.com for details.
  
  @param transportationMode An Enum that represents transportationMode, e.g Walking or Driving.
 */
