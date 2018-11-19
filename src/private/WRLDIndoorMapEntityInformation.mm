@@ -55,7 +55,7 @@
         return;
     }
 
-    const auto& entityModelIds = m_pIndoorEntityInformationApi->GetEntityModelIdsForInformationId(m_indoorMapEntityInformationId);
+    const auto& entityModelIds = m_pIndoorEntityInformationApi->GetEntityModelIdsForInformationModelId(m_indoorMapEntityInformationId);
 
     NSMutableArray* indoorMapEntities = [[NSMutableArray alloc] initWithCapacity:entityModelIds.size()];
     
