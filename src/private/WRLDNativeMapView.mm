@@ -29,6 +29,7 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_indoorEntityPickedHandler(this, &WRLDNativeMapView::OnIndoorEntityPicked)
 , m_precacheCompletedHandler(this, &WRLDNativeMapView::OnPrecacheOperationCompleted)
 , m_precacheCancelledHandler(this, &WRLDNativeMapView::OnPrecacheOperationCancelled)
+, m_indoorMapEntityInformationChangedHandler(this, &WRLDNativeMapView::OnIndoorMapEntityInformationChanged)
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
     
@@ -45,12 +46,14 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetIndoorEntityApi().RegisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
     mapApi.GetPrecacheApi().RegisterPrecacheOperationCompletedCallback(m_precacheCompletedHandler);
     mapApi.GetPrecacheApi().RegisterPrecacheOperationCancelledCallback(m_precacheCancelledHandler);
+    mapApi.GetIndoorEntityInformationApi().RegisterIndoorMapInformationChangedCallback(m_indoorMapEntityInformationChangedHandler);
 }
 
 WRLDNativeMapView::~WRLDNativeMapView()
 {
     Eegeo::Api::EegeoMapApi& mapApi = GetMapApi();
 
+    mapApi.GetIndoorEntityInformationApi().UnregisterIndoorMapInformationChangedCallback(m_indoorMapEntityInformationChangedHandler);
     mapApi.GetPrecacheApi().UnregisterPrecacheOperationCancelledCallback(m_precacheCancelledHandler);
     mapApi.GetPrecacheApi().UnregisterPrecacheOperationCompletedCallback(m_precacheCompletedHandler);
     mapApi.GetIndoorEntityApi().UnregisterIndoorEntityPickedCallback(m_indoorEntityPickedHandler);
@@ -150,6 +153,11 @@ void WRLDNativeMapView::OnPrecacheOperationCompleted(const Eegeo::Api::EegeoPrec
 void WRLDNativeMapView::OnPrecacheOperationCancelled(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType& operationId)
 {
     [m_mapView notifyPrecacheOperationCancelled:operationId];
+}
+
+void WRLDNativeMapView::OnIndoorMapEntityInformationChanged(const Eegeo::Api::IndoorMapEntityInformationMessage& message)
+{
+    [m_mapView notifyIndoorMapEntityInformationChanged:message];
 }
 
 Eegeo::Api::EegeoMapApi& WRLDNativeMapView::GetMapApi()
