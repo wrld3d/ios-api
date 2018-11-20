@@ -6,6 +6,7 @@
 #include "PositioningTypes.h"
 #include "MapsceneRequestResponse.h"
 #include "EegeoIndoorEntityApi.h"
+#include "EegeoIndoorEntityInformationApi.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyPrecacheOperationCompleted:(int)operationId;
 
 - (void)notifyPrecacheOperationCancelled:(int)operationId;
+
+- (void)notifyIndoorMapEntityInformationChanged:(const Eegeo::Api::IndoorMapEntityInformationMessage&)message;
 
 - (Eegeo::Api::EegeoMapApi&)getMapApi;
 

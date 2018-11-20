@@ -34,6 +34,7 @@
 #import "WRLDPrecacheOperationResult+Private.h"
 #import "WRLDPointOnPath.h"
 #import "WRLDPointOnPath+Private.h"
+#import "WRLDIndoorMapEntityInformation+Private.h"
 
 #include "EegeoApiHostPlatformConfigOptions.h"
 #include "iOSApiRunner.h"
@@ -60,6 +61,7 @@
 #include "EegeoPickingApi.h"
 #include "EegeoIndoorEntityApi.h"
 #include "EegeoPrecacheApi.h"
+#include "EegeoIndoorEntityInformationApi.h"
 
 #include <string>
 
@@ -778,6 +780,18 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
     [self removeOverlay: buildingHighlight];
 }
 
+#pragma mark - indoor map entity information -
+- (void)addIndoorMapEntityInformation:(WRLDIndoorMapEntityInformation*) indoorMapEntityInformation
+{
+    [self addOverlay:indoorMapEntityInformation];
+}
+
+- (void)removeIndoorMapEntityInformation:(WRLDIndoorMapEntityInformation*) indoorMapEntityInformation
+{
+    [self removeOverlay:indoorMapEntityInformation];
+}
+
+
 #pragma mark - Feature Picking -
 
 -(WRLDPickResult*)pickFeatureAtScreenPoint:(CGPoint)screenPoint
@@ -1234,6 +1248,35 @@ template<typename T> inline T* safe_cast(id instance)
     if ([self.delegate respondsToSelector:@selector(mapView:didTapIndoorEntities:)])
     {
         [self.delegate mapView:self didTapIndoorEntities:[WRLDIndoorEntityApiHelpers createIndoorEntityTapResult:indoorEntityPickedMessage]];
+    }
+}
+
+
+- (void)notifyIndoorMapEntityInformationChanged:(const Eegeo::Api::IndoorMapEntityInformationMessage&)message
+{
+    WRLDOverlayId overlayId;
+    overlayId.overlayType = WRLDOverlayIndoorMapInformation;
+    overlayId.nativeHandle = message.Id;
+    
+    if (m_overlays.find(overlayId) == m_overlays.end())
+    {
+        return;
+    }
+    
+    id<WRLDOverlay> overlay = m_overlays.at(overlayId);
+    
+    WRLDIndoorMapEntityInformation* indoorMapEntityInformation = safe_cast<WRLDIndoorMapEntityInformation>(overlay);
+    
+    if (indoorMapEntityInformation == nil)
+    {
+        return;
+    }
+    
+    [indoorMapEntityInformation loadIndoorMapEntityInformationFromNative];
+    
+    if ([self.delegate respondsToSelector:@selector(mapView:indoorMapEntityInformationDidChange:)])
+    {
+        [self.delegate mapView:self indoorMapEntityInformationDidChange:indoorMapEntityInformation];
     }
 }
 

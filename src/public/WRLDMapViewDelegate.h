@@ -12,6 +12,7 @@
 @class WRLDRoutingQuery;
 @class WRLDRoutingQueryResponse;
 @class WRLDBuildingHighlight;
+@class WRLDIndoorMapEntityInformation;
 
 /*!
  This protocol defines an interface for observing a WRLDMapView for events.
@@ -113,5 +114,12 @@ routingQueryResponse: (WRLDRoutingQueryResponse*) routingQueryResponse;
  @param indoorEntityTapResult The WRLDIndoorEntityTapResult containing information about the tapped indoor entities.
  */
 - (void)mapView:(WRLDMapView *)mapView didTapIndoorEntities: (WRLDIndoorEntityTapResult*) indoorEntityTapResult;
+
+/*!
+ A message sent in response to a WRLDIndoorMapEntityInformation isntance changing.
+ @param mapView The WRLDMapView that is being observed.
+ @param indoorMapEntityInformation The WRLDIndoorMapEntityInformation instance, containing updated information about indoor map entities for a specified indoor map.
+ */
+- (void)mapView:(WRLDMapView *)mapView indoorMapEntityInformationDidChange: (WRLDIndoorMapEntityInformation*) indoorMapEntityInformation;
 
 @end

@@ -16,6 +16,7 @@
 #include "EegeoBuildingsApi.h"
 #include "EegeoIndoorEntityApi.h"
 #include "EegeoPrecacheApi.h"
+#include "EegeoIndoorEntityInformationApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -39,6 +40,7 @@ private:
     void OnIndoorEntityPicked(const Eegeo::Api::IndoorEntityPickedMessage& indoorEntityPickedMessage);
     void OnPrecacheOperationCompleted(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType& operationId);
     void OnPrecacheOperationCancelled(const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType& operationId);
+    void OnIndoorMapEntityInformationChanged(const Eegeo::Api::IndoorMapEntityInformationMessage& message);
 
     Eegeo::Api::EegeoMapApi& GetMapApi();
     
@@ -67,6 +69,8 @@ private:
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::BuildingHighlights::BuildingHighlightId> m_buildingInformationReceivedHandler;
 
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::IndoorEntityPickedMessage> m_indoorEntityPickedHandler;
+
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::IndoorMapEntityInformationMessage> m_indoorMapEntityInformationChangedHandler;
     
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType> m_precacheCompletedHandler;
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType> m_precacheCancelledHandler;

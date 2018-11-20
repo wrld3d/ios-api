@@ -23,6 +23,7 @@
 #import "WRLDPrecacheOperation.h"
 #import "WRLDPrecacheOperationResult.h"
 #import "WRLDPointOnPath.h"
+#import "WRLDIndoorMapEntityInformation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -398,6 +399,8 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void)setFloorInterpolation:(CGFloat)floorInterpolation;
 
+#pragma mark - indoor map entity highlights -
+
 /*!
  Highlights the provided indoor entities in the given indoor map.
  @param indoorMapId The ID of the indoor map which contains the entity ID(s).
@@ -418,11 +421,34 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void)clearAllIndoorEntityHighlights;
 
+
+#pragma mark - indoor map entity information -
+
+/*! @name Indoor map entity information */
+
+/*!
+ Add an indoor map entity information request.
+ @param indoorMapEntityInformation The <WRLDIndoorMapEntityInformation> object to add to the map.
+ */
+- (void)addIndoorMapEntityInformation:(WRLDIndoorMapEntityInformation*) indoorMapEntityInformation;
+
+/*!
+ Remove a WRLDIndoorMapEntityInformation from the map and destroy it.
+ @param indoorMapEntityInformation The <WRLDIndoorMapEntityInformation> object to remove from the map.
+ */
+- (void)removeIndoorMapEntityInformation:(WRLDIndoorMapEntityInformation*) indoorMapEntityInformation;
+
+
+#pragma mark - map interaction state -
+
 /*!
  Sets whether the map view should display with vertical scaling applied so that terrain and other map features appear flattened.
  @param isMapCollapsed If YES, map appears flattened; If NO, map displays with default vertical scaling.
  */
 - (void)setMapCollapsed:(BOOL)isMapCollapsed;
+
+
+#pragma mark - services -
 
 /*!
  @returns The POI service.
