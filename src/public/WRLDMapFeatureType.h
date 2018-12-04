@@ -9,14 +9,31 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef NS_ENUM(NSInteger, WRLDMapFeatureType)
 {
+    /// No geometry feature.
     WRLDFeatureTypeNone,
+
+    /// The feature geometry is the ground.
     WRLDFeatureTypeGround,
+
+    /// The feature geometry are buildings.
     WRLDFeatureTypeBuilding,
+
+    /// The feature geometry are trees.
     WRLDFeatureTypeTree,
+
+    /// The feature geometry is road transport.
     WRLDFeatureTypeTransportRoad,
+
+    /// The feature geometry is rail transport.
     WRLDFeatureTypeTransportRail,
+
+    /// The feature geometry is tram transport.
     WRLDFeatureTypeTransportTram,
+
+    /// The feature geometry is indoor map structures.
     WRLDFeatureTypeIndoorStructure,
+
+    /// The feature geometry is indoor map highlights.
     WRLDFeatureTypeIndoorHighlight
 };
 
