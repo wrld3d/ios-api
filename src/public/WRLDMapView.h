@@ -12,6 +12,7 @@
 #import "WRLDPositioner.h"
 #import "WRLDPolygon.h"
 #import "WRLDPolyline.h"
+#import "WRLDProp.h"
 #import "WRLDMapOptions.h"
 #import "WRLDBlueSphere.h"
 #import "WRLDPoiService.h"
