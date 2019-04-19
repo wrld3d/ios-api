@@ -46,6 +46,10 @@ withIndoorMapFloorId:(NSInteger)indoorMapFloorId;
             heading:(CLLocationDirection) heading;
 
 
+/// The property that determines if the blue sphere should display orientation information.
+@property (nonatomic) bool showOrientation;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

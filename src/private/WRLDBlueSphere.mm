@@ -70,5 +70,11 @@ withIndoorMapFloorId:(NSInteger)indoorMapFloorId
     [self setHeading:heading];
 }
 
+- (void)setShowOrientation:(bool)orientationVisible
+{
+    _showOrientation = orientationVisible;
+    m_pBlueSphereApi->ShowOrientation(_showOrientation);
+}
+
 
 @end
