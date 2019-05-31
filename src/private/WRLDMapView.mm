@@ -69,6 +69,7 @@
 
 NSString * const WRLDMapViewDidEnterIndoorMapNotification = @"WRLDMapViewDidEnterIndoorMapNotification";
 NSString * const WRLDMapViewDidExitIndoorMapNotification = @"WRLDMapViewDidExitIndoorMapNotification";
+NSString * const WRLDMapViewDidEnterIndoorMapFailedNotification = @"WRLDMapViewDidEnterIndoorMapFailedNotification";
 NSString * const WRLDMapViewDidChangeFloorNotification = @"WRLDMapViewDidChangeFloorNotification";
 
 NSString * const WRLDMapViewNotificationPreviousFloorIndex = @"WRLDMapViewNotificationPreviousFloorIndex";
@@ -100,6 +101,9 @@ NSString * const WRLDMapViewNotificationCurrentFloorIndex = @"WRLDMapViewNotific
 
     std::unordered_map<WRLDOverlayId, id<WRLDOverlay>, WRLDOverlayIdHash, WRLDOverlayIdEqual> m_overlays;
     std::unordered_map<Eegeo::Api::EegeoPrecacheApi::TPrecacheOperationIdType, WRLDPrecacheOperation*> m_precacheOperations;
+    bool m_transitioningToIndoorMap;
+    std::string m_indoorMapForTransition;
+    std::unordered_map<std::string, Eegeo::Space::LatLongAltitude> m_indoorMapEntryMarkerLocations;
 }
 
 
@@ -842,10 +846,46 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 
 #pragma mark - controlling the indoor map view -
 
-- (void)enterIndoorMap:(NSString*)indoorMapId
+- (BOOL)enterIndoorMap:(NSString*)indoorMapId
 {
     const std::string interiorId = std::string([indoorMapId UTF8String]);
-    [self getMapApi].GetIndoorsApi().EnterIndoorMap(interiorId);
+    
+    if ([self isIndoors] || m_transitioningToIndoorMap)
+    {
+        return NO;
+    }
+
+    if (m_indoorMapEntryMarkerLocations.find(interiorId) == m_indoorMapEntryMarkerLocations.end())
+    {
+        return NO;
+    }
+    
+    [self transitionToIndoorMap:interiorId atLocation:m_indoorMapEntryMarkerLocations.at(interiorId)];
+    return YES;
+}
+
+- (void)transitionToIndoorMap:(const std::string&)interiorId atLocation:(const Eegeo::Space::LatLongAltitude&)location
+{
+    m_transitioningToIndoorMap = TRUE;
+    m_indoorMapForTransition = interiorId;
+    
+    const double latitude = location.GetLatitudeInDegrees();
+    const double longitude = location.GetLongitudeInDegrees();
+    const double distance = 400;
+    
+    const auto& cameraUpdate = Eegeo::Api::MapCameraUpdateBuilder()
+    .SetCoordinate(latitude, longitude)
+    .SetDistanceToInterest(distance)
+    .SetIndoorMapWithDefaultFloor(interiorId)
+    .Build();
+    
+    const auto& cameraAnimationOptions = Eegeo::Api::MapCameraAnimationOptionsBuilder()
+    .SetInterruptByApiAllowed(false)
+    .SetInterruptByGestureAllowed(false)
+    .Build();
+    
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    cameraApi.AnimateCamera(cameraUpdate, cameraAnimationOptions);
 }
 
 - (void)exitIndoorMap
@@ -1134,6 +1174,7 @@ template<typename T> inline T* safe_cast(id instance)
 
 - (void)notifyEnteredIndoorMap
 {
+    m_transitioningToIndoorMap = false;
     [self refreshActiveIndoorMap];
     
     if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMap)])
@@ -1156,6 +1197,29 @@ template<typename T> inline T* safe_cast(id instance)
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:WRLDMapViewDidExitIndoorMapNotification object:self];
+}
+
+- (void)notifyEnterIndoorMapFailed:(const std::string&)interiorId
+{
+    m_transitioningToIndoorMap = false;
+    
+    if ([self.indoorMapDelegate respondsToSelector:@selector(didEnterIndoorMapFailed:)])
+    {
+        [self.indoorMapDelegate didEnterIndoorMapFailed:[NSString stringWithCString: interiorId.c_str() encoding:NSUTF8StringEncoding]];
+    }
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:WRLDMapViewDidEnterIndoorMapFailedNotification object:self];
+}
+
+- (void)notifyIndoorEntryMarkerAdded:(const Eegeo::Api::IndoorMapEntryMarkerMessage&)message
+{
+    m_indoorMapEntryMarkerLocations.emplace(message.GetIndoorMapId(), message.GetMarkerLocation());
+}
+
+- (void)notifyIndoorEntryMarkerRemoved:(const Eegeo::Api::IndoorMapEntryMarkerMessage&)message
+{
+    m_indoorMapEntryMarkerLocations.erase(message.GetIndoorMapId());
 }
 
 - (void)notifyPoiSearchCompleted:(const Eegeo::PoiSearch::PoiSearchResults&)result

@@ -22,6 +22,9 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
 , m_positionersProjectionChangedHandler(this, &WRLDNativeMapView::OnPositionerProjectionChanged)
 , m_enteredIndoorMapHandler(this, &WRLDNativeMapView::OnEnteredIndoorMap)
 , m_exitedIndoorMapHandler(this, &WRLDNativeMapView::OnExitedIndoorMap)
+, m_enterIndoorMapFailedHandler(this, &WRLDNativeMapView::OnEnterIndoorMapFailed)
+, m_indoorEntryMarkerAddedHandler(this, &WRLDNativeMapView::OnIndoorEntryMarkerAdded)
+, m_indoorEntryMarkerRemovedHandler(this, &WRLDNativeMapView::OnIndoorEntryMarkerRemoved)
 , m_poiSearchCompletedHandler(this, &WRLDNativeMapView::OnPoiSearchCompleted)
 , m_mapsceneCompletedHandler(this, &WRLDNativeMapView::OnMapsceneLoadCompleted)
 , m_routingQueryCompletedHandler(this, &WRLDNativeMapView::OnRoutingQueryCompleted)
@@ -39,6 +42,9 @@ WRLDNativeMapView::WRLDNativeMapView(WRLDMapView* mapView, Eegeo::ApiHost::iOS::
     mapApi.GetPositionerApi().RegisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetIndoorsApi().RegisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
+    mapApi.GetIndoorsApi().RegisterIndoorMapEnterFailedCallback(m_enterIndoorMapFailedHandler);
+    mapApi.GetIndoorsApi().RegisterIndoorMapEntryMarkerAddedCallback(m_indoorEntryMarkerAddedHandler);
+    mapApi.GetIndoorsApi().RegisterIndoorMapEntryMarkerRemovedCallback(m_indoorEntryMarkerRemovedHandler);
     mapApi.GetPoiApi().RegisterSearchCompletedCallback(m_poiSearchCompletedHandler);
     mapApi.GetMapsceneApi().RegisterMapsceneRequestCompletedCallback(m_mapsceneCompletedHandler);
     mapApi.GetRoutingApi().RegisterQueryCompletedCallback(m_routingQueryCompletedHandler);
@@ -60,6 +66,9 @@ WRLDNativeMapView::~WRLDNativeMapView()
     mapApi.GetBuildingsApi().UnregisterBuildingInformationReceivedCallback(m_buildingInformationReceivedHandler);
     mapApi.GetRoutingApi().UnregisterQueryCompletedCallback(m_routingQueryCompletedHandler);
     mapApi.GetPoiApi().UnregisterSearchCompletedCallback(m_poiSearchCompletedHandler);
+    mapApi.GetIndoorsApi().UnregisterIndoorMapEntryMarkerRemovedCallback(m_indoorEntryMarkerRemovedHandler);
+    mapApi.GetIndoorsApi().UnregisterIndoorMapEntryMarkerAddedCallback(m_indoorEntryMarkerAddedHandler);
+    mapApi.GetIndoorsApi().UnregisterIndoorMapEnterFailedCallback(m_enterIndoorMapFailedHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapExitedCallback(m_exitedIndoorMapHandler);
     mapApi.GetIndoorsApi().UnregisterIndoorMapEnteredCallback(m_enteredIndoorMapHandler);
     mapApi.GetPositionerApi().UnregisterProjectionChangedCallback(m_positionersProjectionChangedHandler);
@@ -118,6 +127,21 @@ void WRLDNativeMapView::OnEnteredIndoorMap()
 void WRLDNativeMapView::OnExitedIndoorMap()
 {
     [m_mapView notifyExitedIndoorMap];
+}
+
+void WRLDNativeMapView::OnEnterIndoorMapFailed(const std::string& interiorId)
+{
+    [m_mapView notifyEnterIndoorMapFailed:interiorId];
+}
+
+void WRLDNativeMapView::OnIndoorEntryMarkerAdded(const Eegeo::Api::IndoorMapEntryMarkerMessage& indoorMapEntryMarkerMessage)
+{
+    [m_mapView notifyIndoorEntryMarkerAdded:indoorMapEntryMarkerMessage];
+}
+
+void WRLDNativeMapView::OnIndoorEntryMarkerRemoved(const Eegeo::Api::IndoorMapEntryMarkerMessage& indoorMapEntryMarkerMessage)
+{
+    [m_mapView notifyIndoorEntryMarkerRemoved:indoorMapEntryMarkerMessage];
 }
 
 void WRLDNativeMapView::OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults)

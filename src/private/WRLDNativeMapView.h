@@ -17,6 +17,7 @@
 #include "EegeoIndoorEntityApi.h"
 #include "EegeoPrecacheApi.h"
 #include "EegeoIndoorEntityInformationApi.h"
+#include "EegeoIndoorsApi.h"
 
 class WRLDNativeMapView : private Eegeo::NonCopyable
 {
@@ -33,6 +34,9 @@ private:
     void OnPositionerProjectionChanged();
     void OnEnteredIndoorMap();
     void OnExitedIndoorMap();
+    void OnEnterIndoorMapFailed(const std::string& interiorId);
+    void OnIndoorEntryMarkerAdded(const Eegeo::Api::IndoorMapEntryMarkerMessage& indoorMapEntryMarkerMessage);
+    void OnIndoorEntryMarkerRemoved(const Eegeo::Api::IndoorMapEntryMarkerMessage& indoorMapEntryMarkerMessage);
     void OnPoiSearchCompleted(const Eegeo::PoiSearch::PoiSearchResults& poiSearchResults);
     void OnMapsceneLoadCompleted(const Eegeo::Mapscenes::MapsceneRequestResponse& mapsceneRequestResponse);
     void OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& routingQueryResponse);
@@ -59,6 +63,12 @@ private:
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_enteredIndoorMapHandler;
     
     Eegeo::Helpers::TCallback0<WRLDNativeMapView> m_exitedIndoorMapHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const std::string> m_enterIndoorMapFailedHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::IndoorMapEntryMarkerMessage> m_indoorEntryMarkerAddedHandler;
+    
+    Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::Api::IndoorMapEntryMarkerMessage> m_indoorEntryMarkerRemovedHandler;
     
     Eegeo::Helpers::TCallback1<WRLDNativeMapView, const Eegeo::PoiSearch::PoiSearchResults> m_poiSearchCompletedHandler;
     

@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString * const WRLDMapViewDidEnterIndoorMapNotification;
 /// Notification fired whenever the map view exits an indoor map
 extern NSString * const WRLDMapViewDidExitIndoorMapNotification;
+/// Notification fired whenever the map view fails to enter an indoor map
+extern NSString * const WRLDMapViewDidEnterIndoorMapFailedNotification;
 /// Notification fired whenever the map view changes floors an indoor map
 extern NSString * const WRLDMapViewDidChangeFloorNotification;
 
@@ -336,8 +338,9 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 /*!
  Enter an indoor map with the given ID.
  @param indoorMapId The ID of an indoor map as an NSString. See <WRLDIndoorMap> for details.
+ @returns YES if can enter given indoor map, NO otherwise.
  */
-- (void)enterIndoorMap:(NSString*)indoorMapId;
+- (BOOL)enterIndoorMap:(NSString*)indoorMapId;
 
 /*!
  Exit the current indoor map, if indoors.

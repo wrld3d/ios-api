@@ -16,4 +16,7 @@
 /// A message sent when the user exits an indoor map.
 - (void) didExitIndoorMap;
 
+/// A message sent when user failed to enter an indoor map.
+- (void) didEnterIndoorMapFailed:(NSString*)indoorMapId;
+
 @end

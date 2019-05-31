@@ -7,6 +7,7 @@
 #include "MapsceneRequestResponse.h"
 #include "EegeoIndoorEntityApi.h"
 #include "EegeoIndoorEntityInformationApi.h"
+#include "EegeoIndoorsApi.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,6 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyEnteredIndoorMap;
 
 - (void)notifyExitedIndoorMap;
+
+- (void)notifyEnterIndoorMapFailed:(const std::string&)interiorId;
+
+- (void)notifyIndoorEntryMarkerAdded:(const Eegeo::Api::IndoorMapEntryMarkerMessage&)message;
+
+- (void)notifyIndoorEntryMarkerRemoved:(const Eegeo::Api::IndoorMapEntryMarkerMessage&)message;
 
 - (void)notifyPoiSearchCompleted:(const Eegeo::PoiSearch::PoiSearchResults&)result;
 
