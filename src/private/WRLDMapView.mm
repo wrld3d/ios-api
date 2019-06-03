@@ -596,6 +596,12 @@ const double defaultStartZoomLevel = 8;
                       animated:animated];
 }
 
+- (void)setIndoorCameraRestriction:(BOOL)indoorCameraRestriction
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    cameraApi.SetIndoorCameraRestriction(indoorCameraRestriction);
+}
+
 - (void)_moveOrAnimateCamera:(BOOL)animated mapCameraUpdate:(Eegeo::Api::MapCameraUpdate)mapCameraUpdate
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
@@ -981,6 +987,11 @@ const Eegeo::Positioning::ElevationMode::Type ToPositioningElevationMode(WRLDEle
 - (void)moveDownFloor
 {
     [self moveDownFloors:1];
+}
+
+- (void)setExitIndoorWhenTooFarAway:(BOOL)exitWhenFarAway
+{
+    [self getMapApi].GetIndoorsApi().SetExitInteriorWhenTooFarAway(exitWhenFarAway);
 }
 
 - (void)expandIndoorMapView

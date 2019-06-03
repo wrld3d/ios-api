@@ -135,6 +135,12 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
 - (void)setDirection:(double)direction
             animated:(BOOL)animated;
 
+/*!
+ Enable or Disable the camera restriction when viewing Indoor Maps. When enabled, the camera is unable to move outside the bounds of the Indoor Map.
+ @param indoorCameraRestriction Whether the restriction is enabled or disabled.
+ */
+- (void)setIndoorCameraRestriction:(BOOL)indoorCameraRestriction;
+
 
 - (void)setCamera:(WRLDMapCamera *)camera;
 
@@ -386,6 +392,13 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  @param numberOfFloors The number of floors to move as an NSInteger.
  */
 - (void)moveDownFloors:(NSInteger)numberOfFloors;
+
+/*!
+ Set if you should exit an Indoor Map when moving the camera away from it.
+ To be used in conjunction with setIndoorCameraRestriction:NO.
+ @param exitWhenFarAway If YES, Indoor Map will automatically exit when moving camera away from Indoor Map.
+ */
+- (void)setExitIndoorWhenTooFarAway:(BOOL)exitWhenFarAway;
 
 /*!
  Enter the expanded view of an indoor map.
