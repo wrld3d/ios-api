@@ -602,6 +602,19 @@ const double defaultStartZoomLevel = 8;
     cameraApi.SetIndoorCameraRestriction(indoorCameraRestriction);
 }
 
+- (void)setCameraScreenSpaceOffset:(CGPoint)screenPoint
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    cameraApi.SetMapCameraScreenSpaceOffset(static_cast<float>(screenPoint.x),
+                                            static_cast<float>(screenPoint.y));
+}
+
+- (void)disableCameraScreenSpaceOffset
+{
+    Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();
+    cameraApi.DisableMapCameraScreenSpaceOffset();
+}
+
 - (void)_moveOrAnimateCamera:(BOOL)animated mapCameraUpdate:(Eegeo::Api::MapCameraUpdate)mapCameraUpdate
 {
     Eegeo::Api::EegeoCameraApi& cameraApi = [self getMapApi].GetCameraApi();

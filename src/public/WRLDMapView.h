@@ -141,6 +141,16 @@ extern NSString * const WRLDMapViewNotificationCurrentFloorIndex;
  */
 - (void)setIndoorCameraRestriction:(BOOL)indoorCameraRestriction;
 
+/*!
+ Set the camera to focus at a particular screen coordinate, so it will rotate + zoom around this point on screen.
+ @param screenPoint The screen coordinate to focus the camera around.
+ */
+- (void)setCameraScreenSpaceOffset:(CGPoint)screenPoint;
+
+/*!
+ Disable any previously set screen space offset set by setCameraScreenSpaceOffset and resume the default behavior.
+ */
+- (void)disableCameraScreenSpaceOffset;
 
 - (void)setCamera:(WRLDMapCamera *)camera;
 
