@@ -14,7 +14,6 @@ Pod::Spec.new do |s|
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'BSD 2-Clause', :file => 'LICENSE.md' }
   s.author           = { 'WRLD' => 'support@wrld3d.com' }
-  s.social_media_url  = 'https://twitter.com/wrld3d'
   s.documentation_url = 'https://docs.eegeo.com/ios/latest/docs/api/'
 
   s.source = {
