@@ -7,7 +7,7 @@ A framework for displaying beautiful, interactive 3D maps on iOS devices.
 
 This repository contains source code for the Objective-C framework alongside a dev app, intended for developers contributing to the library itself.
 
-If instead you want information on how to integrate a WRLD 3d map view in your iOS app, then follow our [walkthrough guide](https://docs.eegeo.com/ios/latest/docs/api/walkthrough/).
+If instead you want information on how to integrate a WRLD 3d map view in your iOS app, then follow our [walkthrough guide](https://docs.wrld3d.com/ios/latest/docs/examples/walkthrough/).
 
 The framework is available on [CocoaPods](https://cocoapods.org/pods/wrld).
 

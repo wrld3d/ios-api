@@ -5,7 +5,7 @@
 # WRLD iOS SDK
 The WRLD iOS SDK is a framework for displaying beautiful, interactive 3D map views in Cocoa Touch apps for iPhone or iPad. Map views can be embedded into apps using iOS 8.0 or above, using Objective-C, or by simply hooking up in Xcode Interface Builder.
 
-For more information, see the [WRLD iOS API documentation page](https://docs.eegeo.com/ios/latest/docs/api/).
+For more information, see the [WRLD iOS API documentation page](https://docs.wrld3d.com/ios/latest/docs/api/).
 
 
 ## Installing
@@ -43,7 +43,7 @@ After signing up, create an [API key](https://www.wrld3d.com/developers/apikeys)
 To provide your app with an API key, in Xcode, open your app's ```Info.plist``` file (select it in the Project Navigator).
 
 
-<img style="padding: 0 0 30px 130px" src="https://docs.eegeo.com/ios/latest/static/images/WRLD-iPadMini.png">
+<img style="padding: 0 0 30px 130px" src="https://docs.wrld3d.com/ios/latest/static/images/WRLD-iPadMini.png">
 
 ## Use a map view in your app
 Now that you have the WRLD iOS SDK installed, you are ready to integrate a WRLD 3d map view into your app.
@@ -60,7 +60,7 @@ Add an entry with the columns set as follows:
 - Type: ```String```
 - Value: [your api key]
 
-<img src="https://docs.eegeo.com/ios/latest/static/images/iOS-PList.gif">
+<img src="https://docs.wrld3d.com/ios/latest/static/images/iOS-PList.gif">
 
 <br>
 
@@ -73,7 +73,7 @@ Add an entry with the columns set as follows:
 5. In the Utilities sidebar, select Identity Inspector.  
 6. Change the Class of the view to ```WRLDMapView```.  
 
-<img src="https://docs.eegeo.com/ios/latest/static/images/iOS-CustomClass.gif">
+<img src="https://docs.wrld3d.com/ios/latest/static/images/iOS-CustomClass.gif">
 
 
 <br>
@@ -100,7 +100,7 @@ Currently the WRLD iOS SDK does not support [Bitcode](https://developer.apple.co
 1. Select Build Settings in Project Editor. 
 2. Under Build Options ensure that Enable Bitcode is set to ```No```.
 
-<img src="https://docs.eegeo.com/ios/latest/static/images/iOS-EnableBitcode.gif">
+<img src="https://docs.wrld3d.com/ios/latest/static/images/iOS-EnableBitcode.gif">
 
 
 ### Build and run your app
@@ -110,10 +110,10 @@ You're now ready to try out your app.
 1. Select a target device
 2. In the toolbar, click the 'Build and the run the current scheme' button.
 
-    <img src="https://docs.eegeo.com/ios/latest/static/images/iOS-SelectDevice.png">
+    <img src="https://docs.wrld3d.com/ios/latest/static/images/iOS-SelectDevice.png">
 
 The app will now install and run on your device. If you selected a Simulator iOS target device, Simulator will launch and then run your app.
-<img src="https://docs.eegeo.com/ios/latest/static/images/iOS-Simulator.png">
+<img src="https://docs.wrld3d.com/ios/latest/static/images/iOS-Simulator.png">
 
 Add an entry with the columns set as follows:
 * Key: ```WrldApiKey```

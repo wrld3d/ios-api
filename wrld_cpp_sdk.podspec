@@ -6,7 +6,7 @@ Pod::Spec.new do |m|
   m.summary          = 'WRLD C++11 SDK'
   m.description      = 'WRLD C++11 SDK'
   m.homepage         = 'http://www.wrld3d.com'
-  m.author           = { 'eeGeo' => 'support@eegeo.com' }
+  m.author           = { 'WRLD' => 'support@wrld3d.com' }
 
   m.source = {
     :http => "http://s3.amazonaws.com/eegeo-static/sdk.package.ios.cpp11.tar.gz",
