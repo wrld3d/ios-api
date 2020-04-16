@@ -10,8 +10,6 @@
 
 @interface WRLDMarker () <WRLDOverlayImpl>
 
-@property (nonatomic, readwrite, copy) NSString* styleName;
-
 @property (nonatomic, readwrite, copy) NSString* indoorMapId;
 
 @property (nonatomic, readwrite) NSInteger indoorFloorId;
