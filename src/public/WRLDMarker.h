@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString* title;
 
 /// The name of the label style to use. The list of supported styles has not been stabilized yet and this can be left as the default value.
-@property (nonatomic, readonly, copy) NSString* styleName;
+@property (nonatomic, copy) NSString* styleName;
 
 /// Optional JSON user data associated with this marker.
 @property (nonatomic, copy) NSString* userData;
