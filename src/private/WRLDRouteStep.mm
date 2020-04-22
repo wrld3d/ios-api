@@ -17,6 +17,7 @@
     BOOL m_isMultiFloor;
     NSTimeInterval m_duration;
     CLLocationDistance m_distance;
+    NSString* m_stepName;
 }
 
 - (instancetype)initWithPath:(CLLocationCoordinate2D*)path
@@ -29,6 +30,7 @@
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
                     distance:(CLLocationDistance)distance
+                    stepName:(NSString*)stepName
 {
     if (self = [super init])
     {
@@ -42,6 +44,7 @@
         m_indoorFloorId = indoorFloorId;
         m_duration = duration;
         m_distance = distance;
+        m_stepName = stepName;
     }
 
     return self;
@@ -95,6 +98,11 @@
 - (CLLocationDistance) distance
 {
     return m_distance;
+}
+
+- (NSString*) stepName
+{
+    return m_stepName;
 }
 
 @end

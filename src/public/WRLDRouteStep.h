@@ -70,6 +70,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (CLLocationDistance) distance;
 
+/*!
+ @returns name of current step
+ */
+- (NSString*) stepName;
+
 @end
 
 NS_ASSUME_NONNULL_END
