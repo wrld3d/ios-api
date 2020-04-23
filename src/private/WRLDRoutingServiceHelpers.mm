@@ -80,7 +80,8 @@
                                                       isMultiFloor:withStep.IsMultiFloor
                                                      indoorFloorId:withStep.IndoorFloorId
                                                           duration:withStep.Duration
-                                                          distance:withStep.Distance];
+                                                          distance:withStep.Distance
+                                                          stepName:[NSString stringWithCString: withStep.Name.c_str() encoding:NSUTF8StringEncoding]];
     return routeStep;
 }
 

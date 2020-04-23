@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
                 isMultiFloor:(BOOL)isMultiFloor
                indoorFloorId:(int)indoorFloorId
                     duration:(NSTimeInterval)duration
-                    distance:(CLLocationDistance)distance;
+                    distance:(CLLocationDistance)distance
+                    stepName:(NSString*)stepName;
 
 @end
 
