@@ -23,13 +23,13 @@ This section will walk you through the process of getting up and running quickly
 1.  Install CocoaPods as described in the [CocoaPods guide](https://guides.cocoapods.org/using/getting-started.html#getting-started).
 2.  Clone this repo: `git clone https://github.com/wrld3d/ios-api.git`
 3.  Install dependencies by running `pod install` from the root of the repo.
-4.  Obtain a [WRLD API key](https://www.wrld3d.com/developers/apikeys) and place it in the [Info.plist](https://github.com/wrld3d/ios-api/blob/master/DevApp/Info.plist#L49) file.
+4.  Obtain a [WRLD API key](https://accounts.wrld3d.com/#/tab-keys) and place it in the [Info.plist](https://github.com/wrld3d/ios-api/blob/master/DevApp/Info.plist#L49) file.
 5.  Open, build, and run **ios-sdk.xcworkspace** in Xcode.
 
 **Note:** Run `pod update` followed by `pod install` to update the pod to the latest version if you have already setup your pod as above.
 
 ### WRLD API Key 
-In order to use the WRLD iOS API, you must sign up for a free developer account at https://www.wrld3d.com/developers. After signing up, you'll be able to create an [API key](https://www.wrld3d.com/developers/apikeys) for your apps. 
+In order to use the WRLD iOS API, you must sign up for a Digital Twin developer account at https://www.wrld3d.com/pricing/developers. After signing up, you'll be able to create an [API key](https://accounts.wrld3d.com/#/tab-keys) for your apps. 
 
 After signing up for a developer account and creating an API key, add it to the dev app [plist file](https://github.com/wrld3d/ios-api/blob/master/DevApp/Info.plist#L49) as described [above](#getting-started).
 
