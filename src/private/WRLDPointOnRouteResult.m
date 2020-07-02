@@ -17,9 +17,9 @@
               fractionAlongRouteStep:(double)fractionAlongRouteStep
                            routeStep:(WRLDRouteStep*)routeStep
                         routeSection:(WRLDRouteSection*)routeSection
-        routeSectionIndex:(int)routeSectionIndex
-        routeStepIndex:(int)routeStepIndex
-        pathSegmentStartVertexIndex:(int)pathSegmentStartVertexIndex
+                   routeSectionIndex:(int)routeSectionIndex
+                      routeStepIndex:(int)routeStepIndex
+         pathSegmentStartVertexIndex:(int)pathSegmentStartVertexIndex
 {
     if (self = [super init])
     {

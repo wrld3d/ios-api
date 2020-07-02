@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
              fractionAlongRouteStep:(double)fractionAlongRouteStep
                           routeStep:(WRLDRouteStep*)routeStep
                        routeSection:(WRLDRouteSection*)routeSection
-        routeSectionIndex:(int)routeSectionIndex
-        routeStepIndex:(int)routeStepIndex
+                  routeSectionIndex:(int)routeSectionIndex
+                     routeStepIndex:(int)routeStepIndex
         pathSegmentStartVertexIndex:(int)pathSegmentStartVertexIndex;
 
 @end
