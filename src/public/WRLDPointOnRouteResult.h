@@ -34,6 +34,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// Route Section that the projected point lies on.
 @property (nonatomic, retain, readonly) WRLDRouteSection* routeSection;
 
+/// Index for the Route Step that the projected point lies on.
+@property (nonatomic, readonly) int routeStepIndex;
+
+///  Index for the Route Section that the projected point lies on.
+@property (nonatomic, readonly) int routeSectionIndex;
+
+/// Vertex index where the path segment starts for the projected point. Can be used to separate traversed path.
+@property (nonatomic, readonly) int pathSegmentStartVertexIndex;
+
 @end
 
 NS_ASSUME_NONNULL_END
