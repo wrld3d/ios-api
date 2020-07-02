@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///  Index for the Route Section that the projected point lies on.
 @property (nonatomic, readonly) int routeSectionIndex;
 
-/// Index of Path segment start vertex that the projected point lies on.
+/// Vertex index where the path segment starts for the projected point. Can be used to separate traversed path.
 @property (nonatomic, readonly) int pathSegmentStartVertexIndex;
 
 @end
