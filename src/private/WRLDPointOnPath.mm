@@ -109,7 +109,9 @@
     
     WRLDRouteStep *routeStep = [routeSection.steps objectAtIndex:pointOnRouteInfo.GetRouteStepIndex()];
     
-    WRLDPointOnRouteResult* newPointOnRouteInfo = [[WRLDPointOnRouteResult alloc] initWithResultPoint:resultPoint inputPoint:inputPoint distanceFromInputPoint:distanceFromInputPoint fractionAlongRoute:fractionAlongRoute fractionAlongRouteSection:fractionAlongRouteSection fractionAlongRouteStep:fractionAlongRouteStep routeStep:routeStep routeSection:routeSection];
+    int pathSegmentStartVertexIndex = pointOnRouteInfo.GetPointOnPathForClosestRouteStep().GetIndexOfPathSegmentStartVertex();
+    
+    WRLDPointOnRouteResult* newPointOnRouteInfo = [[WRLDPointOnRouteResult alloc] initWithResultPoint:resultPoint inputPoint:inputPoint distanceFromInputPoint:distanceFromInputPoint fractionAlongRoute:fractionAlongRoute fractionAlongRouteSection:fractionAlongRouteSection fractionAlongRouteStep:fractionAlongRouteStep routeStep:routeStep routeSection:routeSection routeSectionIndex:pointOnRouteInfo.GetRouteSectionIndex() routeStepIndex:pointOnRouteInfo.GetRouteStepIndex() pathSegmentStartVertexIndex:pathSegmentStartVertexIndex];
     
     return newPointOnRouteInfo;
 }
