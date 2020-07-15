@@ -14,6 +14,7 @@
                           route:(WRLDRoute*)route
                          option:(WRLDRouteViewOptions*)options;
 
+-(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int) count ofColor:(UIColor*)color;
 
 @end
 
