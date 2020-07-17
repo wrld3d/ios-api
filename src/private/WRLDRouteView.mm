@@ -192,56 +192,43 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
     }
     else
     {
-        int forwardPathSize = coordinatesSize - (sIndex+1);
-        int backwardPathSize = coordinatesSize - forwardPathSize;
+        int actualBackwordPathCount = sIndex;
+        int actualForwordPathCount = actualBackwordPathCount;
+        int newBackwordPathCount = actualBackwordPathCount + 1;
+        int newForwordPathCount = actualForwordPathCount + 1;
 
-        CLLocationCoordinate2D* backwardPath = new CLLocationCoordinate2D[backwardPathSize+1]; // //Extra space for the split point
-        CLLocationCoordinate2D* forwardPath = new CLLocationCoordinate2D[forwardPathSize+1]; //Extra space for the split point
-        
-
-        
-        for (int i = 0; i< backwardPathSize; i++)
+        CLLocationCoordinate2D* backwardPath = new CLLocationCoordinate2D[newBackwordPathCount];
+        CLLocationCoordinate2D* forwardPath = new CLLocationCoordinate2D[newForwordPathCount];
+                
+        for (int i =0; i< sIndex; i++)
         {
             backwardPath[i] = coordinates[i];
-            NSLog(@"backword");
-
-        }
-        //Backward path ends with the split point
-        backwardPath[backwardPathSize] =  CLLocationCoordinate2DMake(closestPoint.latitude, closestPoint.longitude);
-        
-        //Forward path starts with the split point
-        forwardPath[0] = CLLocationCoordinate2DMake(closestPoint.latitude, closestPoint.longitude);
-        for (int i = 0; i < forwardPathSize; i++)
-        {
-            forwardPath[i+1] = coordinates[backwardPathSize+i];
-            NSLog(@"forwardPath");
-
         }
         
-        if (backwardPathSize >= 2)
+        if(sIndex == 0 && coordinatesSize == 2)
         {
-            if (step.isIndoors)
-            {
-                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:bColor indoorId:step.indoorId floorId:step.indoorFloorId];
-            }
-            else
-            {
-                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:bColor];
-            }
-        }
-        if (forwardPathSize >= 2)
-        {
-            if (step.isIndoors)
-            {
-                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:fColor indoorId:step.indoorId floorId:step.indoorFloorId];
-            }
-            else
-            {
-                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:fColor];
-            }
+            backwardPath[0] = coordinates[0];
         }
         
-
+        backwardPath[newBackwordPathCount-1] =  closestPoint;
+        forwardPath[0] =  closestPoint;
+        int index = 0;
+        
+        for (int i = sIndex; i < coordinatesSize; i++)
+        {
+            forwardPath[index+1] = coordinates[i];
+        }
+        
+        if (step.isIndoors)
+        {
+            [self addLinesForRoutePath:backwardPath pathCount:newBackwordPathCount ofColor:bColor indoorId:step.indoorId floorId:step.indoorFloorId];
+            [self addLinesForRoutePath:forwardPath pathCount:newForwordPathCount ofColor:fColor indoorId:step.indoorId floorId:step.indoorFloorId];
+        }
+        else
+        {
+            [self addLinesForRoutePath:backwardPath pathCount:newBackwordPathCount ofColor:bColor];
+            [self addLinesForRoutePath:forwardPath pathCount:newForwordPathCount ofColor:fColor];
+        }
     }
 }
 
