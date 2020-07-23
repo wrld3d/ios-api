@@ -5,6 +5,7 @@
 #import "WRLDRouteSection+Private.h"
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
+#import "WRLDRouteViewHelper.h"
 
 @interface WRLDRouteView ()
 
@@ -192,42 +193,70 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
     }
     else
     {
-        int actualBackwordPathCount = sIndex;
-        int actualForwordPathCount = actualBackwordPathCount;
-        int newBackwordPathCount = actualBackwordPathCount + 1;
-        int newForwordPathCount = actualForwordPathCount + 1;
+        NSMutableArray *backPathArray = [[NSMutableArray alloc] init];
+        NSMutableArray *forwardPathArray = [[NSMutableArray alloc] init];
 
-        CLLocationCoordinate2D* backwardPath = new CLLocationCoordinate2D[newBackwordPathCount];
-        CLLocationCoordinate2D* forwardPath = new CLLocationCoordinate2D[newForwordPathCount];
-                
-        for (int i =0; i< sIndex; i++)
+        for (int i=0; i<sIndex;i++)
         {
-            backwardPath[i] = coordinates[i];
+            [backPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[i].latitude longitude:coordinates[i].longitude]];
         }
         
         if(sIndex == 0 && coordinatesSize == 2)
         {
-            backwardPath[0] = coordinates[0];
+            [backPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[0].latitude longitude:coordinates[0].longitude]];
         }
         
-        backwardPath[newBackwordPathCount-1] =  closestPoint;
-        forwardPath[0] =  closestPoint;
-        int index = 0;
+        CLLocation *closestLoc = [[CLLocation alloc] initWithLatitude:closestPoint.latitude longitude:closestPoint.longitude];
+        [backPathArray addObject:closestLoc];
+        [forwardPathArray addObject:closestLoc];
         
-        for (int i = sIndex; i < coordinatesSize; i++)
+        for (int i = sIndex; i<coordinatesSize; i++)
         {
-            forwardPath[index+1] = coordinates[i];
+            [forwardPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[i].latitude longitude:coordinates[i].longitude]];
         }
         
-        if (step.isIndoors)
+        backPathArray = [WRLDRouteViewHelper removeCoincidentPoints:backPathArray];
+        forwardPathArray = [WRLDRouteViewHelper removeCoincidentPoints:forwardPathArray];
+        
+        int backwardPathSize = (int) backPathArray.count;
+        int forwardPathSize = (int) forwardPathArray.count;
+        CLLocationCoordinate2D* backwardPath = new CLLocationCoordinate2D[backwardPathSize];
+        CLLocationCoordinate2D* forwardPath = new CLLocationCoordinate2D[forwardPathSize];
+        
+        for (int i=0; i<backwardPathSize;i++)
         {
-            [self addLinesForRoutePath:backwardPath pathCount:newBackwordPathCount ofColor:bColor indoorId:step.indoorId floorId:step.indoorFloorId];
-            [self addLinesForRoutePath:forwardPath pathCount:newForwordPathCount ofColor:fColor indoorId:step.indoorId floorId:step.indoorFloorId];
+            CLLocation *loc = [backPathArray objectAtIndex:i];
+            backwardPath[i] = loc.coordinate;
         }
-        else
+        
+        for (int i=0; i<forwardPathSize;i++)
         {
-            [self addLinesForRoutePath:backwardPath pathCount:newBackwordPathCount ofColor:bColor];
-            [self addLinesForRoutePath:forwardPath pathCount:newForwordPathCount ofColor:fColor];
+            CLLocation *loc = [forwardPathArray objectAtIndex:i];
+            forwardPath[i] = loc.coordinate;
+        }
+        
+        if (backwardPathSize >= 2)
+        {
+            if (step.isIndoors)
+            {
+                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:bColor indoorId:step.indoorId floorId:step.indoorFloorId];
+            }
+            else
+            {
+                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:bColor];
+            }
+        }
+        
+        if (forwardPathSize >= 2)
+        {
+            if (step.isIndoors)
+            {
+                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:fColor indoorId:step.indoorId floorId:step.indoorFloorId];
+            }
+            else
+            {
+                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:fColor];
+            }
         }
     }
 }

@@ -57,6 +57,8 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		598C506C24C9737E0072FE1F /* WRLDRouteViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */; };
+		598C506D24C973860072FE1F /* WRLDRouteViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */; };
 		65B6A4C9209318F000F17DEE /* WRLDPrecacheOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B6A4C6209312F500F17DEE /* WRLDPrecacheOperation.mm */; };
 		65B6A4DD2097154100F17DEE /* WRLDPrecacheOperationResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B6A4DA20970F9200F17DEE /* WRLDPrecacheOperationResult.mm */; };
 		65B6A4DE2097155C00F17DEE /* WRLDPrecacheOperationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65B6A4D920970F0C00F17DEE /* WRLDPrecacheOperationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -350,6 +352,8 @@
 		528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDElevationMode.h; sourceTree = "<group>"; };
 		52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapOptions.h; sourceTree = "<group>"; };
 		52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMapOptions.m; sourceTree = "<group>"; };
+		598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteViewHelper.h; sourceTree = "<group>"; };
+		598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteViewHelper.mm; sourceTree = "<group>"; };
 		650E368E21B58843003A5E73 /* WRLDProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDProp.h; sourceTree = "<group>"; };
 		650FA1C721B182DF00A75D96 /* WRLDProp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDProp.mm; sourceTree = "<group>"; };
 		65B6A4C52090BDF200F17DEE /* WRLDPrecacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDPrecacheOperation.h; sourceTree = "<group>"; };
@@ -896,6 +900,8 @@
 				D00CD33320B6DC7800A09252 /* WRLDPointOnRouteResult+Private.h */,
 				D00CD32E20B5AD8200A09252 /* WRLDPointOnRouteOptions.m */,
 				D00CD33020B5B1A100A09252 /* WRLDPointOnRouteOptions+Private.h */,
+				598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */,
+				598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -1126,6 +1132,7 @@
 				BB6B6DB91FEB900F0070E78F /* WRLDBuildingHighlightSelectionMode.h in Headers */,
 				BB6B6DBD1FEB982B0070E78F /* WRLDBuildingApiHelpers.h in Headers */,
 				BBFA4A242021DB3000124AF1 /* WRLDPickResult+Private.h in Headers */,
+				598C506C24C9737E0072FE1F /* WRLDRouteViewHelper.h in Headers */,
 				BB3CEC19202B335600AF5235 /* WRLDVector3+Private.h in Headers */,
 				BB3CEC1A202B335800AF5235 /* WRLDTouchTapInfo+Private.h in Headers */,
 			);
@@ -1411,6 +1418,7 @@
 				E0A48C001EBB32B900DD387F /* WRLDNativeMapView.mm in Sources */,
 				A83FFABC1FA21E7C0096DE13 /* WRLDPositioner.mm in Sources */,
 				BB3CEC13202B1CA000AF5235 /* WRLDTouchTapInfo.m in Sources */,
+				598C506D24C973860072FE1F /* WRLDRouteViewHelper.mm in Sources */,
 				BB6B6DBB1FEB981A0070E78F /* WRLDBuildingApiHelpers.mm in Sources */,
 				6F96F3431FE02D1400A560FF /* WRLDMapsceneSearchConfig.m in Sources */,
 			);
