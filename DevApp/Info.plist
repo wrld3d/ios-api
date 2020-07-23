@@ -46,6 +46,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>WrldApiKey</key>
-	<string>8fh:9356d23g2c723h25g95e5h84h4:7</string>
+	<string>$(WRLD_API_KEY)</string>
 </dict>
 </plist>
