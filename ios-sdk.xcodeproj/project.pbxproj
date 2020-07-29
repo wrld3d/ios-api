@@ -1169,6 +1169,7 @@
 				E0310FF81EB0E08B00002E88 /* Frameworks */,
 				E0310FF91EB0E08B00002E88 /* Headers */,
 				E0310FFA1EB0E08B00002E88 /* Resources */,
+				9FA608DC0E00AC11FE14EFD5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1308,6 +1309,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./scripts/remove_symbol_from_library.sh libapps-on-maps-cpp11 Pods/wrld_cpp_sdk AppDelegate\n./scripts/remove_symbol_from_library.sh libapps-on-maps-cpp11-sim Pods/wrld_cpp_sdk AppDelegate";
+		};
+		9FA608DC0E00AC11FE14EFD5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		B9C743DAE1EC313416817F32 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
