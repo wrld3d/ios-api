@@ -28,6 +28,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (WRLDRouteViewOptions*) color:(UIColor*)color;
 
 /*!
+* Sets the forward path color of the RouteView's polylines as a 32-bit ARGB color. The default value is opaque black (0xff000000).
+*
+* @param color The color to use.
+* @return The RouteViewOptions object on which the method was called, with the new color set.
+*/
+- (WRLDRouteViewOptions*) forwardPathColor:(UIColor*)color;
+
+/*!
  * Sets the miter limit of the RouteView's polylines, the maximum allowed ratio between the length of a miter
  * diagonal at a join, and the line width.
  *
@@ -39,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat) getWidth;
 
 - (UIColor*) getColor;
+
+-(UIColor*) getForwardPathColor;
 
 - (CGFloat) getMiterLimit;
 

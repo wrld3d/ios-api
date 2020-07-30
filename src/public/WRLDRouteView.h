@@ -33,19 +33,16 @@ NS_ASSUME_NONNULL_BEGIN
                              floor:(NSInteger)floor
                             height:(CGFloat)height;
 
-- (void) addLinesForRouteStep:(WRLDRouteStep*)step
-                      ofColor:(UIColor*)color;
+- (void) addLinesForRouteStep:(WRLDRouteStep*)step;
 
 - (void) addLinesForFloorTransition:(WRLDRouteStep*)step
                          stepBefore:(WRLDRouteStep*)stepBefore
-                          stepAfter:(WRLDRouteStep*)stepAfter
-                            ofColor:(UIColor*)color;
+                          stepAfter:(WRLDRouteStep*)stepAfter;
 
--(void) addLinesForRouteStep:(WRLDRouteStep*)step
-                forwardColor:(UIColor *)fColor
-               backwardColor:(UIColor*)bColor
-                  splitIndex:(int) sIndex
-         closestPointOnRoute:(CLLocationCoordinate2D) closestPoint;
+-(void) updateRouteProgress:(int)sectionIndex
+                  stepIndex:(int)stepIndex
+         closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
+indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex;
 
 /*!
  * Remove this RouteView from the map.
