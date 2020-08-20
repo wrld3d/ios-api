@@ -79,11 +79,37 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
     }
 }
 
+- (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
+                         count:(NSUInteger)pathCount
+                     isIndoors:(BOOL)isIndoors
+                      indoorId:(NSString*)indoorId
+                       floorId:(NSInteger)floorId
+                        
+{
+    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:coords count:pathCount];
+    polyline.color = m_color;
+    polyline.lineWidth = m_width;
+    polyline.miterLimit = m_miterLimit;
+    
+    if(isIndoors)
+    {
+        [polyline setIndoorMapId:indoorId];
+        [polyline setIndoorFloorId:floorId];
+    }
+    
+    return polyline;
+}
+
 - (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
                              floor:(NSInteger)floor
                             height:(CGFloat)height
 {
-   WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:step.path count:step.pathCount onIndoorMap:step.indoorId onFloor:floor];
+    WRLDPolyline* polyline = [self basePolyline:step.path
+                                          count:step.pathCount
+                                      isIndoors:step.isIndoors
+                                       indoorId:step.indoorId
+                                        floorId:floor];
+    
     CGFloat elevations[2];
     elevations[0] = (CGFloat)0;
     elevations[1] = (CGFloat)height;
@@ -93,61 +119,24 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 
 - (void) addLinesForRouteStep:(WRLDRouteStep*)step
 {
-     WRLDPolyline* polyline;
+     WRLDPolyline* polyline = [self basePolyline:step.path
+                                           count:step.pathCount
+                                       isIndoors:step.isIndoors
+                                        indoorId:step.indoorId
+                                         floorId:step.indoorFloorId];
     
-    if (step.isIndoors)
-    {
-        polyline = [WRLDPolyline polylineWithCoordinates:step.path
-                                                   count:step.pathCount
-                                             onIndoorMap:step.indoorId
-                                                 onFloor:step.indoorFloorId];
-    }
-    else
-    {
-        polyline = [WRLDPolyline polylineWithCoordinates:step.path
-                                                   count:step.pathCount];
-    }
-    
-    polyline.color = m_color;
-    polyline.lineWidth = m_width;
-    polyline.miterLimit = m_miterLimit;
-    [m_polylines addObject:polyline];
-    [m_map addOverlay:polyline];
-}
-
-- (void) addLinesForFloorTransition:(WRLDRouteStep*)step
-                         stepBefore:(WRLDRouteStep*)stepBefore
-                          stepAfter:(WRLDRouteStep*)stepAfter
-{
-    NSInteger floorBefore = stepBefore.indoorFloorId;
-    NSInteger floorAfter = stepAfter.indoorFloorId;
-    CGFloat lineHeight = (floorAfter > floorBefore) ? (CGFloat)VERTICAL_LINE_HEIGHT : -(CGFloat)VERTICAL_LINE_HEIGHT;
-    
-    WRLDPolyline* polyline = [self makeVerticalLine:step floor:floorBefore height:lineHeight];
-                polyline.color = m_color;
-                polyline.lineWidth = m_width;
-                polyline.miterLimit = m_miterLimit;
-    [m_polylines addObject:polyline];
-    [m_map addOverlay:polyline];
-    
-    polyline = [self makeVerticalLine:step floor:floorAfter height:-lineHeight];
-    polyline.color = m_color;
-    polyline.lineWidth = m_width;
-    polyline.miterLimit = m_miterLimit;
     [m_polylines addObject:polyline];
     [m_map addOverlay:polyline];
 }
 
 -(void) addLinesForRouteStep:(WRLDRouteStep*)step
           closestPointOnPath:(CLLocationCoordinate2D)closestPoint
-                  splitIndex:(int)sIndex
+                  splitIndex:(int)splitIndex
 {
-    
-    
     CLLocationCoordinate2D* coordinates = step.path;
     int coordinatesSize = step.pathCount;
 
-    bool hasReachedEnd = sIndex == (coordinatesSize-1);
+    bool hasReachedEnd = splitIndex == (coordinatesSize-1);
 
     if (hasReachedEnd)
     {
@@ -158,12 +147,12 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
         NSMutableArray *backPathArray = [[NSMutableArray alloc] init];
         NSMutableArray *forwardPathArray = [[NSMutableArray alloc] init];
 
-        for (int i=0; i<sIndex;i++)
+        for (int i=0; i<splitIndex; i++)
         {
             [backPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[i].latitude longitude:coordinates[i].longitude]];
         }
         
-        if(sIndex == 0 && coordinatesSize == 2)
+        if(splitIndex == 0 && coordinatesSize == 2)
         {
             [backPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[0].latitude longitude:coordinates[0].longitude]];
         }
@@ -172,7 +161,7 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
         [backPathArray addObject:closestLoc];
         [forwardPathArray addObject:closestLoc];
         
-        for (int i = sIndex; i<coordinatesSize; i++)
+        for (int i = splitIndex; i<coordinatesSize; i++)
         {
             [forwardPathArray addObject:[[CLLocation alloc] initWithLatitude:coordinates[i].latitude longitude:coordinates[i].longitude]];
         }
@@ -199,49 +188,44 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
         
         if (backwardPathSize >= 2)
         {
-            if (step.isIndoors)
-            {
-                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:m_color indoorId:step.indoorId floorId:step.indoorFloorId];
-            }
-            else
-            {
-                [self addLinesForRoutePath:backwardPath pathCount:backwardPathSize ofColor:m_color];
-            }
+            WRLDPolyline* polyline = [self basePolyline:backwardPath
+                                                  count:backwardPathSize
+                                              isIndoors:step.isIndoors
+                                               indoorId:step.indoorId
+                                                floorId:step.indoorFloorId];
+            
+            [m_polylines addObject:polyline];
+            [m_map addOverlay:polyline];
         }
         
         if (forwardPathSize >= 2)
         {
-            if (step.isIndoors)
-            {
-                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:m_forwardPathColor indoorId:step.indoorId floorId:step.indoorFloorId];
-            }
-            else
-            {
-                [self addLinesForRoutePath:forwardPath pathCount:forwardPathSize ofColor:m_forwardPathColor];
-            }
+            WRLDPolyline* polyline = [self basePolyline:forwardPath
+                                                  count:forwardPathSize
+                                              isIndoors:step.isIndoors
+                                               indoorId:step.indoorId
+                                                floorId:step.indoorFloorId];
+            
+            polyline.color = m_forwardPathColor;
+            [m_polylines addObject:polyline];
+            [m_map addOverlay:polyline];
         }
     }
 }
 
--(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int)count ofColor:(UIColor*)color
+- (void) addLinesForFloorTransition:(WRLDRouteStep*)step
+                         stepBefore:(WRLDRouteStep*)stepBefore
+                          stepAfter:(WRLDRouteStep*)stepAfter
 {
-    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:path count: count];
+    NSInteger floorBefore = stepBefore.indoorFloorId;
+    NSInteger floorAfter = stepAfter.indoorFloorId;
+    CGFloat lineHeight = (floorAfter > floorBefore) ? (CGFloat)VERTICAL_LINE_HEIGHT : -(CGFloat)VERTICAL_LINE_HEIGHT;
     
-    polyline.color = color;
-    polyline.lineWidth = m_width;
-    polyline.miterLimit = m_miterLimit;
+    WRLDPolyline* polyline = [self makeVerticalLine:step floor:floorBefore height:lineHeight];
     [m_polylines addObject:polyline];
     [m_map addOverlay:polyline];
-}
-
--(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int)count ofColor:(UIColor*)color indoorId:(NSString*)indoorId floorId:(int)floorId
-{
-    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:path count: count onIndoorMap:indoorId
-    onFloor:floorId];
     
-    polyline.color = color;
-    polyline.lineWidth = m_width;
-    polyline.miterLimit = m_miterLimit;
+    polyline = [self makeVerticalLine:step floor:floorAfter height:-lineHeight];
     [m_polylines addObject:polyline];
     [m_map addOverlay:polyline];
 }
@@ -269,6 +253,13 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
             {
                 if (step.isMultiFloor)
                 {
+                    bool isValidTransition = i > 0 && i < (section.steps.count - 1) && step.isIndoors;
+                    
+                    if (!isValidTransition)
+                    {
+                        continue;
+                    }
+                    
                     WRLDRouteStep* stepBefore = [steps objectAtIndex:i-1];
                     WRLDRouteStep* stepAfter = [steps objectAtIndex:i+1];
                     [self addLinesForFloorTransition:step stepBefore:stepBefore stepAfter:stepAfter];

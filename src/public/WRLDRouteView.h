@@ -39,6 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
                          stepBefore:(WRLDRouteStep*)stepBefore
                           stepAfter:(WRLDRouteStep*)stepAfter;
 
+/*!
+ * Update the progress of turn by turn navigation on route.
+ *
+ * @param sectionIndex The current index of WRLDRouteSection.
+ * @param stepIndex The current index of WRLDRouteStep.
+ * @param closestPointOnPath Closest point on the path of WRLDRouteStep.
+ * @param indexOfPathSegmentStartVertex Index of path segment start vertex in WRLDRouteStep.
+ */
+
 -(void) updateRouteProgress:(int)sectionIndex
                   stepIndex:(int)stepIndex
          closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath

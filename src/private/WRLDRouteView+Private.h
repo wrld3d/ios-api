@@ -20,7 +20,13 @@
 
 -(void) addLinesForRouteStep:(WRLDRouteStep*)step
          closestPointOnPath:(CLLocationCoordinate2D) closestPoint
-                  splitIndex:(int) sIndex;
+                  splitIndex:(int)splitIndex;
+
+- (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
+                         count:(NSUInteger)pathCount
+                     isIndoors:(BOOL)isIndoors
+                      indoorId:(NSString*)indoorId
+                       floorId:(NSInteger)floorId
 @end
 
 //NS_ASSUME_NONNULL_END
