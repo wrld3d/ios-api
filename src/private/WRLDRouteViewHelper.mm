@@ -6,37 +6,6 @@
 
 @implementation WRLDRouteViewHelper
 
-+ (bool) areApproximatelyEqual:(CLLocation*)firstLocation secondLocation:(CLLocation*)secondLocation
-{
-    // <= 1mm separation
-    const double epsilonSq = 1e-6;
-    return [firstLocation distanceFromLocation:secondLocation] <= epsilonSq;
-}
-
-+ (NSMutableArray*) removeCoincidentPoints:(NSMutableArray*) coordinates
-{
-    NSMutableArray* uniqueCoordinates = [[NSMutableArray alloc] init];
-
-    for(int i=0;i<coordinates.count;i++)
-    {
-        CLLocation* firstLocation = [coordinates objectAtIndex:i];
-        bool isUnique = true;
-        for(int j=i+1; j<coordinates.count;j++)
-        {
-            CLLocation* secondLocation = [coordinates objectAtIndex:j];
-            if ([self areApproximatelyEqual:firstLocation secondLocation:secondLocation])
-            {
-                isUnique = false;
-            }
-        }
-        if (isUnique)
-        {
-            [uniqueCoordinates addObject:firstLocation];
-        }
-    }
-    return uniqueCoordinates;
-}
-
 + (bool) areApproximatelyEqualNew:(CLLocationCoordinate2D)firstLocation secondLocation:(CLLocationCoordinate2D)secondLocation
 {
     // <= 1mm separation
@@ -46,35 +15,10 @@
     Eegeo::Space::LatLong secondLoc = Eegeo::Space::LatLong::FromDegrees(secondLocation.latitude, secondLocation.longitude);
 
     return Eegeo::Space::SpaceHelpers::GreatCircleDistance(firstLoc, secondLoc, Eegeo::Space::EarthConstants::Radius) <= epsilonSq;
-    
-//    CLLocation *first = [[CLLocation alloc] initWithLatitude:firstLocation.latitude longitude:firstLocation.longitude];
-//    CLLocation *second = [[CLLocation alloc] initWithLatitude:secondLocation.latitude longitude:secondLocation.longitude];
-//    return [first distanceFromLocation:second] <= epsilonSq;
 }
 
-+ (std::vector<CLLocationCoordinate2D>) removeCoincidentPointsFromVector:(std::vector<CLLocationCoordinate2D>) coordinates
++ (std::vector<CLLocationCoordinate2D>) removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>) coordinates
 {
-//    NSMutableArray* uniqueCoordinates = [[NSMutableArray alloc] init];
-    
-//    for(int i=0; i<coordinates.count; i++)
-//    {
-//        CLLocation* firstLocation = [coordinates objectAtIndex:i];
-//        bool isUnique = true;
-//        for(int j=i+1; j<coordinates.count;j++)
-//        {
-//            CLLocation* secondLocation = [coordinates objectAtIndex:j];
-//            if ([self areApproximatelyEqual:firstLocation secondLocation:secondLocation])
-//            {
-//                isUnique = false;
-//            }
-//        }
-//        if (isUnique)
-//        {
-//            [uniqueCoordinates addObject:firstLocation];
-//        }
-//    }
-//    return uniqueCoordinates;
-    
     std::vector<CLLocationCoordinate2D> returnVector;
     for(std::vector<CLLocationCoordinate2D>::iterator it = coordinates.begin(); it != coordinates.end(); it++) {
             

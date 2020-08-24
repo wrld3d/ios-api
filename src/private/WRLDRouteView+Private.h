@@ -19,14 +19,18 @@
 -(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int)count ofColor:(UIColor*)color indoorId:(NSString*)indoorId floorId:(int)floorId;
 
 -(void) addLinesForRouteStep:(WRLDRouteStep*)step
-         closestPointOnPath:(CLLocationCoordinate2D) closestPoint
+         closestPointOnPath:(CLLocationCoordinate2D)closestPoint
                   splitIndex:(int)splitIndex;
 
 - (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
                          count:(NSUInteger)pathCount
                      isIndoors:(BOOL)isIndoors
                       indoorId:(NSString*)indoorId
-                       floorId:(NSInteger)floorId
+                       floorId:(NSInteger)floorId;
+
+- (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
+                          pathSegment:(std::vector<CLLocationCoordinate2D>)pathSegment
+                            isForward:(BOOL)isForward;
 @end
 
 //NS_ASSUME_NONNULL_END

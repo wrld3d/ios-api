@@ -6,9 +6,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDRouteViewHelper : NSObject
 
-+ (bool) areApproximatelyEqual:(CLLocation*)firstLocation secondLocation:(CLLocation*)secondLocation;
-+ (NSMutableArray*) removeCoincidentPoints:(NSMutableArray*) coordinates;
-+ (std::vector<CLLocationCoordinate2D>) removeCoincidentPointsFromVector:(std::vector<CLLocationCoordinate2D>) coordinates;
++ (bool) areApproximatelyEqualNew:(CLLocationCoordinate2D)firstLocation secondLocation:(CLLocationCoordinate2D)secondLocation;
++ (std::vector<CLLocationCoordinate2D>) removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>) coordinates;
 @end
 
 NS_ASSUME_NONNULL_END

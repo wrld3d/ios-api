@@ -202,9 +202,9 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     }
 }
 
--(void) addLinesForRouteStep:(WRLDRouteStep*)step
-          closestPointOnPath:(CLLocationCoordinate2D)closestPoint
-                  splitIndex:(int)splitIndex
+- (void) addLinesForRouteStep:(WRLDRouteStep*)step
+           closestPointOnPath:(CLLocationCoordinate2D)closestPoint
+                   splitIndex:(int)splitIndex
 {
     std::vector<CLLocationCoordinate2D> backPath;
     for (int i=0; i<splitIndex+1; i++)
@@ -212,37 +212,34 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         backPath.push_back(step.path[i]);
     }
     backPath.push_back(closestPoint);
-    backPath = [WRLDRouteViewHelper removeCoincidentPointsFromVector:backPath];
+    [self addLinesForActiveStepSegment:step pathSegment:backPath isForward:false];
 
+    
     std::vector<CLLocationCoordinate2D> forwardPath;
     forwardPath.push_back(closestPoint);
     for (int i=splitIndex+1; i<step.pathCount; i++)
     {
         forwardPath.push_back(step.path[i]);
     }
-    forwardPath = [WRLDRouteViewHelper removeCoincidentPointsFromVector:forwardPath];
-        
-    if (backPath.size() >= 2)
-    {
-        WRLDPolyline* polyline = [self basePolyline:&backPath[0]
-                                              count:backPath.size()
-                                          isIndoors:step.isIndoors
-                                           indoorId:step.indoorId
-                                            floorId:step.indoorFloorId];
-        
-        [m_polylines addObject:polyline];
-        [m_map addOverlay:polyline];
-    }
-    
-    if (forwardPath.size() >= 2)
-    {
-        WRLDPolyline* polyline = [self basePolyline:&forwardPath[0]
-                                              count:forwardPath.size()
-                                          isIndoors:step.isIndoors
-                                           indoorId:step.indoorId
-                                            floorId:step.indoorFloorId];
+    [self addLinesForActiveStepSegment:step pathSegment:forwardPath isForward:true];
+}
 
-        polyline.color = m_forwardPathColor;
+- (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
+                          pathSegment:(std::vector<CLLocationCoordinate2D>)pathSegment
+                            isForward:(BOOL)isForward {
+    
+    std::vector<CLLocationCoordinate2D> filteredPathSegment = [WRLDRouteViewHelper removeCoincidentPoints:pathSegment];
+    if (filteredPathSegment.size() >= 2)
+    {
+        WRLDPolyline* polyline = [self basePolyline:&filteredPathSegment[0]
+                                              count:filteredPathSegment.size()
+                                          isIndoors:step.isIndoors
+                                           indoorId:step.indoorId
+                                            floorId:step.indoorFloorId];
+        if(isForward)
+        {
+            polyline.color = m_forwardPathColor;
+        }
         [m_polylines addObject:polyline];
         [m_map addOverlay:polyline];
     }
