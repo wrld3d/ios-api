@@ -31,13 +31,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
                              floor:(NSInteger)floor
-                            height:(CGFloat)height;
+                            height:(CGFloat)height
+                      isActiveStep:(BOOL)isActiveStep;
 
 - (void) addLinesForRouteStep:(WRLDRouteStep*)step;
 
 - (void) addLinesForFloorTransition:(WRLDRouteStep*)step
                          stepBefore:(WRLDRouteStep*)stepBefore
-                          stepAfter:(WRLDRouteStep*)stepAfter;
+                          stepAfter:(WRLDRouteStep*)stepAfter
+                       isActiveStep:(BOOL)isActiveStep;
 
 /*!
  * Update the progress of turn by turn navigation on route.
