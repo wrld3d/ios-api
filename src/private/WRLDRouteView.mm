@@ -82,20 +82,17 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 
 - (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
                          count:(NSUInteger)pathCount
-                     isIndoors:(BOOL)isIndoors
-                      indoorId:(NSString*)indoorId
-                       floorId:(NSInteger)floorId
-                        
+                     routeStep:(WRLDRouteStep *)step                        
 {
     WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:coords count:pathCount];
     polyline.color = m_color;
     polyline.lineWidth = m_width;
     polyline.miterLimit = m_miterLimit;
     
-    if(isIndoors)
+    if(step.isIndoors)
     {
-        [polyline setIndoorMapId:indoorId];
-        [polyline setIndoorFloorId:floorId];
+        [polyline setIndoorMapId:step.indoorId];
+        [polyline setIndoorFloorId:step.indoorFloorId];
     }
     
     return polyline;
@@ -105,9 +102,7 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 {
      WRLDPolyline* polyline = [self basePolyline:step.path
                                            count:step.pathCount
-                                       isIndoors:step.isIndoors
-                                        indoorId:step.indoorId
-                                         floorId:step.indoorFloorId];
+                                       routeStep:step];
     
     [m_polylines addObject:polyline];
     [m_map addOverlay:polyline];
@@ -138,9 +133,8 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 {
     WRLDPolyline* polyline = [self basePolyline:step.path
                                           count:step.pathCount
-                                      isIndoors:step.isIndoors
-                                       indoorId:step.indoorId
-                                        floorId:floor];
+                                      routeStep:step];
+    [polyline setIndoorFloorId:floor];
     if(isActiveStep)
     {
         polyline.color = m_forwardPathColor;
@@ -233,9 +227,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     {
         WRLDPolyline* polyline = [self basePolyline:&filteredPathSegment[0]
                                               count:filteredPathSegment.size()
-                                          isIndoors:step.isIndoors
-                                           indoorId:step.indoorId
-                                            floorId:step.indoorFloorId];
+                                          routeStep:step];
         if(isForward)
         {
             polyline.color = m_forwardPathColor;

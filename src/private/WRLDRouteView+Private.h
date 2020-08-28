@@ -24,9 +24,7 @@
 
 - (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
                          count:(NSUInteger)pathCount
-                     isIndoors:(BOOL)isIndoors
-                      indoorId:(NSString*)indoorId
-                       floorId:(NSInteger)floorId;
+                     routeStep:(WRLDRouteStep *)step;
 
 - (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
                           pathSegment:(std::vector<CLLocationCoordinate2D>)pathSegment
