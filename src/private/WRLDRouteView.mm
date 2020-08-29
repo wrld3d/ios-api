@@ -207,27 +207,29 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         backPath.push_back(step.path[i]);
     }
     backPath.push_back(closestPoint);
-    [self addLinesForActiveStepSegment:step pathSegment:&backPath isForward:false];
+    [self addLinesForActiveStepSegment:step pathSegment:backPath isForward:false];
 
     
     std::vector<CLLocationCoordinate2D> forwardPath;
-    forwardPath.reserve(step.pathCount - splitIndex + 1 + 1);
+    forwardPath.reserve(step.pathCount - splitIndex+2);
     forwardPath.push_back(closestPoint);
     for (int i=splitIndex+1; i<step.pathCount; i++)
     {
         forwardPath.push_back(step.path[i]);
     }
-    [self addLinesForActiveStepSegment:step pathSegment:&forwardPath isForward:true];
+    [self addLinesForActiveStepSegment:step pathSegment:forwardPath isForward:true];
 }
 
 - (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
-                          pathSegment:(std::vector<CLLocationCoordinate2D> *)pathSegment
+                          pathSegment:(const std::vector<CLLocationCoordinate2D> &)pathSegment
                             isForward:(BOOL)isForward {
     
-    std::vector<CLLocationCoordinate2D> filteredPathSegment = [WRLDRouteViewHelper removeCoincidentPoints:*pathSegment];
+    std::vector<CLLocationCoordinate2D> filteredPathSegment;
+    [WRLDRouteViewHelper removeCoincidentPoints:pathSegment outPut:filteredPathSegment];
+    
     if (filteredPathSegment.size() >= 2)
     {
-        WRLDPolyline* polyline = [self basePolyline:&filteredPathSegment[0]
+        WRLDPolyline* polyline = [self basePolyline:filteredPathSegment.data()
                                               count:filteredPathSegment.size()
                                           routeStep:step];
         if(isForward)

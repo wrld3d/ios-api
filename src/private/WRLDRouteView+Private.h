@@ -27,7 +27,7 @@
                      routeStep:(WRLDRouteStep *)step;
 
 - (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
-                          pathSegment:(std::vector<CLLocationCoordinate2D>)pathSegment
+                          pathSegment:(const std::vector<CLLocationCoordinate2D> &)pathSegment
                             isForward:(BOOL)isForward;
 @end
 
