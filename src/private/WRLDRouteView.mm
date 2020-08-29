@@ -225,7 +225,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                             isForward:(BOOL)isForward {
     
     std::vector<CLLocationCoordinate2D> filteredPathSegment;
-    [WRLDRouteViewHelper removeCoincidentPoints:pathSegment outPut:filteredPathSegment];
+    [WRLDRouteViewHelper removeCoincidentPoints:pathSegment output:filteredPathSegment];
     
     if (filteredPathSegment.size() >= 2)
     {
