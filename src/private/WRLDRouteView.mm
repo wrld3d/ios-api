@@ -148,7 +148,7 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 
 -(void) updateRouteProgress:(int)sectionIndex
                   stepIndex:(int)stepIndex
-         closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
+        closestPointOnRoute:(CLLocationCoordinate2D)closestPointOnRoute
 indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 {
     [self removeFromMap];
@@ -185,7 +185,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
             {
                 if(isActiveStep)
                 {
-                    [self addLinesForRouteStep:step closestPointOnPath:closestPointOnPath splitIndex:indexOfPathSegmentStartVertex];
+                    [self addLinesForRouteStep:step closestPointOnPath:closestPointOnRoute splitIndex:indexOfPathSegmentStartVertex];
                 }
                 else
                 {
@@ -201,28 +201,30 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                    splitIndex:(int)splitIndex
 {
     std::vector<CLLocationCoordinate2D> backPath;
+    backPath.reserve(splitIndex+2);
     for (int i=0; i<splitIndex+1; i++)
     {
         backPath.push_back(step.path[i]);
     }
     backPath.push_back(closestPoint);
-    [self addLinesForActiveStepSegment:step pathSegment:backPath isForward:false];
+    [self addLinesForActiveStepSegment:step pathSegment:&backPath isForward:false];
 
     
     std::vector<CLLocationCoordinate2D> forwardPath;
+    forwardPath.reserve(step.pathCount - splitIndex + 1 + 1);
     forwardPath.push_back(closestPoint);
     for (int i=splitIndex+1; i<step.pathCount; i++)
     {
         forwardPath.push_back(step.path[i]);
     }
-    [self addLinesForActiveStepSegment:step pathSegment:forwardPath isForward:true];
+    [self addLinesForActiveStepSegment:step pathSegment:&forwardPath isForward:true];
 }
 
 - (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
-                          pathSegment:(std::vector<CLLocationCoordinate2D>)pathSegment
+                          pathSegment:(std::vector<CLLocationCoordinate2D> *)pathSegment
                             isForward:(BOOL)isForward {
     
-    std::vector<CLLocationCoordinate2D> filteredPathSegment = [WRLDRouteViewHelper removeCoincidentPoints:pathSegment];
+    std::vector<CLLocationCoordinate2D> filteredPathSegment = [WRLDRouteViewHelper removeCoincidentPoints:*pathSegment];
     if (filteredPathSegment.size() >= 2)
     {
         WRLDPolyline* polyline = [self basePolyline:&filteredPathSegment[0]
