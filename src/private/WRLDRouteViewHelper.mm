@@ -6,15 +6,14 @@
 
 @implementation WRLDRouteViewHelper
 
-+ (bool) areApproximatelyEqualNew:(CLLocationCoordinate2D)firstLocation secondLocation:(CLLocationCoordinate2D)secondLocation
++ (bool) areApproximatelyEqualNew:(const CLLocationCoordinate2D &)firstLocation secondLocation:(const CLLocationCoordinate2D &)secondLocation
 {
     // <= 1mm separation
     const double epsilonSq = 1e-6;
     
-    Eegeo::Space::LatLong firstLoc = Eegeo::Space::LatLong::FromDegrees(firstLocation.latitude, firstLocation.longitude);
-    Eegeo::Space::LatLong secondLoc = Eegeo::Space::LatLong::FromDegrees(secondLocation.latitude, secondLocation.longitude);
-
-    return Eegeo::Space::SpaceHelpers::GreatCircleDistance(firstLoc, secondLoc, Eegeo::Space::EarthConstants::Radius) <= epsilonSq;
+    CLLocation *firstLoc = [[CLLocation alloc] initWithLatitude:firstLocation.latitude longitude:firstLocation.longitude];
+    CLLocation *secondLoc = [[CLLocation alloc] initWithLatitude:secondLocation.latitude longitude:secondLocation.longitude];
+    return  [firstLoc distanceFromLocation:secondLoc] <= epsilonSq;
 }
 
 + (void) removeCoincidentPoints:(const std::vector<CLLocationCoordinate2D> &)coordinates output:(std::vector<CLLocationCoordinate2D> &)output
