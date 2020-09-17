@@ -934,6 +934,23 @@
         "priority": 0
     },
     {
+        "name": "marker_always_visible",
+        "label_text_style_name": "marker_default",
+        "label_icon_style_name": "marker_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
+        "screen_margin": 36.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
+        "priority": 0,
+        "ignore_occlusion": true
+    },
+    {
         "name": "nav_marker_default",
         "label_text_style_name": "marker_default",
         "label_icon_style_name": "nav_marker_default",
