@@ -226,8 +226,10 @@ const double defaultStartZoomLevel = 8;
 {
     [super awakeFromNib];
     
-    // awakeFromNib after IBAdditions properties have been set from 
-    [self _initialiseCameraView];
+    // awakeFromNib after IBAdditions properties have been set from
+    if (m_pApiRunner != NULL) {
+        [self _initialiseCameraView];
+    }
 }
 
 - (void)_initialiseCameraView
@@ -312,6 +314,7 @@ const double defaultStartZoomLevel = 8;
     if (m_pApiRunner == NULL)
     {
         [self createPlatform];
+        [self _initialiseCameraView];
     }
 
     [self resume];
@@ -340,6 +343,12 @@ const double defaultStartZoomLevel = 8;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+
+    if (m_pApiRunner == NULL)
+    {
+        [self createPlatform];
+        [self _initialiseCameraView];
+    }
 
     m_pApiRunner->NotifyViewFrameChanged();
 }
