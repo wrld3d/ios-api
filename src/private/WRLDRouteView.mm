@@ -6,24 +6,28 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 #import "WRLDRouteViewHelper.h"
+#import "WRLDRouteViewAmalgamationHelper.h"
 #include <vector>
+#include <map>
+
+#import "WRLDRoutingPolylineCreateParams.h"
 
 @interface WRLDRouteView ()
 
 @end
 
-static double VERTICAL_LINE_HEIGHT = 5.0;
-
 @implementation WRLDRouteView
 {
     WRLDMapView* m_map;
     WRLDRoute* m_route;
-    NSMutableArray* m_polylines;
+    NSMutableArray* m_polylineIds;
     BOOL m_currentlyOnMap;
     CGFloat m_width;
     UIColor* m_color;
     UIColor* m_forwardPathColor;
     CGFloat m_miterLimit;
+    
+    std::map<int, WRLDRoutingPolylineCreateParamsVector> m_routeStepToPolylineCreateParams;
 }
 
 - (instancetype)initWithMapView:(WRLDMapView*)map
@@ -32,7 +36,7 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 {
     if (self = [super init])
     {
-        m_polylines = [[NSMutableArray alloc] init];
+        m_polylineIds = [[NSMutableArray alloc] init];
         m_map = map;
         m_route = route;
         m_width = options.getWidth;
@@ -47,12 +51,13 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
 
 - (void) addToMap
 {
+    int flattenStepIndex=0;
     for (WRLDRouteSection* section in m_route.sections)
     {
-        int i = 0;
-        for (WRLDRouteStep* step in section.steps)
+        for(int i=0; i< section.steps.count; i++)
         {
-            i++;
+            WRLDRouteStep* step = [section.steps objectAtIndex:i];
+            
             if (step.pathCount < 2)
             {
                 continue;
@@ -61,89 +66,26 @@ static double VERTICAL_LINE_HEIGHT = 5.0;
             if (step.isMultiFloor)
             {
                 bool isValidTransition = i > 0 && i < (section.steps.count - 1) && step.isIndoors;
-                
+
                 if (!isValidTransition)
                 {
                     continue;
                 }
-                
+
                 WRLDRouteStep* stepBefore = [section.steps objectAtIndex:i-1];
                 WRLDRouteStep* stepAfter = [section.steps objectAtIndex:i+1];
                 
-                [self addLinesForFloorTransition:step stepBefore:stepBefore stepAfter:stepAfter isActiveStep:false];
+                [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:m_color];
             }
             else
             {
-                [self addLinesForRouteStep:step];
+                [self addLineCreationParamsForStep:step ndFlattenStepIndex:flattenStepIndex];
             }
+            
+            flattenStepIndex++;
         }
     }
-}
-
-- (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
-                         count:(NSUInteger)pathCount
-                     routeStep:(WRLDRouteStep *)step                        
-{
-    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:coords count:pathCount];
-    polyline.color = m_color;
-    polyline.lineWidth = m_width;
-    polyline.miterLimit = m_miterLimit;
-    
-    if(step.isIndoors)
-    {
-        [polyline setIndoorMapId:step.indoorId];
-        [polyline setIndoorFloorId:step.indoorFloorId];
-    }
-    
-    return polyline;
-}
-
-- (void) addLinesForRouteStep:(WRLDRouteStep*)step
-{
-     WRLDPolyline* polyline = [self basePolyline:step.path
-                                           count:step.pathCount
-                                       routeStep:step];
-    
-    [m_polylines addObject:polyline];
-    [m_map addOverlay:polyline];
-}
-
-- (void) addLinesForFloorTransition:(WRLDRouteStep*)step
-                         stepBefore:(WRLDRouteStep*)stepBefore
-                          stepAfter:(WRLDRouteStep*)stepAfter
-                       isActiveStep:(BOOL)isActiveStep
-{
-    NSInteger floorBefore = stepBefore.indoorFloorId;
-    NSInteger floorAfter = stepAfter.indoorFloorId;
-    CGFloat lineHeight = (floorAfter > floorBefore) ? (CGFloat)VERTICAL_LINE_HEIGHT : -(CGFloat)VERTICAL_LINE_HEIGHT;
-    
-    WRLDPolyline* polyline = [self makeVerticalLine:step floor:floorBefore height:lineHeight isActiveStep:isActiveStep];
-    [m_polylines addObject:polyline];
-    [m_map addOverlay:polyline];
-    
-    polyline = [self makeVerticalLine:step floor:floorAfter height:-lineHeight isActiveStep:isActiveStep];
-    [m_polylines addObject:polyline];
-    [m_map addOverlay:polyline];
-}
-
-- (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
-                             floor:(NSInteger)floor
-                            height:(CGFloat)height
-                      isActiveStep:(BOOL)isActiveStep
-{
-    WRLDPolyline* polyline = [self basePolyline:step.path
-                                          count:step.pathCount
-                                      routeStep:step];
-    [polyline setIndoorFloorId:floor];
-    if(isActiveStep)
-    {
-        polyline.color = m_forwardPathColor;
-    }
-    CGFloat elevations[2];
-    elevations[0] = (CGFloat)0;
-    elevations[1] = (CGFloat)height;
-    [polyline setPerPointElevations:elevations count:2];
-    return polyline;
+    [self refreshPolylines];
 }
 
 -(void) updateRouteProgress:(int)sectionIndex
@@ -154,6 +96,8 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     [self removeFromMap];
     
     NSMutableArray* sections = m_route.sections;
+    int flattenStepIndex = 0;
+    
     for (int j=0; j<sections.count;j++)
     {
         WRLDRouteSection* section = [sections objectAtIndex:j];
@@ -179,81 +123,104 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                 
                 WRLDRouteStep* stepBefore = [steps objectAtIndex:i-1];
                 WRLDRouteStep* stepAfter = [steps objectAtIndex:i+1];
-                [self addLinesForFloorTransition:step stepBefore:stepBefore stepAfter:stepAfter isActiveStep:isActiveStep];
+                
+                if(isActiveStep) {
+                    bool hasReachedEnd = indexOfPathSegmentStartVertex == (step.pathCount-1);
+                    
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:(hasReachedEnd ? m_color : m_forwardPathColor)];
+
+                } else {
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:m_color];
+                }
             }
             else
             {
                 if(isActiveStep)
                 {
-                    [self addLinesForRouteStep:step closestPointOnPath:closestPointOnRoute splitIndex:indexOfPathSegmentStartVertex];
+                    [self addLineCreationParamsForStep:step stepIndex:flattenStepIndex closestPointOnPath:closestPointOnRoute ndSplitIndex:indexOfPathSegmentStartVertex];
                 }
                 else
                 {
-                    [self addLinesForRouteStep:step];
+                    [self addLineCreationParamsForStep:step ndFlattenStepIndex:flattenStepIndex];
+                    
                 }
             }
+            flattenStepIndex ++;
         }
     }
+    [self refreshPolylines];
 }
 
-- (void) addLinesForRouteStep:(WRLDRouteStep*)step
-           closestPointOnPath:(CLLocationCoordinate2D)closestPoint
-                   splitIndex:(int)splitIndex
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                          stepBefore:(WRLDRouteStep*)routeStepBefore
+                           stepAfter:(WRLDRouteStep*)routeStepAfter
+                    flattenStepIndex:(int)flattenStepIndex
+                             ndColor:(UIColor *)color
 {
-    std::vector<CLLocationCoordinate2D> backPath;
-    backPath.reserve(splitIndex+2);
-    for (int i=0; i<splitIndex+1; i++)
+    if (routeStep.pathCount < 2)
     {
-        backPath.push_back(step.path[i]);
+        return;
     }
-    backPath.push_back(closestPoint);
-    [self addLinesForActiveStepSegment:step pathSegment:backPath isForward:false];
-
     
-    std::vector<CLLocationCoordinate2D> forwardPath;
-    forwardPath.reserve(step.pathCount - splitIndex+2);
-    forwardPath.push_back(closestPoint);
-    for (int i=splitIndex+1; i<step.pathCount; i++)
-    {
-        forwardPath.push_back(step.path[i]);
-    }
-    [self addLinesForActiveStepSegment:step pathSegment:forwardPath isForward:true];
+    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForFloorTransition:routeStep
+                                                                                                 floorBefore:routeStepBefore.indoorFloorId
+                                                                                                  floorAfter:routeStepAfter.indoorFloorId
+                                                                                                     ndColor:color];
 }
 
-- (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
-                          pathSegment:(const std::vector<CLLocationCoordinate2D> &)pathSegment
-                            isForward:(BOOL)isForward {
-    
-    std::vector<CLLocationCoordinate2D> filteredPathSegment;
-    [WRLDRouteViewHelper removeCoincidentPoints:pathSegment output:filteredPathSegment];
-    
-    if (filteredPathSegment.size() >= 2)
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep ndFlattenStepIndex:(int)flattenStepIndex
+{
+    if (routeStep.pathCount < 2)
     {
-        WRLDPolyline* polyline = [self basePolyline:filteredPathSegment.data()
-                                              count:filteredPathSegment.size()
-                                          routeStep:step];
-        if(isForward)
-        {
-            polyline.color = m_forwardPathColor;
-        }
-        [m_polylines addObject:polyline];
-        [m_map addOverlay:polyline];
+        return;
     }
+    
+    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep andColor:m_color];
+}
+
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                           stepIndex:(int)stepIndex
+                  closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
+                        ndSplitIndex:(int)splitIndex
+{
+    if (routeStep.pathCount < 2)
+    {
+        return;
+    }
+
+    m_routeStepToPolylineCreateParams[stepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep forwardColor:m_forwardPathColor backwardColor:m_color splitIndex:splitIndex closestPointOnPath:closestPointOnPath];
+}
+
+-(void) refreshPolylines
+{
+    [self removeFromMap];
+    
+    Eegeo_ASSERT(m_polylineIds.count == 0);
+
+    WRLDRoutingPolylineCreateParamsVector allPolylineCreateParams;
+    
+    for (const auto& pair : m_routeStepToPolylineCreateParams)
+    {
+        const auto& createParams = pair.second;
+        allPolylineCreateParams.insert(allPolylineCreateParams.end(), createParams.begin(), createParams.end());
+    }
+    
+    m_polylineIds = [WRLDRouteViewAmalgamationHelper CreatePolylines:allPolylineCreateParams width:m_width miterLimit:m_miterLimit ndMap:m_map];
 }
 
 - (void) removeFromMap
 {
-    for(WRLDPolyline* poly in m_polylines)
+    for(WRLDPolyline* poly in m_polylineIds)
     {
         [m_map removeOverlay:poly];
     }
-    [m_polylines removeAllObjects];
+    [m_polylineIds removeAllObjects];
 }
 
 - (void) setWidth:(CGFloat)width
 {
     m_width = width;
-    for(WRLDPolyline* polyline in m_polylines)
+    for(WRLDPolyline* polyline in m_polylineIds)
     {
         [polyline setLineWidth:m_width];
     }
@@ -262,7 +229,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 - (void) setColor:(UIColor*)color
 {
     m_color = color;
-    for(WRLDPolyline* polyline in m_polylines)
+    for(WRLDPolyline* polyline in m_polylineIds)
     {
         [polyline setColor:m_color];
     }
@@ -271,10 +238,59 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 - (void) setMiterLimit:(CGFloat)miterLimit
 {
     m_miterLimit = miterLimit;
-    for(WRLDPolyline* polyline in m_polylines)
+    for(WRLDPolyline* polyline in m_polylineIds)
     {
         [polyline setMiterLimit:m_miterLimit];
     }
+}
+
+- (void) addLinesForRouteStep:(WRLDRouteStep*)step
+{
+    int currentStepToPolylineCreateParamsSize = (int)m_routeStepToPolylineCreateParams.size();
+    [self addLineCreationParamsForStep:step ndFlattenStepIndex:currentStepToPolylineCreateParamsSize];
+    
+    [self refreshPolylines];
+}
+
+- (void) addLinesForFloorTransition:(WRLDRouteStep*)step
+                         stepBefore:(WRLDRouteStep*)stepBefore
+                          stepAfter:(WRLDRouteStep*)stepAfter
+                       isActiveStep:(BOOL)isActiveStep
+{
+    int currentStepToPolylineCreateParamsSize = (int)m_routeStepToPolylineCreateParams.size();
+    UIColor *routeColor = isActiveStep ? m_forwardPathColor : m_color;
+    
+    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:currentStepToPolylineCreateParamsSize ndColor:routeColor];
+    
+    [self refreshPolylines];
+}
+
+- (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
+                             floor:(NSInteger)floor
+                            height:(CGFloat)height
+                      isActiveStep:(BOOL)isActiveStep
+{
+    WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:step.path count:step.pathCount];
+    polyline.color = m_color;
+    polyline.lineWidth = m_width;
+    polyline.miterLimit = m_miterLimit;
+    
+    if(step.isIndoors)
+    {
+        [polyline setIndoorMapId:step.indoorId];
+        [polyline setIndoorFloorId:step.indoorFloorId];
+    }
+
+    [polyline setIndoorFloorId:floor];
+    if(isActiveStep)
+    {
+        polyline.color = m_forwardPathColor;
+    }
+    CGFloat elevations[2];
+    elevations[0] = (CGFloat)0;
+    elevations[1] = (CGFloat)height;
+    [polyline setPerPointElevations:elevations count:2];
+    return polyline;
 }
 
 @end

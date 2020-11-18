@@ -57,6 +57,9 @@
 		52BF5A0F1F013F2200720DF0 /* WRLDMapOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52BF5A121F014E9A00720DF0 /* WRLDMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */; };
 		544BF29AE96C1DBFC8D1C548 /* libPods-WrldSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D487709F794FC9A95CA12653 /* libPods-WrldSdk.a */; };
+		581032D42555C11E005E3C93 /* WRLDRoutingPolylineCreateParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 581032D32555C11E005E3C93 /* WRLDRoutingPolylineCreateParams.h */; };
+		5890D5052563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5890D5032563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.h */; };
+		5890D5062563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5890D5042563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.mm */; };
 		598C506C24C9737E0072FE1F /* WRLDRouteViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */; };
 		598C506D24C973860072FE1F /* WRLDRouteViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */; };
 		65B6A4C9209318F000F17DEE /* WRLDPrecacheOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B6A4C6209312F500F17DEE /* WRLDPrecacheOperation.mm */; };
@@ -352,6 +355,9 @@
 		528A5C801EDDB93B00C5454F /* WRLDElevationMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDElevationMode.h; sourceTree = "<group>"; };
 		52BF5A0E1F013F2200720DF0 /* WRLDMapOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDMapOptions.h; sourceTree = "<group>"; };
 		52BF5A101F014E7000720DF0 /* WRLDMapOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRLDMapOptions.m; sourceTree = "<group>"; };
+		581032D32555C11E005E3C93 /* WRLDRoutingPolylineCreateParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDRoutingPolylineCreateParams.h; sourceTree = "<group>"; };
+		5890D5032563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDRouteViewAmalgamationHelper.h; sourceTree = "<group>"; };
+		5890D5042563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteViewAmalgamationHelper.mm; sourceTree = "<group>"; };
 		598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WRLDRouteViewHelper.h; sourceTree = "<group>"; };
 		598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WRLDRouteViewHelper.mm; sourceTree = "<group>"; };
 		650E368E21B58843003A5E73 /* WRLDProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRLDProp.h; sourceTree = "<group>"; };
@@ -902,6 +908,9 @@
 				D00CD33020B5B1A100A09252 /* WRLDPointOnRouteOptions+Private.h */,
 				598C506924C94CDB0072FE1F /* WRLDRouteViewHelper.h */,
 				598C506A24C94CDB0072FE1F /* WRLDRouteViewHelper.mm */,
+				5890D5032563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.h */,
+				5890D5042563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.mm */,
+				581032D32555C11E005E3C93 /* WRLDRoutingPolylineCreateParams.h */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -1096,6 +1105,7 @@
 				D2960AEE1FE829AB00A9C313 /* WRLDMapsceneServiceHelpers.h in Headers */,
 				27849D76209749A30038674E /* WRLDPointOnPath.h in Headers */,
 				BB6B6D681FD567260070E78F /* WRLDRouteTransportationMode.h in Headers */,
+				5890D5052563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.h in Headers */,
 				BB6B6D641FD5670C0070E78F /* WRLDRoute.h in Headers */,
 				A8E599711FB5D0D100695193 /* WRLDPoiService+Private.h in Headers */,
 				A83FFABB1FA21E6E0096DE13 /* WRLDPositioner.h in Headers */,
@@ -1116,6 +1126,7 @@
 				65B6A4E02097354C00F17DEE /* WRLDPrecacheOperationResult+Private.h in Headers */,
 				BB6B6D931FE25AFB0070E78F /* WRLDRouteStep+Private.h in Headers */,
 				BB6B6D951FE25D4B0070E78F /* WRLDRouteDirections+Private.h in Headers */,
+				581032D42555C11E005E3C93 /* WRLDRoutingPolylineCreateParams.h in Headers */,
 				BB6896D12047FC3500E46218 /* WRLDIndoorEntityTapResult+Private.h in Headers */,
 				BB6B6D971FE2717D0070E78F /* WRLDRoutingQueryWaypoint+Private.h in Headers */,
 				BB6B6D621FD566EC0070E78F /* WRLDRoutingQuery+Private.h in Headers */,
@@ -1169,7 +1180,6 @@
 				E0310FF81EB0E08B00002E88 /* Frameworks */,
 				E0310FF91EB0E08B00002E88 /* Headers */,
 				E0310FFA1EB0E08B00002E88 /* Resources */,
-				9FA608DC0E00AC11FE14EFD5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1211,17 +1221,14 @@
 				TargetAttributes = {
 					2CB2C53D1EC1D76400C0B401 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = QBCVJ28BRW;
 						ProvisioningStyle = Automatic;
 					};
 					E0310FFB1EB0E08B00002E88 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = QBCVJ28BRW;
 						ProvisioningStyle = Automatic;
 					};
 					E0601E491EAFBF510050EB45 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = QBCVJ28BRW;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1231,6 +1238,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1309,21 +1317,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./scripts/remove_symbol_from_library.sh libapps-on-maps-cpp11 Pods/wrld_cpp_sdk AppDelegate\n./scripts/remove_symbol_from_library.sh libapps-on-maps-cpp11-sim Pods/wrld_cpp_sdk AppDelegate";
-		};
-		9FA608DC0E00AC11FE14EFD5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WrldSdk/Pods-WrldSdk-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		B9C743DAE1EC313416817F32 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1435,6 +1428,7 @@
 				BB3CEC13202B1CA000AF5235 /* WRLDTouchTapInfo.m in Sources */,
 				598C506D24C973860072FE1F /* WRLDRouteViewHelper.mm in Sources */,
 				BB6B6DBB1FEB981A0070E78F /* WRLDBuildingApiHelpers.mm in Sources */,
+				5890D5062563FE98008DD966 /* WRLDRouteViewAmalgamationHelper.mm in Sources */,
 				6F96F3431FE02D1400A560FF /* WRLDMapsceneSearchConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1486,7 +1480,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1495,7 +1489,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WrldWidgets/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.sdk.ios.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1517,7 +1511,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1526,7 +1520,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WrldWidgets/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.sdk.ios.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1550,7 +1544,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1559,7 +1553,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.sdk.ios;
 				PRODUCT_NAME = Wrld;
@@ -1579,7 +1573,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1588,7 +1582,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wrld.sdk.ios;
 				PRODUCT_NAME = Wrld;
@@ -1639,7 +1633,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1682,7 +1676,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1694,10 +1688,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/DevApp/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1711,10 +1705,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QBCVJ28BRW;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/DevApp/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";

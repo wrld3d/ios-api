@@ -29,13 +29,22 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void) addToMap;
 
+/*!
+  !Deprecated
+ */
 - (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
                              floor:(NSInteger)floor
                             height:(CGFloat)height
                       isActiveStep:(BOOL)isActiveStep;
 
+/*!
+  !Deprecated
+ */
 - (void) addLinesForRouteStep:(WRLDRouteStep*)step;
 
+/*!
+  !Deprecated
+ */
 - (void) addLinesForFloorTransition:(WRLDRouteStep*)step
                          stepBefore:(WRLDRouteStep*)stepBefore
                           stepAfter:(WRLDRouteStep*)stepAfter
