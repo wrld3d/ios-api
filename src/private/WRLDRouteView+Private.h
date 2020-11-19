@@ -14,21 +14,19 @@
                           route:(WRLDRoute*)route
                          option:(WRLDRouteViewOptions*)options;
 
--(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int) count ofColor:(UIColor*)color;
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                          stepBefore:(WRLDRouteStep*)routeStepBefore
+                           stepAfter:(WRLDRouteStep*)routeStepAfter
+                    flattenStepIndex:(int)flattenStepIndex
+                               color:(UIColor *)color;
 
--(void) addLinesForRoutePath:(CLLocationCoordinate2D*)path pathCount:(int)count ofColor:(UIColor*)color indoorId:(NSString*)indoorId floorId:(int)floorId;
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                    flattenStepIndex:(int)flattenStepIndex;
 
--(void) addLinesForRouteStep:(WRLDRouteStep*)step
-         closestPointOnPath:(CLLocationCoordinate2D)closestPoint
-                  splitIndex:(int)splitIndex;
-
-- (WRLDPolyline*) basePolyline:(CLLocationCoordinate2D *)coords
-                         count:(NSUInteger)pathCount
-                     routeStep:(WRLDRouteStep *)step;
-
-- (void) addLinesForActiveStepSegment:(WRLDRouteStep*)step
-                          pathSegment:(const std::vector<CLLocationCoordinate2D> &)pathSegment
-                            isForward:(BOOL)isForward;
+-(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                           stepIndex:(int)stepIndex
+                  closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
+                          splitIndex:(int)splitIndex
 @end
 
 //NS_ASSUME_NONNULL_END
