@@ -44,6 +44,7 @@
         m_forwardPathColor = options.getForwardPathColor;
         m_miterLimit = options.getMiterLimit;
         [self addToMap];
+    
     }
     
     return self;
@@ -75,7 +76,7 @@
                 WRLDRouteStep* stepBefore = [section.steps objectAtIndex:i-1];
                 WRLDRouteStep* stepAfter = [section.steps objectAtIndex:i+1];
                 
-                [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:m_color];
+                [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex color:m_color];
             }
             else
             {
@@ -127,17 +128,17 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                 if(isActiveStep) {
                     bool hasReachedEnd = indexOfPathSegmentStartVertex == (step.pathCount-1);
                     
-                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:(hasReachedEnd ? m_color : m_forwardPathColor)];
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex color:(hasReachedEnd ? m_color : m_forwardPathColor)];
 
                 } else {
-                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex ndColor:m_color];
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:flattenStepIndex color:m_color];
                 }
             }
             else
             {
                 if(isActiveStep)
                 {
-                    [self addLineCreationParamsForStep:step stepIndex:flattenStepIndex closestPointOnPath:closestPointOnRoute ndSplitIndex:indexOfPathSegmentStartVertex];
+                    [self addLineCreationParamsForStep:step stepIndex:flattenStepIndex closestPointOnPath:closestPointOnRoute splitIndex:indexOfPathSegmentStartVertex];
                 }
                 else
                 {
@@ -155,7 +156,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                           stepBefore:(WRLDRouteStep*)routeStepBefore
                            stepAfter:(WRLDRouteStep*)routeStepAfter
                     flattenStepIndex:(int)flattenStepIndex
-                             ndColor:(UIColor *)color
+                               color:(UIColor *)color
 {
     if (routeStep.pathCount < 2)
     {
@@ -165,7 +166,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForFloorTransition:routeStep
                                                                                                  floorBefore:routeStepBefore.indoorFloorId
                                                                                                   floorAfter:routeStepAfter.indoorFloorId
-                                                                                                     ndColor:color];
+                                                                                                     color:color];
 }
 
 -(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep ndFlattenStepIndex:(int)flattenStepIndex
@@ -175,13 +176,13 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         return;
     }
     
-    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep andColor:m_color];
+    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep color:m_color];
 }
 
 -(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                            stepIndex:(int)stepIndex
                   closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
-                        ndSplitIndex:(int)splitIndex
+                        splitIndex:(int)splitIndex
 {
     if (routeStep.pathCount < 2)
     {
@@ -205,7 +206,11 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         allPolylineCreateParams.insert(allPolylineCreateParams.end(), createParams.begin(), createParams.end());
     }
     
-    m_polylineIds = [WRLDRouteViewAmalgamationHelper CreatePolylines:allPolylineCreateParams width:m_width miterLimit:m_miterLimit ndMap:m_map];
+    m_polylineIds = [WRLDRouteViewAmalgamationHelper CreatePolylines:allPolylineCreateParams width:m_width miterLimit:m_miterLimit];
+    
+    for(WRLDPolyline* polyline in m_polylineIds) {
+        [m_map addOverlay:polyline];
+    }
 }
 
 - (void) removeFromMap
@@ -260,7 +265,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     int currentStepToPolylineCreateParamsSize = (int)m_routeStepToPolylineCreateParams.size();
     UIColor *routeColor = isActiveStep ? m_forwardPathColor : m_color;
     
-    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:currentStepToPolylineCreateParamsSize ndColor:routeColor];
+    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenStepIndex:currentStepToPolylineCreateParamsSize color:routeColor];
     
     [self refreshPolylines];
 }

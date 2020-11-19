@@ -1,19 +1,20 @@
 #import "WRLDRouteViewAmalgamationHelper.h"
 #import "WRLDRouteViewHelper.h"
-#import "WRLDPolyline.h"
 
 @implementation WRLDRouteViewAmalgamationHelper
 
-+ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams width:(CGFloat)width miterLimit:(CGFloat)miterLimit ndMap:(WRLDMapView*)map
++ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams width:(CGFloat)width miterLimit:(CGFloat)miterLimit
 {
-    NSMutableArray* result = [[NSMutableArray alloc] init];
-
     const auto& ranges = [WRLDRouteViewAmalgamationHelper BuildAmalgamationRanges:polylineCreateParams];
+    
+    NSMutableArray* result = [[NSMutableArray alloc] initWithCapacity:ranges.size()];
     
     for (const auto& range : ranges)
     {
-        NSArray *polylineIds = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylinesForRange:polylineCreateParams startRange:range.first ndEndRange:range.second width:width miterLimit:miterLimit ndMap:map];
-        [result addObjectsFromArray:polylineIds];
+        WRLDPolyline *polyline = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first ndEndRange:range.second width:width miterLimit:miterLimit];
+        if(polyline != nil) {
+            [result addObject:polyline];
+        }
     }
     
     return result;
@@ -69,18 +70,14 @@
     return true;
 }
 
-+ (NSArray *) CreateAmalgamatedPolylinesForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams startRange:(const int)rangeStartIndex ndEndRange:(const int)rangeEndIndex width:(CGFloat)width miterLimit:(CGFloat)miterLimit ndMap:(WRLDMapView*)map
++ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams startRange:(const int)rangeStartIndex ndEndRange:(const int)rangeEndIndex width:(CGFloat)width miterLimit:(CGFloat)miterLimit
 {
     Eegeo_ASSERT(rangeStartIndex < rangeEndIndex);
     Eegeo_ASSERT(rangeStartIndex >= 0);
     Eegeo_ASSERT(rangeEndIndex <= polylineCreateParams.size());
 
-    NSMutableArray* result = [[NSMutableArray alloc] init];
-
     std::vector<CLLocationCoordinate2D> joinedCoordinates;
     std::vector<CGFloat> joinedPerPointElevations;
-    
-    std::vector<CLLocationCoordinate2D> filteredJoinedCoordinates;
     
     bool anyPerPointElevations = false;
 
@@ -115,18 +112,18 @@
             }
         }
         
-        [WRLDRouteViewHelper removeCoincidentPointsWithElevations:joinedCoordinates pointElevation:joinedPerPointElevations ndOutput:filteredJoinedCoordinates];
+        [WRLDRouteViewHelper removeCoincidentPointsWithElevations:joinedCoordinates pointElevation:joinedPerPointElevations];
     }
     else
     {
-        [WRLDRouteViewHelper removeCoincidentPoints:joinedCoordinates output:filteredJoinedCoordinates];
+        [WRLDRouteViewHelper removeCoincidentPoints:joinedCoordinates];
     }
 
-    if (filteredJoinedCoordinates.size() > 1)
+    if (joinedCoordinates.size() > 1)
     {
         const auto& commonParams = polylineCreateParams[rangeStartIndex];
         
-        WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:filteredJoinedCoordinates.data() count:filteredJoinedCoordinates.size()];
+        WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:joinedCoordinates.data() count:joinedCoordinates.size()];
         
         polyline.color = commonParams.GetColor();
         polyline.lineWidth = width;
@@ -142,12 +139,10 @@
             }
         }
         
-        [result addObject:polyline];
-        
-        [map addOverlay:polyline];
+        return polyline;
     }
 
-    return result;
+    return nil;
 }
 
 

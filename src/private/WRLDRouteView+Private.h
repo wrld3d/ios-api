@@ -18,15 +18,15 @@
                           stepBefore:(WRLDRouteStep*)routeStepBefore
                            stepAfter:(WRLDRouteStep*)routeStepAfter
                     flattenStepIndex:(int)flattenStepIndex
-                             ndColor:(UIColor *)color;
+                               color:(UIColor *)color;
 
 -(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
-                 ndFlattenStepIndex:(int)flattenStepIndex;
+                    flattenStepIndex:(int)flattenStepIndex;
 
 -(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                            stepIndex:(int)stepIndex
                   closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
-                        ndSplitIndex:(int)splitIndex
+                          splitIndex:(int)splitIndex
 @end
 
 //NS_ASSUME_NONNULL_END
