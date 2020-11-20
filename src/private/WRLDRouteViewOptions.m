@@ -60,7 +60,7 @@
     return m_color;
 }
 
--(UIColor*) getForwardPathColor
+- (UIColor*) getForwardPathColor
 {
     return m_forwardPathColor;
 }

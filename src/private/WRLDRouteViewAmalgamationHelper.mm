@@ -3,9 +3,9 @@
 
 @implementation WRLDRouteViewAmalgamationHelper
 
-+ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
-                               width:(CGFloat)width
-                          miterLimit:(CGFloat)miterLimit
++ (NSMutableArray*) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                              width:(CGFloat)width
+                         miterLimit:(CGFloat)miterLimit
 {
     const auto& ranges = [WRLDRouteViewAmalgamationHelper BuildAmalgamationRanges:polylineCreateParams];
     
@@ -74,11 +74,11 @@
     return true;
 }
 
-+ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
-                                          startRange:(const int)rangeStartIndex
-                                            endRange:(const int)rangeEndIndex
-                                               width:(CGFloat)width
-                                          miterLimit:(CGFloat)miterLimit
++ (WRLDPolyline*) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                                         startRange:(const int)rangeStartIndex
+                                           endRange:(const int)rangeEndIndex
+                                              width:(CGFloat)width
+                                         miterLimit:(CGFloat)miterLimit
 {
     Eegeo_ASSERT(rangeStartIndex < rangeEndIndex);
     Eegeo_ASSERT(rangeStartIndex >= 0);

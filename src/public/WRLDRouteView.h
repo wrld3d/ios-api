@@ -57,8 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param indexOfPathSegmentStartVertex Vertex index where the path segment starts for the projected point. Can be used to separate traversed path.
  */
 
--(void) updateRouteProgress:(int)sectionIndex
-                  stepIndex:(int)stepIndex
+- (void) updateRouteProgress:(int)sectionIndex
+                   stepIndex:(int)stepIndex
          closestPointOnRoute:(CLLocationCoordinate2D)closestPointOnRoute
 indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex;
 

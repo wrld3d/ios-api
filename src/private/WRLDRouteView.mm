@@ -80,7 +80,7 @@
             }
             else
             {
-                [self addLineCreationParamsForStep:step flattenStepIndex:flattenedStepIndex];
+                [self addLineCreationParamsForStep:step flattenedStepIndex:flattenedStepIndex];
             }
             
             flattenedStepIndex++;
@@ -89,9 +89,9 @@
     [self refreshPolylines];
 }
 
--(void) updateRouteProgress:(int)sectionIndex
-                  stepIndex:(int)stepIndex
-        closestPointOnRoute:(CLLocationCoordinate2D)closestPointOnRoute
+- (void) updateRouteProgress:(int)sectionIndex
+                   stepIndex:(int)stepIndex
+         closestPointOnRoute:(CLLocationCoordinate2D)closestPointOnRoute
 indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 {
     [self removeFromMap];
@@ -145,7 +145,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                 }
                 else
                 {
-                    [self addLineCreationParamsForStep:step flattenStepIndex:flattenStepIndex];
+                    [self addLineCreationParamsForStep:step flattenedStepIndex:flattenStepIndex];
                     
                 }
             }
@@ -155,11 +155,11 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     [self refreshPolylines];
 }
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
-                          stepBefore:(WRLDRouteStep*)routeStepBefore
-                           stepAfter:(WRLDRouteStep*)routeStepAfter
-                  flattenedStepIndex:(int)flattenStepIndex
-                               color:(UIColor*)color
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                           stepBefore:(WRLDRouteStep*)routeStepBefore
+                            stepAfter:(WRLDRouteStep*)routeStepAfter
+                   flattenedStepIndex:(int)flattenStepIndex
+                                color:(UIColor*)color
 {
     if (routeStep.pathCount < 2)
     {
@@ -172,20 +172,20 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                                                                                                        color:color];
 }
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep flattenStepIndex:(int)flattenStepIndex
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep flattenedStepIndex:(int)flattenedStepIndex
 {
     if (routeStep.pathCount < 2)
     {
         return;
     }
     
-    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep color:m_color];
+    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep color:m_color];
 }
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
-                           stepIndex:(int)stepIndex
-                  closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
-                          splitIndex:(int)splitIndex
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+                            stepIndex:(int)stepIndex
+                   closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
+                           splitIndex:(int)splitIndex
 {
     if (routeStep.pathCount < 2)
     {
@@ -195,7 +195,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     m_routeStepToPolylineCreateParams[stepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep forwardColor:m_forwardPathColor backwardColor:m_color splitIndex:splitIndex closestPointOnPath:closestPointOnPath];
 }
 
--(void) refreshPolylines
+- (void) refreshPolylines
 {
     [self removeFromMap];
     
@@ -255,7 +255,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 - (void) addLinesForRouteStep:(WRLDRouteStep*)step
 {
     int currentStepToPolylineCreateParamsSize = (int)m_routeStepToPolylineCreateParams.size();
-    [self addLineCreationParamsForStep:step flattenStepIndex:currentStepToPolylineCreateParamsSize];
+    [self addLineCreationParamsForStep:step flattenedStepIndex:currentStepToPolylineCreateParamsSize];
     
     [self refreshPolylines];
 }

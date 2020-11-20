@@ -1,6 +1,5 @@
-#import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "WRLDRoutingPolylineCreateParams.h"
 #import "WRLDPolyline.h"
 
@@ -11,7 +10,7 @@ typedef std::vector<std::pair<int, int>> WRLDStartEndRangePairVector;
 
 @interface WRLDRouteViewAmalgamationHelper : NSObject
 
-+ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
++ (NSMutableArray*) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
                                width:(CGFloat)width
                           miterLimit:(CGFloat)miterLimit;
 
@@ -20,11 +19,11 @@ typedef std::vector<std::pair<int, int>> WRLDStartEndRangePairVector;
 
 + (WRLDStartEndRangePairVector) BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams;
 
-+ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
-                                          startRange:(const int)rangeStartIndex
-                                            endRange:(const int)rangeEndIndex
-                                               width:(CGFloat)width
-                                          miterLimit:(CGFloat)miterLimit;
++ (WRLDPolyline*) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                                         startRange:(const int)rangeStartIndex
+                                           endRange:(const int)rangeEndIndex
+                                              width:(CGFloat)width
+                                         miterLimit:(CGFloat)miterLimit;
 @end
 
 NS_ASSUME_NONNULL_END
