@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIColor*) getColor;
 
--(UIColor*) getForwardPathColor;
+- (UIColor*) getForwardPathColor;
 
 - (CGFloat) getMiterLimit;
 

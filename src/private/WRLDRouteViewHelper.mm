@@ -35,7 +35,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     return std::abs(a.second - b.second) <= elevationEpsilon;
 }
 
-+ (void) removeCoincidentPoints:(std::vector<CLLocationCoordinate2D> &)coordinates
++ (void) removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>&)coordinates
 {
     coordinates.erase(
         std::unique(coordinates.begin(), coordinates.end(), AreApproximatelyEqual),
@@ -43,7 +43,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 }
 
 + (void) removeCoincidentPointsWithElevations:(std::vector<CLLocationCoordinate2D>&)coordinates
-                               pointElevation:(std::vector<CGFloat>&)perPointElevations
+                            perPointElevation:(std::vector<CGFloat>&)perPointElevations
 {
     Eegeo_ASSERT(coordinates.size() == perPointElevations.size());
     std::vector<std::pair<CLLocationCoordinate2D, CGFloat>> zipped;
@@ -71,16 +71,16 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 
 
 + (WRLDRoutingPolylineCreateParams) MakeNavRoutingPolylineCreateParams:(const std::vector<CLLocationCoordinate2D>&)coordinates
-                                                                 color:(UIColor *)color
-                                                           indoorMapId:(NSString *)indoorMapId
+                                                                 color:(UIColor*)color
+                                                           indoorMapId:(NSString*)indoorMapId
                                                             mapFloorId:(int)indoorMapFloorId
 {
     return {coordinates, color, indoorMapId, indoorMapFloorId, {}};
 }
 
 + (WRLDRoutingPolylineCreateParams) MakeNavRoutingPolylineCreateParamsForVerticalLine:(const std::vector<CLLocationCoordinate2D>&)coordinates
-                                                                                color:(UIColor *)color
-                                                                          indoorMapId:(NSString *)indoorMapId
+                                                                                color:(UIColor*)color
+                                                                          indoorMapId:(NSString*)indoorMapId
                                                                            mapFloorId:(int)indoorMapFloorId
                                                                           heightStart:(CGFloat)heightStart
                                                                             heightEnd:(CGFloat)heightEnd
@@ -88,8 +88,8 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     return {coordinates, color, indoorMapId, indoorMapFloorId, {heightStart, heightEnd}};
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep *)routeStep
-                                                                        color:(UIColor *)color
++ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
+                                                                        color:(UIColor*)color
 {
     std::vector<WRLDRoutingPolylineCreateParams> results;
     
@@ -105,9 +105,9 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     return results;
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep *)routeStep
-                                                                 forwardColor:(UIColor *)forwardColor
-                                                                backwardColor:(UIColor *)backwardColor
++ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
+                                                                 forwardColor:(UIColor*)forwardColor
+                                                                backwardColor:(UIColor*)backwardColor
                                                                    splitIndex:(int)splitIndex
                                                            closestPointOnPath:(CLLocationCoordinate2D)closestPointOnRoute
 {
@@ -157,8 +157,8 @@ bool AreCoordinateElevationPairApproximatelyEqual(
         if(backwardPath.size()>1)
         {
             results.emplace_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParams:backwardPath
-                                                                                 color:backwardColor
-                                                                           indoorMapId:routeStep.indoorId
+                                                                                   color:backwardColor
+                                                                             indoorMapId:routeStep.indoorId
                                                                               mapFloorId:routeStep.indoorFloorId]);
         }
         
@@ -167,17 +167,17 @@ bool AreCoordinateElevationPairApproximatelyEqual(
             results.emplace_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParams:forwardPath
                                                                                    color:forwardColor
                                                                              indoorMapId:routeStep.indoorId
-                                                                            mapFloorId:routeStep.indoorFloorId]);
+                                                                              mapFloorId:routeStep.indoorFloorId]);
         }
         
         return results;
     }
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForFloorTransition:(WRLDRouteStep *)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForFloorTransition:(WRLDRouteStep*)routeStep
                                                                    floorBefore:(int)floorBefore
                                                                     floorAfter:(int)floorAfter
-                                                                         color:(UIColor *)color
+                                                                         color:(UIColor*)color
 {
     CGFloat verticalLineHeight = 5.0;
     CGFloat lineHeight = (floorAfter > floorBefore) ? verticalLineHeight : -verticalLineHeight;

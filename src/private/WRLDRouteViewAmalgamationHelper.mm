@@ -3,7 +3,9 @@
 
 @implementation WRLDRouteViewAmalgamationHelper
 
-+ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams width:(CGFloat)width miterLimit:(CGFloat)miterLimit
++ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                               width:(CGFloat)width
+                          miterLimit:(CGFloat)miterLimit
 {
     const auto& ranges = [WRLDRouteViewAmalgamationHelper BuildAmalgamationRanges:polylineCreateParams];
     
@@ -11,8 +13,9 @@
     
     for (const auto& range : ranges)
     {
-        WRLDPolyline *polyline = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first ndEndRange:range.second width:width miterLimit:miterLimit];
-        if(polyline != nil) {
+        WRLDPolyline *polyline = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first endRange:range.second width:width miterLimit:miterLimit];
+        if(polyline != nil)
+        {
             [result addObject:polyline];
         }
     }
@@ -20,7 +23,7 @@
     return result;
 }
 
-+ (WRLDStartEndRangePairVector) BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&) polylineCreateParams
++ (WRLDStartEndRangePairVector) BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
 {
     WRLDStartEndRangePairVector ranges;
 
@@ -46,7 +49,8 @@
     return ranges;
 }
 
-+ (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&) a with:(const WRLDRoutingPolylineCreateParams&) b
++ (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
+                  with:(const WRLDRoutingPolylineCreateParams&)b
 {
     if (a.IsIndoor() != b.IsIndoor())
     {
@@ -70,7 +74,11 @@
     return true;
 }
 
-+ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams startRange:(const int)rangeStartIndex ndEndRange:(const int)rangeEndIndex width:(CGFloat)width miterLimit:(CGFloat)miterLimit
++ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                                          startRange:(const int)rangeStartIndex
+                                            endRange:(const int)rangeEndIndex
+                                               width:(CGFloat)width
+                                          miterLimit:(CGFloat)miterLimit
 {
     Eegeo_ASSERT(rangeStartIndex < rangeEndIndex);
     Eegeo_ASSERT(rangeStartIndex >= 0);
@@ -112,7 +120,7 @@
             }
         }
         
-        [WRLDRouteViewHelper removeCoincidentPointsWithElevations:joinedCoordinates pointElevation:joinedPerPointElevations];
+        [WRLDRouteViewHelper removeCoincidentPointsWithElevations:joinedCoordinates perPointElevation:joinedPerPointElevations];
     }
     else
     {

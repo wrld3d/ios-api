@@ -14,16 +14,16 @@
                           route:(WRLDRoute*)route
                          option:(WRLDRouteViewOptions*)options;
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                           stepBefore:(WRLDRouteStep*)routeStepBefore
                            stepAfter:(WRLDRouteStep*)routeStepAfter
-                    flattenStepIndex:(int)flattenStepIndex
-                               color:(UIColor *)color;
+                  flattenedStepIndex:(int)flattenStepIndex
+                               color:(UIColor*)color;
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                     flattenStepIndex:(int)flattenStepIndex;
 
--(void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
+- (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                            stepIndex:(int)stepIndex
                   closestPointOnPath:(CLLocationCoordinate2D)closestPointOnPath
                           splitIndex:(int)splitIndex

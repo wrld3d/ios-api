@@ -34,8 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
                              floor:(NSInteger)floor
-                            height:(CGFloat)height
-                      isActiveStep:(BOOL)isActiveStep;
+                            height:(CGFloat)height;
 
 /*!
   !Deprecated
@@ -47,13 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void) addLinesForFloorTransition:(WRLDRouteStep*)step
                          stepBefore:(WRLDRouteStep*)stepBefore
-                          stepAfter:(WRLDRouteStep*)stepAfter
-                       isActiveStep:(BOOL)isActiveStep;
+                          stepAfter:(WRLDRouteStep*)stepAfter;
 
 /*!
  * Update the progress of turn by turn navigation on route.
  *
- * @param sectionIndex The  index of current WRLDRouteSection.
+ * @param sectionIndex The index of current WRLDRouteSection.
  * @param stepIndex The index of current WRLDRouteStep.
  * @param closestPointOnRoute Closest point on the route in WRLDPointOnRouteResult.
  * @param indexOfPathSegmentStartVertex Vertex index where the path segment starts for the projected point. Can be used to separate traversed path.

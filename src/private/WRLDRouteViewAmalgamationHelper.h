@@ -11,10 +11,20 @@ typedef std::vector<std::pair<int, int>> WRLDStartEndRangePairVector;
 
 @interface WRLDRouteViewAmalgamationHelper : NSObject
 
-+ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams width:(CGFloat)width miterLimit:(CGFloat)miterLimit;
-+ (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a with:(const WRLDRoutingPolylineCreateParams&)b;
++ (NSMutableArray *) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                               width:(CGFloat)width
+                          miterLimit:(CGFloat)miterLimit;
+
++ (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
+                  with:(const WRLDRoutingPolylineCreateParams&)b;
+
 + (WRLDStartEndRangePairVector) BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams;
-+ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&) polylineCreateParams startRange:(const int) rangeStartIndex ndEndRange:(const int) rangeEndIndex width:(CGFloat)width miterLimit:(CGFloat)miterLimit;
+
++ (WRLDPolyline *) CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                                          startRange:(const int)rangeStartIndex
+                                            endRange:(const int)rangeEndIndex
+                                               width:(CGFloat)width
+                                          miterLimit:(CGFloat)miterLimit;
 @end
 
 NS_ASSUME_NONNULL_END
