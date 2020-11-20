@@ -5,7 +5,7 @@
 bool AreApproximatelyEqual(
     const CLLocationCoordinate2D& first,
     const CLLocationCoordinate2D& second
-)
+    )
 {
     // <= 1mm separation
     const double epsilonSq = 1e-6;

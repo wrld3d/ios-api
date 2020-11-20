@@ -97,7 +97,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
     [self removeFromMap];
     
     NSMutableArray* sections = m_route.sections;
-    int flattenStepIndex = 0;
+    int flattenedStepIndex = 0;
     
     for (int j=0; j<sections.count;j++)
     {
@@ -129,27 +129,27 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
                 {
                     bool hasReachedEnd = indexOfPathSegmentStartVertex == (step.pathCount-1);
                     
-                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenedStepIndex:flattenStepIndex color:(hasReachedEnd ? m_color : m_forwardPathColor)];
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenedStepIndex:flattenedStepIndex color:(hasReachedEnd ? m_color : m_forwardPathColor)];
 
                 }
                 else
                 {
-                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenedStepIndex:flattenStepIndex color:m_color];
+                    [self addLineCreationParamsForStep:step stepBefore:stepBefore stepAfter:stepAfter flattenedStepIndex:flattenedStepIndex color:m_color];
                 }
             }
             else
             {
                 if(isActiveStep)
                 {
-                    [self addLineCreationParamsForStep:step stepIndex:flattenStepIndex closestPointOnPath:closestPointOnRoute splitIndex:indexOfPathSegmentStartVertex];
+                    [self addLineCreationParamsForStep:step stepIndex:flattenedStepIndex closestPointOnPath:closestPointOnRoute splitIndex:indexOfPathSegmentStartVertex];
                 }
                 else
                 {
-                    [self addLineCreationParamsForStep:step flattenedStepIndex:flattenStepIndex];
+                    [self addLineCreationParamsForStep:step flattenedStepIndex:flattenedStepIndex];
                     
                 }
             }
-            flattenStepIndex ++;
+            flattenedStepIndex ++;
         }
     }
     [self refreshPolylines];
@@ -158,7 +158,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
 - (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                            stepBefore:(WRLDRouteStep*)routeStepBefore
                             stepAfter:(WRLDRouteStep*)routeStepAfter
-                   flattenedStepIndex:(int)flattenStepIndex
+                   flattenedStepIndex:(int)flattenedStepIndex
                                 color:(UIColor*)color
 {
     if (routeStep.pathCount < 2)
@@ -166,7 +166,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         return;
     }
     
-    m_routeStepToPolylineCreateParams[flattenStepIndex] = [WRLDRouteViewHelper CreateLinesForFloorTransition:routeStep
+    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper CreateLinesForFloorTransition:routeStep
                                                                                                  floorBefore:routeStepBefore.indoorFloorId
                                                                                                   floorAfter:routeStepAfter.indoorFloorId
                                                                                                        color:color];

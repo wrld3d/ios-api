@@ -17,11 +17,11 @@
 - (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                            stepBefore:(WRLDRouteStep*)routeStepBefore
                             stepAfter:(WRLDRouteStep*)routeStepAfter
-                   flattenedStepIndex:(int)flattenStepIndex
+                   flattenedStepIndex:(int)flattenedStepIndex
                                 color:(UIColor*)color;
 
 - (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
-                   flattenedStepIndex:(int)flattenStepIndex;
+                   flattenedStepIndex:(int)flattenedStepIndex;
 
 - (void) addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
                             stepIndex:(int)stepIndex
