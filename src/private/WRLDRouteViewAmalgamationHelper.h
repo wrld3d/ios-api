@@ -11,8 +11,8 @@ typedef std::vector<std::pair<int, int>> WRLDStartEndRangePairVector;
 @interface WRLDRouteViewAmalgamationHelper : NSObject
 
 + (NSMutableArray*) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
-                               width:(CGFloat)width
-                          miterLimit:(CGFloat)miterLimit;
+                              width:(CGFloat)width
+                         miterLimit:(CGFloat)miterLimit;
 
 + (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
                   with:(const WRLDRoutingPolylineCreateParams&)b;
