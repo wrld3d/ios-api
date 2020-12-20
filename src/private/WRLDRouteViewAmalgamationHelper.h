@@ -10,9 +10,11 @@ typedef std::vector<std::pair<int, int>> WRLDStartEndRangePairVector;
 
 @interface WRLDRouteViewAmalgamationHelper : NSObject
 
-+ (NSMutableArray*) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
-                              width:(CGFloat)width
-                         miterLimit:(CGFloat)miterLimit;
++ (void) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
+                   width:(CGFloat)width
+              miterLimit:(CGFloat)miterLimit
+    outBackwardPolylines:(NSMutableArray*)out_backwardPolylines
+     outForwardPolylines:(NSMutableArray*)out_forwardPolylines;
 
 + (bool) CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
                   with:(const WRLDRoutingPolylineCreateParams&)b;

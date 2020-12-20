@@ -82,6 +82,13 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex;
 - (void) setColor:(UIColor*)color;
 
 /*!
+ * Sets the forward color for this RouteView's polylines.
+ *
+ * @param color The color of the polyline as a 32-bit ARGB color.
+ */
+- (void) setForwardColor:(UIColor*)color;
+
+/*!
  * Sets the miter limit of this RouteView's polylines.
  *
  * @param miterLimit The miter limit, as a ratio between maximum allowed miter join diagonal

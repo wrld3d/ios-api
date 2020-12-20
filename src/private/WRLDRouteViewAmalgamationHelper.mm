@@ -3,24 +3,29 @@
 
 @implementation WRLDRouteViewAmalgamationHelper
 
-+ (NSMutableArray*) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
++ (void) CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
                               width:(CGFloat)width
                          miterLimit:(CGFloat)miterLimit
+               outBackwardPolylines:(NSMutableArray*)out_backwardPolylines
+                outForwardPolylines:(NSMutableArray*)out_forwardPolylines
 {
     const auto& ranges = [WRLDRouteViewAmalgamationHelper BuildAmalgamationRanges:polylineCreateParams];
-    
-    NSMutableArray* result = [[NSMutableArray alloc] initWithCapacity:ranges.size()];
     
     for (const auto& range : ranges)
     {
         WRLDPolyline *polyline = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first endRange:range.second width:width miterLimit:miterLimit];
-        if(polyline != nil)
+        if (polyline != nil)
         {
-            [result addObject:polyline];
+            if (polylineCreateParams[range.first].IsForwardColor())
+            {
+                [out_forwardPolylines addObject:polyline];
+            }
+            else
+            {
+                [out_backwardPolylines addObject:polyline];
+            }
         }
     }
-    
-    return result;
 }
 
 + (WRLDStartEndRangePairVector) BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
@@ -67,7 +72,7 @@
         return false;
     }
 
-    if (![a.GetColor() isEqual:b.GetColor()])
+    if (a.IsForwardColor() != b.IsForwardColor())
     {
         return false;
     }
@@ -133,16 +138,16 @@
         
         WRLDPolyline* polyline = [WRLDPolyline polylineWithCoordinates:joinedCoordinates.data() count:joinedCoordinates.size()];
         
-        polyline.color = commonParams.GetColor();
         polyline.lineWidth = width;
         polyline.miterLimit = miterLimit;
         
-        if(commonParams.IsIndoor())
+        if (commonParams.IsIndoor())
         {
             [polyline setIndoorMapId:commonParams.GetIndoorMapId()];
             [polyline setIndoorFloorId:commonParams.GetIndoorMapFloorId()];
             
-            if(anyPerPointElevations) {
+            if(anyPerPointElevations)
+            {
                 [polyline setPerPointElevations:joinedPerPointElevations.data() count:joinedPerPointElevations.size()];
             }
         }
