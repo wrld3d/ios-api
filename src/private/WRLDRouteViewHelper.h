@@ -9,14 +9,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDRouteViewHelper : NSObject
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForRouteDirection:(WRLDRouteStep*)routeStep
                                                               isForwardColor:(bool)isForwardColor;
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForRouteDirection:(WRLDRouteStep*)routeStep
                                                                   splitIndex:(int)splitIndex
                                                           closestPointOnPath:(CLLocationCoordinate2D)closestPointOnRoute;
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForFloorTransition:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForFloorTransition:(WRLDRouteStep*)routeStep
                                                                   floorBefore:(int)floorBefore
                                                                    floorAfter:(int)floorAfter
                                                                isForwardColor:(bool)isForwardColor;

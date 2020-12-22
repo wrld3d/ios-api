@@ -22,12 +22,12 @@ public:
     {
     }
 
-    const std::vector<CLLocationCoordinate2D>& GetCoordinates() const { return m_coordinates; }
-    NSString* GetIndoorMapId() const { return m_indoorMapId; }
-    int GetIndoorMapFloorId() const { return m_indoorMapFloorId; }
-    const std::vector<CGFloat>& GetPerPointElevations() const { return m_perPointElevations; }
-    bool IsIndoor() const { return ![m_indoorMapId isEqualToString:@""]; }
-    bool IsForwardColor() const { return m_isForwardColor; }
+    const std::vector<CLLocationCoordinate2D>& getCoordinates() const { return m_coordinates; }
+    NSString* getIndoorMapId() const { return m_indoorMapId; }
+    int getIndoorMapFloorId() const { return m_indoorMapFloorId; }
+    const std::vector<CGFloat>& getPerPointElevations() const { return m_perPointElevations; }
+    bool isIndoor() const { return ![m_indoorMapId isEqualToString:@""]; }
+    bool isForwardColor() const { return m_isForwardColor; }
 
 private:
     std::vector<CLLocationCoordinate2D> m_coordinates;

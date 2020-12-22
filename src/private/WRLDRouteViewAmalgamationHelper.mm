@@ -3,20 +3,20 @@
 
 @implementation WRLDRouteViewAmalgamationHelper
 
-+ (void)CreatePolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
++ (void)createPolylines:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
                   width:(CGFloat)width
              miterLimit:(CGFloat)miterLimit
    outBackwardPolylines:(NSMutableArray*)out_backwardPolylines
     outForwardPolylines:(NSMutableArray*)out_forwardPolylines
 {
-    const auto& ranges = [WRLDRouteViewAmalgamationHelper BuildAmalgamationRanges:polylineCreateParams];
+    const auto& ranges = [WRLDRouteViewAmalgamationHelper buildAmalgamationRanges:polylineCreateParams];
 
     for (const auto& range : ranges)
     {
-        WRLDPolyline* polyline = [WRLDRouteViewAmalgamationHelper CreateAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first endRange:range.second width:width miterLimit:miterLimit];
+        WRLDPolyline* polyline = [WRLDRouteViewAmalgamationHelper createAmalgamatedPolylineForRange:polylineCreateParams startRange:range.first endRange:range.second width:width miterLimit:miterLimit];
         if (polyline != nil)
         {
-            if (polylineCreateParams[range.first].IsForwardColor())
+            if (polylineCreateParams[range.first].isForwardColor())
             {
                 [out_forwardPolylines addObject:polyline];
             }
@@ -28,7 +28,7 @@
     }
 }
 
-+ (WRLDStartEndRangePairVector)BuildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
++ (WRLDStartEndRangePairVector)buildAmalgamationRanges:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
 {
     WRLDStartEndRangePairVector ranges;
 
@@ -43,7 +43,7 @@
         const auto& a = polylineCreateParams[i - 1];
         const auto& b = polylineCreateParams[i];
 
-        if (![WRLDRouteViewAmalgamationHelper CanAmalgamate:a with:b])
+        if (![WRLDRouteViewAmalgamationHelper canAmalgamate:a with:b])
         {
             ranges.push_back(std::make_pair(rangeStart, i));
             rangeStart = i;
@@ -54,32 +54,32 @@
     return ranges;
 }
 
-+ (bool)CanAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
++ (bool)canAmalgamate:(const WRLDRoutingPolylineCreateParams&)a
                  with:(const WRLDRoutingPolylineCreateParams&)b
 {
-    if (a.IsIndoor() != b.IsIndoor())
+    if (a.isIndoor() != b.isIndoor())
     {
         return false;
     }
 
-    if (![a.GetIndoorMapId() isEqualToString:b.GetIndoorMapId()])
+    if (![a.getIndoorMapId() isEqualToString:b.getIndoorMapId()])
     {
         return false;
     }
 
-    if (a.GetIndoorMapFloorId() != b.GetIndoorMapFloorId())
+    if (a.getIndoorMapFloorId() != b.getIndoorMapFloorId())
     {
         return false;
     }
 
-    if (a.IsForwardColor() != b.IsForwardColor())
+    if (a.isForwardColor() != b.isForwardColor())
     {
         return false;
     }
     return true;
 }
 
-+ (WRLDPolyline*)CreateAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
++ (WRLDPolyline*)createAmalgamatedPolylineForRange:(const WRLDRoutingPolylineCreateParamsVector&)polylineCreateParams
                                         startRange:(const int)rangeStartIndex
                                           endRange:(const int)rangeEndIndex
                                              width:(CGFloat)width
@@ -97,11 +97,11 @@
     for (int i = rangeStartIndex; i < rangeEndIndex; ++i)
     {
         const auto& params = polylineCreateParams[i];
-        const auto& coordinates = params.GetCoordinates();
+        const auto& coordinates = params.getCoordinates();
 
         joinedCoordinates.insert(joinedCoordinates.end(), coordinates.begin(), coordinates.end());
 
-        if (!params.GetPerPointElevations().empty())
+        if (!params.getPerPointElevations().empty())
         {
             anyPerPointElevations = true;
         }
@@ -112,12 +112,12 @@
         for (int i = rangeStartIndex; i < rangeEndIndex; ++i)
         {
             const auto& params = polylineCreateParams[i];
-            const auto& perPointElevations = params.GetPerPointElevations();
+            const auto& perPointElevations = params.getPerPointElevations();
 
             if (perPointElevations.empty())
             {
                 // fill with zero
-                joinedPerPointElevations.insert(joinedPerPointElevations.end(), params.GetCoordinates().size(), 0.0);
+                joinedPerPointElevations.insert(joinedPerPointElevations.end(), params.getCoordinates().size(), 0.0);
             }
             else
             {
@@ -141,10 +141,10 @@
         polyline.lineWidth = width;
         polyline.miterLimit = miterLimit;
 
-        if (commonParams.IsIndoor())
+        if (commonParams.isIndoor())
         {
-            [polyline setIndoorMapId:commonParams.GetIndoorMapId()];
-            [polyline setIndoorFloorId:commonParams.GetIndoorMapFloorId()];
+            [polyline setIndoorMapId:commonParams.getIndoorMapId()];
+            [polyline setIndoorFloorId:commonParams.getIndoorMapFloorId()];
 
             if (anyPerPointElevations)
             {

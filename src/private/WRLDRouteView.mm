@@ -167,7 +167,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         return;
     }
 
-    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper CreateLinesForFloorTransition:routeStep
+    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper createLinesForFloorTransition:routeStep
                                                                                                    floorBefore:routeStepBefore.indoorFloorId
                                                                                                     floorAfter:routeStepAfter.indoorFloorId
                                                                                                 isForwardColor:isForwardColor];
@@ -180,7 +180,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         return;
     }
 
-    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep isForwardColor:false];
+    m_routeStepToPolylineCreateParams[flattenedStepIndex] = [WRLDRouteViewHelper createLinesForRouteDirection:routeStep isForwardColor:false];
 }
 
 - (void)addLineCreationParamsForStep:(WRLDRouteStep*)routeStep
@@ -193,7 +193,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         return;
     }
 
-    m_routeStepToPolylineCreateParams[stepIndex] = [WRLDRouteViewHelper CreateLinesForRouteDirection:routeStep splitIndex:splitIndex closestPointOnPath:closestPointOnPath];
+    m_routeStepToPolylineCreateParams[stepIndex] = [WRLDRouteViewHelper createLinesForRouteDirection:routeStep splitIndex:splitIndex closestPointOnPath:closestPointOnPath];
 }
 
 - (void)refreshPolylines
@@ -209,7 +209,7 @@ indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex
         allPolylineCreateParams.insert(allPolylineCreateParams.end(), createParams.begin(), createParams.end());
     }
 
-    [WRLDRouteViewAmalgamationHelper CreatePolylines:allPolylineCreateParams width:m_width miterLimit:m_miterLimit outBackwardPolylines:m_polylinesBackward outForwardPolylines:m_polylinesForward];
+    [WRLDRouteViewAmalgamationHelper createPolylines:allPolylineCreateParams width:m_width miterLimit:m_miterLimit outBackwardPolylines:m_polylinesBackward outForwardPolylines:m_polylinesForward];
 
     for (WRLDPolyline* polyline in m_polylinesBackward)
     {

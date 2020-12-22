@@ -2,7 +2,7 @@
 
 @implementation WRLDRouteViewHelper
 
-bool AreApproximatelyEqual(
+bool areApproximatelyEqual(
     const CLLocationCoordinate2D& first,
     const CLLocationCoordinate2D& second)
 {
@@ -14,13 +14,13 @@ bool AreApproximatelyEqual(
     return [firstLoc distanceFromLocation:secondLoc] <= epsilonSq;
 }
 
-bool AreCoordinateElevationPairApproximatelyEqual(
+bool areCoordinateElevationPairApproximatelyEqual(
     std::pair<CLLocationCoordinate2D, CGFloat>& a,
     std::pair<CLLocationCoordinate2D, CGFloat>& b)
 {
     const double elevationEpsilon = 1e-3;
 
-    if (!AreApproximatelyEqual(a.first, b.first))
+    if (!areApproximatelyEqual(a.first, b.first))
     {
         return false;
     }
@@ -31,7 +31,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 + (void)removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>&)coordinates
 {
     coordinates.erase(
-        std::unique(coordinates.begin(), coordinates.end(), AreApproximatelyEqual),
+        std::unique(coordinates.begin(), coordinates.end(), areApproximatelyEqual),
         coordinates.end());
 }
 
@@ -46,7 +46,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
         zipped.push_back(std::make_pair(coordinates[i], perPointElevations[i]));
     }
 
-    const auto newEnd = std::unique(zipped.begin(), zipped.end(), AreCoordinateElevationPairApproximatelyEqual);
+    const auto newEnd = std::unique(zipped.begin(), zipped.end(), areCoordinateElevationPairApproximatelyEqual);
     if (newEnd != zipped.end())
     {
         zipped.erase(newEnd, zipped.end());
@@ -62,7 +62,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     }
 }
 
-+ (WRLDRoutingPolylineCreateParams)MakeNavRoutingPolylineCreateParams:(const std::vector<CLLocationCoordinate2D>&)coordinates
++ (WRLDRoutingPolylineCreateParams)makeNavRoutingPolylineCreateParams:(const std::vector<CLLocationCoordinate2D>&)coordinates
                                                        isForwardColor:(bool)isForwardColor
                                                           indoorMapId:(NSString*)indoorMapId
                                                            mapFloorId:(int)indoorMapFloorId
@@ -70,7 +70,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     return { coordinates, isForwardColor, indoorMapId, indoorMapFloorId, {} };
 }
 
-+ (WRLDRoutingPolylineCreateParams)MakeNavRoutingPolylineCreateParamsForVerticalLine:(const std::vector<CLLocationCoordinate2D>&)coordinates
++ (WRLDRoutingPolylineCreateParams)makeNavRoutingPolylineCreateParamsForVerticalLine:(const std::vector<CLLocationCoordinate2D>&)coordinates
                                                                       isForwardColor:(bool)isForwardColor
                                                                          indoorMapId:(NSString*)indoorMapId
                                                                           mapFloorId:(int)indoorMapFloorId
@@ -80,7 +80,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     return { coordinates, isForwardColor, indoorMapId, indoorMapFloorId, { heightStart, heightEnd } };
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForRouteDirection:(WRLDRouteStep*)routeStep
                                                               isForwardColor:(bool)isForwardColor
 {
     std::vector<WRLDRoutingPolylineCreateParams> results;
@@ -91,13 +91,13 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 
     if (pathCoordinates.size() > 1)
     {
-        results.push_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParams:pathCoordinates isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:routeStep.indoorFloorId]);
+        results.push_back([WRLDRouteViewHelper makeNavRoutingPolylineCreateParams:pathCoordinates isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:routeStep.indoorFloorId]);
     }
 
     return results;
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForRouteDirection:(WRLDRouteStep*)routeStep
                                                                   splitIndex:(int)splitIndex
                                                           closestPointOnPath:(CLLocationCoordinate2D)closestPointOnRoute
 {
@@ -108,7 +108,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 
     if (hasReachedEnd)
     {
-        return [self CreateLinesForRouteDirection:routeStep isForwardColor:false];
+        return [self createLinesForRouteDirection:routeStep isForwardColor:false];
     }
     else
     {
@@ -146,7 +146,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 
         if (backwardPath.size() > 1)
         {
-            results.emplace_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParams:backwardPath
+            results.emplace_back([WRLDRouteViewHelper makeNavRoutingPolylineCreateParams:backwardPath
                                                                           isForwardColor:false
                                                                              indoorMapId:routeStep.indoorId
                                                                               mapFloorId:routeStep.indoorFloorId]);
@@ -154,7 +154,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
 
         if (forwardPath.size() > 1)
         {
-            results.emplace_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParams:forwardPath
+            results.emplace_back([WRLDRouteViewHelper makeNavRoutingPolylineCreateParams:forwardPath
                                                                           isForwardColor:true
                                                                              indoorMapId:routeStep.indoorId
                                                                               mapFloorId:routeStep.indoorFloorId]);
@@ -164,7 +164,7 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     }
 }
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForFloorTransition:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)createLinesForFloorTransition:(WRLDRouteStep*)routeStep
                                                                   floorBefore:(int)floorBefore
                                                                    floorAfter:(int)floorAfter
                                                                isForwardColor:(bool)isForwardColor
@@ -186,9 +186,9 @@ bool AreCoordinateElevationPairApproximatelyEqual(
     endCoords.push_back(coordinates.at(coordinateCount - 2));
     endCoords.push_back(coordinates.at(coordinateCount - 1));
 
-    results.push_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParamsForVerticalLine:startCoords isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:floorBefore heightStart:0 heightEnd:lineHeight]);
+    results.push_back([WRLDRouteViewHelper makeNavRoutingPolylineCreateParamsForVerticalLine:startCoords isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:floorBefore heightStart:0 heightEnd:lineHeight]);
 
-    results.push_back([WRLDRouteViewHelper MakeNavRoutingPolylineCreateParamsForVerticalLine:endCoords isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:floorAfter heightStart:-lineHeight heightEnd:0]);
+    results.push_back([WRLDRouteViewHelper makeNavRoutingPolylineCreateParamsForVerticalLine:endCoords isForwardColor:isForwardColor indoorMapId:routeStep.indoorId mapFloorId:floorAfter heightStart:-lineHeight heightEnd:0]);
 
     return results;
 }
