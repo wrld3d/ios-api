@@ -7,24 +7,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WRLDRouteViewHelper : NSObject 
+@interface WRLDRouteViewHelper : NSObject
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
++ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
+                                                              isForwardColor:(bool)isForwardColor;
+
++ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
+                                                                  splitIndex:(int)splitIndex
+                                                          closestPointOnPath:(CLLocationCoordinate2D)closestPointOnRoute;
+
++ (std::vector<WRLDRoutingPolylineCreateParams>)CreateLinesForFloorTransition:(WRLDRouteStep*)routeStep
+                                                                  floorBefore:(int)floorBefore
+                                                                   floorAfter:(int)floorAfter
                                                                isForwardColor:(bool)isForwardColor;
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForRouteDirection:(WRLDRouteStep*)routeStep
-                                                                   splitIndex:(int)splitIndex
-                                                           closestPointOnPath:(CLLocationCoordinate2D)closestPointOnRoute;
++ (void)removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>&)coordinates;
 
-+ (std::vector<WRLDRoutingPolylineCreateParams>) CreateLinesForFloorTransition:(WRLDRouteStep*)routeStep
-                                                                   floorBefore:(int)floorBefore
-                                                                    floorAfter:(int)floorAfter
-                                                                isForwardColor:(bool)isForwardColor;
-
-+ (void) removeCoincidentPoints:(std::vector<CLLocationCoordinate2D>&)coordinates;
-
-+ (void) removeCoincidentPointsWithElevations:(std::vector<CLLocationCoordinate2D>&)coordinates
-                            perPointElevation:(std::vector<CGFloat>&)perPointElevations;
++ (void)removeCoincidentPointsWithElevations:(std::vector<CLLocationCoordinate2D>&)coordinates
+                           perPointElevation:(std::vector<CGFloat>&)perPointElevations;
 
 @end
 

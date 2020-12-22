@@ -13,13 +13,12 @@ public:
         bool isForwardColor,
         NSString* indoorMapId,
         int indoorMapFloorId,
-        const std::vector<CGFloat>& perPointElevations
-    )
-    : m_coordinates(coordinates)
-    , m_isForwardColor(isForwardColor)
-    , m_indoorMapId(indoorMapId)
-    , m_indoorMapFloorId(indoorMapFloorId)
-    , m_perPointElevations(perPointElevations)
+        const std::vector<CGFloat>& perPointElevations)
+        : m_coordinates(coordinates)
+        , m_isForwardColor(isForwardColor)
+        , m_indoorMapId(indoorMapId)
+        , m_indoorMapFloorId(indoorMapFloorId)
+        , m_perPointElevations(perPointElevations)
     {
     }
 
