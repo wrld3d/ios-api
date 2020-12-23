@@ -9,6 +9,7 @@
 {
     CGFloat m_width;
     UIColor* m_color;
+    UIColor* m_forwardPathColor;
     CGFloat m_miterLimit;
 }
 
@@ -17,7 +18,8 @@
     if (self = [super init])
     {
         m_width = 10.f;
-        m_color = [UIColor blackColor];
+        m_color = [UIColor colorWithRed:0 green:(150.f/255.f) blue:1.f alpha:1.f];
+        m_forwardPathColor = [UIColor colorWithRed:0 green:1.f blue:(150.f/255.f) alpha:1.f];
         m_miterLimit = 10.0f;
     }
     
@@ -36,6 +38,12 @@
     return self;
 }
 
+- (WRLDRouteViewOptions*) forwardPathColor:(UIColor*)color
+{
+    m_forwardPathColor = color;
+    return self;
+}
+
 - (WRLDRouteViewOptions*) miterLimit:(CGFloat)miterLimit
 {
     m_miterLimit = miterLimit;
@@ -50,6 +58,11 @@
 - (UIColor*) getColor
 {
     return m_color;
+}
+
+- (UIColor*) getForwardPathColor
+{
+    return m_forwardPathColor;
 }
 
 - (CGFloat) getMiterLimit

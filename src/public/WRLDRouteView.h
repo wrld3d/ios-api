@@ -29,15 +29,39 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void) addToMap;
 
+/*!
+  !Deprecated
+ */
 - (WRLDPolyline*) makeVerticalLine:(WRLDRouteStep*)step
                              floor:(NSInteger)floor
                             height:(CGFloat)height;
 
+/*!
+  !Deprecated
+ */
 - (void) addLinesForRouteStep:(WRLDRouteStep*)step;
 
+/*!
+  !Deprecated
+ */
 - (void) addLinesForFloorTransition:(WRLDRouteStep*)step
                          stepBefore:(WRLDRouteStep*)stepBefore
                           stepAfter:(WRLDRouteStep*)stepAfter;
+
+/*!
+ * Update the progress of turn by turn navigation on route.
+ *
+ * @param sectionIndex The index of current WRLDRouteSection.
+ * @param stepIndex The index of current WRLDRouteStep.
+ * @param closestPointOnRoute Closest point on the route in WRLDPointOnRouteResult.
+ * @param indexOfPathSegmentStartVertex Vertex index where the path segment starts for the projected point. Can be used to separate traversed path.
+ */
+
+- (void) updateRouteProgress:(int)sectionIndex
+                   stepIndex:(int)stepIndex
+         closestPointOnRoute:(CLLocationCoordinate2D)closestPointOnRoute
+indexOfPathSegmentStartVertex:(int)indexOfPathSegmentStartVertex;
+
 /*!
  * Remove this RouteView from the map.
  */
@@ -56,6 +80,13 @@ NS_ASSUME_NONNULL_BEGIN
  * @param color The color of the polyline as a 32-bit ARGB color.
  */
 - (void) setColor:(UIColor*)color;
+
+/*!
+ * Sets the forward color for this RouteView's polylines.
+ *
+ * @param color The color of the polyline as a 32-bit ARGB color.
+ */
+- (void) setForwardColor:(UIColor*)color;
 
 /*!
  * Sets the miter limit of this RouteView's polylines.
