@@ -63,6 +63,18 @@ withIndoorMapFloorId:(NSInteger)indoorMapFloorId
     m_pBlueSphereApi->SetEnabled(_enabled);
 }
 
+- (void)setAccuracyRingEnabled:(bool)accuracyRingEnabled
+{
+    _accuracyRingEnabled = accuracyRingEnabled;
+    m_pBlueSphereApi->SetAccuracyRingEnabled(_accuracyRingEnabled);
+}
+
+-(void)setAccuracyInMeters:(float)accuracyInMeters
+{
+    _accuracyInMeters = accuracyInMeters;
+    m_pBlueSphereApi->SetCurrentLocationAccuracy(accuracyInMeters);
+}
+
 - (void)setCoordinate:(CLLocationCoordinate2D)coordinate
             heading:(CLLocationDirection) heading
 {
