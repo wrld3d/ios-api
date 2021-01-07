@@ -29,6 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// The property that determines if the blue sphere should be displayed and assets loaded.
 @property (nonatomic) bool enabled;
 
+/// The property that determines if the accracy ring should be displayed.
+@property (nonatomic) bool accuracyRingEnabled;
+
+/// The property that determines radius of accuracy ring in meters.
+@property (nonatomic) float accuracyInMeters;
+
 /*!
  Place the blue sphere inside an indoor map on a specific floor.
  @param indoorMapId The ID of an indoor map the bue sphere should be inside. (See WRLDIndoorMap).
