@@ -15,10 +15,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)mapOptions;
 
-/// The coverage tree manifest url for the map.
+/*!
+  The coverage tree manifest url for the map.  By default, the map will
+  load the latest public manifest which is updated regularly.
+*/
 @property (nonatomic, copy) NSString* coverageTreeManifest;
 
-/// The environment themes manifest url for the map.
+/*!
+  The environment themes manifest url for the map.  By default, the map will
+  load the latest themes manifest which is updated regularly.
+*/
 @property (nonatomic, copy) NSString* environmentThemesManifest;
 
 @end
