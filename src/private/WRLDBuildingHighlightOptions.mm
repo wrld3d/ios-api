@@ -16,12 +16,12 @@
 
 + (instancetype) highlightOptionsWithLocation:(CLLocationCoordinate2D)location
 {
-    return [[self alloc] initWithLocation:location];
+    return [[WRLDBuildingHighlightOptions alloc] initWithLocation:location];
 }
 
 + (instancetype) highlightOptionsWithScreenPoint:(CGPoint)screenPoint
 {
-    return [[self alloc] initWithScreenPoint:screenPoint];
+    return [[WRLDBuildingHighlightOptions alloc] initWithScreenPoint:screenPoint];
 }
 
 - (instancetype) initWithLocation:(CLLocationCoordinate2D)location
