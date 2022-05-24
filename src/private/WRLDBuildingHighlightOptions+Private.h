@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDBuildingHighlightOptions (Private)
 
-- (instancetype) initWithLocation:(CLLocationCoordinate2D)location;
+- (instancetype) initWithLocation2:(CLLocationCoordinate2D)location;
 
 - (instancetype) initWithScreenPoint:(CGPoint)screenPoint;
 

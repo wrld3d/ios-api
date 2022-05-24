@@ -16,7 +16,7 @@
 
 + (instancetype) highlightOptionsWithLocation:(CLLocationCoordinate2D)location
 {
-    return [[self alloc] initWithLocation:location];
+    return [[self alloc] initWithLocation2:location];
 }
 
 + (instancetype) highlightOptionsWithScreenPoint:(CGPoint)screenPoint
@@ -24,7 +24,7 @@
     return [[self alloc] initWithScreenPoint:screenPoint];
 }
 
-- (instancetype) initWithLocation:(CLLocationCoordinate2D)location
+- (instancetype) initWithLocation2:(CLLocationCoordinate2D)location
 {
     self = [super init];
     if (self)
